@@ -1,0 +1,493 @@
+﻿[gd_scene format=3 uid="uid://q3f28mks8nc4"]
+
+[ext_resource type="PackedScene" uid="uid://brllxfyknsnb4" path="res://Scenes/main.tscn" id="1_main"]
+[ext_resource type="Script" uid="uid://eqypgnvo40nk" path="res://Scripts/hard_level.gd" id="2_builder"]
+[ext_resource type="Texture2D" uid="uid://bdb2bsoxwa7vo" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Spike.png" id="5_spike"]
+[ext_resource type="Texture2D" uid="uid://bndp1c68msn1l" path="res://Sprites/Objects/Crate.png" id="6_crate"]
+[ext_resource type="Texture2D" uid="uid://bvrxjy64tb0pe" path="res://Sprites/Objects/TombStone (2).png" id="7_tomb_a"]
+[ext_resource type="Texture2D" uid="uid://00n0fakr0jl0" path="res://Sprites/Objects/TombStone (1).png" id="8_tomb_b"]
+[ext_resource type="Texture2D" uid="uid://cm4f3qx6763u1" path="res://Sprites/Objects/Tree.png" id="9_tree"]
+[ext_resource type="Texture2D" uid="uid://qgisgfd0iqyt" path="res://Sprites/Objects/Bush (1).png" id="10_bush"]
+[ext_resource type="Texture2D" uid="uid://c0p0dylmeum30" path="res://Sprites/Objects/DeadBush.png" id="11_dead_bush"]
+[ext_resource type="Texture2D" uid="uid://bp7ptdkue4fue" path="res://Sprites/Objects/Skeleton.png" id="12_skeleton"]
+[ext_resource type="Texture2D" uid="uid://jq6aduasebml" path="res://Sprites/Tiles/Tile (1).png" id="13_0y4fu"]
+[ext_resource type="Texture2D" uid="uid://q62qjknb5mb3" path="res://Sprites/Objects/Sign.png" id="13_sign"]
+[ext_resource type="Script" uid="uid://cunpx36d0qi4r" path="res://Scripts/deadly_hazard.gd" id="14_hazard"]
+[ext_resource type="Texture2D" uid="uid://bln460hvddh30" path="res://Sprites/Tiles/Tile (2).png" id="14_yfosk"]
+[ext_resource type="Texture2D" uid="uid://d1uyf17d1wb0h" path="res://Sprites/Tiles/Tile (3).png" id="15_rk6cw"]
+[ext_resource type="Texture2D" uid="uid://dtm7o6uu8pjg5" path="res://Sprites/Tiles/Tile (12).png" id="16_5i60d"]
+[ext_resource type="Texture2D" uid="uid://bwkfl4n0lrqx0" path="res://Sprites/Tiles/Tile (9).png" id="17_y3khl"]
+[ext_resource type="Texture2D" uid="uid://c5n8l34yto1p2" path="res://Sprites/Tiles/Tile (13).png" id="18_meqga"]
+[ext_resource type="Texture2D" uid="uid://dn0anwejndvon" path="res://Sprites/Tiles/Tile (14).png" id="19_iqh83"]
+[ext_resource type="Texture2D" uid="uid://dvfbye0ooj14w" path="res://Sprites/Tiles/Tile (16).png" id="20_fmn83"]
+[ext_resource type="Texture2D" uid="uid://dm5e2ppds6pqv" path="res://Sprites/Tiles/Tile (4).png" id="21_obup0"]
+[ext_resource type="Texture2D" uid="uid://d4mcu6qxk2ejp" path="res://Sprites/Tiles/Tile (5).png" id="22_bwo32"]
+[ext_resource type="Texture2D" uid="uid://g6vhjk887opq" path="res://Sprites/Tiles/Tile (6).png" id="23_n8pip"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hard_start"]
+size = Vector2(512, 256)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hard_small"]
+size = Vector2(256, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hard_tower"]
+size = Vector2(384, 512)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hard_final"]
+size = Vector2(384, 384)
+
+[node name="MainHard" unique_id=93204075 instance=ExtResource("1_main")]
+
+[node name="BackgroundA" parent="." index="1"]
+position = Vector2(884, 360)
+scale = Vector2(1.016, 0.9)
+
+[node name="Level" parent="." index="3"]
+visible = false
+collisions_enabled = false
+
+[node name="Player" parent="." index="5"]
+position = Vector2(260, 410)
+
+[node name="Camera2D" parent="Player" index="2"]
+limit_right = 3600
+
+[node name="HardLevel" type="Node2D" parent="." index="6" unique_id=2033321054]
+z_index = 9
+script = ExtResource("2_builder")
+spike_texture = ExtResource("5_spike")
+crate_texture = ExtResource("6_crate")
+tombstone_a_texture = ExtResource("7_tomb_a")
+tombstone_b_texture = ExtResource("8_tomb_b")
+tree_texture = ExtResource("9_tree")
+bush_texture = ExtResource("10_bush")
+dead_bush_texture = ExtResource("11_dead_bush")
+skeleton_texture = ExtResource("12_skeleton")
+sign_texture = ExtResource("13_sign")
+hazard_script = ExtResource("14_hazard")
+
+[node name="Generated" type="Node2D" parent="HardLevel" index="0" unique_id=763997560]
+
+[node name="StartPlatform" type="StaticBody2D" parent="HardLevel/Generated" index="0" unique_id=1179444643]
+position = Vector2(256, 628)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HardLevel/Generated/StartPlatform" index="0" unique_id=178104286]
+shape = SubResource("RectangleShape2D_hard_start")
+
+[node name="Tile_0_0" type="Sprite2D" parent="HardLevel/Generated" index="1" unique_id=710715627]
+z_index = -1
+position = Vector2(64, 564)
+texture = ExtResource("13_0y4fu")
+
+[node name="Tile_1_0" type="Sprite2D" parent="HardLevel/Generated" index="2" unique_id=347317136]
+z_index = -1
+position = Vector2(192, 564)
+texture = ExtResource("14_yfosk")
+
+[node name="Tile_2_0" type="Sprite2D" parent="HardLevel/Generated" index="3" unique_id=719292778]
+z_index = -1
+position = Vector2(320, 564)
+texture = ExtResource("14_yfosk")
+
+[node name="Tile_3_0" type="Sprite2D" parent="HardLevel/Generated" index="4" unique_id=634183600]
+z_index = -1
+position = Vector2(448, 564)
+texture = ExtResource("15_rk6cw")
+
+[node name="Tile_0_1" type="Sprite2D" parent="HardLevel/Generated" index="5" unique_id=1938086223]
+z_index = -1
+position = Vector2(64, 692)
+texture = ExtResource("16_5i60d")
+
+[node name="Tile_1_1" type="Sprite2D" parent="HardLevel/Generated" index="6" unique_id=1066980742]
+z_index = -1
+position = Vector2(192, 692)
+texture = ExtResource("17_y3khl")
+
+[node name="Tile_2_1" type="Sprite2D" parent="HardLevel/Generated" index="7" unique_id=354671452]
+z_index = -1
+position = Vector2(320, 692)
+texture = ExtResource("17_y3khl")
+
+[node name="Tile_3_1" type="Sprite2D" parent="HardLevel/Generated" index="8" unique_id=2113476638]
+z_index = -1
+position = Vector2(448, 692)
+texture = ExtResource("18_meqga")
+
+[node name="NeedlePlatformA" type="StaticBody2D" parent="HardLevel/Generated" index="9" unique_id=448924784]
+position = Vector2(768, 434)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HardLevel/Generated/NeedlePlatformA" index="0" unique_id=1003331521]
+shape = SubResource("RectangleShape2D_hard_small")
+
+[node name="@Sprite2D@57274" type="Sprite2D" parent="HardLevel/Generated" index="10" unique_id=2023603575]
+z_index = -1
+position = Vector2(704, 434)
+texture = ExtResource("19_iqh83")
+
+[node name="@Sprite2D@57275" type="Sprite2D" parent="HardLevel/Generated" index="11" unique_id=1355513755]
+z_index = -1
+position = Vector2(832, 434)
+texture = ExtResource("20_fmn83")
+
+[node name="NeedlePlatformB" type="StaticBody2D" parent="HardLevel/Generated" index="12" unique_id=988684974]
+position = Vector2(1158, 314)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HardLevel/Generated/NeedlePlatformB" index="0" unique_id=557166019]
+shape = SubResource("RectangleShape2D_hard_small")
+
+[node name="@Sprite2D@57277" type="Sprite2D" parent="HardLevel/Generated" index="13" unique_id=515276009]
+z_index = -1
+position = Vector2(1094, 314)
+texture = ExtResource("19_iqh83")
+
+[node name="@Sprite2D@57278" type="Sprite2D" parent="HardLevel/Generated" index="14" unique_id=2143172786]
+z_index = -1
+position = Vector2(1222, 314)
+texture = ExtResource("20_fmn83")
+
+[node name="SafeStep" type="StaticBody2D" parent="HardLevel/Generated" index="15" unique_id=1356931581]
+position = Vector2(1548, 484)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HardLevel/Generated/SafeStep" index="0" unique_id=1674142233]
+shape = SubResource("RectangleShape2D_hard_small")
+
+[node name="@Sprite2D@57280" type="Sprite2D" parent="HardLevel/Generated" index="16" unique_id=2104430260]
+z_index = -1
+position = Vector2(1484, 484)
+texture = ExtResource("19_iqh83")
+
+[node name="@Sprite2D@57281" type="Sprite2D" parent="HardLevel/Generated" index="17" unique_id=499326187]
+z_index = -1
+position = Vector2(1612, 484)
+texture = ExtResource("20_fmn83")
+
+[node name="HighTower" type="StaticBody2D" parent="HardLevel/Generated" index="18" unique_id=291833555]
+position = Vector2(1982, 486)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HardLevel/Generated/HighTower" index="0" unique_id=835885903]
+shape = SubResource("RectangleShape2D_hard_tower")
+
+[node name="@Sprite2D@57283" type="Sprite2D" parent="HardLevel/Generated" index="19" unique_id=1518889790]
+z_index = -1
+position = Vector2(1854, 294)
+texture = ExtResource("13_0y4fu")
+
+[node name="@Sprite2D@57284" type="Sprite2D" parent="HardLevel/Generated" index="20" unique_id=1896175565]
+z_index = -1
+position = Vector2(1982, 294)
+texture = ExtResource("14_yfosk")
+
+[node name="@Sprite2D@57285" type="Sprite2D" parent="HardLevel/Generated" index="21" unique_id=97576396]
+z_index = -1
+position = Vector2(2110, 294)
+texture = ExtResource("15_rk6cw")
+
+[node name="@Sprite2D@57286" type="Sprite2D" parent="HardLevel/Generated" index="22" unique_id=1004514180]
+z_index = -1
+position = Vector2(1854, 422)
+texture = ExtResource("21_obup0")
+
+[node name="@Sprite2D@57287" type="Sprite2D" parent="HardLevel/Generated" index="23" unique_id=1576854840]
+z_index = -1
+position = Vector2(1982, 422)
+texture = ExtResource("22_bwo32")
+
+[node name="@Sprite2D@57288" type="Sprite2D" parent="HardLevel/Generated" index="24" unique_id=2107321665]
+z_index = -1
+position = Vector2(2110, 422)
+texture = ExtResource("23_n8pip")
+
+[node name="Tile_0_2" type="Sprite2D" parent="HardLevel/Generated" index="25" unique_id=1889343840]
+z_index = -1
+position = Vector2(1854, 550)
+texture = ExtResource("21_obup0")
+
+[node name="Tile_1_2" type="Sprite2D" parent="HardLevel/Generated" index="26" unique_id=325121542]
+z_index = -1
+position = Vector2(1982, 550)
+texture = ExtResource("22_bwo32")
+
+[node name="Tile_2_2" type="Sprite2D" parent="HardLevel/Generated" index="27" unique_id=1953877544]
+z_index = -1
+position = Vector2(2110, 550)
+texture = ExtResource("23_n8pip")
+
+[node name="Tile_0_3" type="Sprite2D" parent="HardLevel/Generated" index="28" unique_id=1663178924]
+z_index = -1
+position = Vector2(1854, 678)
+texture = ExtResource("16_5i60d")
+
+[node name="Tile_1_3" type="Sprite2D" parent="HardLevel/Generated" index="29" unique_id=1311189127]
+z_index = -1
+position = Vector2(1982, 678)
+texture = ExtResource("17_y3khl")
+
+[node name="Tile_2_3" type="Sprite2D" parent="HardLevel/Generated" index="30" unique_id=623836003]
+z_index = -1
+position = Vector2(2110, 678)
+texture = ExtResource("18_meqga")
+
+[node name="DropPlatform" type="StaticBody2D" parent="HardLevel/Generated" index="31" unique_id=1092715901]
+position = Vector2(2428, 624)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HardLevel/Generated/DropPlatform" index="0" unique_id=2085817056]
+shape = SubResource("RectangleShape2D_hard_small")
+
+[node name="@Sprite2D@57290" type="Sprite2D" parent="HardLevel/Generated" index="32" unique_id=1618076416]
+z_index = -1
+position = Vector2(2364, 624)
+texture = ExtResource("19_iqh83")
+
+[node name="@Sprite2D@57291" type="Sprite2D" parent="HardLevel/Generated" index="33" unique_id=105944274]
+z_index = -1
+position = Vector2(2492, 624)
+texture = ExtResource("20_fmn83")
+
+[node name="TinyBridge" type="StaticBody2D" parent="HardLevel/Generated" index="34" unique_id=2017820090]
+position = Vector2(2828, 474)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HardLevel/Generated/TinyBridge" index="0" unique_id=1981900166]
+shape = SubResource("RectangleShape2D_hard_small")
+
+[node name="@Sprite2D@57293" type="Sprite2D" parent="HardLevel/Generated" index="35" unique_id=867508729]
+z_index = -1
+position = Vector2(2764, 474)
+texture = ExtResource("19_iqh83")
+
+[node name="@Sprite2D@57294" type="Sprite2D" parent="HardLevel/Generated" index="36" unique_id=1811849492]
+z_index = -1
+position = Vector2(2892, 474)
+texture = ExtResource("20_fmn83")
+
+[node name="FinalPlatform" type="StaticBody2D" parent="HardLevel/Generated" index="37" unique_id=948479250]
+position = Vector2(3282, 477)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HardLevel/Generated/FinalPlatform" index="0" unique_id=1509490710]
+shape = SubResource("RectangleShape2D_hard_final")
+
+[node name="@Sprite2D@57296" type="Sprite2D" parent="HardLevel/Generated" index="38" unique_id=896788588]
+z_index = -1
+position = Vector2(3154, 349)
+texture = ExtResource("13_0y4fu")
+
+[node name="@Sprite2D@57297" type="Sprite2D" parent="HardLevel/Generated" index="39" unique_id=1679972898]
+z_index = -1
+position = Vector2(3282, 349)
+texture = ExtResource("14_yfosk")
+
+[node name="@Sprite2D@57298" type="Sprite2D" parent="HardLevel/Generated" index="40" unique_id=1132537351]
+z_index = -1
+position = Vector2(3410, 349)
+texture = ExtResource("15_rk6cw")
+
+[node name="@Sprite2D@57299" type="Sprite2D" parent="HardLevel/Generated" index="41" unique_id=226673850]
+z_index = -1
+position = Vector2(3154, 477)
+texture = ExtResource("21_obup0")
+
+[node name="@Sprite2D@57300" type="Sprite2D" parent="HardLevel/Generated" index="42" unique_id=1993099756]
+z_index = -1
+position = Vector2(3282, 477)
+texture = ExtResource("22_bwo32")
+
+[node name="@Sprite2D@57301" type="Sprite2D" parent="HardLevel/Generated" index="43" unique_id=1389128266]
+z_index = -1
+position = Vector2(3410, 477)
+texture = ExtResource("23_n8pip")
+
+[node name="@Sprite2D@57302" type="Sprite2D" parent="HardLevel/Generated" index="44" unique_id=46040286]
+z_index = -1
+position = Vector2(3154, 605)
+texture = ExtResource("16_5i60d")
+
+[node name="@Sprite2D@57303" type="Sprite2D" parent="HardLevel/Generated" index="45" unique_id=1263837358]
+z_index = -1
+position = Vector2(3282, 605)
+texture = ExtResource("17_y3khl")
+
+[node name="@Sprite2D@57304" type="Sprite2D" parent="HardLevel/Generated" index="46" unique_id=1124622738]
+z_index = -1
+position = Vector2(3410, 605)
+texture = ExtResource("18_meqga")
+
+[node name="SpikePitHazard" type="Area2D" parent="HardLevel/Generated" index="47" unique_id=1275385210]
+position = Vector2(704, 742)
+script = ExtResource("14_hazard")
+
+[node name="Spike_0" type="Sprite2D" parent="HardLevel/Generated" index="48" unique_id=577983462]
+position = Vector2(576, 710)
+texture = ExtResource("5_spike")
+
+[node name="Spike_1" type="Sprite2D" parent="HardLevel/Generated" index="49" unique_id=1656321423]
+position = Vector2(704, 710)
+texture = ExtResource("5_spike")
+
+[node name="Spike_2" type="Sprite2D" parent="HardLevel/Generated" index="50" unique_id=646938616]
+position = Vector2(832, 710)
+texture = ExtResource("5_spike")
+
+[node name="@Area2D@57306" type="Area2D" parent="HardLevel/Generated" index="51" unique_id=496159601]
+position = Vector2(1156, 742)
+script = ExtResource("14_hazard")
+
+[node name="@Sprite2D@57308" type="Sprite2D" parent="HardLevel/Generated" index="52" unique_id=44863955]
+position = Vector2(964, 710)
+texture = ExtResource("5_spike")
+
+[node name="@Sprite2D@57309" type="Sprite2D" parent="HardLevel/Generated" index="53" unique_id=435990972]
+position = Vector2(1092, 710)
+texture = ExtResource("5_spike")
+
+[node name="@Sprite2D@57310" type="Sprite2D" parent="HardLevel/Generated" index="54" unique_id=923787979]
+position = Vector2(1220, 710)
+texture = ExtResource("5_spike")
+
+[node name="Spike_3" type="Sprite2D" parent="HardLevel/Generated" index="55" unique_id=59467662]
+position = Vector2(1348, 710)
+texture = ExtResource("5_spike")
+
+[node name="@Area2D@57311" type="Area2D" parent="HardLevel/Generated" index="56" unique_id=2043021069]
+position = Vector2(1541, 742)
+script = ExtResource("14_hazard")
+
+[node name="@Sprite2D@57313" type="Sprite2D" parent="HardLevel/Generated" index="57" unique_id=1153880947]
+position = Vector2(1349, 710)
+texture = ExtResource("5_spike")
+
+[node name="@Sprite2D@57314" type="Sprite2D" parent="HardLevel/Generated" index="58" unique_id=22214632]
+position = Vector2(1477, 710)
+texture = ExtResource("5_spike")
+
+[node name="@Sprite2D@57315" type="Sprite2D" parent="HardLevel/Generated" index="59" unique_id=1012757172]
+position = Vector2(1605, 710)
+texture = ExtResource("5_spike")
+
+[node name="@Sprite2D@57316" type="Sprite2D" parent="HardLevel/Generated" index="60" unique_id=855027649]
+position = Vector2(1733, 710)
+texture = ExtResource("5_spike")
+
+[node name="@Area2D@57317" type="Area2D" parent="HardLevel/Generated" index="61" unique_id=229671944]
+position = Vector2(2816, 742)
+script = ExtResource("14_hazard")
+
+[node name="@Sprite2D@57319" type="Sprite2D" parent="HardLevel/Generated" index="62" unique_id=1553057150]
+position = Vector2(2624, 710)
+texture = ExtResource("5_spike")
+
+[node name="@Sprite2D@57320" type="Sprite2D" parent="HardLevel/Generated" index="63" unique_id=965580993]
+position = Vector2(2752, 710)
+texture = ExtResource("5_spike")
+
+[node name="@Sprite2D@57321" type="Sprite2D" parent="HardLevel/Generated" index="64" unique_id=1017328078]
+position = Vector2(2880, 710)
+texture = ExtResource("5_spike")
+
+[node name="@Sprite2D@57322" type="Sprite2D" parent="HardLevel/Generated" index="65" unique_id=1968825794]
+position = Vector2(3008, 710)
+texture = ExtResource("5_spike")
+
+[node name="StartTree" type="Sprite2D" parent="HardLevel/Generated" index="66" unique_id=1944625146]
+z_index = 30
+position = Vector2(115, 351)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("9_tree")
+
+[node name="StartSkeleton" type="Sprite2D" parent="HardLevel/Generated" index="67" unique_id=136908288]
+z_index = 3
+position = Vector2(300, 470)
+scale = Vector2(1.15, 1.15)
+texture = ExtResource("12_skeleton")
+
+[node name="StartCrate" type="Sprite2D" parent="HardLevel/Generated" index="68" unique_id=998144534]
+z_index = 3
+position = Vector2(430, 448)
+scale = Vector2(0.95, 0.95)
+texture = ExtResource("6_crate")
+
+[node name="PlatformATombstone" type="Sprite2D" parent="HardLevel/Generated" index="69" unique_id=1044563157]
+z_index = 3
+position = Vector2(700, 330)
+scale = Vector2(1.6, 1.6)
+texture = ExtResource("8_tomb_b")
+
+[node name="PlatformABush" type="Sprite2D" parent="HardLevel/Generated" index="70" unique_id=846097082]
+z_index = 30
+position = Vector2(825, 348)
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("10_bush")
+
+[node name="PlatformBCrate" type="Sprite2D" parent="HardLevel/Generated" index="71" unique_id=1383475076]
+z_index = 3
+position = Vector2(1165, 198)
+scale = Vector2(0.95, 0.95)
+texture = ExtResource("6_crate")
+
+[node name="SafeStepSign" type="Sprite2D" parent="HardLevel/Generated" index="72" unique_id=240627840]
+z_index = 3
+position = Vector2(1500, 374)
+texture = ExtResource("13_sign")
+
+[node name="TowerTombstone" type="Sprite2D" parent="HardLevel/Generated" index="73" unique_id=251849358]
+z_index = 3
+position = Vector2(1875, 164)
+scale = Vector2(1.65, 1.65)
+texture = ExtResource("7_tomb_a")
+
+[node name="TowerDeadBush" type="Sprite2D" parent="HardLevel/Generated" index="74" unique_id=802752290]
+z_index = 30
+position = Vector2(2050, 196)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("11_dead_bush")
+
+[node name="TowerCrate" type="Sprite2D" parent="HardLevel/Generated" index="75" unique_id=1471150054]
+z_index = 3
+position = Vector2(2115, 178)
+scale = Vector2(0.95, 0.95)
+texture = ExtResource("6_crate")
+
+[node name="DropDeadBush" type="Sprite2D" parent="HardLevel/Generated" index="76" unique_id=1195951979]
+z_index = 30
+position = Vector2(2395, 529)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("11_dead_bush")
+
+[node name="TinyBridgeCrate" type="Sprite2D" parent="HardLevel/Generated" index="77" unique_id=1973791420]
+z_index = 3
+position = Vector2(2790, 358)
+scale = Vector2(0.95, 0.95)
+texture = ExtResource("6_crate")
+
+[node name="FinalTombstone" type="Sprite2D" parent="HardLevel/Generated" index="78" unique_id=357622035]
+z_index = 3
+position = Vector2(3200, 220)
+scale = Vector2(1.8, 1.8)
+texture = ExtResource("7_tomb_a")
+
+[node name="FinalTree" type="Sprite2D" parent="HardLevel/Generated" index="79" unique_id=1029895165]
+z_index = 30
+position = Vector2(3420, 168)
+scale = Vector2(-1.15, 1.15)
+texture = ExtResource("9_tree")
+
+[node name="MenuButton" parent="PlayerHUD" index="3"]
+anchors_preset = 1
+
+[node name="PauseMenu" parent="PlayerHUD" index="4"]
+anchors_preset = 8
+
+[node name="Box" parent="PlayerHUD/PauseMenu" index="0"]
+layout_mode = 0
+
+[node name="Title" parent="PlayerHUD/PauseMenu/Box" index="0"]
+layout_mode = 2
+
+[node name="OnlineStatusLabel" parent="PlayerHUD/PauseMenu/Box" index="1"]
+layout_mode = 2
+
+[node name="ReturnButton" parent="PlayerHUD/PauseMenu/Box" index="2"]
+layout_mode = 2
+
+[node name="MainMenuButton" parent="PlayerHUD/PauseMenu/Box" index="3"]
+layout_mode = 2
+

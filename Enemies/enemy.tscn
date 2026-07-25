@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=4]
+
+[ext_resource type="Script" path="res://Enemies/enemy.gd" id="1_enemy_script"]
+[ext_resource type="Texture2D" uid="uid://ghdkjwb6vixu" path="res://Characters/Adventurer/Poses/adventurer_idle.png" id="2_default_character"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_enemy_body"]
+size = Vector2(56, 82)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_fill"]
+bg_color = Color(0.75, 0.07, 0.07, 1)
+
+[node name="Enemy" type="CharacterBody2D"]
+z_index = 20
+script = ExtResource("1_enemy_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -38)
+scale = Vector2(1.65, 1.65)
+texture = ExtResource("2_default_character")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -38)
+shape = SubResource("RectangleShape2D_enemy_body")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -45.0
+offset_top = -100.0
+offset_right = 45.0
+offset_bottom = -88.0
+max_value = 100.0
+value = 100.0
+show_percentage = false
+theme_override_styles/fill = SubResource("StyleBoxFlat_health_fill")

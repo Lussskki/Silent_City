@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bli5nb7pcuouy"
+path="res://.godot/imported/Calima - Usual Rigmarole (freetouse.com).mp3-367d5e4ecd5341b491ab0dea65b5e3c8.mp3str"
+
+[deps]
+
+source_file="res://Resources/Background_voice/Calima - Usual Rigmarole (freetouse.com).mp3"
+dest_files=["res://.godot/imported/Calima - Usual Rigmarole (freetouse.com).mp3-367d5e4ecd5341b491ab0dea65b5e3c8.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
