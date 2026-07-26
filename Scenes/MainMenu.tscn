@@ -1,4 +1,4 @@
-﻿[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_menu_script"]
 [ext_resource type="Texture2D" path="res://Sprites/Background/BG.png" id="2_bg"]
@@ -286,6 +286,7 @@ text = "Online"
 horizontal_alignment = 1
 
 [node name="AddressBox" type="PanelContainer" parent="Content/Root/Pages/Online"]
+visible = false
 custom_minimum_size = Vector2(380, 56)
 layout_mode = 2
 
@@ -293,7 +294,15 @@ layout_mode = 2
 custom_minimum_size = Vector2(360, 42)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-placeholder_text = "Host IP address"
+placeholder_text = "Steam lobby search"
+
+[node name="RoomNameInput" type="LineEdit" parent="Content/Root/Pages/Online"]
+custom_minimum_size = Vector2(380, 42)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+placeholder_text = "Room name"
+text = "Silent City"
+alignment = 1
 
 [node name="Buttons" type="HBoxContainer" parent="Content/Root/Pages/Online"]
 layout_mode = 2
@@ -303,7 +312,7 @@ theme_override_constants/separation = 14
 custom_minimum_size = Vector2(183, 44)
 layout_mode = 2
 theme_override_font_sizes/font_size = 21
-text = "Host Online"
+text = "Create Room"
 
 [node name="JoinButton" type="Button" parent="Content/Root/Pages/Online/Buttons"]
 custom_minimum_size = Vector2(183, 44)
@@ -316,9 +325,15 @@ custom_minimum_size = Vector2(380, 76)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9, 1, 0.9, 1)
 theme_override_font_sizes/font_size = 18
-text = "Host online or enter the host IP to join."
+text = "Create a room or join a room that appears here."
 horizontal_alignment = 1
 autowrap_mode = 3
+
+[node name="LobbySelect" type="ItemList" parent="Content/Root/Pages/Online"]
+visible = false
+custom_minimum_size = Vector2(380, 96)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
 
 [node name="StartOnlineButton" type="Button" parent="Content/Root/Pages/Online"]
 visible = false
@@ -326,7 +341,7 @@ custom_minimum_size = Vector2(300, 42)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 20
-text = "Start Online"
+text = "Start Match"
 
 [node name="BackButton" type="Button" parent="Content/Root/Pages/Online"]
 custom_minimum_size = Vector2(260, 42)
@@ -365,14 +380,14 @@ theme_override_constants/separation = 8
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 20
-text = "Online Tutorial"
+text = "Steam Lobby"
 horizontal_alignment = 1
 
 [node name="Text" type="Label" parent="Content/Root/Pages/TutorialOverlay/Card/Box"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.92, 0.98, 1, 1)
 theme_override_font_sizes/font_size = 18
-text = "Host opens a room."
+text = "Create Room opens a Steam room for other players."
 horizontal_alignment = 1
 autowrap_mode = 3
 

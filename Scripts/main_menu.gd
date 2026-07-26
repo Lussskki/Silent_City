@@ -6,6 +6,7 @@ const HARD_SCENE := "res://Scenes/MainHard.tscn"
 const ONLINE_PORT := 8910
 const ROOM_NAME := "Silent City Room"
 const MAX_ROOM_PLAYERS := 2
+const STEAM_LOBBY_REFRESH_INTERVAL := 2.0
 const LANG_ENG := "eng"
 const LANG_GEO := "geo"
 const CHARACTER_DISPLAY_NAMES := {
@@ -28,29 +29,38 @@ const TEXT := {
 		"choose_first": "Choose a character before starting.",
 		"start_game": "Start Game",
 		"back": "Back",
-		"host_room": "Host Online",
+		"host_room": "Create Room",
+		"return_to_match": "Return to Game",
 		"join": "Join",
-		"start_online_room": "Start Online",
-		"tutorial_title": "Online Tutorial",
+		"start_online_room": "Start Match",
+		"tutorial_title": "Steam Lobby",
 		"skip": "Skip",
 		"next": "Next",
 		"done": "Done",
-		"selected_online": "Selected: %s. Press Start Game to enter online room.",
+		"selected_online": "Selected: %s. Wait for the Steam lobby to start.",
 		"selected": "Selected: %s",
 		"host_failed": "Host failed: %s",
-		"room_open": "Online room is open. Give your public IP to the other player.",
-		"hosting_device": "This device is hosting. Use another device to join by IP.",
-		"no_room_selected": "Enter the host IP address to join.",
+		"room_open": "Steam lobby is open. Invite a friend or let them press Join.",
+		"steam_creating_lobby": "Creating Steam lobby...",
+		"steam_finding_lobby": "Looking for rooms...",
+		"steam_lobby_count": "Select a room to join.",
+		"steam_no_lobby": "No rooms yet. Waiting for rooms...",
+		"steam_transport_missing": "Steam lobby works, but Steam MultiplayerPeer addon is missing.",
+		"hosting_device": "This device is already hosting a Steam lobby.",
+		"hosting_active": "Your Steam room is still open.",
+		"no_room_selected": "No Steam lobby selected.",
 		"join_failed": "Join failed: %s",
 		"joining": "Joining room...",
 		"connected_choose": "Connected. Choose your character.",
-		"waiting_for_host_start": "Character selected. Waiting for host to start.",
+		"waiting_for_host_start": "Character selected. Waiting for both players.",
 		"waiting_for_player_choice": "Waiting for the other player to choose a character.",
-		"player_connected": "Player connected.\nPress Start Online.",
-		"room_waiting": "Online room is open. Waiting for player to connect.",
+		"player_connected": "Player connected.\nChoose characters to start.",
+		"both_ready": "Both players ready. Starting match...",
+		"room_waiting": "Steam lobby is open. Waiting for player to join.",
 		"connection_failed": "Connection failed",
-		"online_status_default": "Host online or enter the host IP to join.",
-		"invalid_address": "Enter a valid host IP address.",
+		"online_status_default": "Create a room or join a room that appears here.",
+		"steam_not_ready": "Steam is not ready. Open Steam and restart the game.",
+		"invalid_address": "No Steam lobby selected.",
 		"room_players": "%s - %d/%d players"
 	},
 	LANG_GEO: {
@@ -64,40 +74,53 @@ const TEXT := {
 		"choose_first": "áƒ¯áƒ”áƒ  áƒáƒ˜áƒ áƒ©áƒ˜áƒ” áƒžáƒ”áƒ áƒ¡áƒáƒœáƒáƒŸáƒ˜.",
 		"start_game": "áƒ—áƒáƒ›áƒáƒ¨áƒ˜áƒ¡ áƒ“áƒáƒ¬áƒ§áƒ”áƒ‘áƒ",
 		"back": "áƒ£áƒ™áƒáƒœ",
-		"host_room": "áƒáƒ—áƒáƒ®áƒ˜áƒ¡ áƒ’áƒáƒ®áƒ¡áƒœáƒ",
+		"host_room": "Create Room",
+		"return_to_match": "Return to Game",
 		"join": "áƒ¨áƒ”áƒ¡áƒ•áƒšáƒ",
-		"start_online_room": "Start Online",
-		"tutorial_title": "Online Tutorial",
+		"start_online_room": "Start Match",
+		"tutorial_title": "Steam Lobby",
 		"skip": "áƒ’áƒáƒ›áƒáƒ¢áƒáƒ•áƒ”áƒ‘áƒ",
 		"next": "áƒ¨áƒ”áƒ›áƒ“áƒ”áƒ’áƒ˜",
 		"done": "áƒ›áƒ–áƒáƒ“áƒáƒ",
-		"selected_online": "áƒáƒ áƒ©áƒ”áƒ£áƒšáƒ˜áƒ: %s. áƒ“áƒáƒáƒ­áƒ˜áƒ áƒ” áƒ—áƒáƒ›áƒáƒ¨áƒ˜áƒ¡ áƒ“áƒáƒ¬áƒ§áƒ”áƒ‘áƒáƒ¡.",
+		"selected_online": "Selected: %s. Wait for the Steam lobby to start.",
 		"selected": "áƒáƒ áƒ©áƒ”áƒ£áƒšáƒ˜áƒ: %s",
 		"host_failed": "áƒáƒ—áƒáƒ®áƒ˜ áƒ•áƒ”áƒ  áƒ’áƒáƒ˜áƒ®áƒ¡áƒœáƒ: %s",
-		"room_open": "áƒáƒ—áƒáƒ®áƒ˜ áƒ’áƒáƒ®áƒ¡áƒœáƒ˜áƒšáƒ˜áƒ. áƒ¡áƒ®áƒ•áƒ áƒ›áƒáƒ¬áƒ§áƒáƒ‘áƒ˜áƒšáƒáƒ‘áƒ áƒ¡áƒ˜áƒ˜áƒ“áƒáƒœ áƒáƒ˜áƒ áƒ©áƒ”áƒ•áƒ¡.",
-		"hosting_device": "áƒ”áƒ¡ áƒ›áƒáƒ¬áƒ§áƒáƒ‘áƒ˜áƒšáƒáƒ‘áƒ áƒ›áƒáƒ¡áƒžáƒ˜áƒœáƒ«áƒšáƒáƒ‘áƒ¡. áƒ¨áƒ”áƒ¡áƒáƒ¡áƒ•áƒšáƒ”áƒšáƒáƒ“ áƒ’áƒáƒ›áƒáƒ˜áƒ§áƒ”áƒœáƒ” áƒ›áƒ”áƒáƒ áƒ” áƒ›áƒáƒ¬áƒ§áƒáƒ‘áƒ˜áƒšáƒáƒ‘áƒ.",
-		"no_room_selected": "áƒáƒ—áƒáƒ®áƒ˜ áƒáƒ áƒ©áƒ”áƒ£áƒšáƒ˜ áƒáƒ  áƒáƒ áƒ˜áƒ¡. áƒ’áƒáƒ®áƒ¡áƒ”áƒœáƒ˜ áƒáƒ—áƒáƒ®áƒ˜ áƒáƒœ áƒ“áƒáƒ”áƒšáƒáƒ“áƒ”.",
+		"room_open": "Steam lobby is open. Invite a friend or let them press Join.",
+		"steam_creating_lobby": "Creating Steam lobby...",
+		"steam_finding_lobby": "Looking for rooms...",
+		"steam_lobby_count": "Select a room to join.",
+		"steam_no_lobby": "No rooms yet. Waiting for rooms...",
+		"steam_transport_missing": "Steam lobby works, but Steam MultiplayerPeer addon is missing.",
+		"hosting_device": "This device is already hosting a Steam lobby.",
+		"hosting_active": "Your Steam room is still open.",
+		"no_room_selected": "No Steam lobby selected.",
 		"join_failed": "áƒ¨áƒ”áƒ¡áƒ•áƒšáƒ áƒ•áƒ”áƒ  áƒ›áƒáƒ®áƒ”áƒ áƒ®áƒ“áƒ: %s",
 		"joining": "áƒáƒ—áƒáƒ®áƒ¨áƒ˜ áƒ¨áƒ”áƒ¡áƒ•áƒšáƒ...",
 		"connected_choose": "áƒ“áƒáƒ™áƒáƒ•áƒ¨áƒ˜áƒ áƒ”áƒ‘áƒ£áƒšáƒ˜áƒ. áƒáƒ˜áƒ áƒ©áƒ˜áƒ” áƒžáƒ”áƒ áƒ¡áƒáƒœáƒáƒŸáƒ˜.",
-		"player_connected": "áƒ›áƒáƒ—áƒáƒ›áƒáƒ¨áƒ” áƒ¨áƒ”áƒ›áƒáƒ•áƒ˜áƒ“áƒ.\nPress Start Online.",
-		"room_waiting": "áƒáƒ—áƒáƒ®áƒ˜ áƒ’áƒáƒ®áƒ¡áƒœáƒ˜áƒšáƒ˜áƒ. áƒ•áƒ”áƒšáƒáƒ“áƒ”áƒ‘áƒ˜áƒ— áƒ›áƒáƒ—áƒáƒ›áƒáƒ¨áƒ”áƒ”áƒ‘áƒ¡.",
+		"waiting_for_host_start": "Character selected. Waiting for both players.",
+		"waiting_for_player_choice": "Waiting for the other player to choose a character.",
+		"player_connected": "Player connected.\nChoose characters to start.",
+		"both_ready": "Both players ready. Starting match...",
+		"room_waiting": "Steam lobby is open. Waiting for player to join.",
 		"connection_failed": "áƒ™áƒáƒ•áƒ¨áƒ˜áƒ áƒ˜ áƒ•áƒ”áƒ  áƒ›áƒáƒ®áƒ”áƒ áƒ®áƒ“áƒ",
-		"online_status_default": "Host online or enter the host IP to join.",
-		"invalid_address": "Enter a valid host IP address.",
+		"online_status_default": "Create a room or join a room that appears here.",
+		"steam_not_ready": "Steam is not ready. Open Steam and restart the game.",
+		"invalid_address": "No Steam lobby selected.",
 		"room_players": "%s - %d/%d áƒ›áƒáƒ—áƒáƒ›áƒáƒ¨áƒ”"
 	}
 }
 const ONLINE_TUTORIAL_STEPS := {
 	LANG_ENG: [
-		"Host opens a room.",
-		"Join picks the room.",
-		"Choose character, then start."
+		"Create Room opens a Steam room for other players.",
+		"Open rooms appear automatically. Select one and press Join.",
+		"Both players choose different characters. The match starts by itself.",
+		"Host can leave to menu and press Return to Game to rejoin."
 	],
 	LANG_GEO: [
-		"áƒ›áƒáƒ¡áƒžáƒ˜áƒœáƒ«áƒ”áƒšáƒ˜ áƒ®áƒ¡áƒœáƒ˜áƒ¡ áƒáƒ—áƒáƒ®áƒ¡.",
-		"áƒ›áƒ”áƒáƒ áƒ” áƒ›áƒáƒ—áƒáƒ›áƒáƒ¨áƒ” áƒ˜áƒ áƒ©áƒ”áƒ•áƒ¡ áƒáƒ—áƒáƒ®áƒ¡.",
-		"áƒáƒ˜áƒ áƒ©áƒ˜áƒ” áƒžáƒ”áƒ áƒ¡áƒáƒœáƒáƒŸáƒ˜ áƒ“áƒ áƒ“áƒáƒ˜áƒ¬áƒ§áƒ”."
+		"Create Room opens a Steam room for other players.",
+		"Open rooms appear automatically. Select one and press Join.",
+		"Both players choose different characters. The match starts by itself.",
+		"Host can leave to menu and press Return to Game to rejoin."
 	]
 }
 
@@ -133,8 +156,10 @@ const ONLINE_TUTORIAL_STEPS := {
 @onready var online_tutorial_skip: Button = $Content/Root/Pages/TutorialOverlay/Card/Box/Buttons/SkipButton
 @onready var online_tutorial_back: Button = $Content/Root/Pages/TutorialOverlay/Card/Box/Buttons/BackButton
 @onready var online_address_input: LineEdit = $Content/Root/Pages/Online/AddressBox/AddressInput
+@onready var room_name_input: LineEdit = $Content/Root/Pages/Online/RoomNameInput
 @onready var online_header: Label = $Content/Root/Pages/Online/Header
 @onready var online_status: Label = $Content/Root/Pages/Online/StatusLabel
+@onready var lobby_select: ItemList = $Content/Root/Pages/Online/LobbySelect
 @onready var host_button: Button = $Content/Root/Pages/Online/Buttons/HostButton
 @onready var join_button: Button = $Content/Root/Pages/Online/Buttons/JoinButton
 @onready var online_start_button: Button = $Content/Root/Pages/Online/StartOnlineButton
@@ -148,6 +173,11 @@ var remote_client_character := "golem"
 var remote_client_character_chosen := false
 var other_player_character := ""
 var other_player_character_chosen := false
+var steam_lobbies: Array = []
+var steam_lobby_refresh_timer := 0.0
+var steam_lobby_searching := false
+var online_match_starting := false
+var pending_join_lobby: Dictionary = {}
 
 
 func _ready() -> void:
@@ -177,20 +207,32 @@ func _ready() -> void:
 	online_tutorial_skip.pressed.connect(_finish_online_tutorial)
 	online_tutorial_back.pressed.connect(_back_from_online)
 	online_back_button.pressed.connect(_back_from_online)
+	var address_box := online_address_input.get_parent() as Control
+	if address_box:
+		address_box.visible = false
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.connection_failed.connect(_on_connection_failed)
+	_connect_steam_manager()
 	_apply_language()
 	_update_character_cards()
 	_update_online_room_text()
+	_update_lobby_select()
 	online_start_button.visible = false
 	_update_room_buttons()
 	_show_page(home_page)
 
 
 func _process(delta: float) -> void:
-	pass
+	if not online_page or not online_page.visible:
+		return
+	if _is_hosting_room() or _is_joining_room() or not _steam_ready():
+		return
+	steam_lobby_refresh_timer -= delta
+	if steam_lobby_refresh_timer <= 0.0:
+		steam_lobby_refresh_timer = STEAM_LOBBY_REFRESH_INTERVAL
+		_request_steam_lobbies(false)
 
 
 func _setup_language() -> void:
@@ -268,6 +310,7 @@ func _exit_game() -> void:
 func _open_online_page() -> void:
 	_update_online_room_text()
 	_show_page(online_page)
+	_request_steam_lobbies(true)
 	_show_online_tutorial_once()
 
 
@@ -354,6 +397,7 @@ func _select_character(character: String) -> void:
 			character_status.text = _t("selected_online") % character_name
 			online_status.text = _t("selected_online") % character_name
 			_sync_online_character_state()
+			_try_auto_start_online_match()
 	else:
 		character_status.text = _t("selected") % character_name
 	_update_character_cards()
@@ -451,15 +495,33 @@ func _selected_main_scene() -> String:
 
 func _host_online_game() -> void:
 	if _is_hosting_room():
+		online_status.text = _t("hosting_active")
+		get_tree().change_scene_to_file(MAIN_SCENE)
 		return
 
 	_clear_peer()
-	var peer := ENetMultiplayerPeer.new()
-	var error := peer.create_server(ONLINE_PORT, 1)
-	if error != OK:
-		online_status.text = _t("host_failed") % _error_message(error)
+	steam_lobbies.clear()
+	_update_lobby_select()
+	if not _steam_ready():
+		online_status.text = _steam_not_ready_message()
+		return
+	online_status.text = _t("steam_creating_lobby")
+	host_button.disabled = true
+	join_button.disabled = true
+	_steam_manager().create_lobby(_room_name())
+
+
+func _finish_steam_host_lobby(_lobby_id: int) -> void:
+	var peer := _steam_manager().create_host_peer() as MultiplayerPeer
+	if not peer:
+		online_status.text = _t("steam_transport_missing")
+		_update_room_buttons()
 		return
 
+	_prepare_online_host(peer)
+
+
+func _prepare_online_host(peer: MultiplayerPeer) -> void:
 	var settings := _settings()
 	if settings:
 		settings.set("online_mode", true)
@@ -474,8 +536,11 @@ func _host_online_game() -> void:
 	remote_client_character_chosen = false
 	other_player_character = ""
 	other_player_character_chosen = false
-	online_status.text = _t("room_open")
-	online_start_button.visible = true
+	online_match_starting = false
+	steam_lobbies.clear()
+	_update_lobby_select()
+	online_status.text = "Steam lobby is open. Invite a friend or let them press Join."
+	online_start_button.visible = false
 	_update_room_buttons()
 	joined_room_waiting_for_character = true
 	character_status.text = _t("connected_choose")
@@ -484,25 +549,41 @@ func _host_online_game() -> void:
 
 
 func _start_online_host_game() -> void:
+	_try_auto_start_online_match()
+
+
+func _try_auto_start_online_match() -> void:
 	var settings := _settings()
-	if settings and settings.get("online_mode") == true and String(settings.get("online_role")) == "host":
-		if settings.get("character_chosen") != true:
-			joined_room_waiting_for_character = true
-			character_status.text = _t("connected_choose")
-			_update_character_cards()
-			_show_page(choose_page)
-			return
-		if multiplayer.get_peers().is_empty():
-			online_status.text = _t("room_waiting")
-			_show_page(online_page)
-			return
-		if not remote_client_character_chosen:
-			character_status.text = _t("waiting_for_player_choice")
-			online_status.text = _t("waiting_for_player_choice")
-			_show_page(online_page)
-			return
-		rpc("_start_online_match")
-		get_tree().change_scene_to_file(MAIN_SCENE)
+	if online_match_starting:
+		return
+	if not settings or settings.get("online_mode") != true or String(settings.get("online_role")) != "host":
+		return
+	if settings.get("character_chosen") != true:
+		joined_room_waiting_for_character = true
+		character_status.text = _t("connected_choose")
+		_update_character_cards()
+		return
+	if multiplayer.get_peers().is_empty():
+		online_status.text = _t("room_waiting")
+		return
+	if not remote_client_character_chosen:
+		character_status.text = _t("waiting_for_player_choice")
+		online_status.text = _t("waiting_for_player_choice")
+		return
+
+	online_match_starting = true
+	joined_room_waiting_for_character = false
+	var host_character := String(settings.get("selected_character"))
+	var steam_manager := _steam_manager()
+	if steam_manager and steam_manager.has_method("set_lobby_match_state"):
+		steam_manager.set_lobby_match_state("playing", host_character, remote_client_character)
+	character_status.text = _t("both_ready")
+	online_status.text = _t("both_ready")
+	online_start_button.visible = false
+	_update_room_buttons()
+	_sync_online_character_state()
+	rpc("_start_online_match")
+	get_tree().change_scene_to_file(MAIN_SCENE)
 
 
 func _join_online_game() -> void:
@@ -510,42 +591,94 @@ func _join_online_game() -> void:
 		online_status.text = _t("hosting_device")
 		return
 
-	var address := _get_entered_online_address()
-	if String(address["ip"]).is_empty():
-		online_status.text = _t("invalid_address")
+	if not _steam_ready():
+		online_status.text = _steam_not_ready_message()
 		return
 
+	if not steam_lobbies.is_empty():
+		var selected_items := lobby_select.get_selected_items()
+		var selected_index := int(selected_items[0]) if not selected_items.is_empty() else 0
+		if selected_index >= steam_lobbies.size():
+			selected_index = 0
+		var lobby_id := int(steam_lobbies[selected_index].get("id", 0))
+		_prepare_join_selected_lobby(steam_lobbies[selected_index])
+		_steam_manager().join_lobby(lobby_id)
+		online_status.text = _t("joining")
+		return
+
+	online_status.text = _t("steam_no_lobby")
+	_request_steam_lobbies(true)
+
+
+func _prepare_join_selected_lobby(lobby_data: Dictionary) -> void:
 	_clear_peer()
-	host_button.disabled = true
-	join_button.disabled = true
-	var peer := ENetMultiplayerPeer.new()
-	var error := peer.create_client(address["ip"], address["port"])
-	if error != OK:
-		online_status.text = _t("join_failed") % _error_message(error)
-		_update_room_buttons()
-		return
-
+	pending_join_lobby = lobby_data.duplicate(true)
 	var settings := _settings()
 	if settings:
 		settings.set("online_mode", true)
 		settings.set("online_role", "client")
-		settings.set("character_chosen", false)
+		if _is_pending_join_lobby_playing():
+			var saved_client_character := String(pending_join_lobby.get("client_character", "")).strip_edges()
+			var saved_host_character := String(pending_join_lobby.get("host_character", "")).strip_edges()
+			if saved_client_character in ["player", "golem"]:
+				settings.set("selected_character", saved_client_character)
+			settings.set("character_chosen", true)
+			if saved_host_character in ["player", "golem"]:
+				settings.set("online_remote_character", saved_host_character)
+		else:
+			settings.set("character_chosen", false)
 		if settings.has_method("reset_online_rounds"):
 			settings.reset_online_rounds()
-	multiplayer.multiplayer_peer = peer
 	remote_client_character = "golem"
 	remote_client_character_chosen = false
 	other_player_character = ""
 	other_player_character_chosen = false
-	online_status.text = _t("joining")
+	online_match_starting = false
+	steam_lobbies.clear()
+	_update_lobby_select()
+
+
+func _finish_steam_join_lobby(lobby_id: int) -> void:
+	if not _is_joining_room():
+		return
+	var peer := _steam_manager().create_client_peer_for_lobby(lobby_id) as MultiplayerPeer
+	if not peer:
+		online_status.text = _t("steam_transport_missing")
+		_update_room_buttons()
+		return
+	multiplayer.multiplayer_peer = peer
+	if _is_pending_join_lobby_playing():
+		online_status.text = "Rejoining match..."
+		get_tree().change_scene_to_file(MAIN_SCENE)
+	else:
+		online_status.text = _t("joining")
+
+
+func _on_steam_lobby_list_updated(lobbies: Array) -> void:
+	steam_lobby_searching = false
+	if _is_hosting_room() or (_is_joining_room() and multiplayer.multiplayer_peer != null):
+		return
+	steam_lobbies = lobbies.duplicate(true)
+	_update_lobby_select()
+	if lobbies.is_empty():
+		online_status.text = _t("steam_no_lobby")
+		_update_room_buttons()
+		return
+	online_status.text = _t("steam_lobby_count")
+	_update_room_buttons()
 
 
 func _on_connected_to_server() -> void:
 	var settings := _settings()
 	if settings and settings.get("online_mode") == true and String(settings.get("online_role")) == "client":
+		if _is_pending_join_lobby_playing():
+			online_status.text = "Rejoining match..."
+			get_tree().change_scene_to_file(MAIN_SCENE)
+			return
 		joined_room_waiting_for_character = true
 		other_player_character = ""
 		other_player_character_chosen = false
+		online_match_starting = false
 		settings.set("character_chosen", false)
 		character_status.text = _t("connected_choose")
 		_update_character_cards()
@@ -559,6 +692,7 @@ func _on_peer_connected(peer_id: int) -> void:
 		remote_client_character_chosen = false
 		other_player_character = ""
 		other_player_character_chosen = false
+		online_match_starting = false
 		online_status.text = _t("player_connected")
 		_update_room_buttons()
 		_sync_online_character_state.call_deferred()
@@ -571,6 +705,7 @@ func _on_peer_disconnected(_peer_id: int) -> void:
 		remote_client_character_chosen = false
 		other_player_character = ""
 		other_player_character_chosen = false
+		online_match_starting = false
 		online_status.text = _t("room_waiting")
 		_update_character_cards()
 		_update_room_buttons()
@@ -583,6 +718,7 @@ func _on_connection_failed() -> void:
 		settings.call("reset_online")
 	other_player_character = ""
 	other_player_character_chosen = false
+	online_match_starting = false
 	_clear_peer()
 	online_start_button.visible = false
 	_update_room_buttons()
@@ -600,7 +736,11 @@ func _back_from_online() -> void:
 	remote_client_character_chosen = false
 	other_player_character = ""
 	other_player_character_chosen = false
+	online_match_starting = false
+	pending_join_lobby.clear()
 	online_start_button.visible = false
+	steam_lobbies.clear()
+	_update_lobby_select()
 	online_status.text = _t("online_status_default")
 	_update_room_buttons()
 	_show_page(home_page)
@@ -611,15 +751,93 @@ func _update_online_room_text() -> void:
 	_update_room_buttons()
 
 
+func _request_steam_lobbies(show_search_text: bool) -> void:
+	if steam_lobby_searching or not _steam_ready() or _is_hosting_room() or _is_joining_room():
+		return
+	steam_lobby_searching = true
+	if show_search_text:
+		online_status.text = _t("steam_finding_lobby")
+	_steam_manager().request_lobbies()
+
+
 func _clear_peer() -> void:
+	var steam_manager := _steam_manager()
+	if steam_manager and steam_manager.has_method("leave_lobby"):
+		steam_manager.leave_lobby()
 	var peer := multiplayer.multiplayer_peer
-	if peer:
+	if peer and peer.has_method("close"):
 		peer.close()
 	multiplayer.multiplayer_peer = null
 
 
 func _settings() -> Node:
 	return get_node_or_null("/root/GameSettings")
+
+
+func _update_lobby_select() -> void:
+	if not lobby_select:
+		return
+	lobby_select.clear()
+	if steam_lobbies.is_empty():
+		lobby_select.visible = false
+		lobby_select.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		return
+	lobby_select.visible = true
+	lobby_select.mouse_filter = Control.MOUSE_FILTER_STOP
+	for index in steam_lobbies.size():
+		var lobby: Dictionary = steam_lobbies[index]
+		var lobby_name := String(lobby.get("name", "Silent City"))
+		if String(lobby.get("state", "waiting")) == "playing":
+			lobby_name = "%s - Playing" % lobby_name
+		lobby_select.add_item(lobby_name)
+	lobby_select.select(0)
+
+
+func _is_pending_join_lobby_playing() -> bool:
+	return String(pending_join_lobby.get("state", "waiting")) == "playing"
+
+
+func _steam_manager() -> Node:
+	return get_node_or_null("/root/SteamManager")
+
+
+func _room_name() -> String:
+	var room_name := room_name_input.text.strip_edges()
+	return room_name if not room_name.is_empty() else "Silent City"
+
+
+func _steam_ready() -> bool:
+	var steam_manager := _steam_manager()
+	return steam_manager and steam_manager.has_method("is_ready") and steam_manager.is_ready()
+
+
+func _steam_not_ready_message() -> String:
+	var steam_manager := _steam_manager()
+	if steam_manager and steam_manager.has_method("get_last_error"):
+		var message := String(steam_manager.get_last_error())
+		if not message.is_empty():
+			return message
+	return _t("steam_not_ready")
+
+
+func _connect_steam_manager() -> void:
+	var steam_manager := _steam_manager()
+	if not steam_manager:
+		return
+	if steam_manager.has_signal("lobby_created") and not steam_manager.lobby_created.is_connected(_finish_steam_host_lobby):
+		steam_manager.lobby_created.connect(_finish_steam_host_lobby)
+	if steam_manager.has_signal("lobby_joined") and not steam_manager.lobby_joined.is_connected(_finish_steam_join_lobby):
+		steam_manager.lobby_joined.connect(_finish_steam_join_lobby)
+	if steam_manager.has_signal("lobby_list_updated") and not steam_manager.lobby_list_updated.is_connected(_on_steam_lobby_list_updated):
+		steam_manager.lobby_list_updated.connect(_on_steam_lobby_list_updated)
+	if steam_manager.has_signal("steam_failed") and not steam_manager.steam_failed.is_connected(_on_steam_failed):
+		steam_manager.steam_failed.connect(_on_steam_failed)
+
+
+func _on_steam_failed(message: String) -> void:
+	if online_page and online_page.visible:
+		online_status.text = message
+	_update_room_buttons()
 
 
 func _get_entered_online_address() -> Dictionary:
@@ -639,12 +857,12 @@ func _get_entered_online_address() -> Dictionary:
 
 func _is_hosting_room() -> bool:
 	var settings := _settings()
-	return settings and settings.get("online_mode") == true and String(settings.get("online_role")) == "host"
+	return settings and settings.get("online_mode") == true and String(settings.get("online_role")) == "host" and multiplayer.has_multiplayer_peer()
 
 
 func _is_joining_room() -> bool:
 	var settings := _settings()
-	return settings and settings.get("online_mode") == true and String(settings.get("online_role")) == "client"
+	return settings and settings.get("online_mode") == true and String(settings.get("online_role")) == "client" and multiplayer.has_multiplayer_peer()
 
 
 func _update_room_buttons() -> void:
@@ -653,12 +871,12 @@ func _update_room_buttons() -> void:
 
 	var hosting := _is_hosting_room()
 	var joining := _is_joining_room()
-	host_button.disabled = hosting or joining
-	join_button.disabled = hosting or joining
-	online_start_button.visible = hosting
-	if hosting:
-		var settings := _settings()
-		online_start_button.disabled = not settings or settings.get("character_chosen") != true or multiplayer.get_peers().is_empty() or not remote_client_character_chosen
+	var has_peer := multiplayer.multiplayer_peer != null
+	host_button.disabled = joining
+	host_button.text = _t("return_to_match") if hosting else _t("host_room")
+	join_button.disabled = hosting or steam_lobbies.is_empty() or (joining and has_peer)
+	online_start_button.visible = false
+	online_start_button.disabled = true
 
 
 func _lock_online_character_selection() -> void:
@@ -742,6 +960,7 @@ func _client_online_character_selected(character: String) -> void:
 	_update_character_cards()
 	_update_room_buttons()
 	_sync_online_character_state()
+	_try_auto_start_online_match()
 
 
 func _sync_online_character_state() -> void:
@@ -779,6 +998,7 @@ func _start_online_match() -> void:
 	if settings:
 		settings.set("character_chosen", true)
 	joined_room_waiting_for_character = false
+	online_match_starting = true
 	get_tree().change_scene_to_file(MAIN_SCENE)
 
 

@@ -138,12 +138,20 @@ func _go_to_main_menu() -> void:
 
 func _exit_online_match() -> void:
 	get_tree().paused = false
+	var settings := get_node_or_null("/root/GameSettings")
+	var match_is_finished: bool = settings != null and settings.has_method("is_online_match_over") and settings.is_online_match_over()
+	var online_manager := get_tree().get_first_node_in_group("OnlineManager")
+	if online_manager and online_manager.has_method("close_online_session"):
+		online_manager.close_online_session(match_is_finished)
+		return
+	var steam_manager := get_node_or_null("/root/SteamManager")
+	if steam_manager and steam_manager.has_method("reset_session"):
+		steam_manager.reset_session()
 	var peer := multiplayer.multiplayer_peer
-	if peer:
+	if peer and peer.has_method("close"):
 		peer.close()
 	multiplayer.multiplayer_peer = null
 
-	var settings := get_node_or_null("/root/GameSettings")
 	if settings:
 		settings.call("reset_online")
 

@@ -1,6 +1,6 @@
-﻿[gd_scene format=3 uid="uid://ce3gmaci87xm5"]
+[gd_scene format=3 uid="uid://ce3gmaci87xm5"]
 
-[ext_resource type="PackedScene" uid="uid://brllxfyknsnb4" path="res://Scenes/main.tscn" id="1_main"]
+[ext_resource type="PackedScene" uid="uid://cmlvqcwrts1x6" path="res://Scenes/main.tscn" id="1_main"]
 [ext_resource type="Script" uid="uid://dqs4dr8muvvca" path="res://Scripts/medium_level.gd" id="2_builder"]
 [ext_resource type="Texture2D" uid="uid://bdb2bsoxwa7vo" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Spike.png" id="5_spike"]
 [ext_resource type="Texture2D" uid="uid://bndp1c68msn1l" path="res://Sprites/Objects/Crate.png" id="6_crate"]

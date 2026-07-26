@@ -18,11 +18,16 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameSettings="*res://Scripts/game_settings.gd"
+SteamManager="*res://Scripts/steam_manager.gd"
 
 [display]
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godotsteam/plugin.cfg")
 
 [input]
 
