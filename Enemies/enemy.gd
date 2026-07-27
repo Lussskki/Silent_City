@@ -8,6 +8,9 @@ extends CharacterBody2D
 @export var attack_damage: int = 10
 @export var attack_cooldown := 1.0
 @export var hurt_cooldown := 0.35
+@export var patrol_min_x := 0.0
+@export var patrol_max_x := 0.0
+@export var sight_vertical_tolerance := 120.0
 @export var random_character := true
 @export var character_name := ""
 
@@ -17,10 +20,11 @@ extends CharacterBody2D
 const CHARACTER_NAMES := [
 	"Adventurer",
 	"Female",
-	"Player",
 	"Soldier",
 	"Zombie"
 ]
+
+const SPRITE_GROUND_Y := 0.0
 
 var life: int = 100
 var player: Node2D
@@ -35,11 +39,15 @@ var hurt_texture: Texture2D
 var flip_direction := false
 var network_sync_timer := 0.0
 var current_pose := "idle"
+var patrol_direction := 1.0
 
 func _ready() -> void:
 	add_to_group("Enemy")
 	add_to_group("enemy")
 	life = max_life
+	if is_zero_approx(patrol_min_x) and is_zero_approx(patrol_max_x):
+		patrol_min_x = global_position.x - 120.0
+		patrol_max_x = global_position.x + 120.0
 	_setup_random_character()
 	_find_player()
 	_ignore_player_collisions()
@@ -78,20 +86,15 @@ func _physics_process(delta: float) -> void:
 		var direction: float = sign(player_position.x - enemy_position.x)
 		var player_in_attack_range := _is_player_in_attack_range()
 
-		if distance <= chase_distance and not player_in_attack_range:
-			velocity.x = direction * move_speed
-			flip_direction = direction < 0
-			sprite.flip_h = flip_direction
-			_show_walk_pose()
+		if _can_see_player(distance, player_position) and not player_in_attack_range:
+			_walk(direction, move_speed, delta)
 		else:
-			velocity.x = move_toward(velocity.x, 0.0, move_speed)
-			_show_idle_pose()
+			_patrol(delta)
 
 		if player_in_attack_range:
 			_try_attack_player()
 	else:
-		velocity.x = move_toward(velocity.x, 0.0, move_speed)
-		_show_idle_pose()
+		_patrol(delta)
 
 	move_and_slide()
 	_send_network_state(delta)
@@ -212,6 +215,40 @@ func _is_player_in_attack_range() -> bool:
 	return abs(hit_offset.x) <= attack_distance and abs(hit_offset.y) <= attack_vertical_tolerance
 
 
+func _can_see_player(distance: float, player_position: Vector2) -> bool:
+	if distance > chase_distance:
+		return false
+	if abs(player_position.y - get_hit_position().y) > sight_vertical_tolerance:
+		return false
+	return player_position.x >= patrol_min_x - 80.0 and player_position.x <= patrol_max_x + 80.0
+
+
+func _patrol(delta: float) -> void:
+	_walk(patrol_direction, move_speed * 0.55, delta)
+
+
+func _walk(direction: float, speed: float, delta: float) -> void:
+	if is_zero_approx(direction):
+		velocity.x = move_toward(velocity.x, 0.0, speed)
+		_show_idle_pose()
+		return
+
+	var next_x := global_position.x + direction * speed * delta
+	if next_x <= patrol_min_x:
+		direction = 1.0
+		patrol_direction = 1.0
+	elif next_x >= patrol_max_x:
+		direction = -1.0
+		patrol_direction = -1.0
+	else:
+		patrol_direction = direction
+
+	velocity.x = direction * speed
+	flip_direction = direction < 0
+	sprite.flip_h = flip_direction
+	_show_walk_pose()
+
+
 func _update_health_bar() -> void:
 	health_bar.max_value = max_life
 	health_bar.value = life
@@ -248,6 +285,7 @@ func _setup_random_character() -> void:
 
 	if idle_texture:
 		sprite.texture = idle_texture
+		_align_sprite_to_ground()
 
 
 func _show_idle_pose() -> void:
@@ -256,6 +294,7 @@ func _show_idle_pose() -> void:
 	current_pose = "idle"
 	if idle_texture and sprite.texture != idle_texture:
 		sprite.texture = idle_texture
+		_align_sprite_to_ground()
 
 
 func _show_walk_pose() -> void:
@@ -268,18 +307,29 @@ func _show_walk_pose() -> void:
 	var index := int(Time.get_ticks_msec() / 220) % walk_textures.size()
 	if walk_textures[index]:
 		sprite.texture = walk_textures[index]
+		_align_sprite_to_ground()
 
 
 func _show_attack_pose() -> void:
 	current_pose = "attack"
 	if attack_texture:
 		sprite.texture = attack_texture
+		_align_sprite_to_ground()
 
 
 func _show_hurt_pose() -> void:
 	current_pose = "hurt"
 	if hurt_texture:
 		sprite.texture = hurt_texture
+		_align_sprite_to_ground()
+
+
+func _align_sprite_to_ground() -> void:
+	if not sprite.texture:
+		return
+
+	var texture_height := float(sprite.texture.get_height())
+	sprite.position.y = SPRITE_GROUND_Y - (texture_height * abs(sprite.scale.y) * 0.5)
 
 
 func _send_network_state(delta: float) -> void:

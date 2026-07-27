@@ -16,6 +16,7 @@ var match_exit_button: Button
 
 
 func _ready() -> void:
+	_normalize_pause_menu_layout()
 	menu_button.pressed.connect(_open_pause_menu)
 	return_button.pressed.connect(_return_to_game)
 	main_menu_button.pressed.connect(_go_to_main_menu)
@@ -35,6 +36,56 @@ func _process(_delta: float) -> void:
 	var local_player := get_tree().get_first_node_in_group("LocalPlayer")
 	if local_player and local_player != player:
 		_connect_local_player()
+
+
+func _normalize_pause_menu_layout() -> void:
+	layer = 100
+	menu_button.z_index = 100
+	menu_button.anchor_left = 1.0
+	menu_button.anchor_top = 0.0
+	menu_button.anchor_right = 1.0
+	menu_button.anchor_bottom = 0.0
+	menu_button.offset_left = -52.0
+	menu_button.offset_top = 12.0
+	menu_button.offset_right = -12.0
+	menu_button.offset_bottom = 44.0
+
+	pause_menu.z_index = 101
+	pause_menu.anchor_left = 0.5
+	pause_menu.anchor_top = 0.5
+	pause_menu.anchor_right = 0.5
+	pause_menu.anchor_bottom = 0.5
+	pause_menu.offset_left = -170.0
+	pause_menu.offset_top = -105.0
+	pause_menu.offset_right = 170.0
+	pause_menu.offset_bottom = 105.0
+
+	var panel_style := StyleBoxFlat.new()
+	panel_style.bg_color = Color(0.02, 0.025, 0.03, 0.98)
+	panel_style.border_width_left = 2
+	panel_style.border_width_top = 2
+	panel_style.border_width_right = 2
+	panel_style.border_width_bottom = 2
+	panel_style.border_color = Color(0.34, 0.39, 0.43, 1.0)
+	panel_style.corner_radius_top_left = 4
+	panel_style.corner_radius_top_right = 4
+	panel_style.corner_radius_bottom_right = 4
+	panel_style.corner_radius_bottom_left = 4
+	pause_menu.add_theme_stylebox_override("panel", panel_style)
+
+	var box := pause_menu.get_node_or_null("Box") as VBoxContainer
+	if not box:
+		return
+	box.anchor_left = 0.0
+	box.anchor_top = 0.0
+	box.anchor_right = 1.0
+	box.anchor_bottom = 1.0
+	box.offset_left = 18.0
+	box.offset_top = 16.0
+	box.offset_right = -18.0
+	box.offset_bottom = -16.0
+	box.alignment = BoxContainer.ALIGNMENT_CENTER
+	box.add_theme_constant_override("separation", 12)
 
 
 func _connect_local_player() -> void:

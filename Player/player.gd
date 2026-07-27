@@ -1,4 +1,4 @@
-﻿extends CharacterBody2D
+extends CharacterBody2D
 
 const WALK_SPEED = 250.0
 const RUN_SPEED = 450.0
@@ -9,8 +9,9 @@ const SLIDE_ANGLE = 15.0
 const NETWORK_SYNC_INTERVAL = 0.033
 const REMOTE_POSITION_SMOOTHING = 14.0
 const REMOTE_EXTRAPOLATION_LIMIT = 0.12
-const DEFAULT_SPRITE_OFFSET := Vector2(0, -32)
+const DEFAULT_SPRITE_OFFSET := Vector2(0, -24)
 const GOLEM_SPRITE_OFFSET := Vector2(0, -24)
+const HURT_ANIMATION_TIME := 0.28
 
 
 signal life_changed(life: int, max_life: int)
@@ -52,6 +53,7 @@ var hit_audio: AudioStreamPlayer2D
 var landing_audio: AudioStreamPlayer2D
 var run_sound_timer := 0.0
 var attack_hit_timer := 0.0
+var hurt_animation_timer := 0.0
 var network_sync_timer := 0.0
 var spawn_position := Vector2.ZERO
 var jumps_left := MAX_JUMPS
@@ -182,6 +184,9 @@ func _physics_process(delta):
 	_send_network_state(delta)
 	_process_attack_hits(delta)
 
+	if hurt_animation_timer > 0.0:
+		hurt_animation_timer = max(hurt_animation_timer - delta, 0.0)
+		return
 	
 	
 
@@ -341,11 +346,8 @@ func take_damage(amount: int) -> void:
 		_die()
 		return
 
+	_play_hurt_feedback()
 	_send_network_state(0.0, true)
-	modulate = Color(1.0, 0.55, 0.55)
-	await get_tree().create_timer(0.12).timeout
-	if not dead:
-		modulate = Color.WHITE
 
 
 @rpc("any_peer", "reliable")
@@ -476,8 +478,11 @@ func _apply_remote_network_state(remote_position: Vector2, remote_velocity: Vect
 			sprite.stop()
 			modulate = Color(0.45, 0.45, 0.45, 0.85)
 	else:
-		modulate = Color.WHITE
-		_safe_play(remote_animation)
+		if remote_animation == "Hurt":
+			_play_hurt_feedback()
+		else:
+			modulate = Color.WHITE
+			_safe_play(remote_animation)
 
 
 func _update_remote_network_motion(delta: float) -> void:
@@ -505,6 +510,7 @@ func _load_dynamic_sprite_frames() -> void:
 		"Slashing In Air": "Slashing in The Air",
 		"Run Slashing": "Run Slashing",
 		"Kicking": "Kicking",
+		"Hurt": "Hurt",
 		"Throwing": "Throwing",
 		"Throwing In Air": "Throwing in The Air",
 		"Dying": "Dying",
@@ -544,6 +550,7 @@ func _apply_selected_character() -> bool:
 	var golem_frames := load("res://Resources/golem_sprite_frames.tres") as SpriteFrames
 	if golem_frames:
 		sprite.sprite_frames = golem_frames
+		_add_animation_from_folder(sprite.sprite_frames, "Hurt", "res://Characters/Golem/PNG/PNG Sequences/Hurt", 12.0, false)
 		sprite.position = GOLEM_SPRITE_OFFSET
 		sprite.play("Idle")
 		_apply_stone_golem_sounds()
@@ -590,6 +597,41 @@ func _remember_default_player_frames() -> void:
 	var settings := get_node_or_null("/root/GameSettings")
 	if settings and settings.get("player_sprite_frames") == null:
 		settings.set("player_sprite_frames", sprite.sprite_frames)
+
+
+func _play_hurt_feedback() -> void:
+	attacking = false
+	is_sliding = false
+	attack_hit_timer = 0.0
+	hit_targets.clear()
+	hurt_animation_timer = HURT_ANIMATION_TIME
+	if _has_animation("Hurt"):
+		_safe_play("Hurt")
+	modulate = Color(1.0, 0.45, 0.45)
+	_clear_hurt_flash_later()
+
+
+func _clear_hurt_flash_later() -> void:
+	await get_tree().create_timer(0.14).timeout
+	if not dead:
+		modulate = Color.WHITE
+
+
+func _add_animation_from_folder(frames: SpriteFrames, animation_name: String, folder_path: String, speed: float, loop: bool) -> void:
+	if not frames or frames.has_animation(animation_name):
+		return
+
+	var image_files := _get_png_files(folder_path)
+	if image_files.is_empty():
+		return
+
+	frames.add_animation(animation_name)
+	frames.set_animation_speed(animation_name, speed)
+	frames.set_animation_loop(animation_name, loop)
+	for file_name in image_files:
+		var texture := load("%s/%s" % [folder_path, file_name]) as Texture2D
+		if texture:
+			frames.add_frame(animation_name, texture)
 
 
 func _get_png_files(folder_path: String) -> Array[String]:
@@ -669,11 +711,15 @@ func _try_damage_target(target: Node, damage: int) -> bool:
 		return false
 
 	var dealt_damage := false
-	var target_peer_id := int(target.get("network_player_id"))
+	var raw_target_peer_id = target.get("network_player_id")
+	var target_peer_id := 0
+	if raw_target_peer_id != null:
+		target_peer_id = int(raw_target_peer_id)
 	var api := get_multiplayer()
 	if (
 		api
 		and api.has_multiplayer_peer()
+		and target_peer_id > 0
 		and target_peer_id != api.get_unique_id()
 		and target_peer_id in api.get_peers()
 		and target.has_method("network_take_damage")
@@ -770,5 +816,3 @@ func _is_online_match_over() -> bool:
 
 func _online_round_winner_name() -> String:
 	return "Golem 2" if network_player_id == 1 else "Golem 1"
-
-

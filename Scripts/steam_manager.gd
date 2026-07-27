@@ -12,6 +12,7 @@ const LOBBY_COMPARISON_EQUAL := 0
 const LOBBY_DISTANCE_FILTER_WORLDWIDE := 3
 const MAX_LOBBY_MEMBERS := 2
 const STEAM_VIRTUAL_PORT := 0
+const GAME_LOBBY_KEY := "silent_city"
 
 var steam: Object
 var initialized := false
@@ -19,6 +20,7 @@ var last_error := ""
 var current_lobby_id: int = 0
 var available_lobbies: Array = []
 var pending_lobby_name := "Silent City"
+var wide_lobby_search := false
 
 
 func _ready() -> void:
@@ -63,12 +65,16 @@ func create_lobby(lobby_name: String = "Silent City") -> void:
 	steam.call("createLobby", LOBBY_TYPE_PUBLIC, MAX_LOBBY_MEMBERS)
 
 
-func request_lobbies() -> void:
+func request_lobbies(wide_search: bool = false) -> void:
 	if not initialized:
 		steam_failed.emit("Steam is not ready.")
 		return
-	steam.call("addRequestLobbyListStringFilter", "game", "silent_city", LOBBY_COMPARISON_EQUAL)
+	wide_lobby_search = wide_search
+	if not wide_lobby_search:
+		steam.call("addRequestLobbyListStringFilter", "game", GAME_LOBBY_KEY, LOBBY_COMPARISON_EQUAL)
 	steam.call("addRequestLobbyListDistanceFilter", LOBBY_DISTANCE_FILTER_WORLDWIDE)
+	if steam.has_method("addRequestLobbyListResultCountFilter"):
+		steam.call("addRequestLobbyListResultCountFilter", 250)
 	steam.call("requestLobbyList")
 
 
@@ -192,10 +198,12 @@ func _on_lobby_created(connect_result: int, lobby_id: int) -> void:
 		return
 	current_lobby_id = lobby_id
 	steam.call("setLobbyData", current_lobby_id, "name", pending_lobby_name)
-	steam.call("setLobbyData", current_lobby_id, "game", "silent_city")
+	steam.call("setLobbyData", current_lobby_id, "game", GAME_LOBBY_KEY)
 	steam.call("setLobbyData", current_lobby_id, "state", "waiting")
 	steam.call("setLobbyData", current_lobby_id, "host_character", "")
 	steam.call("setLobbyData", current_lobby_id, "client_character", "")
+	if steam.has_method("setLobbyJoinable"):
+		steam.call("setLobbyJoinable", current_lobby_id, true)
 	lobby_created.emit(current_lobby_id)
 
 
@@ -226,13 +234,17 @@ func _add_lobby(lobby_id: int) -> void:
 	var lobby_state := "waiting"
 	var host_character := ""
 	var client_character := ""
+	var game_key := ""
 	if steam:
 		var name = steam.call("getLobbyData", lobby_id, "name")
 		if String(name).strip_edges() != "":
 			lobby_name = String(name)
+		game_key = String(steam.call("getLobbyData", lobby_id, "game"))
 		lobby_state = String(steam.call("getLobbyData", lobby_id, "state"))
 		host_character = String(steam.call("getLobbyData", lobby_id, "host_character"))
 		client_character = String(steam.call("getLobbyData", lobby_id, "client_character"))
+	if game_key != GAME_LOBBY_KEY:
+		return
 	if lobby_state.strip_edges().is_empty():
 		lobby_state = "waiting"
 	if lobby_state == "closed":

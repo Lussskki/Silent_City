@@ -12,20 +12,16 @@ extends Node2D
 	Rect2(760, 1000, 520, 1),
 	Rect2(-1120, -170, 360, 1)
 ]
+@export var edge_padding := 45.0
 
 const CHARACTER_NAMES := [
 	"Adventurer",
 	"Female",
-	"Player",
 	"Soldier",
 	"Zombie"
 ]
 
 func _ready() -> void:
-	var settings := get_node_or_null("/root/GameSettings")
-	if settings and settings.get("lan_mode") == true:
-		return
-
 	_spawn_enemies()
 
 
@@ -41,14 +37,22 @@ func _spawn_enemies() -> void:
 	var amount: int = min(spawn_count, spawn_areas.size(), CHARACTER_NAMES.size())
 	for index in amount:
 		var area: Rect2 = spawn_areas[area_indices[index]]
+		var left_x := area.position.x + edge_padding
+		var right_x := area.end.x - edge_padding
+		if right_x <= left_x:
+			left_x = area.position.x
+			right_x = area.end.x
+
 		var enemy := enemy_scene.instantiate() as Node2D
 		enemy.name = "Enemy_%d" % index
 		enemy.position = Vector2(
-			rng.randf_range(area.position.x, area.end.x),
+			rng.randf_range(left_x, right_x),
 			rng.randf_range(area.position.y, area.end.y)
 		)
 		enemy.set("random_character", false)
 		enemy.set("character_name", CHARACTER_NAMES[character_indices[index]])
+		enemy.set("patrol_min_x", left_x)
+		enemy.set("patrol_max_x", right_x)
 		add_child(enemy)
 
 

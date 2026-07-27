@@ -35,6 +35,8 @@
 [ext_resource type="Script" uid="uid://f3kytvyw6lfm" path="res://Scripts/player_hud.gd" id="40_player_hud"]
 [ext_resource type="Script" path="res://Scripts/online_manager.gd" id="41_online_manager"]
 [ext_resource type="PackedScene" uid="uid://ktuf83rha8ye" path="res://Scenes/GolemPlayer.tscn" id="42_golem_player"]
+[ext_resource type="PackedScene" path="res://Enemies/enemy.tscn" id="43_enemy_scene"]
+[ext_resource type="Script" path="res://Enemies/enemy_spawner.gd" id="44_enemy_spawner"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_start"]
 size = Vector2(565, 64)
@@ -491,3 +493,10 @@ text = "Main Menu"
 [node name="OnlineManager" type="CanvasLayer" parent="."]
 script = ExtResource("41_online_manager")
 golem_player_scene = ExtResource("42_golem_player")
+
+[node name="EnemySpawner" type="Node2D" parent="."]
+script = ExtResource("44_enemy_spawner")
+enemy_scene = ExtResource("43_enemy_scene")
+spawn_count = 3
+spawn_seed = 1201
+spawn_areas = Array[Rect2]([Rect2(760, 381, 270, 1), Rect2(1270, 477, 280, 1), Rect2(1840, 445, 410, 1), Rect2(3090, 445, 350, 1)])

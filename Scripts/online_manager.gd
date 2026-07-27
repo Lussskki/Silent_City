@@ -4,6 +4,11 @@ const PORT := 8910
 const MAX_CLIENTS := 1
 const SECOND_PLAYER_NAME := "SecondPlayer"
 const SECOND_PLAYER_SPAWN_OFFSET := Vector2(-120, 0)
+const SECOND_PLAYER_SPAWNS_BY_SCENE := {
+	"res://Scenes/main.tscn": Vector2(3264, 404),
+	"res://Scenes/MainMedium.tscn": Vector2(3008, 410),
+	"res://Scenes/MainHard.tscn": Vector2(3282, 195),
+}
 const ASH_GOLEM_FRAMES_ROOT := "res://Player/player_assets/PNG Sequences"
 const ASH_GOLEM_ANIMATION_DIRS := {
 	"Idle": "Idle",
@@ -214,6 +219,7 @@ func _spawn_golem_player(peer_id: int, controlled_locally: bool, character: Stri
 	_set_player_active(player, true)
 	spawned_players[SECOND_PLAYER_NAME] = player
 	_apply_character_to_player(player, character)
+	_face_player_east(player)
 
 	if player.has_method("configure_online_player"):
 		player.configure_online_player(peer_id, controlled_locally)
@@ -274,6 +280,12 @@ func _apply_character_to_player(player: Node2D, character: String) -> void:
 		sprite.position = Vector2(0, -32)
 		sprite.play("Idle")
 		return
+
+
+func _face_player_east(player: Node2D) -> void:
+	var sprite := player.get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
+	if sprite:
+		sprite.flip_h = false
 
 
 func _apply_stone_golem_sounds(player: Node2D) -> void:
@@ -350,7 +362,11 @@ func _cache_scene_spawns() -> void:
 		first_player_spawn = (main_player as Node2D).global_position
 	else:
 		first_player_spawn = Vector2(300, 400)
-	second_player_spawn = first_player_spawn + SECOND_PLAYER_SPAWN_OFFSET
+
+	var scene_path := ""
+	if get_tree().current_scene:
+		scene_path = get_tree().current_scene.scene_file_path
+	second_player_spawn = SECOND_PLAYER_SPAWNS_BY_SCENE.get(scene_path, first_player_spawn + SECOND_PLAYER_SPAWN_OFFSET)
 
 
 func _reset_steam_session() -> void:

@@ -470,6 +470,11 @@ position = Vector2(3420, 168)
 scale = Vector2(-1.15, 1.15)
 texture = ExtResource("9_tree")
 
+[node name="EnemySpawner" parent="." index="10" unique_id=1209425924]
+spawn_count = 2
+spawn_seed = 3201
+spawn_areas = Array[Rect2]([Rect2(1860, 227, 245, 1), Rect2(3160, 282, 245, 1)])
+
 [node name="MenuButton" parent="PlayerHUD" parent_id_path=PackedInt32Array(1158069440) index="3" unique_id=96562753]
 offset_left = -40.0
 offset_top = 0.0

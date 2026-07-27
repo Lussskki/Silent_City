@@ -176,8 +176,10 @@ var other_player_character_chosen := false
 var steam_lobbies: Array = []
 var steam_lobby_refresh_timer := 0.0
 var steam_lobby_searching := false
+var steam_lobby_wide_searching := false
 var online_match_starting := false
 var pending_join_lobby: Dictionary = {}
+var level_select_starts_game := false
 
 
 func _ready() -> void:
@@ -197,11 +199,12 @@ func _ready() -> void:
 	_make_character_card_tappable(golem_card, "golem")
 	player_select_button.visible = true
 	golem_select_button.visible = true
-	choose_start_button.pressed.connect(_start_game)
+	choose_start_button.pressed.connect(_open_level_select_from_character)
 	choose_online_button.pressed.connect(_open_online_page)
 	choose_back_button.pressed.connect(_back_from_character_page)
 	host_button.pressed.connect(_host_online_game)
 	join_button.pressed.connect(_join_online_game)
+	lobby_select.item_activated.connect(func(_index: int): _join_online_game())
 	online_start_button.pressed.connect(_start_online_host_game)
 	online_tutorial_next.pressed.connect(_advance_online_tutorial)
 	online_tutorial_skip.pressed.connect(_finish_online_tutorial)
@@ -315,7 +318,8 @@ func _open_online_page() -> void:
 
 
 func _open_start_flow() -> void:
-	_show_page(level_page)
+	level_select_starts_game = false
+	_show_page(choose_page)
 
 
 func _select_level(level: String) -> void:
@@ -323,6 +327,9 @@ func _select_level(level: String) -> void:
 	if settings:
 		settings.set("selected_level", level)
 		settings.set("level_chosen", true)
+	if level_select_starts_game:
+		_start_game()
+		return
 	_show_page(choose_page)
 
 
@@ -374,6 +381,19 @@ func _back_from_character_page() -> void:
 		return
 
 	_show_page(home_page)
+
+
+func _open_level_select_from_character() -> void:
+	var settings := _settings()
+	if not settings or settings.get("character_chosen") != true:
+		character_status.text = _t("choose_first")
+		return
+	if settings.get("online_mode") == true:
+		_start_game()
+		return
+	settings.set("level_chosen", false)
+	level_select_starts_game = true
+	_show_page(level_page)
 
 
 func _select_character(character: String) -> void:
@@ -468,6 +488,10 @@ func _start_game() -> void:
 	var settings := _settings()
 	if not settings or settings.get("character_chosen") != true:
 		character_status.text = _t("choose_first")
+		return
+
+	if settings.get("level_chosen") != true:
+		_open_level_select_from_character()
 		return
 
 	if settings.get("online_mode") == true:
@@ -658,6 +682,16 @@ func _on_steam_lobby_list_updated(lobbies: Array) -> void:
 	steam_lobby_searching = false
 	if _is_hosting_room() or (_is_joining_room() and multiplayer.multiplayer_peer != null):
 		return
+	if lobbies.is_empty() and not steam_lobby_wide_searching:
+		online_status.text = "Still searching Steam rooms..."
+		_request_steam_lobbies(false, true)
+		return
+	steam_lobby_wide_searching = false
+	if lobbies.is_empty() and not steam_lobbies.is_empty():
+		online_status.text = "Steam refresh missed the room. Select it and press Join."
+		_update_lobby_select()
+		_update_room_buttons()
+		return
 	steam_lobbies = lobbies.duplicate(true)
 	_update_lobby_select()
 	if lobbies.is_empty():
@@ -751,13 +785,14 @@ func _update_online_room_text() -> void:
 	_update_room_buttons()
 
 
-func _request_steam_lobbies(show_search_text: bool) -> void:
+func _request_steam_lobbies(show_search_text: bool, wide_search: bool = false) -> void:
 	if steam_lobby_searching or not _steam_ready() or _is_hosting_room() or _is_joining_room():
 		return
 	steam_lobby_searching = true
+	steam_lobby_wide_searching = wide_search
 	if show_search_text:
 		online_status.text = _t("steam_finding_lobby")
-	_steam_manager().request_lobbies()
+	_steam_manager().request_lobbies(wide_search)
 
 
 func _clear_peer() -> void:
@@ -862,7 +897,7 @@ func _is_hosting_room() -> bool:
 
 func _is_joining_room() -> bool:
 	var settings := _settings()
-	return settings and settings.get("online_mode") == true and String(settings.get("online_role")) == "client" and multiplayer.has_multiplayer_peer()
+	return settings and settings.get("online_mode") == true and String(settings.get("online_role")) == "client"
 
 
 func _update_room_buttons() -> void:
