@@ -24,7 +24,7 @@ const CHARACTER_NAMES := [
 	"Zombie"
 ]
 
-const SPRITE_GROUND_Y := 0.0
+const SPRITE_GROUND_Y := 12.0
 
 var life: int = 100
 var player: Node2D

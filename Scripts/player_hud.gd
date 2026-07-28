@@ -2,6 +2,7 @@
 
 @onready var health_bar: ProgressBar = $HealthBar
 @onready var health_label: Label = $HealthLabel
+@onready var enemy_count_label: Label = $EnemyCountLabel
 @onready var round_label: Label = $RoundLabel
 @onready var menu_button: Button = $MenuButton
 @onready var pause_menu: Panel = $PauseMenu
@@ -24,6 +25,7 @@ func _ready() -> void:
 	_create_match_popup()
 	_connect_round_counter()
 	_connect_local_player()
+	_update_enemy_count()
 
 
 func _process(_delta: float) -> void:
@@ -36,6 +38,7 @@ func _process(_delta: float) -> void:
 	var local_player := get_tree().get_first_node_in_group("LocalPlayer")
 	if local_player and local_player != player:
 		_connect_local_player()
+	_update_enemy_count()
 
 
 func _normalize_pause_menu_layout() -> void:
@@ -105,6 +108,17 @@ func _on_player_life_changed(life: int, max_life: int) -> void:
 	health_bar.max_value = max_life
 	health_bar.value = life
 	health_label.text = "Life: %d" % life
+
+
+func _update_enemy_count() -> void:
+	var enemies_left := 0
+	for enemy in get_tree().get_nodes_in_group("Enemy"):
+		if enemy is CanvasItem and not enemy.visible:
+			continue
+		if enemy.get("dead") == true:
+			continue
+		enemies_left += 1
+	enemy_count_label.text = "Enemies: %d" % enemies_left
 
 
 func _connect_round_counter() -> void:

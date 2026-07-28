@@ -453,7 +453,7 @@ texture = ExtResource("9_tree")
 [node name="EnemySpawner" parent="." index="10"]
 spawn_count = 4
 spawn_seed = 2201
-spawn_areas = Array[Rect2]([Rect2(720, 327, 220, 1), Rect2(1230, 427, 220, 1), Rect2(1740, 267, 350, 1), Rect2(2245, 647, 360, 1), Rect2(2885, 497, 230, 1)])
+spawn_areas = Array[Rect2]([Rect2(720, 335, 220, 1), Rect2(1230, 435, 220, 1), Rect2(1740, 275, 350, 1), Rect2(2245, 655, 360, 1), Rect2(2885, 505, 230, 1)])
 
 [node name="MenuButton" parent="PlayerHUD" index="3"]
 anchors_preset = 1

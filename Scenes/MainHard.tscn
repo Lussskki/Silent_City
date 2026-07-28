@@ -389,19 +389,19 @@ texture = ExtResource("5_spike")
 
 [node name="StartTree" type="Sprite2D" parent="HardLevel/Generated" index="66" unique_id=1944625146]
 z_index = 30
-position = Vector2(115, 351)
+position = Vector2(114, 367.00003)
 scale = Vector2(1.25, 1.25)
 texture = ExtResource("9_tree")
 
 [node name="StartSkeleton" type="Sprite2D" parent="HardLevel/Generated" index="67" unique_id=136908288]
 z_index = 3
-position = Vector2(300, 470)
+position = Vector2(297, 479.00003)
 scale = Vector2(1.15, 1.15)
 texture = ExtResource("12_skeleton")
 
 [node name="StartCrate" type="Sprite2D" parent="HardLevel/Generated" index="68" unique_id=998144534]
 z_index = 3
-position = Vector2(430, 448)
+position = Vector2(430, 463.00003)
 scale = Vector2(0.95, 0.95)
 texture = ExtResource("6_crate")
 
@@ -419,36 +419,36 @@ texture = ExtResource("10_bush")
 
 [node name="PlatformBCrate" type="Sprite2D" parent="HardLevel/Generated" index="71" unique_id=1383475076]
 z_index = 3
-position = Vector2(1165, 198)
+position = Vector2(1169, 209.00002)
 scale = Vector2(0.95, 0.95)
 texture = ExtResource("6_crate")
 
 [node name="SafeStepSign" type="Sprite2D" parent="HardLevel/Generated" index="72" unique_id=240627840]
 z_index = 3
-position = Vector2(1500, 374)
+position = Vector2(1500, 386)
 texture = ExtResource("13_sign")
 
 [node name="TowerTombstone" type="Sprite2D" parent="HardLevel/Generated" index="73" unique_id=251849358]
 z_index = 3
-position = Vector2(1875, 164)
+position = Vector2(1873, 176)
 scale = Vector2(1.65, 1.65)
 texture = ExtResource("7_tomb_a")
 
 [node name="TowerDeadBush" type="Sprite2D" parent="HardLevel/Generated" index="74" unique_id=802752290]
 z_index = 30
-position = Vector2(2050, 196)
+position = Vector2(2043, 205)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("11_dead_bush")
 
 [node name="TowerCrate" type="Sprite2D" parent="HardLevel/Generated" index="75" unique_id=1471150054]
 z_index = 3
-position = Vector2(2115, 178)
+position = Vector2(2115, 182)
 scale = Vector2(0.95, 0.95)
 texture = ExtResource("6_crate")
 
 [node name="DropDeadBush" type="Sprite2D" parent="HardLevel/Generated" index="76" unique_id=1195951979]
 z_index = 30
-position = Vector2(2395, 529)
+position = Vector2(2397, 536)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("11_dead_bush")
 
@@ -470,19 +470,14 @@ position = Vector2(3420, 168)
 scale = Vector2(-1.15, 1.15)
 texture = ExtResource("9_tree")
 
-[node name="EnemySpawner" parent="." index="10" unique_id=1209425924]
-spawn_count = 2
-spawn_seed = 3201
-spawn_areas = Array[Rect2]([Rect2(1860, 227, 245, 1), Rect2(3160, 282, 245, 1)])
-
-[node name="MenuButton" parent="PlayerHUD" parent_id_path=PackedInt32Array(1158069440) index="3" unique_id=96562753]
-offset_left = -40.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 32.0
+[node name="MenuButton" parent="PlayerHUD" parent_id_path=PackedInt32Array(1158069440) index="4" unique_id=96562753]
+offset_left = -49.0
+offset_top = 5.0
+offset_right = -9.0
+offset_bottom = 37.0
 grow_horizontal = 0
 
-[node name="PauseMenu" parent="PlayerHUD" parent_id_path=PackedInt32Array(1158069440) index="4" unique_id=833667631]
+[node name="PauseMenu" parent="PlayerHUD" parent_id_path=PackedInt32Array(1158069440) index="5" unique_id=833667631]
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -493,3 +488,10 @@ offset_left = 0.0
 offset_top = 0.0
 offset_right = 0.0
 offset_bottom = 0.0
+
+[node name="EnemySpawner" parent="." index="9"]
+spawn_count = 3
+spawn_seed = 3201
+spawn_areas = Array[Rect2]([Rect2(1860, 235, 245, 1), Rect2(2764, 415, 128, 1), Rect2(3160, 290, 245, 1)])
+enemy_attack_cooldown = 0.35
+enemy_character_name = "Zombie"

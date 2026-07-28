@@ -427,12 +427,19 @@ offset_right = 160.0
 offset_bottom = 60.0
 text = "Life: 100"
 
+[node name="EnemyCountLabel" type="Label" parent="PlayerHUD"]
+offset_left = 16.0
+offset_top = 62.0
+offset_right = 160.0
+offset_bottom = 86.0
+text = "Enemies: 0"
+
 [node name="RoundLabel" type="Label" parent="PlayerHUD" unique_id=1378954021]
 visible = false
 offset_left = 16.0
-offset_top = 62.0
+offset_top = 88.0
 offset_right = 100.0
-offset_bottom = 86.0
+offset_bottom = 112.0
 text = "0/0"
 
 [node name="MenuButton" type="Button" parent="PlayerHUD" unique_id=96562753]
@@ -499,4 +506,4 @@ script = ExtResource("44_enemy_spawner")
 enemy_scene = ExtResource("43_enemy_scene")
 spawn_count = 3
 spawn_seed = 1201
-spawn_areas = Array[Rect2]([Rect2(760, 381, 270, 1), Rect2(1270, 477, 280, 1), Rect2(1840, 445, 410, 1), Rect2(3090, 445, 350, 1)])
+spawn_areas = Array[Rect2]([Rect2(760, 389, 270, 1), Rect2(1270, 485, 280, 1), Rect2(1840, 453, 410, 1), Rect2(3090, 453, 350, 1)])

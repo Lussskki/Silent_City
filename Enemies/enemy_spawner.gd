@@ -13,6 +13,8 @@ extends Node2D
 	Rect2(-1120, -170, 360, 1)
 ]
 @export var edge_padding := 45.0
+@export var enemy_attack_cooldown := 1.0
+@export var enemy_character_name := ""
 
 const CHARACTER_NAMES := [
 	"Adventurer",
@@ -50,9 +52,13 @@ func _spawn_enemies() -> void:
 			rng.randf_range(area.position.y, area.end.y)
 		)
 		enemy.set("random_character", false)
-		enemy.set("character_name", CHARACTER_NAMES[character_indices[index]])
+		var selected_character := enemy_character_name.strip_edges()
+		if selected_character.is_empty():
+			selected_character = CHARACTER_NAMES[character_indices[index]]
+		enemy.set("character_name", selected_character)
 		enemy.set("patrol_min_x", left_x)
 		enemy.set("patrol_max_x", right_x)
+		enemy.set("attack_cooldown", enemy_attack_cooldown)
 		add_child(enemy)
 
 
