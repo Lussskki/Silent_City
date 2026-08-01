@@ -350,6 +350,26 @@ func take_damage(amount: int) -> void:
 	_send_network_state(0.0, true)
 
 
+func heal(amount: int) -> int:
+	if dead:
+		return 0
+
+	var previous_life := life
+	life = min(life + amount, max_life)
+	var healed := life - previous_life
+	if healed <= 0:
+		return 0
+
+	life_changed.emit(life, max_life)
+	modulate = Color(0.65, 1.0, 0.65)
+	get_tree().create_timer(0.16).timeout.connect(func():
+		if not dead:
+			modulate = Color.WHITE
+	)
+	_send_network_state(0.0, true)
+	return healed
+
+
 @rpc("any_peer", "reliable")
 func network_take_damage(amount: int) -> void:
 	if not local_player:
@@ -772,6 +792,11 @@ func _die() -> void:
 			return
 		_respawn_for_online_match()
 	else:
+		var settings := get_node_or_null("/root/GameSettings")
+		if settings and int(settings.get("offline_tries_left")) <= 0:
+			velocity = Vector2.ZERO
+			set_physics_process(false)
+			return
 		get_tree().reload_current_scene()
 
 

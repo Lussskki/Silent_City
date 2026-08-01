@@ -1,8 +1,9 @@
-﻿extends CanvasLayer
+extends CanvasLayer
 
 @onready var health_bar: ProgressBar = $HealthBar
 @onready var health_label: Label = $HealthLabel
 @onready var enemy_count_label: Label = $EnemyCountLabel
+@onready var lives_label: Label = $LivesLabel
 @onready var round_label: Label = $RoundLabel
 @onready var menu_button: Button = $MenuButton
 @onready var pause_menu: Panel = $PauseMenu
@@ -14,6 +15,10 @@ var player: Node
 var match_popup: Panel
 var match_label: Label
 var match_exit_button: Button
+var enemies_seen_once := false
+var game_result_shown := false
+var result_check_delay := 0.35
+var death_recorded := false
 
 
 func _ready() -> void:
@@ -26,9 +31,10 @@ func _ready() -> void:
 	_connect_round_counter()
 	_connect_local_player()
 	_update_enemy_count()
+	_update_try_count()
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		if pause_menu.visible:
 			_return_to_game()
@@ -38,7 +44,8 @@ func _process(_delta: float) -> void:
 	var local_player := get_tree().get_first_node_in_group("LocalPlayer")
 	if local_player and local_player != player:
 		_connect_local_player()
-	_update_enemy_count()
+	var enemies_left := _update_enemy_count()
+	_update_offline_result(delta, enemies_left)
 
 
 func _normalize_pause_menu_layout() -> void:
@@ -108,9 +115,13 @@ func _on_player_life_changed(life: int, max_life: int) -> void:
 	health_bar.max_value = max_life
 	health_bar.value = life
 	health_label.text = "Life: %d" % life
+	if life > 0:
+		death_recorded = false
+	elif _is_offline_game():
+		_handle_offline_death()
 
 
-func _update_enemy_count() -> void:
+func _update_enemy_count() -> int:
 	var enemies_left := 0
 	for enemy in get_tree().get_nodes_in_group("Enemy"):
 		if enemy is CanvasItem and not enemy.visible:
@@ -119,6 +130,52 @@ func _update_enemy_count() -> void:
 			continue
 		enemies_left += 1
 	enemy_count_label.text = "Enemies: %d" % enemies_left
+	return enemies_left
+
+
+func _update_offline_result(delta: float, enemies_left: int) -> void:
+	if game_result_shown or not _is_offline_game():
+		return
+
+	result_check_delay = max(result_check_delay - delta, 0.0)
+	if enemies_left > 0:
+		enemies_seen_once = true
+
+	if result_check_delay <= 0.0 and enemies_seen_once and enemies_left <= 0:
+		_show_result_popup("You Win", "Main Menu", false)
+
+
+func _is_offline_game() -> bool:
+	var settings := get_node_or_null("/root/GameSettings")
+	var settings_online: bool = settings != null and settings.get("online_mode") == true
+	return not multiplayer.has_multiplayer_peer() and not settings_online
+
+
+func _handle_offline_death() -> void:
+	if death_recorded or game_result_shown:
+		return
+
+	death_recorded = true
+	var settings := get_node_or_null("/root/GameSettings")
+	if settings and settings.has_method("consume_offline_try"):
+		var tries_left := int(settings.call("consume_offline_try"))
+		_update_try_count()
+		if tries_left <= 0:
+			_show_result_popup("You Lose", "Main Menu", false)
+		return
+
+	_show_result_popup("You Lose", "Main Menu", false)
+
+
+func _update_try_count() -> void:
+	if not lives_label:
+		return
+	lives_label.visible = _is_offline_game()
+	var settings := get_node_or_null("/root/GameSettings")
+	if settings and settings.has_method("offline_tries_text"):
+		lives_label.text = String(settings.call("offline_tries_text"))
+	else:
+		lives_label.text = "Lives: 0/5"
 
 
 func _connect_round_counter() -> void:
@@ -145,9 +202,30 @@ func _on_online_rounds_changed(rounds_played: int, max_rounds: int) -> void:
 func _on_online_match_finished(winner_name: String) -> void:
 	if winner_name.is_empty():
 		winner_name = "Winner"
-	match_label.text = "%s won!" % winner_name
+	_show_result_popup("%s won!" % winner_name, "Exit Online", true)
+
+
+func _show_result_popup(result_text: String, button_text: String, pause_game := true) -> void:
+	if game_result_shown:
+		return
+	game_result_shown = true
+	match_label.text = result_text
+	match_exit_button.text = button_text
 	match_popup.visible = true
-	get_tree().paused = true
+	if pause_game:
+		get_tree().paused = true
+	else:
+		_stop_local_player_control()
+
+
+func _stop_local_player_control() -> void:
+	var local_player := get_tree().get_first_node_in_group("LocalPlayer")
+	if not local_player:
+		local_player = get_tree().get_first_node_in_group("Player")
+	if local_player and local_player is Node2D:
+		local_player.set_physics_process(false)
+		local_player.set_process_input(false)
+		local_player.set_process_unhandled_input(false)
 
 
 func _create_match_popup() -> void:
@@ -221,5 +299,3 @@ func _exit_online_match() -> void:
 		settings.call("reset_online")
 
 	get_tree().change_scene_to_file("res://Scenes/MainMenu.tscn")
-
-

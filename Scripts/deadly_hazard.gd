@@ -14,8 +14,8 @@ func _on_body_entered(body: Node) -> void:
 	if body.get("local_player") == false:
 		return
 
-	if body.has_method("respawn"):
-		body.respawn()
-		return
 	if body.has_method("take_damage"):
 		body.take_damage(damage)
+		return
+	if body.has_method("respawn"):
+		body.respawn()

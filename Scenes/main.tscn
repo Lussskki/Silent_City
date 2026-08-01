@@ -33,13 +33,14 @@
 [ext_resource type="Script" uid="uid://c8or26v0ouen6" path="res://Scripts/kill_zone.gd" id="38_kill_zone"]
 [ext_resource type="AudioStream" uid="uid://jc86kj4mpjrm" path="res://Resources/character_voices/45_Landing_01.wav" id="39_landing_sound"]
 [ext_resource type="Script" uid="uid://f3kytvyw6lfm" path="res://Scripts/player_hud.gd" id="40_player_hud"]
-[ext_resource type="Script" path="res://Scripts/online_manager.gd" id="41_online_manager"]
+[ext_resource type="Script" uid="uid://l5xletxmo2lc" path="res://Scripts/online_manager.gd" id="41_online_manager"]
 [ext_resource type="PackedScene" uid="uid://ktuf83rha8ye" path="res://Scenes/GolemPlayer.tscn" id="42_golem_player"]
 [ext_resource type="PackedScene" path="res://Enemies/enemy.tscn" id="43_enemy_scene"]
-[ext_resource type="Script" path="res://Enemies/enemy_spawner.gd" id="44_enemy_spawner"]
+[ext_resource type="Script" uid="uid://dqflgmk88ohqg" path="res://Enemies/enemy_spawner.gd" id="44_enemy_spawner"]
+[ext_resource type="Script" path="res://Scripts/health_drop_spawner.gd" id="45_health_drop_spawner"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_start"]
-size = Vector2(565, 64)
+size = Vector2(629, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_float3"]
 size = Vector2(384, 64)
@@ -84,14 +85,14 @@ autoplay = true
 
 [node name="BackgroundA" type="Sprite2D" parent="." unique_id=1062492226]
 z_index = -50
-position = Vector2(841.49994, 360)
-scale = Vector2(1.0584999, 0.9)
+position = Vector2(841.49994, 458.325)
+scale = Vector2(1.0584999, 1.0720472)
 texture = ExtResource("2_bg")
 
 [node name="BackgroundB" type="Sprite2D" parent="." unique_id=1200270985]
 z_index = -50
-position = Vector2(2800, 360)
-scale = Vector2(0.9, 0.9)
+position = Vector2(2800, 460.325)
+scale = Vector2(0.9, 1.0755467)
 texture = ExtResource("2_bg")
 
 [node name="Level" type="Node2D" parent="." unique_id=1045485232]
@@ -101,7 +102,7 @@ script = ExtResource("37_level_layer")
 position = Vector2(512, 544)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/StartPlatform" unique_id=76557778]
-position = Vector2(-37.5, 0)
+position = Vector2(-69.5, 0)
 shape = SubResource("RectangleShape2D_start")
 
 [node name="StartTopLeft" type="Sprite2D" parent="Level" unique_id=1759868570]
@@ -322,12 +323,12 @@ texture = ExtResource("23_tree")
 
 [node name="StartSkeleton" type="Sprite2D" parent="Level" unique_id=1325297464]
 z_index = 3
-position = Vector2(477, 506)
+position = Vector2(476, 493)
 texture = ExtResource("24_skeleton")
 
 [node name="StartSign" type="Sprite2D" parent="Level" unique_id=788304011]
 z_index = 3
-position = Vector2(628, 492)
+position = Vector2(630, 468)
 texture = ExtResource("25_sign")
 
 [node name="JumpCrate" type="Sprite2D" parent="Level" unique_id=2019646860]
@@ -355,6 +356,7 @@ texture = ExtResource("28_tomb_b")
 [node name="TowerDeadBush" type="Sprite2D" parent="Level" unique_id=330642478]
 z_index = 30
 position = Vector2(2195, 260)
+scale = Vector2(1, 1.0000002)
 texture = ExtResource("30_dead_bush")
 
 [node name="ExitTombstone" type="Sprite2D" parent="Level" unique_id=1526973342]
@@ -427,19 +429,26 @@ offset_right = 160.0
 offset_bottom = 60.0
 text = "Life: 100"
 
-[node name="EnemyCountLabel" type="Label" parent="PlayerHUD"]
+[node name="EnemyCountLabel" type="Label" parent="PlayerHUD" unique_id=1358564899]
 offset_left = 16.0
 offset_top = 62.0
 offset_right = 160.0
 offset_bottom = 86.0
 text = "Enemies: 0"
 
+[node name="LivesLabel" type="Label" parent="PlayerHUD" unique_id=1979271889]
+offset_left = 16.0
+offset_top = 88.0
+offset_right = 160.0
+offset_bottom = 112.0
+text = "Lives: 0/5"
+
 [node name="RoundLabel" type="Label" parent="PlayerHUD" unique_id=1378954021]
 visible = false
 offset_left = 16.0
-offset_top = 88.0
+offset_top = 114.0
 offset_right = 100.0
-offset_bottom = 112.0
+offset_bottom = 138.0
 text = "0/0"
 
 [node name="MenuButton" type="Button" parent="PlayerHUD" unique_id=96562753]
@@ -497,13 +506,16 @@ custom_minimum_size = Vector2(0, 34)
 layout_mode = 2
 text = "Main Menu"
 
-[node name="OnlineManager" type="CanvasLayer" parent="."]
+[node name="OnlineManager" type="CanvasLayer" parent="." unique_id=404326727]
 script = ExtResource("41_online_manager")
 golem_player_scene = ExtResource("42_golem_player")
 
-[node name="EnemySpawner" type="Node2D" parent="."]
+[node name="EnemySpawner" type="Node2D" parent="." unique_id=1527017218]
 script = ExtResource("44_enemy_spawner")
 enemy_scene = ExtResource("43_enemy_scene")
 spawn_count = 3
 spawn_seed = 1201
 spawn_areas = Array[Rect2]([Rect2(760, 389, 270, 1), Rect2(1270, 485, 280, 1), Rect2(1840, 453, 410, 1), Rect2(3090, 453, 350, 1)])
+
+[node name="HealthDropSpawner" type="CanvasLayer" parent="."]
+script = ExtResource("45_health_drop_spawner")

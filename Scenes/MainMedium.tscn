@@ -48,18 +48,25 @@ size = Vector2(384, 256)
 
 [node name="MainMedium" unique_id=1474546206 instance=ExtResource("1_main")]
 
-[node name="BackgroundA" parent="." index="1"]
-position = Vector2(845.99994, 360)
-scale = Vector2(1.054, 0.9)
+[node name="BackgroundA" parent="." index="1" unique_id=1062492226]
+position = Vector2(845.99994, 461.32507)
+scale = Vector2(1.054, 1.0772967)
 
-[node name="Level" parent="." index="3"]
+[node name="BackgroundB" parent="." index="2" unique_id=1200270985]
+position = Vector2(2910, 452.32504)
+scale = Vector2(1.01, 1.0615486)
+
+[node name="Level" parent="." index="3" unique_id=1045485232]
 visible = false
 collisions_enabled = false
 
-[node name="Player" parent="." index="5"]
+[node name="CollisionShape2D" parent="FallKillZone" parent_id_path=PackedInt32Array(1249545714) index="0" unique_id=1877193375]
+position = Vector2(-9, 20)
+
+[node name="Player" parent="." index="5" unique_id=2090043745]
 position = Vector2(280, 380)
 
-[node name="Camera2D" parent="Player" index="2"]
+[node name="Camera2D" parent="Player" index="2" unique_id=213213847]
 limit_right = 3200
 
 [node name="MediumLevel" type="Node2D" parent="." index="6" unique_id=1886984370]
@@ -366,8 +373,8 @@ texture = ExtResource("5_spike")
 
 [node name="StartTree" type="Sprite2D" parent="MediumLevel/Generated" index="57" unique_id=1378278037]
 z_index = 30
-position = Vector2(81, 307)
-scale = Vector2(1.35, 1.35)
+position = Vector2(81, 316.8375)
+scale = Vector2(1.35, 1.4323221)
 texture = ExtResource("9_tree")
 
 [node name="StartSkeleton" type="Sprite2D" parent="MediumLevel/Generated" index="58" unique_id=690749404]
@@ -406,8 +413,8 @@ texture = ExtResource("6_crate")
 
 [node name="CenterDeadBush" type="Sprite2D" parent="MediumLevel/Generated" index="64" unique_id=2009682580]
 z_index = 30
-position = Vector2(1225, 399)
-scale = Vector2(0.85, 0.85)
+position = Vector2(1225, 403.275)
+scale = Vector2(0.85, 0.96554035)
 texture = ExtResource("11_dead_bush")
 
 [node name="TowerTombstone" type="Sprite2D" parent="MediumLevel/Generated" index="65" unique_id=1434971704]
@@ -418,7 +425,7 @@ texture = ExtResource("7_tomb_a")
 
 [node name="TowerBush" type="Sprite2D" parent="MediumLevel/Generated" index="66" unique_id=354731733]
 z_index = 30
-position = Vector2(1710, 250)
+position = Vector2(1732, 250)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("10_bush")
 
@@ -434,8 +441,8 @@ texture = ExtResource("6_crate")
 
 [node name="LowerDeadBush" type="Sprite2D" parent="MediumLevel/Generated" index="69" unique_id=564016247]
 z_index = 30
-position = Vector2(2250, 619)
-scale = Vector2(0.85, 0.85)
+position = Vector2(2250, 630.27496)
+scale = Vector2(0.85, 1.1547301)
 texture = ExtResource("11_dead_bush")
 
 [node name="ExitTombstone" type="Sprite2D" parent="MediumLevel/Generated" index="70" unique_id=2145261494]
@@ -450,29 +457,30 @@ position = Vector2(3050, 385)
 scale = Vector2(-1.15, 1.15)
 texture = ExtResource("9_tree")
 
-[node name="EnemySpawner" parent="." index="10"]
+[node name="RoundLabel" parent="PlayerHUD" parent_id_path=PackedInt32Array(1158069440) index="4" unique_id=1378954021]
+offset_top = 88.0
+offset_bottom = 112.0
+
+[node name="MenuButton" parent="PlayerHUD" parent_id_path=PackedInt32Array(1158069440) index="5" unique_id=96562753]
+offset_left = -40.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 32.0
+grow_horizontal = 0
+
+[node name="PauseMenu" parent="PlayerHUD" parent_id_path=PackedInt32Array(1158069440) index="6" unique_id=833667631]
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Box" parent="PlayerHUD/PauseMenu" index="0" unique_id=1436296251]
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="EnemySpawner" parent="." index="9" unique_id=1527017218]
 spawn_count = 4
 spawn_seed = 2201
 spawn_areas = Array[Rect2]([Rect2(720, 335, 220, 1), Rect2(1230, 435, 220, 1), Rect2(1740, 275, 350, 1), Rect2(2245, 655, 360, 1), Rect2(2885, 505, 230, 1)])
-
-[node name="MenuButton" parent="PlayerHUD" index="3"]
-anchors_preset = 1
-
-[node name="PauseMenu" parent="PlayerHUD" index="4"]
-anchors_preset = 8
-
-[node name="Box" parent="PlayerHUD/PauseMenu" index="0"]
-layout_mode = 0
-
-[node name="Title" parent="PlayerHUD/PauseMenu/Box" index="0"]
-layout_mode = 2
-
-[node name="OnlineStatusLabel" parent="PlayerHUD/PauseMenu/Box" index="1"]
-layout_mode = 2
-
-[node name="ReturnButton" parent="PlayerHUD/PauseMenu/Box" index="2"]
-layout_mode = 2
-
-[node name="MainMenuButton" parent="PlayerHUD/PauseMenu/Box" index="3"]
-layout_mode = 2
-

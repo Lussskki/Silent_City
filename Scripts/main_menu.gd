@@ -318,7 +318,12 @@ func _open_online_page() -> void:
 
 
 func _open_start_flow() -> void:
+	var settings := _settings()
+	if settings:
+		settings.set("character_chosen", false)
+		settings.set("level_chosen", false)
 	level_select_starts_game = false
+	_update_character_cards()
 	_show_page(choose_page)
 
 
@@ -476,10 +481,8 @@ func _update_character_cards() -> void:
 		return
 	if String(settings.get("selected_character")) == "golem":
 		golem_card.modulate = Color(0.65, 1.0, 0.65)
-		_set_card_crossed(golem_card, true)
 	else:
 		player_card.modulate = Color(0.65, 1.0, 0.65)
-		_set_card_crossed(player_card, true)
 	_set_character_buttons_enabled(not _is_online_character_locked())
 	_apply_taken_character_input_state()
 
@@ -502,6 +505,7 @@ func _start_game() -> void:
 		return
 
 	settings.call("reset_online")
+	settings.call("start_offline_level", String(settings.get("selected_level")))
 	_clear_peer()
 	get_tree().change_scene_to_file(_selected_main_scene())
 

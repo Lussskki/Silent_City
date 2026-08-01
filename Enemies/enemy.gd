@@ -50,7 +50,6 @@ func _ready() -> void:
 		patrol_max_x = global_position.x + 120.0
 	_setup_random_character()
 	_find_player()
-	_ignore_player_collisions()
 	_update_health_bar()
 
 
