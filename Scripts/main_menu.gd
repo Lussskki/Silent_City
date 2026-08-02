@@ -29,6 +29,8 @@ const TEXT := {
 		"how_attack": "Hands: A / S",
 		"how_heart": "Collect hearts",
 		"how_jump": "Jump: Space",
+		"credits": "Credits",
+		"credits_text": "Silent City\nCreated by Luka Guledani / SonnyRenderer\n\nCharacter and asset credits:\nKenney - Animated Characters Retro 1.1\nLicense: Creative Commons Zero (CC0)\nwww.kenney.nl\n\nGraveyard platform tileset\nGameArt2D / CraftPix freebie license\nhttps://www.gameart2d.com/free-graveyard-platformer-tileset.html\n\nThank you for playing.",
 		"exit": "Exit",
 		"select": "Select",
 		"choose_first": "Choose a character before starting.",
@@ -83,6 +85,8 @@ const TEXT := {
 		"how_attack": "ხელები: A / S",
 		"how_heart": "შეაგროვე გულები",
 		"how_jump": "ახტომა: Space",
+		"credits": "კრედიტები",
+		"credits_text": "Silent City\nშექმნა: Luka Guledani / SonnyRenderer\n\nპერსონაჟებისა და ასეტების კრედიტები:\nKenney - Animated Characters Retro 1.1\nლიცენზია: Creative Commons Zero (CC0)\nwww.kenney.nl\n\nGraveyard platform tileset\nGameArt2D / CraftPix freebie license\nhttps://www.gameart2d.com/free-graveyard-platformer-tileset.html\n\nმადლობა თამაშისთვის.",
 		"exit": "გასვლა",
 		"select": "არჩევა",
 		"choose_first": "ჯერ აირჩიე პერსონაჟი.",
@@ -145,11 +149,13 @@ const ONLINE_TUTORIAL_STEPS := {
 @onready var level_page: VBoxContainer = $Content/Root/Pages/ChooseLevel
 @onready var choose_page: VBoxContainer = $Content/Root/Pages/ChooseCharacter
 @onready var how_to_play_page: VBoxContainer = $Content/Root/Pages/HowToPlay
+@onready var credits_page: VBoxContainer = $Content/Root/Pages/Credits
 @onready var online_page: VBoxContainer = $Content/Root/Pages/Online
 @onready var home_start_button: Button = $Content/Root/Pages/Home/StartButton
 @onready var home_choose_button: Button = $Content/Root/Pages/Home/ChooseButton
 @onready var home_online_button: Button = $Content/Root/Pages/Home/OnlineButton
 @onready var home_how_to_play_button: Button = $Content/Root/Pages/Home/HowToPlayButton
+@onready var home_credits_button: Button = $Content/Root/Pages/Home/CreditsButton
 @onready var home_exit_button: Button = $Content/Root/Pages/Home/ExitButton
 @onready var level_header: Label = $Content/Root/Pages/ChooseLevel/Header
 @onready var easy_button: Button = $Content/Root/Pages/ChooseLevel/EasyButton
@@ -171,6 +177,9 @@ const ONLINE_TUTORIAL_STEPS := {
 @onready var how_heart_label: Label = $Content/Root/Pages/HowToPlay/Cards/HeartCard/Text
 @onready var how_jump_label: Label = $Content/Root/Pages/HowToPlay/Cards/JumpCard/Text
 @onready var how_to_play_back_button: Button = $Content/Root/Pages/HowToPlay/BackButton
+@onready var credits_header: Label = $Content/Root/Pages/Credits/Header
+@onready var credits_text: Label = $Content/Root/Pages/Credits/CreditsText
+@onready var credits_back_button: Button = $Content/Root/Pages/Credits/BackButton
 @onready var online_tutorial_overlay: Control = $Content/Root/Pages/TutorialOverlay
 @onready var online_tutorial_title: Label = $Content/Root/Pages/TutorialOverlay/Card/Box/Title
 @onready var online_tutorial_text: Label = $Content/Root/Pages/TutorialOverlay/Card/Box/Text
@@ -211,6 +220,7 @@ func _ready() -> void:
 	home_choose_button.pressed.connect(func(): _show_page(choose_page))
 	home_online_button.pressed.connect(_open_online_page)
 	home_how_to_play_button.pressed.connect(func(): _show_page(how_to_play_page))
+	home_credits_button.pressed.connect(func(): _show_page(credits_page))
 	home_exit_button.pressed.connect(_exit_game)
 	easy_button.pressed.connect(func(): _select_level("easy"))
 	medium_button.pressed.connect(func(): _select_level("medium"))
@@ -226,6 +236,7 @@ func _ready() -> void:
 	choose_online_button.pressed.connect(_open_online_page)
 	choose_back_button.pressed.connect(_back_from_character_page)
 	how_to_play_back_button.pressed.connect(func(): _show_page(home_page))
+	credits_back_button.pressed.connect(func(): _show_page(home_page))
 	host_button.pressed.connect(_host_online_game)
 	join_button.pressed.connect(_join_online_game)
 	lobby_select.item_activated.connect(func(_index: int): _join_online_game())
@@ -301,6 +312,7 @@ func _apply_language() -> void:
 	home_choose_button.text = _t("choose_character")
 	home_online_button.text = _t("online_room")
 	home_how_to_play_button.text = _t("how_to_play")
+	home_credits_button.text = _t("credits")
 	home_exit_button.text = _t("exit")
 	level_header.text = _t("choose_level")
 	easy_button.text = _t("easy")
@@ -319,6 +331,9 @@ func _apply_language() -> void:
 	how_heart_label.text = _t("how_heart")
 	how_jump_label.text = _t("how_jump")
 	how_to_play_back_button.text = _t("back")
+	credits_header.text = _t("credits")
+	credits_text.text = _t("credits_text")
+	credits_back_button.text = _t("back")
 	online_header.text = _t("online_room")
 	host_button.text = _t("host_room")
 	join_button.text = _t("join")
