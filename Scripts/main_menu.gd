@@ -25,8 +25,9 @@ const TEXT := {
 		"choose_character": "Choose Character",
 		"online_room": "Online",
 		"how_to_play": "How to Play",
-		"how_to_play_text": "Move with Left/Right arrows or D.\nJump with Space.\nUse hands with A and S.\nDefeat enemies, avoid spikes, and collect hearts for health.\nFirst heart appears after 35 seconds, then every 90 seconds.",
-		"how_attack": "Hands: A / S",
+		"how_to_play_text": "Move with Left/Right arrows.\nJump with Space.\nUse hands with A and foot kick with S.\nDefeat enemies, avoid spikes, and collect hearts for health.\nFirst heart appears after 35 seconds, then every 90 seconds.",
+		"how_attack": "Hands: A",
+		"how_kick": "Foot: S",
 		"how_heart": "First heart: 35s, then 90s",
 		"how_jump": "Jump: Space",
 		"credits": "Credits",
@@ -81,8 +82,9 @@ const TEXT := {
 		"choose_character": "აირჩიე პერსონაჟი",
 		"online_room": "ონლაინი",
 		"how_to_play": "როგორ ვითამაშოთ",
-		"how_to_play_text": "იმოძრავე მარცხენა/მარჯვენა ისრებით ან D-ით.\nახტომა: Space.\nხელებით დარტყმა: A და S.\nდაამარცხე მტრები, მოერიდე ეკლებს და აიღე გულები სიცოცხლისთვის.\nპირველი გული მოდის 35 წამში, შემდეგ ყოველ 90 წამში.",
-		"how_attack": "ხელები: A / S",
+		"how_to_play_text": "იმოძრავე მარცხენა/მარჯვენა ისრებით.\nახტომა: Space.\nხელით დარტყმა: A, ფეხით დარტყმა: S.\nდაამარცხე მტრები, მოერიდე ეკლებს და აიღე გულები სიცოცხლისთვის.\nპირველი გული მოდის 35 წამში, შემდეგ ყოველ 90 წამში.",
+		"how_attack": "ხელები: A",
+		"how_kick": "ფეხი: S",
 		"how_heart": "პირველი: 35წმ, მერე 90წმ",
 		"how_jump": "ახტომა: Space",
 		"credits": "კრედიტები",
@@ -174,6 +176,7 @@ const ONLINE_TUTORIAL_STEPS := {
 @onready var how_to_play_header: Label = $Content/Root/Pages/HowToPlay/Header
 @onready var how_to_play_instructions: Label = $Content/Root/Pages/HowToPlay/Instructions
 @onready var how_attack_label: Label = $Content/Root/Pages/HowToPlay/Cards/AttackCard/Text
+@onready var how_kick_label: Label = $Content/Root/Pages/HowToPlay/Cards/KickCard/Text
 @onready var how_heart_label: Label = $Content/Root/Pages/HowToPlay/Cards/HeartCard/Text
 @onready var how_jump_label: Label = $Content/Root/Pages/HowToPlay/Cards/JumpCard/Text
 @onready var how_to_play_back_button: Button = $Content/Root/Pages/HowToPlay/BackButton
@@ -328,6 +331,7 @@ func _apply_language() -> void:
 	how_to_play_header.text = _t("how_to_play")
 	how_to_play_instructions.text = _t("how_to_play_text")
 	how_attack_label.text = _t("how_attack")
+	how_kick_label.text = _t("how_kick")
 	how_heart_label.text = _t("how_heart")
 	how_jump_label.text = _t("how_jump")
 	how_to_play_back_button.text = _t("back")

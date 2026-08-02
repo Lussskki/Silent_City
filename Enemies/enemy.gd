@@ -8,6 +8,7 @@ extends CharacterBody2D
 @export var attack_damage: int = 10
 @export var attack_cooldown := 1.0
 @export var hurt_cooldown := 0.35
+@export var knockback_time := 0.22
 @export var patrol_min_x := 0.0
 @export var patrol_max_x := 0.0
 @export var sight_vertical_tolerance := 120.0
@@ -40,6 +41,7 @@ var flip_direction := false
 var network_sync_timer := 0.0
 var current_pose := "idle"
 var patrol_direction := 1.0
+var knockback_timer := 0.0
 
 func _ready() -> void:
 	add_to_group("Enemy")
@@ -72,11 +74,17 @@ func _physics_process(delta: float) -> void:
 
 	attack_timer = max(attack_timer - delta, 0.0)
 	hurt_timer = max(hurt_timer - delta, 0.0)
+	knockback_timer = max(knockback_timer - delta, 0.0)
 
 	_find_player()
 
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+
+	if knockback_timer > 0.0:
+		move_and_slide()
+		_send_network_state(delta)
+		return
 
 	if player:
 		var enemy_position := get_hit_position()
@@ -122,6 +130,31 @@ func take_damage(amount: int) -> void:
 		modulate = Color.WHITE
 
 
+func take_kick(amount: int, knockback: Vector2) -> void:
+	if dead:
+		return
+
+	var api := get_multiplayer()
+	if api and api.has_multiplayer_peer() and not api.is_server():
+		rpc_id(1, "network_take_kick", amount, knockback)
+		return
+
+	take_damage(amount)
+	apply_knockback(knockback)
+
+
+func apply_knockback(force: Vector2) -> void:
+	if dead:
+		return
+
+	velocity = force
+	knockback_timer = knockback_time
+	if not is_zero_approx(force.x):
+		flip_direction = force.x > 0.0
+		sprite.flip_h = flip_direction
+	_show_hurt_pose()
+
+
 func get_hit_position() -> Vector2:
 	return sprite.global_position
 
@@ -132,6 +165,15 @@ func network_take_damage(amount: int) -> void:
 	if api and api.has_multiplayer_peer() and not api.is_server():
 		return
 	take_damage(amount)
+
+
+@rpc("any_peer", "reliable")
+func network_take_kick(amount: int, knockback: Vector2) -> void:
+	var api := get_multiplayer()
+	if api and api.has_multiplayer_peer() and not api.is_server():
+		return
+	take_damage(amount)
+	apply_knockback(knockback)
 
 
 func _find_player() -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_menu_script"]
 [ext_resource type="Texture2D" path="res://Sprites/Background/BG.png" id="2_bg"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" path="res://Resources/How_to_play/1.png" id="5_how_attack"]
 [ext_resource type="Texture2D" path="res://Resources/How_to_play/2.png" id="6_how_heart"]
 [ext_resource type="Texture2D" path="res://Resources/How_to_play/3.png" id="7_how_jump"]
+[ext_resource type="Texture2D" path="res://Resources/How_to_play/4.png" id="8_how_kick"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -306,11 +307,11 @@ theme_override_constants/separation = 12
 alignment = 1
 
 [node name="AttackCard" type="VBoxContainer" parent="Content/Root/Pages/HowToPlay/Cards"]
-custom_minimum_size = Vector2(190, 130)
+custom_minimum_size = Vector2(150, 130)
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Content/Root/Pages/HowToPlay/Cards/AttackCard"]
-custom_minimum_size = Vector2(190, 96)
+custom_minimum_size = Vector2(150, 86)
 layout_mode = 2
 texture = ExtResource("5_how_attack")
 expand_mode = 1
@@ -320,15 +321,33 @@ stretch_mode = 5
 layout_mode = 2
 theme_override_colors/font_color = Color(0.92, 0.98, 1, 1)
 theme_override_font_sizes/font_size = 16
-text = "Hands: A / S"
+text = "Hands: A"
+horizontal_alignment = 1
+
+[node name="KickCard" type="VBoxContainer" parent="Content/Root/Pages/HowToPlay/Cards"]
+custom_minimum_size = Vector2(150, 130)
+layout_mode = 2
+
+[node name="Image" type="TextureRect" parent="Content/Root/Pages/HowToPlay/Cards/KickCard"]
+custom_minimum_size = Vector2(150, 86)
+layout_mode = 2
+texture = ExtResource("8_how_kick")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Text" type="Label" parent="Content/Root/Pages/HowToPlay/Cards/KickCard"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.98, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "Foot: S"
 horizontal_alignment = 1
 
 [node name="HeartCard" type="VBoxContainer" parent="Content/Root/Pages/HowToPlay/Cards"]
-custom_minimum_size = Vector2(190, 130)
+custom_minimum_size = Vector2(150, 130)
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Content/Root/Pages/HowToPlay/Cards/HeartCard"]
-custom_minimum_size = Vector2(190, 96)
+custom_minimum_size = Vector2(150, 86)
 layout_mode = 2
 texture = ExtResource("6_how_heart")
 expand_mode = 1
@@ -342,11 +361,11 @@ text = "Collect hearts"
 horizontal_alignment = 1
 
 [node name="JumpCard" type="VBoxContainer" parent="Content/Root/Pages/HowToPlay/Cards"]
-custom_minimum_size = Vector2(190, 130)
+custom_minimum_size = Vector2(150, 130)
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Content/Root/Pages/HowToPlay/Cards/JumpCard"]
-custom_minimum_size = Vector2(190, 96)
+custom_minimum_size = Vector2(150, 86)
 layout_mode = 2
 texture = ExtResource("7_how_jump")
 expand_mode = 1
@@ -364,9 +383,9 @@ custom_minimum_size = Vector2(640, 120)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.92, 0.98, 1, 1)
 theme_override_font_sizes/font_size = 18
-text = "Move with Left/Right arrows or D.
+text = "Move with Left/Right arrows.
 Jump with Space.
-Use hands with A and S.
+Use hands with A and foot kick with S.
 Defeat enemies, avoid spikes, and collect hearts for health."
 horizontal_alignment = 1
 vertical_alignment = 1

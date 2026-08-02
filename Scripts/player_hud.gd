@@ -14,6 +14,7 @@ extends CanvasLayer
 var player: Node
 var match_popup: Panel
 var match_label: Label
+var match_restart_button: Button
 var match_exit_button: Button
 var enemies_seen_once := false
 var game_result_shown := false
@@ -142,7 +143,7 @@ func _update_offline_result(delta: float, enemies_left: int) -> void:
 		enemies_seen_once = true
 
 	if result_check_delay <= 0.0 and enemies_seen_once and enemies_left <= 0:
-		_show_result_popup("You Win", "Main Menu", false)
+		_show_result_popup("You Win", "Main Menu", false, true)
 
 
 func _is_offline_game() -> bool:
@@ -161,10 +162,10 @@ func _handle_offline_death() -> void:
 		var tries_left := int(settings.call("consume_offline_try"))
 		_update_try_count()
 		if tries_left <= 0:
-			_show_result_popup("You Lose", "Main Menu", false)
+			_show_result_popup("You Lose", "Main Menu", false, true)
 		return
 
-	_show_result_popup("You Lose", "Main Menu", false)
+	_show_result_popup("You Lose", "Main Menu", false, true)
 
 
 func _update_try_count() -> void:
@@ -205,11 +206,12 @@ func _on_online_match_finished(winner_name: String) -> void:
 	_show_result_popup("%s won!" % winner_name, "Exit Online", true)
 
 
-func _show_result_popup(result_text: String, button_text: String, pause_game := true) -> void:
+func _show_result_popup(result_text: String, button_text: String, pause_game := true, show_restart := false) -> void:
 	if game_result_shown:
 		return
 	game_result_shown = true
 	match_label.text = result_text
+	match_restart_button.visible = show_restart
 	match_exit_button.text = button_text
 	match_popup.visible = true
 	if pause_game:
@@ -237,9 +239,9 @@ func _create_match_popup() -> void:
 	match_popup.anchor_right = 0.5
 	match_popup.anchor_bottom = 0.5
 	match_popup.offset_left = -170.0
-	match_popup.offset_top = -70.0
+	match_popup.offset_top = -95.0
 	match_popup.offset_right = 170.0
-	match_popup.offset_bottom = 70.0
+	match_popup.offset_bottom = 95.0
 	add_child(match_popup)
 
 	var box := VBoxContainer.new()
@@ -258,10 +260,27 @@ func _create_match_popup() -> void:
 	match_label.add_theme_font_size_override("font_size", 28)
 	box.add_child(match_label)
 
+	match_restart_button = Button.new()
+	match_restart_button.text = "Restart"
+	match_restart_button.visible = false
+	match_restart_button.pressed.connect(_restart_current_level)
+	box.add_child(match_restart_button)
+
 	match_exit_button = Button.new()
 	match_exit_button.text = "Exit Online"
 	match_exit_button.pressed.connect(_exit_online_match)
 	box.add_child(match_exit_button)
+
+
+func _restart_current_level() -> void:
+	get_tree().paused = false
+	var settings := get_node_or_null("/root/GameSettings")
+	if settings and settings.has_method("start_offline_level"):
+		var level := String(settings.get("offline_tries_level"))
+		if level.is_empty():
+			level = String(settings.get("selected_level"))
+		settings.call("start_offline_level", level)
+	get_tree().reload_current_scene()
 
 
 func _open_pause_menu() -> void:

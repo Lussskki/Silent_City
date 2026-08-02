@@ -12,7 +12,6 @@ const REMOTE_EXTRAPOLATION_LIMIT = 0.12
 const DEFAULT_SPRITE_OFFSET := Vector2(0, -24)
 const GOLEM_SPRITE_OFFSET := Vector2(0, -24)
 const HURT_ANIMATION_TIME := 0.28
-const LETTER_LEFT_HOLD_DELAY := 0.14
 
 
 signal life_changed(life: int, max_life: int)
@@ -32,8 +31,12 @@ signal life_changed(life: int, max_life: int)
 @export var attack_hit_radius := 185.0
 @export var attack_vertical_tolerance := 125.0
 @export var attack_back_reach := 36.0
+@export var kick_hit_radius := 82.0
+@export var kick_vertical_tolerance := 70.0
+@export var kick_back_reach := 12.0
 @export var slash_hit_window := 0.34
 @export var kick_hit_window := 0.28
+@export var kick_knockback_force := Vector2(260, -55)
 @export_group("Online")
 @export var local_player := true
 @export var network_player_id := 1
@@ -63,7 +66,6 @@ var remote_target_velocity := Vector2.ZERO
 var remote_state_age := 0.0
 var hit_targets := {}
 var was_on_floor := false
-var letter_left_hold_timer := 0.0
 
 func _ready():
 	_set_player_groups(true)
@@ -135,7 +137,9 @@ func _physics_process(delta):
 		_begin_attack("Kicking", kick_hit_window)
 
 	# Movement
-	var direction := _read_move_direction(delta)
+	var direction := Input.get_axis("move_left", "move_right")
+	if is_zero_approx(direction):
+		direction = Input.get_axis("ui_left", "ui_right")
 	var speed := WALK_SPEED
 
 	if Input.is_action_pressed("run"):
@@ -318,22 +322,6 @@ func _update_landing_sound() -> void:
 	was_on_floor = on_floor
 
 
-func _read_move_direction(delta: float) -> float:
-	var direction := Input.get_axis("move_left", "move_right")
-	if is_zero_approx(direction):
-		direction = Input.get_axis("ui_left", "ui_right")
-
-	if Input.is_key_pressed(KEY_A):
-		letter_left_hold_timer += delta
-	else:
-		letter_left_hold_timer = 0.0
-
-	if is_zero_approx(direction) and letter_left_hold_timer >= LETTER_LEFT_HOLD_DELAY:
-		direction = -1.0
-
-	return direction
-
-
 func is_attacking_enemy() -> bool:
 	return attacking and sprite.animation in [
 		"Slashing",
@@ -346,11 +334,19 @@ func is_attacking_enemy() -> bool:
 func get_attack_damage() -> int:
 	match sprite.animation:
 		"Kicking":
-			return 20
+			return 12
 		"Run Slashing":
 			return 35
 		_:
 			return 25
+
+
+func get_attack_knockback() -> Vector2:
+	if sprite.animation != "Kicking":
+		return Vector2.ZERO
+
+	var facing_direction := -1.0 if sprite.flip_h else 1.0
+	return Vector2(kick_knockback_force.x * facing_direction, kick_knockback_force.y)
 
 
 func take_damage(amount: int) -> void:
@@ -697,6 +693,7 @@ func _get_png_files(folder_path: String) -> Array[String]:
 
 func _damage_nearby_enemies() -> void:
 	var damage := get_attack_damage()
+	var knockback := get_attack_knockback()
 	var hit_origin: Vector2 = sprite.global_position
 	var facing_direction := -1.0 if sprite.flip_h else 1.0
 	for enemy in get_tree().get_nodes_in_group("Enemy"):
@@ -709,7 +706,7 @@ func _damage_nearby_enemies() -> void:
 
 		if not _is_valid_hit(hit_origin, enemy_position, facing_direction):
 			continue
-		if _try_damage_target(enemy, damage):
+		if _try_damage_target(enemy, damage, knockback):
 			_play_sound(hit_audio)
 
 
@@ -750,7 +747,7 @@ func _process_attack_hits(delta: float) -> void:
 	attack_hit_timer = max(attack_hit_timer - delta, 0.0)
 
 
-func _try_damage_target(target: Node, damage: int) -> bool:
+func _try_damage_target(target: Node, damage: int, knockback := Vector2.ZERO) -> bool:
 	if hit_targets.has(target.get_instance_id()):
 		return false
 
@@ -766,12 +763,20 @@ func _try_damage_target(target: Node, damage: int) -> bool:
 		and target_peer_id > 0
 		and target_peer_id != api.get_unique_id()
 		and target_peer_id in api.get_peers()
-		and target.has_method("network_take_damage")
 	):
-		target.rpc_id(target_peer_id, "network_take_damage", damage)
-		dealt_damage = true
+		if knockback != Vector2.ZERO and target.has_method("network_take_kick"):
+			target.rpc_id(target_peer_id, "network_take_kick", damage, knockback)
+			dealt_damage = true
+		elif target.has_method("network_take_damage"):
+			target.rpc_id(target_peer_id, "network_take_damage", damage)
+			dealt_damage = true
 	elif target.has_method("take_damage"):
-		target.take_damage(damage)
+		if knockback != Vector2.ZERO and target.has_method("take_kick"):
+			target.take_kick(damage, knockback)
+		else:
+			target.take_damage(damage)
+			if knockback != Vector2.ZERO and target.has_method("apply_knockback"):
+				target.apply_knockback(knockback)
 		dealt_damage = true
 
 	if dealt_damage:
@@ -781,11 +786,20 @@ func _try_damage_target(target: Node, damage: int) -> bool:
 
 func _is_valid_hit(hit_origin: Vector2, target_position: Vector2, facing_direction: float) -> bool:
 	var hit_offset := target_position - hit_origin
-	if abs(hit_offset.y) > attack_vertical_tolerance:
+	var reach := attack_hit_radius
+	var vertical_tolerance := attack_vertical_tolerance
+	var back_reach := attack_back_reach
+
+	if sprite.animation == "Kicking":
+		reach = kick_hit_radius
+		vertical_tolerance = kick_vertical_tolerance
+		back_reach = kick_back_reach
+
+	if abs(hit_offset.y) > vertical_tolerance:
 		return false
-	if hit_offset.x * facing_direction < -attack_back_reach:
+	if hit_offset.x * facing_direction < -back_reach:
 		return false
-	if hit_offset.x * facing_direction > attack_hit_radius:
+	if hit_offset.x * facing_direction > reach:
 		return false
 	return true
 
