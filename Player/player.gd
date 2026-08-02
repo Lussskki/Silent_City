@@ -12,6 +12,7 @@ const REMOTE_EXTRAPOLATION_LIMIT = 0.12
 const DEFAULT_SPRITE_OFFSET := Vector2(0, -24)
 const GOLEM_SPRITE_OFFSET := Vector2(0, -24)
 const HURT_ANIMATION_TIME := 0.28
+const LETTER_LEFT_HOLD_DELAY := 0.14
 
 
 signal life_changed(life: int, max_life: int)
@@ -62,6 +63,7 @@ var remote_target_velocity := Vector2.ZERO
 var remote_state_age := 0.0
 var hit_targets := {}
 var was_on_floor := false
+var letter_left_hold_timer := 0.0
 
 func _ready():
 	_set_player_groups(true)
@@ -133,9 +135,7 @@ func _physics_process(delta):
 		_begin_attack("Kicking", kick_hit_window)
 
 	# Movement
-	var direction := Input.get_axis("move_left", "move_right")
-	if is_zero_approx(direction):
-		direction = Input.get_axis("ui_left", "ui_right")
+	var direction := _read_move_direction(delta)
 	var speed := WALK_SPEED
 
 	if Input.is_action_pressed("run"):
@@ -316,6 +316,22 @@ func _update_landing_sound() -> void:
 	if on_floor and not was_on_floor and abs(velocity.y) < 1.0:
 		_play_sound(landing_audio)
 	was_on_floor = on_floor
+
+
+func _read_move_direction(delta: float) -> float:
+	var direction := Input.get_axis("move_left", "move_right")
+	if is_zero_approx(direction):
+		direction = Input.get_axis("ui_left", "ui_right")
+
+	if Input.is_key_pressed(KEY_A):
+		letter_left_hold_timer += delta
+	else:
+		letter_left_hold_timer = 0.0
+
+	if is_zero_approx(direction) and letter_left_hold_timer >= LETTER_LEFT_HOLD_DELAY:
+		direction = -1.0
+
+	return direction
 
 
 func is_attacking_enemy() -> bool:
