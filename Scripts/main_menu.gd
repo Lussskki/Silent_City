@@ -24,6 +24,11 @@ const TEXT := {
 		"hard": "Hard",
 		"choose_character": "Choose Character",
 		"online_room": "Online",
+		"how_to_play": "How to Play",
+		"how_to_play_text": "Move with Left/Right arrows or D.\nJump with Space.\nUse hands with A and S.\nDefeat enemies, avoid spikes, and collect hearts for health.",
+		"how_attack": "Hands: A / S",
+		"how_heart": "Collect hearts",
+		"how_jump": "Jump: Space",
 		"exit": "Exit",
 		"select": "Select",
 		"choose_first": "Choose a character before starting.",
@@ -65,48 +70,57 @@ const TEXT := {
 	},
 	LANG_GEO: {
 		"language_button": "ENG",
-		"subtitle": "áƒáƒ˜áƒ áƒ©áƒ˜áƒ” áƒ‘áƒ áƒ«áƒáƒšáƒ",
-		"start": "áƒ“áƒáƒ¬áƒ§áƒ”áƒ‘áƒ",
-		"choose_character": "áƒžáƒ”áƒ áƒ¡áƒáƒœáƒáƒŸáƒ˜",
-		"online_room": "Online",
-		"exit": "áƒ’áƒáƒ¡áƒ•áƒšáƒ",
-		"select": "áƒáƒ áƒ©áƒ”áƒ•áƒ",
-		"choose_first": "áƒ¯áƒ”áƒ  áƒáƒ˜áƒ áƒ©áƒ˜áƒ” áƒžáƒ”áƒ áƒ¡áƒáƒœáƒáƒŸáƒ˜.",
-		"start_game": "áƒ—áƒáƒ›áƒáƒ¨áƒ˜áƒ¡ áƒ“áƒáƒ¬áƒ§áƒ”áƒ‘áƒ",
-		"back": "áƒ£áƒ™áƒáƒœ",
-		"host_room": "Create Room",
-		"return_to_match": "Return to Game",
-		"join": "áƒ¨áƒ”áƒ¡áƒ•áƒšáƒ",
-		"start_online_room": "Start Match",
+		"subtitle": "აირჩიე ბრძოლა",
+		"start": "დაწყება",
+		"choose_level": "აირჩიე დონე",
+		"easy": "მარტივი",
+		"medium": "საშუალო",
+		"hard": "რთული",
+		"choose_character": "აირჩიე პერსონაჟი",
+		"online_room": "ონლაინი",
+		"how_to_play": "როგორ ვითამაშოთ",
+		"how_to_play_text": "იმოძრავე მარცხენა/მარჯვენა ისრებით ან D-ით.\nახტომა: Space.\nხელებით დარტყმა: A და S.\nდაამარცხე მტრები, მოერიდე ეკლებს და შეაგროვე გულები სიცოცხლისთვის.",
+		"how_attack": "ხელები: A / S",
+		"how_heart": "შეაგროვე გულები",
+		"how_jump": "ახტომა: Space",
+		"exit": "გასვლა",
+		"select": "არჩევა",
+		"choose_first": "ჯერ აირჩიე პერსონაჟი.",
+		"start_game": "თამაშის დაწყება",
+		"back": "უკან",
+		"host_room": "ოთახის შექმნა",
+		"return_to_match": "თამაშში დაბრუნება",
+		"join": "შესვლა",
+		"start_online_room": "მატჩის დაწყება",
 		"tutorial_title": "Steam Lobby",
-		"skip": "áƒ’áƒáƒ›áƒáƒ¢áƒáƒ•áƒ”áƒ‘áƒ",
-		"next": "áƒ¨áƒ”áƒ›áƒ“áƒ”áƒ’áƒ˜",
-		"done": "áƒ›áƒ–áƒáƒ“áƒáƒ",
-		"selected_online": "Selected: %s. Wait for the Steam lobby to start.",
-		"selected": "áƒáƒ áƒ©áƒ”áƒ£áƒšáƒ˜áƒ: %s",
-		"host_failed": "áƒáƒ—áƒáƒ®áƒ˜ áƒ•áƒ”áƒ  áƒ’áƒáƒ˜áƒ®áƒ¡áƒœáƒ: %s",
-		"room_open": "Steam lobby is open. Invite a friend or let them press Join.",
-		"steam_creating_lobby": "Creating Steam lobby...",
-		"steam_finding_lobby": "Looking for rooms...",
-		"steam_lobby_count": "Select a room to join.",
-		"steam_no_lobby": "No rooms yet. Waiting for rooms...",
-		"steam_transport_missing": "Steam lobby works, but Steam MultiplayerPeer addon is missing.",
-		"hosting_device": "This device is already hosting a Steam lobby.",
-		"hosting_active": "Your Steam room is still open.",
-		"no_room_selected": "No Steam lobby selected.",
-		"join_failed": "áƒ¨áƒ”áƒ¡áƒ•áƒšáƒ áƒ•áƒ”áƒ  áƒ›áƒáƒ®áƒ”áƒ áƒ®áƒ“áƒ: %s",
-		"joining": "áƒáƒ—áƒáƒ®áƒ¨áƒ˜ áƒ¨áƒ”áƒ¡áƒ•áƒšáƒ...",
-		"connected_choose": "áƒ“áƒáƒ™áƒáƒ•áƒ¨áƒ˜áƒ áƒ”áƒ‘áƒ£áƒšáƒ˜áƒ. áƒáƒ˜áƒ áƒ©áƒ˜áƒ” áƒžáƒ”áƒ áƒ¡áƒáƒœáƒáƒŸáƒ˜.",
-		"waiting_for_host_start": "Character selected. Waiting for both players.",
-		"waiting_for_player_choice": "Waiting for the other player to choose a character.",
-		"player_connected": "Player connected.\nChoose characters to start.",
-		"both_ready": "Both players ready. Starting match...",
-		"room_waiting": "Steam lobby is open. Waiting for player to join.",
-		"connection_failed": "áƒ™áƒáƒ•áƒ¨áƒ˜áƒ áƒ˜ áƒ•áƒ”áƒ  áƒ›áƒáƒ®áƒ”áƒ áƒ®áƒ“áƒ",
-		"online_status_default": "Create a room or join a room that appears here.",
-		"steam_not_ready": "Steam is not ready. Open Steam and restart the game.",
-		"invalid_address": "No Steam lobby selected.",
-		"room_players": "%s - %d/%d áƒ›áƒáƒ—áƒáƒ›áƒáƒ¨áƒ”"
+		"skip": "გამოტოვება",
+		"next": "შემდეგი",
+		"done": "მზადაა",
+		"selected_online": "არჩეულია: %s. დაელოდე Steam ლობის დაწყებას.",
+		"selected": "არჩეულია: %s",
+		"host_failed": "ოთახი ვერ შეიქმნა: %s",
+		"room_open": "Steam ლობი გახსნილია. მოიწვიე მეგობარი ან დააჭერინე Join.",
+		"steam_creating_lobby": "Steam ლობი იქმნება...",
+		"steam_finding_lobby": "ოთახების ძებნა...",
+		"steam_lobby_count": "აირჩიე ოთახი შესასვლელად.",
+		"steam_no_lobby": "ოთახები ჯერ არ არის. ველოდებით...",
+		"steam_transport_missing": "Steam ლობი მუშაობს, მაგრამ Steam MultiplayerPeer addon აკლია.",
+		"hosting_device": "ეს მოწყობილობა უკვე ქმნის Steam ლობის.",
+		"hosting_active": "შენი Steam ოთახი ისევ ღიაა.",
+		"no_room_selected": "Steam ლობი არჩეული არ არის.",
+		"join_failed": "შესვლა ვერ მოხერხდა: %s",
+		"joining": "ოთახში შესვლა...",
+		"connected_choose": "დაკავშირებულია. აირჩიე პერსონაჟი.",
+		"waiting_for_host_start": "პერსონაჟი არჩეულია. ველოდებით ორივე მოთამაშეს.",
+		"waiting_for_player_choice": "ველოდებით მეორე მოთამაშის არჩევანს.",
+		"player_connected": "მოთამაშე შემოვიდა.\nაირჩიეთ პერსონაჟები დასაწყებად.",
+		"both_ready": "ორივე მოთამაშე მზადაა. მატჩი იწყება...",
+		"room_waiting": "Steam ლობი ღიაა. ველოდებით მოთამაშეს.",
+		"connection_failed": "კავშირი ვერ მოხერხდა",
+		"online_status_default": "შექმენი ოთახი ან შედი აქ გამოჩენილ ოთახში.",
+		"steam_not_ready": "Steam მზად არ არის. გახსენი Steam და თავიდან გაუშვი თამაში.",
+		"invalid_address": "Steam ლობი არჩეული არ არის.",
+		"room_players": "%s - %d/%d მოთამაშე"
 	}
 }
 const ONLINE_TUTORIAL_STEPS := {
@@ -117,10 +131,10 @@ const ONLINE_TUTORIAL_STEPS := {
 		"Host can leave to menu and press Return to Game to rejoin."
 	],
 	LANG_GEO: [
-		"Create Room opens a Steam room for other players.",
-		"Open rooms appear automatically. Select one and press Join.",
-		"Both players choose different characters. The match starts by itself.",
-		"Host can leave to menu and press Return to Game to rejoin."
+		"ოთახის შექმნა ხსნის Steam ოთახს სხვა მოთამაშეებისთვის.",
+		"ღია ოთახები ავტომატურად გამოჩნდება. აირჩიე ოთახი და დააჭირე Join.",
+		"ორივე მოთამაშე ირჩევს განსხვავებულ პერსონაჟს. მატჩი თვითონ იწყება.",
+		"Host-ს შეუძლია მენიუში გასვლა და Return to Game-ით დაბრუნება."
 	]
 }
 
@@ -130,10 +144,12 @@ const ONLINE_TUTORIAL_STEPS := {
 @onready var home_page: VBoxContainer = $Content/Root/Pages/Home
 @onready var level_page: VBoxContainer = $Content/Root/Pages/ChooseLevel
 @onready var choose_page: VBoxContainer = $Content/Root/Pages/ChooseCharacter
+@onready var how_to_play_page: VBoxContainer = $Content/Root/Pages/HowToPlay
 @onready var online_page: VBoxContainer = $Content/Root/Pages/Online
 @onready var home_start_button: Button = $Content/Root/Pages/Home/StartButton
 @onready var home_choose_button: Button = $Content/Root/Pages/Home/ChooseButton
 @onready var home_online_button: Button = $Content/Root/Pages/Home/OnlineButton
+@onready var home_how_to_play_button: Button = $Content/Root/Pages/Home/HowToPlayButton
 @onready var home_exit_button: Button = $Content/Root/Pages/Home/ExitButton
 @onready var level_header: Label = $Content/Root/Pages/ChooseLevel/Header
 @onready var easy_button: Button = $Content/Root/Pages/ChooseLevel/EasyButton
@@ -149,6 +165,12 @@ const ONLINE_TUTORIAL_STEPS := {
 @onready var choose_start_button: Button = $Content/Root/Pages/ChooseCharacter/StartButton
 @onready var choose_online_button: Button = $Content/Root/Pages/ChooseCharacter/OnlineButton
 @onready var choose_back_button: Button = $Content/Root/Pages/ChooseCharacter/BackButton
+@onready var how_to_play_header: Label = $Content/Root/Pages/HowToPlay/Header
+@onready var how_to_play_instructions: Label = $Content/Root/Pages/HowToPlay/Instructions
+@onready var how_attack_label: Label = $Content/Root/Pages/HowToPlay/Cards/AttackCard/Text
+@onready var how_heart_label: Label = $Content/Root/Pages/HowToPlay/Cards/HeartCard/Text
+@onready var how_jump_label: Label = $Content/Root/Pages/HowToPlay/Cards/JumpCard/Text
+@onready var how_to_play_back_button: Button = $Content/Root/Pages/HowToPlay/BackButton
 @onready var online_tutorial_overlay: Control = $Content/Root/Pages/TutorialOverlay
 @onready var online_tutorial_title: Label = $Content/Root/Pages/TutorialOverlay/Card/Box/Title
 @onready var online_tutorial_text: Label = $Content/Root/Pages/TutorialOverlay/Card/Box/Text
@@ -188,6 +210,7 @@ func _ready() -> void:
 	home_start_button.pressed.connect(_open_start_flow)
 	home_choose_button.pressed.connect(func(): _show_page(choose_page))
 	home_online_button.pressed.connect(_open_online_page)
+	home_how_to_play_button.pressed.connect(func(): _show_page(how_to_play_page))
 	home_exit_button.pressed.connect(_exit_game)
 	easy_button.pressed.connect(func(): _select_level("easy"))
 	medium_button.pressed.connect(func(): _select_level("medium"))
@@ -202,6 +225,7 @@ func _ready() -> void:
 	choose_start_button.pressed.connect(_open_level_select_from_character)
 	choose_online_button.pressed.connect(_open_online_page)
 	choose_back_button.pressed.connect(_back_from_character_page)
+	how_to_play_back_button.pressed.connect(func(): _show_page(home_page))
 	host_button.pressed.connect(_host_online_game)
 	join_button.pressed.connect(_join_online_game)
 	lobby_select.item_activated.connect(func(_index: int): _join_online_game())
@@ -276,6 +300,7 @@ func _apply_language() -> void:
 	home_start_button.text = _t("start")
 	home_choose_button.text = _t("choose_character")
 	home_online_button.text = _t("online_room")
+	home_how_to_play_button.text = _t("how_to_play")
 	home_exit_button.text = _t("exit")
 	level_header.text = _t("choose_level")
 	easy_button.text = _t("easy")
@@ -288,6 +313,12 @@ func _apply_language() -> void:
 	choose_start_button.text = _t("start_game")
 	choose_online_button.text = _t("online_room")
 	choose_back_button.text = _t("back")
+	how_to_play_header.text = _t("how_to_play")
+	how_to_play_instructions.text = _t("how_to_play_text")
+	how_attack_label.text = _t("how_attack")
+	how_heart_label.text = _t("how_heart")
+	how_jump_label.text = _t("how_jump")
+	how_to_play_back_button.text = _t("back")
 	online_header.text = _t("online_room")
 	host_button.text = _t("host_room")
 	join_button.text = _t("join")

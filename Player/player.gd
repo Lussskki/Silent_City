@@ -133,7 +133,9 @@ func _physics_process(delta):
 		_begin_attack("Kicking", kick_hit_window)
 
 	# Movement
-	var direction := Input.get_axis("ui_left", "ui_right")
+	var direction := Input.get_axis("move_left", "move_right")
+	if is_zero_approx(direction):
+		direction = Input.get_axis("ui_left", "ui_right")
 	var speed := WALK_SPEED
 
 	if Input.is_action_pressed("run"):
@@ -516,6 +518,12 @@ func _update_remote_network_motion(delta: float) -> void:
 
 
 func _load_dynamic_sprite_frames() -> void:
+	var packaged_frames := load("res://Resources/ash_golem_sprite_frames.tres") as SpriteFrames
+	if packaged_frames:
+		sprite.sprite_frames = packaged_frames
+		sprite.play("Idle")
+		return
+
 	if dynamic_frames_root.is_empty():
 		return
 

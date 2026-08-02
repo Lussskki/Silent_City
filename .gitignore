@@ -2,3 +2,6 @@
 .godot/
 /android/
 .codex/
+/build/
+/builds/
+addons/godotsteam/win64/~*.dll
