@@ -5,3 +5,4 @@
 /build/
 /builds/
 addons/godotsteam/win64/~*.dll
+addons/godotsteam/win64/~*.TMP
