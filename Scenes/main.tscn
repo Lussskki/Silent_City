@@ -37,7 +37,7 @@
 [ext_resource type="PackedScene" uid="uid://ktuf83rha8ye" path="res://Scenes/GolemPlayer.tscn" id="42_golem_player"]
 [ext_resource type="PackedScene" path="res://Enemies/enemy.tscn" id="43_enemy_scene"]
 [ext_resource type="Script" uid="uid://dqflgmk88ohqg" path="res://Enemies/enemy_spawner.gd" id="44_enemy_spawner"]
-[ext_resource type="Script" path="res://Scripts/health_drop_spawner.gd" id="45_health_drop_spawner"]
+[ext_resource type="Script" uid="uid://c3yfa45lm07da" path="res://Scripts/health_drop_spawner.gd" id="45_health_drop_spawner"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_start"]
 size = Vector2(629, 64)
@@ -91,8 +91,8 @@ texture = ExtResource("2_bg")
 
 [node name="BackgroundB" type="Sprite2D" parent="." unique_id=1200270985]
 z_index = -50
-position = Vector2(2800, 460.325)
-scale = Vector2(0.9, 1.0755467)
+position = Vector2(2933, 460.325)
+scale = Vector2(1.033, 1.0755467)
 texture = ExtResource("2_bg")
 
 [node name="Level" type="Node2D" parent="." unique_id=1045485232]
@@ -517,5 +517,5 @@ spawn_count = 3
 spawn_seed = 1201
 spawn_areas = Array[Rect2]([Rect2(760, 389, 270, 1), Rect2(1270, 485, 280, 1), Rect2(1840, 453, 410, 1), Rect2(3090, 453, 350, 1)])
 
-[node name="HealthDropSpawner" type="CanvasLayer" parent="."]
+[node name="HealthDropSpawner" type="CanvasLayer" parent="." unique_id=348391563]
 script = ExtResource("45_health_drop_spawner")
