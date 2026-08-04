@@ -37,6 +37,7 @@ func reset_online() -> void:
 	online_mode = false
 	online_role = ""
 	online_remote_character = "golem"
+	character_chosen = false
 	reset_online_rounds()
 
 

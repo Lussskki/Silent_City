@@ -1,4 +1,4 @@
-﻿extends Control
+extends Control
 
 const MAIN_SCENE := "res://Scenes/main.tscn"
 const MEDIUM_SCENE := "res://Scenes/MainMedium.tscn"
@@ -361,6 +361,7 @@ func _exit_game() -> void:
 
 
 func _open_online_page() -> void:
+	_sync_online_state_with_peer()
 	_update_online_room_text()
 	_show_page(online_page)
 	_request_steam_lobbies(true)
@@ -617,7 +618,7 @@ func _prepare_online_host(peer: MultiplayerPeer) -> void:
 	online_match_starting = false
 	steam_lobbies.clear()
 	_update_lobby_select()
-	online_status.text = "Steam lobby is open. Invite a friend or let them press Join."
+	_set_online_status_with_player_line(_t("room_open"))
 	online_start_button.visible = false
 	_update_room_buttons()
 	joined_room_waiting_for_character = true
@@ -642,7 +643,7 @@ func _try_auto_start_online_match() -> void:
 		_update_character_cards()
 		return
 	if multiplayer.get_peers().is_empty():
-		online_status.text = _t("room_waiting")
+		_set_online_status_with_player_line(_t("room_waiting"))
 		return
 	if not remote_client_character_chosen:
 		character_status.text = _t("waiting_for_player_choice")
@@ -781,7 +782,7 @@ func _on_peer_connected(peer_id: int) -> void:
 		other_player_character = ""
 		other_player_character_chosen = false
 		online_match_starting = false
-		online_status.text = _t("player_connected")
+		_set_online_status_with_player_line(_t("player_connected"))
 		_update_room_buttons()
 		_sync_online_character_state.call_deferred()
 
@@ -794,7 +795,7 @@ func _on_peer_disconnected(_peer_id: int) -> void:
 		other_player_character = ""
 		other_player_character_chosen = false
 		online_match_starting = false
-		online_status.text = _t("room_waiting")
+		_set_online_status_with_player_line(_t("room_waiting"))
 		_update_character_cards()
 		_update_room_buttons()
 
@@ -835,7 +836,8 @@ func _back_from_online() -> void:
 
 
 func _update_online_room_text() -> void:
-	online_status.text = _t("online_status_default")
+	_sync_online_state_with_peer()
+	_set_online_status_with_player_line(_t("online_status_default"))
 	_update_room_buttons()
 
 
@@ -958,6 +960,7 @@ func _update_room_buttons() -> void:
 	if not host_button or not join_button or not online_start_button:
 		return
 
+	_sync_online_state_with_peer()
 	var hosting := _is_hosting_room()
 	var joining := _is_joining_room()
 	var has_peer := multiplayer.multiplayer_peer != null
@@ -1045,7 +1048,7 @@ func _client_online_character_selected(character: String) -> void:
 	other_player_character_chosen = true
 	if settings:
 		settings.set("online_remote_character", character)
-	online_status.text = _t("player_connected")
+	_set_online_status_with_player_line(_t("player_connected"))
 	_update_character_cards()
 	_update_room_buttons()
 	_sync_online_character_state()
@@ -1095,9 +1098,41 @@ func _make_room_id() -> String:
 	return "%d-%d" % [Time.get_ticks_msec(), randi()]
 
 
+func _sync_online_state_with_peer() -> void:
+	var settings := _settings()
+	if not settings:
+		return
+	if settings.get("online_mode") != true:
+		return
+	if multiplayer.has_multiplayer_peer():
+		return
+	settings.call("reset_online")
+	joined_room_waiting_for_character = false
+	remote_client_character = "golem"
+	remote_client_character_chosen = false
+	other_player_character = ""
+	other_player_character_chosen = false
+	online_match_starting = false
+	pending_join_lobby.clear()
+
+
+func _set_online_status_with_player_line(base_text: String) -> void:
+	if not online_status:
+		return
+	online_status.text = "%s\n%s" % [base_text, _online_player_status_line()]
+
+
+func _online_player_status_line() -> String:
+	if _is_hosting_room():
+		if multiplayer.get_peers().size() > 0:
+			return "Second player: connected"
+		return "Second player: not connected"
+	if _is_joining_room() and multiplayer.has_multiplayer_peer():
+		return "Host: connected"
+	return "Second player: not connected"
+
+
 func _error_message(error: int) -> String:
 	if error == ERR_CANT_CREATE:
 		return "20 no network permission/port busy"
 	return str(error)
-
-

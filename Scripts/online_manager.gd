@@ -1,4 +1,4 @@
-﻿extends CanvasLayer
+extends CanvasLayer
 
 const PORT := 8910
 const MAX_CLIENTS := 1
@@ -10,6 +10,8 @@ const SECOND_PLAYER_SPAWNS_BY_SCENE := {
 	"res://Scenes/MainHard.tscn": Vector2(3282, 195),
 }
 const ASH_GOLEM_FRAMES_ROOT := "res://Player/player_assets/PNG Sequences"
+const ONLINE_ASH_GOLEM_SPRITE_OFFSET := Vector2(0, -12)
+const ONLINE_STONE_GOLEM_SPRITE_OFFSET := Vector2(0, -12)
 const ASH_GOLEM_ANIMATION_DIRS := {
 	"Idle": "Idle",
 	"Walking": "Walking",
@@ -160,6 +162,7 @@ func _spawn_remote_golem(peer_id: int, character: String = "golem") -> void:
 func _apply_remote_host_character(character: String = "player") -> void:
 	if main_player:
 		_apply_character_to_player(main_player, character)
+		_face_player_east(main_player)
 
 
 @rpc("authority", "reliable")
@@ -191,6 +194,8 @@ func _bootstrap_menu_connection() -> void:
 
 	if multiplayer.is_server():
 		_configure_main_player(true)
+		_apply_character_to_player(main_player, _selected_character())
+		_face_player_east(main_player)
 		_set_status("Online: Hosting")
 		for peer_id in multiplayer.get_peers():
 			_complete_peer_spawn.call_deferred(peer_id, _remote_client_character())
@@ -218,11 +223,19 @@ func _spawn_golem_player(peer_id: int, controlled_locally: bool, character: Stri
 	player.global_position = second_player_spawn
 	_set_player_active(player, true)
 	spawned_players[SECOND_PLAYER_NAME] = player
-	_apply_character_to_player(player, character)
-	_face_player_east(player)
 
 	if player.has_method("configure_online_player"):
 		player.configure_online_player(peer_id, controlled_locally)
+	_apply_character_to_player(player, character)
+	_face_player_east(player)
+
+
+func is_second_player_connected() -> bool:
+	if not multiplayer.has_multiplayer_peer():
+		return false
+	if multiplayer.is_server():
+		return multiplayer.get_peers().size() > 0
+	return true
 
 
 func _remove_spawned_players() -> void:
@@ -268,7 +281,7 @@ func _apply_character_to_player(player: Node2D, character: String) -> void:
 		var golem_frames := load("res://Resources/golem_sprite_frames.tres") as SpriteFrames
 		if golem_frames:
 			sprite.sprite_frames = golem_frames
-			sprite.position = Vector2(0, -24)
+			sprite.position = ONLINE_STONE_GOLEM_SPRITE_OFFSET
 			sprite.play("Idle")
 		_apply_stone_golem_sounds(player)
 		return
@@ -277,7 +290,7 @@ func _apply_character_to_player(player: Node2D, character: String) -> void:
 	var player_frames = _get_ash_golem_frames(settings)
 	if player_frames is SpriteFrames:
 		sprite.sprite_frames = player_frames
-		sprite.position = Vector2(0, -32)
+		sprite.position = ONLINE_ASH_GOLEM_SPRITE_OFFSET
 		sprite.play("Idle")
 		return
 
@@ -445,4 +458,3 @@ func _get_png_files(folder_path: String) -> Array[String]:
 	dir.list_dir_end()
 	files.sort()
 	return files
-

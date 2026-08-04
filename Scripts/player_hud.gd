@@ -16,6 +16,7 @@ var match_popup: Panel
 var match_label: Label
 var match_restart_button: Button
 var match_exit_button: Button
+var second_player_label: Label
 var enemies_seen_once := false
 var game_result_shown := false
 var result_check_delay := 0.35
@@ -29,10 +30,12 @@ func _ready() -> void:
 	main_menu_button.pressed.connect(_go_to_main_menu)
 	pause_menu.visible = false
 	_create_match_popup()
+	_create_second_player_label()
 	_connect_round_counter()
 	_connect_local_player()
 	_update_enemy_count()
 	_update_try_count()
+	_update_second_player_status()
 
 
 func _process(delta: float) -> void:
@@ -46,6 +49,7 @@ func _process(delta: float) -> void:
 	if local_player and local_player != player:
 		_connect_local_player()
 	var enemies_left := _update_enemy_count()
+	_update_second_player_status()
 	_update_offline_result(delta, enemies_left)
 
 
@@ -197,7 +201,7 @@ func _connect_round_counter() -> void:
 
 
 func _on_online_rounds_changed(rounds_played: int, max_rounds: int) -> void:
-	round_label.text = "%d/%d" % [rounds_played, max_rounds]
+	round_label.text = "Rounds: %d/%d" % [rounds_played, max_rounds]
 
 
 func _on_online_match_finished(winner_name: String) -> void:
@@ -272,6 +276,38 @@ func _create_match_popup() -> void:
 	box.add_child(match_exit_button)
 
 
+func _create_second_player_label() -> void:
+	second_player_label = Label.new()
+	second_player_label.name = "SecondPlayerStatusLabel"
+	second_player_label.visible = false
+	second_player_label.offset_left = round_label.offset_left
+	second_player_label.offset_top = round_label.offset_top + 28.0
+	second_player_label.offset_right = max(round_label.offset_right, round_label.offset_left + 220.0)
+	second_player_label.offset_bottom = second_player_label.offset_top + 24.0
+	second_player_label.text = "Second Player: Off"
+	add_child(second_player_label)
+
+
+func _update_second_player_status() -> void:
+	if not second_player_label:
+		return
+	second_player_label.visible = multiplayer.has_multiplayer_peer()
+	if not second_player_label.visible:
+		return
+	second_player_label.text = "Second Player: %s" % ("On" if _is_second_player_connected() else "Off")
+
+
+func _is_second_player_connected() -> bool:
+	var online_manager := get_tree().get_first_node_in_group("OnlineManager")
+	if online_manager and online_manager.has_method("is_second_player_connected"):
+		return bool(online_manager.call("is_second_player_connected"))
+	if not multiplayer.has_multiplayer_peer():
+		return false
+	if multiplayer.is_server():
+		return multiplayer.get_peers().size() > 0
+	return true
+
+
 func _restart_current_level() -> void:
 	get_tree().paused = false
 	var settings := get_node_or_null("/root/GameSettings")
@@ -284,9 +320,23 @@ func _restart_current_level() -> void:
 
 
 func _open_pause_menu() -> void:
-	online_status_label.text = "Online: connected" if multiplayer.has_multiplayer_peer() else "Online: offline"
+	online_status_label.text = _online_status_text()
 	pause_menu.visible = true
 	get_tree().paused = true
+
+
+func _online_status_text() -> String:
+	var online_manager := get_tree().get_first_node_in_group("OnlineManager")
+	if not multiplayer.has_multiplayer_peer():
+		return "Online: offline\nSecond player: not connected"
+	if multiplayer.is_server():
+		var connected := false
+		if online_manager and online_manager.has_method("is_second_player_connected"):
+			connected = bool(online_manager.call("is_second_player_connected"))
+		else:
+			connected = multiplayer.get_peers().size() > 0
+		return "Online: hosting\nSecond player: %s" % ("connected" if connected else "not connected")
+	return "Online: connected\nHost: connected"
 
 
 func _return_to_game() -> void:
