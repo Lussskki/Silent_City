@@ -3,15 +3,16 @@ extends CanvasLayer
 const PORT := 8910
 const MAX_CLIENTS := 1
 const SECOND_PLAYER_NAME := "SecondPlayer"
-const SECOND_PLAYER_SPAWN_OFFSET := Vector2(-120, 0)
 const SECOND_PLAYER_SPAWNS_BY_SCENE := {
 	"res://Scenes/main.tscn": Vector2(3264, 404),
 	"res://Scenes/MainMedium.tscn": Vector2(3008, 410),
 	"res://Scenes/MainHard.tscn": Vector2(3282, 195),
 }
 const ASH_GOLEM_FRAMES_ROOT := "res://Player/player_assets/PNG Sequences"
-const ONLINE_ASH_GOLEM_SPRITE_OFFSET := Vector2(0, -12)
-const ONLINE_STONE_GOLEM_SPRITE_OFFSET := Vector2(0, -12)
+const ONLINE_CHARACTER_SPRITE_OFFSETS := {
+	"player": Vector2(0, -16),
+	"golem": Vector2(0, -16),
+}
 const ASH_GOLEM_ANIMATION_DIRS := {
 	"Idle": "Idle",
 	"Walking": "Walking",
@@ -40,6 +41,21 @@ var spawned_players := {}
 var first_player_spawn := Vector2.ZERO
 var second_player_spawn := Vector2.ZERO
 var closing_online_session := false
+var client_ready_sent := false
+
+
+func send_chat_message(message: String) -> void:
+	if not multiplayer.has_multiplayer_peer():
+		return
+
+	var clean_message := message.strip_edges()
+	if clean_message.is_empty():
+		return
+
+	clean_message = clean_message.left(120)
+	var author := _local_chat_name()
+	_add_chat_message(author, clean_message, false)
+	rpc("_receive_chat_message", author, clean_message)
 
 
 func _ready() -> void:
@@ -94,10 +110,14 @@ func _join_game() -> void:
 
 
 func _on_connected_to_server() -> void:
+	if client_ready_sent:
+		return
+	client_ready_sent = true
 	var local_id := multiplayer.get_unique_id()
 	var character := _selected_character()
-	_configure_main_player(false)
-	_spawn_golem_player(local_id, true, character)
+	_configure_main_player(true, local_id, _spawn_point_for_peer(local_id))
+	_apply_character_to_player(main_player, character)
+	_face_player_for_spawn(main_player, local_id)
 	_set_status("Online: Connected")
 	rpc_id(1, "_client_ready", local_id, character)
 
@@ -118,7 +138,6 @@ func _on_peer_connected(peer_id: int) -> void:
 	if not multiplayer.is_server():
 		return
 	_set_status("Online: Player connected")
-	_complete_peer_spawn.call_deferred(peer_id)
 
 
 func _on_peer_disconnected(peer_id: int) -> void:
@@ -155,7 +174,7 @@ func _client_ready(peer_id: int, character: String = "golem") -> void:
 
 @rpc("authority", "reliable")
 func _spawn_remote_golem(peer_id: int, character: String = "golem") -> void:
-	_spawn_golem_player(peer_id, peer_id == multiplayer.get_unique_id(), character)
+	_spawn_golem_player(peer_id, false, character)
 
 
 @rpc("authority", "reliable")
@@ -178,8 +197,7 @@ func _complete_peer_spawn(peer_id: int, character: String = "golem") -> void:
 		return
 
 	_spawn_golem_player(peer_id, false, character)
-	rpc_id(peer_id, "_spawn_remote_golem", peer_id, character)
-	rpc_id(peer_id, "_apply_remote_host_character", _selected_character())
+	rpc_id(peer_id, "_spawn_remote_golem", 1, _selected_character())
 
 
 func _bootstrap_menu_connection() -> void:
@@ -193,9 +211,10 @@ func _bootstrap_menu_connection() -> void:
 			panel.visible = false
 
 	if multiplayer.is_server():
-		_configure_main_player(true)
-		_apply_character_to_player(main_player, _selected_character())
-		_face_player_east(main_player)
+		_configure_main_player(true, 1, first_player_spawn)
+		var character := _selected_character()
+		_apply_character_to_player(main_player, character)
+		_face_player_for_spawn(main_player, 1)
 		_set_status("Online: Hosting")
 		for peer_id in multiplayer.get_peers():
 			_complete_peer_spawn.call_deferred(peer_id, _remote_client_character())
@@ -203,12 +222,12 @@ func _bootstrap_menu_connection() -> void:
 		_on_connected_to_server()
 
 
-func _configure_main_player(controlled_locally: bool) -> void:
+func _configure_main_player(controlled_locally: bool, player_id := 1, spawn_point := Vector2.INF) -> void:
 	if not main_player:
 		return
-	main_player.global_position = first_player_spawn
+	main_player.global_position = first_player_spawn if spawn_point == Vector2.INF else spawn_point
 	if main_player.has_method("configure_online_player"):
-		main_player.configure_online_player(1, controlled_locally)
+		main_player.configure_online_player(player_id, controlled_locally)
 
 
 func _spawn_golem_player(peer_id: int, controlled_locally: bool, character: String = "golem") -> void:
@@ -220,14 +239,14 @@ func _spawn_golem_player(peer_id: int, controlled_locally: bool, character: Stri
 		player.name = SECOND_PLAYER_NAME
 		get_parent().add_child(player)
 
-	player.global_position = second_player_spawn
+	player.global_position = _spawn_point_for_peer(peer_id)
 	_set_player_active(player, true)
 	spawned_players[SECOND_PLAYER_NAME] = player
 
 	if player.has_method("configure_online_player"):
 		player.configure_online_player(peer_id, controlled_locally)
 	_apply_character_to_player(player, character)
-	_face_player_east(player)
+	_face_player_for_spawn(player, peer_id)
 
 
 func is_second_player_connected() -> bool:
@@ -236,6 +255,110 @@ func is_second_player_connected() -> bool:
 	if multiplayer.is_server():
 		return multiplayer.get_peers().size() > 0
 	return true
+
+
+@rpc("any_peer", "unreliable_ordered")
+func _receive_player_network_state(remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool = false) -> void:
+	var api := get_multiplayer()
+	if api == null or not api.has_multiplayer_peer():
+		return
+	var peer_id := api.get_remote_sender_id()
+	if peer_id == 0:
+		return
+	_apply_player_network_state(peer_id, remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead)
+
+
+@rpc("any_peer", "reliable")
+func _receive_forced_player_network_state(remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool = false) -> void:
+	var api := get_multiplayer()
+	if api == null or not api.has_multiplayer_peer():
+		return
+	var peer_id := api.get_remote_sender_id()
+	if peer_id == 0:
+		return
+	_apply_player_network_state(peer_id, remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead)
+
+
+func _apply_player_network_state(peer_id: int, remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool) -> void:
+	var player := _remote_player_for_peer(peer_id)
+	if not player:
+		return
+	if peer_id != 1 and is_zero_approx(remote_velocity.x):
+		remote_flip_h = true
+	if player.has_method("_apply_remote_network_state"):
+		player.call("_apply_remote_network_state", remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead)
+
+
+@rpc("any_peer", "reliable")
+func _receive_player_damage(amount: int) -> void:
+	var player := _local_controlled_player()
+	if player and player.has_method("take_damage"):
+		player.call("take_damage", amount)
+
+
+@rpc("any_peer", "reliable")
+func _receive_chat_message(author: String, message: String) -> void:
+	var api := get_multiplayer()
+	if api == null or not api.has_multiplayer_peer():
+		return
+
+	var peer_id := api.get_remote_sender_id()
+	if peer_id == 0:
+		return
+
+	var clean_author := author.strip_edges().left(24)
+	var clean_message := message.strip_edges().left(120)
+	if clean_author.is_empty():
+		clean_author = "Player %d" % peer_id
+	if clean_message.is_empty():
+		return
+
+	_add_chat_message(clean_author, clean_message, true)
+
+
+func _add_chat_message(author: String, message: String, notify := false) -> void:
+	var hud := get_tree().get_first_node_in_group("PlayerHUD")
+	if hud and hud.has_method("add_chat_message"):
+		hud.call("add_chat_message", author, message, notify)
+
+
+func _local_chat_name() -> String:
+	var character := _selected_character()
+	if character == "golem":
+		return "Stone Golem"
+	return "Ash Golem"
+
+
+func _local_controlled_player() -> Node:
+	var players: Array[Node] = []
+	if main_player:
+		players.append(main_player)
+	var second_player := get_parent().get_node_or_null(SECOND_PLAYER_NAME)
+	if second_player:
+		players.append(second_player)
+
+	for player in players:
+		if bool(player.get("local_player")):
+			return player
+
+	return null
+
+
+func _remote_player_for_peer(peer_id: int) -> Node:
+	var players: Array[Node] = []
+	if main_player:
+		players.append(main_player)
+	var second_player := get_parent().get_node_or_null(SECOND_PLAYER_NAME)
+	if second_player:
+		players.append(second_player)
+
+	for player in players:
+		var player_id := int(player.get("network_player_id"))
+		var controlled_locally := bool(player.get("local_player"))
+		if player_id == peer_id and not controlled_locally:
+			return player
+
+	return null
 
 
 func _remove_spawned_players() -> void:
@@ -247,6 +370,7 @@ func _remove_spawned_players() -> void:
 
 
 func _reset_network() -> void:
+	client_ready_sent = false
 	_reset_steam_session()
 	var peer := multiplayer.multiplayer_peer
 	if peer:
@@ -276,12 +400,16 @@ func _apply_character_to_player(player: Node2D, character: String) -> void:
 	var sprite := player.get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
 	if not sprite:
 		return
+	if player.has_method("set_sprite_flip_inverted"):
+		player.call("set_sprite_flip_inverted", character == "golem")
 
 	if character == "golem":
 		var golem_frames := load("res://Resources/golem_sprite_frames.tres") as SpriteFrames
 		if golem_frames:
 			sprite.sprite_frames = golem_frames
-			sprite.position = ONLINE_STONE_GOLEM_SPRITE_OFFSET
+			if player.has_method("_add_animation_from_folder"):
+				player.call("_add_animation_from_folder", sprite.sprite_frames, "Hurt", "res://Characters/Golem/PNG/PNG Sequences/Hurt", 12.0, false)
+			sprite.position = _online_character_sprite_offset(character)
 			sprite.play("Idle")
 		_apply_stone_golem_sounds(player)
 		return
@@ -290,15 +418,34 @@ func _apply_character_to_player(player: Node2D, character: String) -> void:
 	var player_frames = _get_ash_golem_frames(settings)
 	if player_frames is SpriteFrames:
 		sprite.sprite_frames = player_frames
-		sprite.position = ONLINE_ASH_GOLEM_SPRITE_OFFSET
+		sprite.position = _online_character_sprite_offset(character)
 		sprite.play("Idle")
 		return
 
 
+func _online_character_sprite_offset(character: String) -> Vector2:
+	return ONLINE_CHARACTER_SPRITE_OFFSETS.get(character, ONLINE_CHARACTER_SPRITE_OFFSETS["player"])
+
+
+func _spawn_point_for_peer(peer_id: int) -> Vector2:
+	return first_player_spawn if peer_id == 1 else second_player_spawn
+
+
 func _face_player_east(player: Node2D) -> void:
+	_face_player(player, true)
+
+
+func _face_player_for_spawn(player: Node2D, peer_id: int) -> void:
+	_face_player(player, peer_id == 1)
+
+
+func _face_player(player: Node2D, face_right: bool) -> void:
+	if player.has_method("face_right"):
+		player.call("face_right", face_right)
+		return
 	var sprite := player.get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
 	if sprite:
-		sprite.flip_h = false
+		sprite.flip_h = not face_right
 
 
 func _apply_stone_golem_sounds(player: Node2D) -> void:
@@ -379,7 +526,7 @@ func _cache_scene_spawns() -> void:
 	var scene_path := ""
 	if get_tree().current_scene:
 		scene_path = get_tree().current_scene.scene_file_path
-	second_player_spawn = SECOND_PLAYER_SPAWNS_BY_SCENE.get(scene_path, first_player_spawn + SECOND_PLAYER_SPAWN_OFFSET)
+	second_player_spawn = SECOND_PLAYER_SPAWNS_BY_SCENE.get(scene_path, first_player_spawn + Vector2(120, 0))
 
 
 func _reset_steam_session() -> void:
