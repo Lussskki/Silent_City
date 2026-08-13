@@ -1,8 +1,10 @@
-﻿extends Node
+extends Node
 
 const MAIN_SCENE := "res://Scenes/main.tscn"
 const ONLINE_PORT := 8910
 const ONLINE_MAX_ROUNDS := 5
+const SAVE_PATH := "user://silent_city_save.json"
+const ICE_GOLEM_UNLOCK_COINS := 2500
 const OFFLINE_LEVEL_TRIES := {
 	"easy": 5,
 	"medium": 3,
@@ -11,6 +13,7 @@ const OFFLINE_LEVEL_TRIES := {
 
 signal online_rounds_changed(rounds_played: int, max_rounds: int)
 signal online_match_finished(winner_name: String)
+signal saved_coins_changed(saved_coins: int)
 
 var selected_character := "player"
 var character_chosen := false
@@ -19,6 +22,7 @@ var level_chosen := false
 var online_mode := false
 var online_role := ""
 var online_remote_character := "golem"
+var online_scene_path := MAIN_SCENE
 var online_tutorial_seen := false
 var language := "eng"
 var player_sprite_frames: SpriteFrames
@@ -31,14 +35,65 @@ var offline_tries_level := "easy"
 var pending_health_drop := false
 var pending_health_drop_id := 0
 var pending_health_drop_position := Vector2.INF
+var saved_coins := 0
+
+
+func _ready() -> void:
+	load_save()
 
 
 func reset_online() -> void:
 	online_mode = false
 	online_role = ""
 	online_remote_character = "golem"
+	online_scene_path = MAIN_SCENE
 	character_chosen = false
 	reset_online_rounds()
+
+
+func load_save() -> void:
+	if not FileAccess.file_exists(SAVE_PATH):
+		return
+	var file := FileAccess.open(SAVE_PATH, FileAccess.READ)
+	if not file:
+		return
+	var data = JSON.parse_string(file.get_as_text())
+	if data is Dictionary:
+		saved_coins = max(int(data.get("saved_coins", 0)), 0)
+	saved_coins_changed.emit(saved_coins)
+
+
+func save_game() -> void:
+	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	if not file:
+		return
+	var data := {
+		"saved_coins": saved_coins
+	}
+	file.store_string(JSON.stringify(data))
+
+
+func add_saved_coins(amount: int) -> int:
+	if amount <= 0:
+		return saved_coins
+	saved_coins += amount
+	save_game()
+	saved_coins_changed.emit(saved_coins)
+	return saved_coins
+
+
+func get_saved_coins() -> int:
+	return saved_coins
+
+
+func get_character_unlock_cost(character: String) -> int:
+	if character == "ice_golem":
+		return ICE_GOLEM_UNLOCK_COINS
+	return 0
+
+
+func is_character_unlocked(character: String) -> bool:
+	return saved_coins >= get_character_unlock_cost(character)
 
 
 func start_offline_level(level: String) -> void:
@@ -90,4 +145,3 @@ func record_online_round(winner_name: String = "") -> void:
 
 func is_online_match_over() -> bool:
 	return online_rounds_played >= ONLINE_MAX_ROUNDS
-

@@ -12,7 +12,9 @@ const ASH_GOLEM_FRAMES_ROOT := "res://Player/player_assets/PNG Sequences"
 const ONLINE_CHARACTER_SPRITE_OFFSETS := {
 	"player": Vector2(0, -16),
 	"golem": Vector2(0, -16),
+	"ice_golem": Vector2(0, -16),
 }
+const ICE_GOLEM_FRAMES_ROOT := "res://Characters/Golem_1/PNG/PNG Sequences"
 const ASH_GOLEM_ANIMATION_DIRS := {
 	"Idle": "Idle",
 	"Walking": "Walking",
@@ -130,8 +132,11 @@ func _on_connection_failed() -> void:
 
 
 func _on_server_disconnected() -> void:
+	if closing_online_session:
+		return
 	_set_status("Online: Server disconnected")
-	_close_online_session_local()
+	_prepare_disconnected_session_for_modal()
+	_show_online_disconnect_modal("Host left the server.")
 
 
 func _on_peer_connected(peer_id: int) -> void:
@@ -147,6 +152,7 @@ func _on_peer_disconnected(peer_id: int) -> void:
 			player.configure_online_player(2, false)
 		_set_player_active(player, false)
 	spawned_players.erase(SECOND_PLAYER_NAME)
+	_show_online_disconnect_modal("Second player left the server.")
 
 
 func close_online_session(match_finished: bool = false) -> void:
@@ -324,6 +330,8 @@ func _add_chat_message(author: String, message: String, notify := false) -> void
 
 func _local_chat_name() -> String:
 	var character := _selected_character()
+	if character == "ice_golem":
+		return "Ice Golem"
 	if character == "golem":
 		return "Stone Golem"
 	return "Ash Golem"
@@ -401,7 +409,16 @@ func _apply_character_to_player(player: Node2D, character: String) -> void:
 	if not sprite:
 		return
 	if player.has_method("set_sprite_flip_inverted"):
-		player.call("set_sprite_flip_inverted", character == "golem")
+		player.call("set_sprite_flip_inverted", character in ["golem", "ice_golem"])
+
+	if character == "ice_golem":
+		var ice_frames := _build_sprite_frames_from_root(ICE_GOLEM_FRAMES_ROOT)
+		if ice_frames.has_animation("Idle"):
+			sprite.sprite_frames = ice_frames
+			sprite.position = _online_character_sprite_offset(character)
+			sprite.play("Idle")
+		_apply_stone_golem_sounds(player)
+		return
 
 	if character == "golem":
 		var golem_frames := load("res://Resources/golem_sprite_frames.tres") as SpriteFrames
@@ -535,6 +552,22 @@ func _reset_steam_session() -> void:
 		steam_manager.reset_session()
 
 
+func _prepare_disconnected_session_for_modal() -> void:
+	_reset_steam_session()
+	var peer := multiplayer.multiplayer_peer
+	if peer and peer.has_method("close"):
+		peer.close()
+	multiplayer.multiplayer_peer = null
+	_remove_spawned_players()
+	_configure_main_player(true)
+
+
+func _show_online_disconnect_modal(message: String) -> void:
+	var hud := get_tree().get_first_node_in_group("PlayerHUD")
+	if hud and hud.has_method("show_online_disconnect_popup"):
+		hud.call("show_online_disconnect_popup", message)
+
+
 func _close_online_session_local() -> void:
 	closing_online_session = true
 	_reset_steam_session()
@@ -588,6 +621,25 @@ func _get_ash_golem_frames(settings: Node) -> SpriteFrames:
 			settings.set("player_sprite_frames", frames)
 		return frames
 	return null
+
+
+func _build_sprite_frames_from_root(frames_root: String) -> SpriteFrames:
+	var frames := SpriteFrames.new()
+	for animation_name in ASH_GOLEM_ANIMATION_DIRS:
+		var folder_name: String = ASH_GOLEM_ANIMATION_DIRS[animation_name]
+		var folder_path := "%s/%s" % [frames_root, folder_name]
+		var image_files := _get_png_files(folder_path)
+		if image_files.is_empty():
+			continue
+
+		frames.add_animation(animation_name)
+		frames.set_animation_speed(animation_name, 12.0)
+		frames.set_animation_loop(animation_name, animation_name in ["Idle", "Walking", "Running", "Jump Looping", "Falling Down"])
+		for file_name in image_files:
+			var texture := load("%s/%s" % [folder_path, file_name]) as Texture2D
+			if texture:
+				frames.add_frame(animation_name, texture)
+	return frames
 
 
 func _get_png_files(folder_path: String) -> Array[String]:

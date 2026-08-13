@@ -9,6 +9,8 @@ extends CharacterBody2D
 @export var attack_cooldown := 1.0
 @export var hurt_cooldown := 0.35
 @export var knockback_time := 0.22
+@export var coin_drop_chance := 0.85
+@export var coin_power_value := 10
 @export var patrol_min_x := 0.0
 @export var patrol_max_x := 0.0
 @export var sight_vertical_tolerance := 120.0
@@ -25,7 +27,8 @@ const CHARACTER_NAMES := [
 	"Zombie"
 ]
 
-const SPRITE_GROUND_Y := 12.0
+const SPRITE_GROUND_Y := 0.0
+const COIN_SCENE := preload("res://Scenes/Coin.tscn")
 
 var life: int = 100
 var player: Node2D
@@ -39,6 +42,9 @@ var attack_texture: Texture2D
 var hurt_texture: Texture2D
 var flip_direction := false
 var network_sync_timer := 0.0
+var remote_target_position := Vector2.ZERO
+var remote_target_velocity := Vector2.ZERO
+var remote_state_age := 0.0
 var current_pose := "idle"
 var patrol_direction := 1.0
 var knockback_timer := 0.0
@@ -53,6 +59,7 @@ func _ready() -> void:
 	_setup_random_character()
 	_find_player()
 	_update_health_bar()
+	remote_target_position = global_position
 
 
 # ბრძოლა დისტანციაზეა (range-based), ამიტომ მოთამაშესა და მტერს ფიზიკურად
@@ -70,6 +77,7 @@ func _physics_process(delta: float) -> void:
 
 	var api := get_multiplayer()
 	if api and api.has_multiplayer_peer() and not api.is_server():
+		_update_remote_network_motion(delta)
 		return
 
 	attack_timer = max(attack_timer - delta, 0.0)
@@ -301,10 +309,26 @@ func _die() -> void:
 	set_physics_process(false)
 	current_pose = "dead"
 	modulate = Color(0.35, 0.35, 0.35, 0.75)
+	_drop_coins()
 	if _is_network_server():
 		rpc("_network_enemy_died")
 	await get_tree().create_timer(0.35).timeout
 	queue_free()
+
+
+func _drop_coins() -> void:
+	var api := get_multiplayer()
+	if api and api.has_multiplayer_peer() and not api.is_server():
+		return
+	if randf() > coin_drop_chance:
+		return
+
+	var coin := COIN_SCENE.instantiate() as Node2D
+	coin.set("power_value", coin_power_value)
+	coin.global_position = get_hit_position() + Vector2(randf_range(-14.0, 14.0), 14.0)
+	coin.set("ground_y", global_position.y - 42.0)
+	coin.set("launch_velocity", Vector2(randf_range(-90.0, 90.0), randf_range(-230.0, -160.0)))
+	get_tree().current_scene.add_child(coin)
 
 
 func _setup_random_character() -> void:
@@ -385,19 +409,31 @@ func _send_network_state(delta: float) -> void:
 	rpc("_receive_network_state", global_position, velocity, sprite.flip_h, life, current_pose)
 
 
-@rpc("authority", "unreliable")
+@rpc("authority", "unreliable_ordered")
 func _receive_network_state(remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_life: int, remote_pose: String) -> void:
 	var api := get_multiplayer()
 	if not api or not api.has_multiplayer_peer() or api.is_server():
 		return
 
-	global_position = global_position.lerp(remote_position, 0.65)
+	remote_target_position = remote_position
+	remote_target_velocity = remote_velocity
+	remote_state_age = 0.0
 	velocity = remote_velocity
 	sprite.flip_h = remote_flip_h
 	life = remote_life
 	current_pose = remote_pose
 	_update_health_bar()
 	_apply_pose(remote_pose)
+
+
+func _update_remote_network_motion(delta: float) -> void:
+	remote_state_age = min(remote_state_age + delta, 0.18)
+	var predicted_position := remote_target_position + remote_target_velocity * remote_state_age
+	if global_position.distance_to(predicted_position) > 120.0:
+		global_position = predicted_position
+		return
+	var smoothing := 1.0 - exp(-18.0 * delta)
+	global_position = global_position.lerp(predicted_position, smoothing)
 
 
 @rpc("authority", "reliable")

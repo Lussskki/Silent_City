@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://ce3gmaci87xm5"]
 
-[ext_resource type="PackedScene" uid="uid://cmlvqcwrts1x6" path="res://Scenes/main.tscn" id="1_main"]
+[ext_resource type="AudioStream" uid="uid://bli5nb7pcuouy" path="res://Resources/Background_voice/Calima - Usual Rigmarole (freetouse.com).mp3" id="1_wacoo"]
 [ext_resource type="Script" uid="uid://dqs4dr8muvvca" path="res://Scripts/medium_level.gd" id="2_builder"]
+[ext_resource type="Texture2D" uid="uid://bq5l5nqmmiuqk" path="res://Sprites/Background/BG.png" id="2_osxoy"]
+[ext_resource type="Script" uid="uid://bk6khkkmg3o10" path="res://Scripts/level_layer.gd" id="3_evjfi"]
 [ext_resource type="Texture2D" uid="uid://bdb2bsoxwa7vo" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Spike.png" id="5_spike"]
 [ext_resource type="Texture2D" uid="uid://bndp1c68msn1l" path="res://Sprites/Objects/Crate.png" id="6_crate"]
 [ext_resource type="Texture2D" uid="uid://bvrxjy64tb0pe" path="res://Sprites/Objects/TombStone (2).png" id="7_tomb_a"]
@@ -14,62 +16,523 @@
 [ext_resource type="Texture2D" uid="uid://q62qjknb5mb3" path="res://Sprites/Objects/Sign.png" id="13_sign"]
 [ext_resource type="Texture2D" uid="uid://bln460hvddh30" path="res://Sprites/Tiles/Tile (2).png" id="14_gtr7n"]
 [ext_resource type="Script" uid="uid://cunpx36d0qi4r" path="res://Scripts/deadly_hazard.gd" id="14_hazard"]
+[ext_resource type="Texture2D" uid="uid://db57dtpx7yklx" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Tree 02.png" id="15_e00hd"]
 [ext_resource type="Texture2D" uid="uid://d1uyf17d1wb0h" path="res://Sprites/Tiles/Tile (3).png" id="15_hyscg"]
+[ext_resource type="Texture2D" uid="uid://c0ua3apcrceps" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Fence 01.png" id="16_ssblv"]
 [ext_resource type="Texture2D" uid="uid://dtm7o6uu8pjg5" path="res://Sprites/Tiles/Tile (12).png" id="16_yu85r"]
 [ext_resource type="Texture2D" uid="uid://bwkfl4n0lrqx0" path="res://Sprites/Tiles/Tile (9).png" id="17_reqmo"]
+[ext_resource type="Texture2D" uid="uid://cdfoo51dnprul" path="res://Sprites/Objects/ArrowSign.png" id="17_tf75i"]
+[ext_resource type="Texture2D" uid="uid://cblybggfrgw7e" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Lantern.png" id="18_o7kvl"]
 [ext_resource type="Texture2D" uid="uid://c5n8l34yto1p2" path="res://Sprites/Tiles/Tile (13).png" id="18_vystq"]
+[ext_resource type="Texture2D" uid="uid://b60ux64gvoj7" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Wooden Box.png" id="19_d82j4"]
 [ext_resource type="Texture2D" uid="uid://dn0anwejndvon" path="res://Sprites/Tiles/Tile (14).png" id="19_o7ep5"]
+[ext_resource type="Texture2D" uid="uid://dxb2p6jmwidtd" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Bridge Part 01.png" id="20_5hg6j"]
 [ext_resource type="Texture2D" uid="uid://bhbt6n0q3k5pw" path="res://Sprites/Tiles/Tile (15).png" id="20_vp5vm"]
+[ext_resource type="Texture2D" uid="uid://dqs5ub14f36ja" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Bridge Part 02.png" id="21_0gfma"]
 [ext_resource type="Texture2D" uid="uid://dvfbye0ooj14w" path="res://Sprites/Tiles/Tile (16).png" id="21_rphxm"]
 [ext_resource type="Texture2D" uid="uid://dm5e2ppds6pqv" path="res://Sprites/Tiles/Tile (4).png" id="22_ohty1"]
+[ext_resource type="Texture2D" uid="uid://sfuk1rcuc7u" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Crypt.png" id="22_wkxlr"]
 [ext_resource type="Texture2D" uid="uid://d4mcu6qxk2ejp" path="res://Sprites/Tiles/Tile (5).png" id="23_cyycj"]
+[ext_resource type="Texture2D" uid="uid://31c6t647o6w6" path="res://Sprites/Objects/Bush (2).png" id="23_xth7k"]
+[ext_resource type="Texture2D" uid="uid://5l0jagi5jfgu" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Rock 01.png" id="24_m4m21"]
 [ext_resource type="Texture2D" uid="uid://g6vhjk887opq" path="res://Sprites/Tiles/Tile (6).png" id="24_sjvys"]
+[ext_resource type="Texture2D" uid="uid://c15rhra2krp52" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Coffin.png" id="25_xs0au"]
+[ext_resource type="Script" uid="uid://c8or26v0ouen6" path="res://Scripts/kill_zone.gd" id="28_g7lbo"]
+[ext_resource type="Script" uid="uid://bv4mg2gyiqjdd" path="res://Player/player.gd" id="29_nke5f"]
+[ext_resource type="AudioStream" uid="uid://cc4bk6fml4q3f" path="res://Resources/character_voices/30_Jump_03.wav" id="30_b4f6r"]
+[ext_resource type="AudioStream" uid="uid://c08ej7uefog0c" path="res://Resources/character_voices/03_Step_grass_03.wav" id="31_x6rds"]
+[ext_resource type="AudioStream" uid="uid://mwsvtdp6gbby" path="res://Resources/character_voices/56_Attack_03.wav" id="32_2xkuj"]
+[ext_resource type="AudioStream" uid="uid://6qw52k8gxjdf" path="res://Resources/character_voices/61_Hit_03.wav" id="33_aaagc"]
+[ext_resource type="AudioStream" uid="uid://jc86kj4mpjrm" path="res://Resources/character_voices/45_Landing_01.wav" id="34_d0b6v"]
+[ext_resource type="SpriteFrames" path="res://Resources/ash_golem_sprite_frames.tres" id="35_hf065"]
+[ext_resource type="Texture2D" uid="uid://deluw1k1qu860" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Fence 02.png" id="46_wiga1"]
+[ext_resource type="Texture2D" uid="uid://dpwqqjwg2afdd" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Wooden Barrel.png" id="47_6ob6g"]
+[ext_resource type="Texture2D" uid="uid://b8yw283cmml8p" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Skull.png" id="48_eeked"]
+[ext_resource type="Script" uid="uid://f3kytvyw6lfm" path="res://Scripts/player_hud.gd" id="49_67kvf"]
+[ext_resource type="Script" uid="uid://l5xletxmo2lc" path="res://Scripts/online_manager.gd" id="50_5w5xo"]
+[ext_resource type="PackedScene" uid="uid://ktuf83rha8ye" path="res://Scenes/GolemPlayer.tscn" id="51_g88q2"]
+[ext_resource type="Script" uid="uid://dqflgmk88ohqg" path="res://Enemies/enemy_spawner.gd" id="52_nfej5"]
+[ext_resource type="PackedScene" path="res://Enemies/enemy.tscn" id="53_lgm7t"]
+[ext_resource type="Script" uid="uid://c3yfa45lm07da" path="res://Scripts/health_drop_spawner.gd" id="54_6576a"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_medium_start"]
-size = Vector2(640, 256)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_54nrm"]
+size = Vector2(768, 256)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_medium_shotgun"]
-size = Vector2(384, 128)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_medium_center"]
-size = Vector2(384, 128)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_medium_tower"]
-size = Vector2(512, 512)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_medium_step"]
-size = Vector2(256, 128)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_medium_lower"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_55jeb"]
 size = Vector2(512, 128)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_medium_exit"]
-size = Vector2(384, 256)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gsvbx"]
+size = Vector2(512, 256)
 
-[node name="MainMedium" unique_id=1474546206 instance=ExtResource("1_main")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bv80c"]
+size = Vector2(384, 128)
 
-[node name="BackgroundA" parent="." index="1" unique_id=1062492226]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ptfg5"]
+size = Vector2(640, 256)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2daye"]
+size = Vector2(384, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fall_kill"]
+size = Vector2(4400, 220)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_player"]
+radius = 6.0
+height = 18.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_565xu"]
+size = Vector2(640, 256)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5jpku"]
+size = Vector2(384, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u704q"]
+size = Vector2(256, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oi5bp"]
+size = Vector2(512, 384)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_woy1f"]
+size = Vector2(512, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pfkyu"]
+size = Vector2(256, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bd3y8"]
+size = Vector2(512, 256)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j2fm5"]
+size = Vector2(512, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y043w"]
+size = Vector2(384, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_617bh"]
+size = Vector2(384, 56)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_fill"]
+bg_color = Color(0.75, 0.06, 0.06, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pause_panel"]
+bg_color = Color(0.02, 0.025, 0.03, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.25, 0.29, 0.32, 0.95)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="MainMedium" type="Node2D" unique_id=1474546206]
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="." unique_id=15140607]
+stream = ExtResource("1_wacoo")
+volume_db = -18.0
+autoplay = true
+
+[node name="BackgroundA" type="Sprite2D" parent="." unique_id=1062492226]
+z_index = -50
 position = Vector2(845.99994, 461.32507)
 scale = Vector2(1.054, 1.0772967)
+texture = ExtResource("2_osxoy")
 
-[node name="BackgroundB" parent="." index="2" unique_id=1200270985]
+[node name="BackgroundB" type="Sprite2D" parent="." unique_id=1200270985]
+z_index = -50
 position = Vector2(2910, 452.32504)
 scale = Vector2(1.01, 1.0615486)
+texture = ExtResource("2_osxoy")
 
-[node name="Level" parent="." index="3" unique_id=1045485232]
+[node name="Level" type="Node2D" parent="." unique_id=1045485232]
 visible = false
+script = ExtResource("3_evjfi")
 collisions_enabled = false
 
-[node name="CollisionShape2D" parent="FallKillZone" parent_id_path=PackedInt32Array(1249545714) index="0" unique_id=1877193375]
+[node name="StartPlatform" type="StaticBody2D" parent="Level" unique_id=567379904]
+position = Vector2(480, 608)
+
+[node name="@CollisionShape2D@2" type="CollisionShape2D" parent="Level/StartPlatform" unique_id=1572950431]
+shape = SubResource("RectangleShape2D_54nrm")
+
+[node name="StartPlatform_Tile_0_0" type="Sprite2D" parent="Level" unique_id=763155950]
+z_index = -1
+position = Vector2(160, 544)
+texture = ExtResource("13_ofvf2")
+
+[node name="StartPlatform_Tile_1_0" type="Sprite2D" parent="Level" unique_id=1458096048]
+z_index = -1
+position = Vector2(288, 544)
+texture = ExtResource("14_gtr7n")
+
+[node name="StartPlatform_Tile_2_0" type="Sprite2D" parent="Level" unique_id=1368362635]
+z_index = -1
+position = Vector2(416, 544)
+texture = ExtResource("14_gtr7n")
+
+[node name="StartPlatform_Tile_3_0" type="Sprite2D" parent="Level" unique_id=769037263]
+z_index = -1
+position = Vector2(544, 544)
+texture = ExtResource("14_gtr7n")
+
+[node name="StartPlatform_Tile_4_0" type="Sprite2D" parent="Level" unique_id=775384119]
+z_index = -1
+position = Vector2(672, 544)
+texture = ExtResource("14_gtr7n")
+
+[node name="StartPlatform_Tile_5_0" type="Sprite2D" parent="Level" unique_id=1029077254]
+z_index = -1
+position = Vector2(800, 544)
+texture = ExtResource("15_hyscg")
+
+[node name="StartPlatform_Tile_0_1" type="Sprite2D" parent="Level" unique_id=1519423764]
+z_index = -1
+position = Vector2(160, 672)
+texture = ExtResource("16_yu85r")
+
+[node name="StartPlatform_Tile_1_1" type="Sprite2D" parent="Level" unique_id=149257009]
+z_index = -1
+position = Vector2(288, 672)
+texture = ExtResource("17_reqmo")
+
+[node name="StartPlatform_Tile_2_1" type="Sprite2D" parent="Level" unique_id=1695270499]
+z_index = -1
+position = Vector2(416, 672)
+texture = ExtResource("17_reqmo")
+
+[node name="StartPlatform_Tile_3_1" type="Sprite2D" parent="Level" unique_id=837738600]
+z_index = -1
+position = Vector2(544, 672)
+texture = ExtResource("17_reqmo")
+
+[node name="StartPlatform_Tile_4_1" type="Sprite2D" parent="Level" unique_id=428233141]
+z_index = -1
+position = Vector2(672, 672)
+texture = ExtResource("17_reqmo")
+
+[node name="StartPlatform_Tile_5_1" type="Sprite2D" parent="Level" unique_id=799784121]
+z_index = -1
+position = Vector2(800, 672)
+texture = ExtResource("18_vystq")
+
+[node name="LowBridge" type="StaticBody2D" parent="Level" unique_id=1971639192]
+position = Vector2(1184, 474)
+
+[node name="@CollisionShape2D@3" type="CollisionShape2D" parent="Level/LowBridge" unique_id=309213831]
+shape = SubResource("RectangleShape2D_55jeb")
+
+[node name="LowBridge_Tile_0_0" type="Sprite2D" parent="Level" unique_id=1648703103]
+z_index = -1
+position = Vector2(992, 474)
+texture = ExtResource("19_o7ep5")
+
+[node name="LowBridge_Tile_1_0" type="Sprite2D" parent="Level" unique_id=1028511231]
+z_index = -1
+position = Vector2(1120, 474)
+texture = ExtResource("20_vp5vm")
+
+[node name="LowBridge_Tile_2_0" type="Sprite2D" parent="Level" unique_id=326221454]
+z_index = -1
+position = Vector2(1248, 474)
+texture = ExtResource("20_vp5vm")
+
+[node name="LowBridge_Tile_3_0" type="Sprite2D" parent="Level" unique_id=1962532242]
+z_index = -1
+position = Vector2(1376, 474)
+texture = ExtResource("21_rphxm")
+
+[node name="CryptRise" type="StaticBody2D" parent="Level" unique_id=1061487578]
+position = Vector2(1796, 478)
+
+[node name="@CollisionShape2D@4" type="CollisionShape2D" parent="Level/CryptRise" unique_id=1028853773]
+shape = SubResource("RectangleShape2D_gsvbx")
+
+[node name="CryptRise_Tile_0_0" type="Sprite2D" parent="Level" unique_id=1073375184]
+z_index = -1
+position = Vector2(1604, 414)
+texture = ExtResource("13_ofvf2")
+
+[node name="CryptRise_Tile_1_0" type="Sprite2D" parent="Level" unique_id=1102299461]
+z_index = -1
+position = Vector2(1732, 414)
+texture = ExtResource("14_gtr7n")
+
+[node name="CryptRise_Tile_2_0" type="Sprite2D" parent="Level" unique_id=1430816313]
+z_index = -1
+position = Vector2(1860, 414)
+texture = ExtResource("14_gtr7n")
+
+[node name="CryptRise_Tile_3_0" type="Sprite2D" parent="Level" unique_id=872981561]
+z_index = -1
+position = Vector2(1988, 414)
+texture = ExtResource("15_hyscg")
+
+[node name="CryptRise_Tile_0_1" type="Sprite2D" parent="Level" unique_id=1471408595]
+z_index = -1
+position = Vector2(1604, 542)
+texture = ExtResource("16_yu85r")
+
+[node name="CryptRise_Tile_1_1" type="Sprite2D" parent="Level" unique_id=1523662394]
+z_index = -1
+position = Vector2(1732, 542)
+texture = ExtResource("17_reqmo")
+
+[node name="CryptRise_Tile_2_1" type="Sprite2D" parent="Level" unique_id=1937621109]
+z_index = -1
+position = Vector2(1860, 542)
+texture = ExtResource("17_reqmo")
+
+[node name="CryptRise_Tile_3_1" type="Sprite2D" parent="Level" unique_id=1165769340]
+z_index = -1
+position = Vector2(1988, 542)
+texture = ExtResource("18_vystq")
+
+[node name="ShortStep" type="StaticBody2D" parent="Level" unique_id=669323177]
+position = Vector2(2372, 534)
+
+[node name="@CollisionShape2D@5" type="CollisionShape2D" parent="Level/ShortStep" unique_id=1726551765]
+shape = SubResource("RectangleShape2D_bv80c")
+
+[node name="ShortStep_Tile_0_0" type="Sprite2D" parent="Level" unique_id=1321569526]
+z_index = -1
+position = Vector2(2244, 534)
+texture = ExtResource("19_o7ep5")
+
+[node name="ShortStep_Tile_1_0" type="Sprite2D" parent="Level" unique_id=659237315]
+z_index = -1
+position = Vector2(2372, 534)
+texture = ExtResource("20_vp5vm")
+
+[node name="ShortStep_Tile_2_0" type="Sprite2D" parent="Level" unique_id=800446074]
+z_index = -1
+position = Vector2(2500, 534)
+texture = ExtResource("21_rphxm")
+
+[node name="FinalGround" type="StaticBody2D" parent="Level" unique_id=619976100]
+position = Vector2(3080, 548)
+
+[node name="@CollisionShape2D@6" type="CollisionShape2D" parent="Level/FinalGround" unique_id=920341858]
+shape = SubResource("RectangleShape2D_ptfg5")
+
+[node name="FinalGround_Tile_0_0" type="Sprite2D" parent="Level" unique_id=587719207]
+z_index = -1
+position = Vector2(2824, 484)
+texture = ExtResource("13_ofvf2")
+
+[node name="FinalGround_Tile_1_0" type="Sprite2D" parent="Level" unique_id=1195406208]
+z_index = -1
+position = Vector2(2952, 484)
+texture = ExtResource("14_gtr7n")
+
+[node name="FinalGround_Tile_2_0" type="Sprite2D" parent="Level" unique_id=363624170]
+z_index = -1
+position = Vector2(3080, 484)
+texture = ExtResource("14_gtr7n")
+
+[node name="FinalGround_Tile_3_0" type="Sprite2D" parent="Level" unique_id=1954956401]
+z_index = -1
+position = Vector2(3208, 484)
+texture = ExtResource("14_gtr7n")
+
+[node name="FinalGround_Tile_4_0" type="Sprite2D" parent="Level" unique_id=1113947216]
+z_index = -1
+position = Vector2(3336, 484)
+texture = ExtResource("15_hyscg")
+
+[node name="FinalGround_Tile_0_1" type="Sprite2D" parent="Level" unique_id=2008189900]
+z_index = -1
+position = Vector2(2824, 612)
+texture = ExtResource("16_yu85r")
+
+[node name="FinalGround_Tile_1_1" type="Sprite2D" parent="Level" unique_id=895485310]
+z_index = -1
+position = Vector2(2952, 612)
+texture = ExtResource("17_reqmo")
+
+[node name="FinalGround_Tile_2_1" type="Sprite2D" parent="Level" unique_id=445653356]
+z_index = -1
+position = Vector2(3080, 612)
+texture = ExtResource("17_reqmo")
+
+[node name="FinalGround_Tile_3_1" type="Sprite2D" parent="Level" unique_id=2032751121]
+z_index = -1
+position = Vector2(3208, 612)
+texture = ExtResource("17_reqmo")
+
+[node name="FinalGround_Tile_4_1" type="Sprite2D" parent="Level" unique_id=1580217912]
+z_index = -1
+position = Vector2(3336, 612)
+texture = ExtResource("18_vystq")
+
+[node name="SpikePitHazard" type="Area2D" parent="Level" unique_id=252581613]
+position = Vector2(1632, 738)
+script = ExtResource("14_hazard")
+
+[node name="@CollisionShape2D@7" type="CollisionShape2D" parent="Level/SpikePitHazard" unique_id=199775042]
+shape = SubResource("RectangleShape2D_2daye")
+
+[node name="Spike_0" type="Sprite2D" parent="Level" unique_id=381795930]
+z_index = 0
+position = Vector2(1504, 706)
+texture = ExtResource("5_spike")
+
+[node name="Spike_1" type="Sprite2D" parent="Level" unique_id=2057020201]
+z_index = 0
+position = Vector2(1632, 706)
+texture = ExtResource("5_spike")
+
+[node name="Spike_2" type="Sprite2D" parent="Level" unique_id=1137053516]
+z_index = 0
+position = Vector2(1760, 706)
+texture = ExtResource("5_spike")
+
+[node name="StartTree" type="Sprite2D" parent="Level" unique_id=468416153]
+z_index = 0
+position = Vector2(160, 280)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("15_e00hd")
+
+[node name="StartFenceA" type="Sprite2D" parent="Level" unique_id=1440487224]
+z_index = 0
+position = Vector2(390, 454)
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("16_ssblv")
+
+[node name="StartSign" type="Sprite2D" parent="Level" unique_id=2139204321]
+z_index = 0
+position = Vector2(710, 414)
+texture = ExtResource("17_tf75i")
+
+[node name="BridgeLantern" type="Sprite2D" parent="Level" unique_id=1214634190]
+z_index = 0
+position = Vector2(1035, 310)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("18_o7kvl")
+
+[node name="BridgeBox" type="Sprite2D" parent="Level" unique_id=660107442]
+z_index = 0
+position = Vector2(1290, 348)
+texture = ExtResource("19_d82j4")
+
+[node name="BridgeLeft_0" type="Sprite2D" parent="Level" unique_id=1074616327]
+z_index = -2
+position = Vector2(960, 370)
+texture = ExtResource("20_5hg6j")
+
+[node name="BridgeRight_0" type="Sprite2D" parent="Level" unique_id=1808079203]
+z_index = -2
+position = Vector2(1024, 370)
+texture = ExtResource("21_0gfma")
+
+[node name="BridgeLeft_1" type="Sprite2D" parent="Level" unique_id=347871085]
+z_index = -2
+position = Vector2(1088, 370)
+texture = ExtResource("20_5hg6j")
+
+[node name="BridgeRight_1" type="Sprite2D" parent="Level" unique_id=2045910361]
+z_index = -2
+position = Vector2(1152, 370)
+texture = ExtResource("21_0gfma")
+
+[node name="BridgeLeft_2" type="Sprite2D" parent="Level" unique_id=1175840558]
+z_index = -2
+position = Vector2(1216, 370)
+texture = ExtResource("20_5hg6j")
+
+[node name="BridgeRight_2" type="Sprite2D" parent="Level" unique_id=1134488832]
+z_index = -2
+position = Vector2(1280, 370)
+texture = ExtResource("21_0gfma")
+
+[node name="BridgeLeft_3" type="Sprite2D" parent="Level" unique_id=1810726220]
+z_index = -2
+position = Vector2(1344, 370)
+texture = ExtResource("20_5hg6j")
+
+[node name="BridgeRight_3" type="Sprite2D" parent="Level" unique_id=1910666781]
+z_index = -2
+position = Vector2(1408, 370)
+texture = ExtResource("21_0gfma")
+
+[node name="Crypt" type="Sprite2D" parent="Level" unique_id=1488790737]
+z_index = 0
+position = Vector2(1690, 178)
+scale = Vector2(0.82, 0.82)
+texture = ExtResource("22_wkxlr")
+
+[node name="CryptBush" type="Sprite2D" parent="Level" unique_id=631493836]
+z_index = 0
+position = Vector2(1950, 302)
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("23_xth7k")
+
+[node name="StepRock" type="Sprite2D" parent="Level" unique_id=1165245636]
+z_index = 0
+position = Vector2(2265, 426)
+scale = Vector2(1.15, 1.15)
+texture = ExtResource("24_m4m21")
+
+[node name="FinalCoffin" type="Sprite2D" parent="Level" unique_id=986486957]
+z_index = 0
+position = Vector2(2900, 340)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("25_xs0au")
+
+[node name="FinalTombstone" type="Sprite2D" parent="Level" unique_id=268478990]
+z_index = 0
+position = Vector2(3170, 348)
+scale = Vector2(1.8, 1.8)
+texture = ExtResource("7_tomb_a")
+
+[node name="FinalTree" type="Sprite2D" parent="Level" unique_id=1586702866]
+z_index = 0
+position = Vector2(3340, 300)
+scale = Vector2(-1.05, 1.05)
+texture = ExtResource("9_tree")
+
+[node name="FallKillZone" type="Area2D" parent="." unique_id=1249545714]
+position = Vector2(1800, 950)
+script = ExtResource("28_g7lbo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FallKillZone" unique_id=1877193375]
 position = Vector2(-9, 20)
+shape = SubResource("RectangleShape2D_fall_kill")
 
-[node name="Player" parent="." index="5" unique_id=2090043745]
+[node name="Timer" type="Timer" parent="FallKillZone" unique_id=261683266]
+wait_time = 0.15
+one_shot = true
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=2090043745]
+z_index = 10
 position = Vector2(280, 380)
+script = ExtResource("29_nke5f")
+jump_sound = ExtResource("30_b4f6r")
+run_sound = ExtResource("31_x6rds")
+attack_sound = ExtResource("32_2xkuj")
+kick_sound = ExtResource("33_aaagc")
+hit_sound = ExtResource("33_aaagc")
+landing_sound = ExtResource("34_d0b6v")
+dynamic_frames_root = "res://Player/player_assets/PNG Sequences"
 
-[node name="Camera2D" parent="Player" index="2" unique_id=213213847]
-limit_right = 3200
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1781632174]
+position = Vector2(0, 25)
+shape = SubResource("CapsuleShape2D_player")
 
-[node name="MediumLevel" type="Node2D" parent="." index="6" unique_id=1886984370]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player" unique_id=2067691693]
+z_index = 10
+position = Vector2(-6, 24)
+scale = Vector2(0.22, 0.22)
+sprite_frames = ExtResource("35_hf065")
+animation = &"Idle"
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=213213847]
+position = Vector2(0, 16)
+limit_left = 0
+limit_top = 2
+limit_right = 3820
+limit_bottom = 902
+
+[node name="MediumLevel" type="Node2D" parent="." unique_id=1886984370]
 z_index = 9
 script = ExtResource("2_builder")
 spike_texture = ExtResource("5_spike")
@@ -83,404 +546,521 @@ skeleton_texture = ExtResource("12_skeleton")
 sign_texture = ExtResource("13_sign")
 hazard_script = ExtResource("14_hazard")
 
-[node name="Generated" type="Node2D" parent="MediumLevel" index="0" unique_id=963108423]
+[node name="Generated" type="Node2D" parent="MediumLevel" unique_id=963108423]
 
-[node name="StartPlatform" type="StaticBody2D" parent="MediumLevel/Generated" index="0" unique_id=601464991]
-position = Vector2(320, 598)
+[node name="StartPlatform" type="StaticBody2D" parent="MediumLevel/Generated" unique_id=789349926]
+position = Vector2(320, 628)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MediumLevel/Generated/StartPlatform" index="0" unique_id=1687477290]
-shape = SubResource("RectangleShape2D_medium_start")
+[node name="@CollisionShape2D@8" type="CollisionShape2D" parent="MediumLevel/Generated/StartPlatform" unique_id=692086952]
+shape = SubResource("RectangleShape2D_565xu")
 
-[node name="Tile_0_0" type="Sprite2D" parent="MediumLevel/Generated" index="1" unique_id=666849213]
+[node name="StartPlatform_Tile_0_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=411950082]
 z_index = -1
-position = Vector2(64, 534)
+position = Vector2(64, 564)
 texture = ExtResource("13_ofvf2")
 
-[node name="Tile_1_0" type="Sprite2D" parent="MediumLevel/Generated" index="2" unique_id=267930032]
+[node name="StartPlatform_Tile_1_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1595101880]
 z_index = -1
-position = Vector2(192, 534)
+position = Vector2(192, 564)
 texture = ExtResource("14_gtr7n")
 
-[node name="Tile_2_0" type="Sprite2D" parent="MediumLevel/Generated" index="3" unique_id=624409144]
+[node name="StartPlatform_Tile_2_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1071854125]
 z_index = -1
-position = Vector2(320, 534)
+position = Vector2(320, 564)
 texture = ExtResource("14_gtr7n")
 
-[node name="Tile_3_0" type="Sprite2D" parent="MediumLevel/Generated" index="4" unique_id=83363101]
+[node name="StartPlatform_Tile_3_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=685354395]
 z_index = -1
-position = Vector2(448, 534)
+position = Vector2(448, 564)
 texture = ExtResource("14_gtr7n")
 
-[node name="Tile_4_0" type="Sprite2D" parent="MediumLevel/Generated" index="5" unique_id=60432641]
+[node name="StartPlatform_Tile_4_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=935103185]
 z_index = -1
-position = Vector2(576, 534)
+position = Vector2(576, 564)
 texture = ExtResource("15_hyscg")
 
-[node name="Tile_0_1" type="Sprite2D" parent="MediumLevel/Generated" index="6" unique_id=1000191782]
+[node name="StartPlatform_Tile_0_1" type="Sprite2D" parent="MediumLevel/Generated" unique_id=733109636]
 z_index = -1
-position = Vector2(64, 662)
+position = Vector2(64, 692)
 texture = ExtResource("16_yu85r")
 
-[node name="Tile_1_1" type="Sprite2D" parent="MediumLevel/Generated" index="7" unique_id=1313857533]
+[node name="StartPlatform_Tile_1_1" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1901137932]
 z_index = -1
-position = Vector2(192, 662)
+position = Vector2(192, 692)
 texture = ExtResource("17_reqmo")
 
-[node name="Tile_2_1" type="Sprite2D" parent="MediumLevel/Generated" index="8" unique_id=631336042]
+[node name="StartPlatform_Tile_2_1" type="Sprite2D" parent="MediumLevel/Generated" unique_id=297638987]
 z_index = -1
-position = Vector2(320, 662)
+position = Vector2(320, 692)
 texture = ExtResource("17_reqmo")
 
-[node name="Tile_3_1" type="Sprite2D" parent="MediumLevel/Generated" index="9" unique_id=1179782130]
+[node name="StartPlatform_Tile_3_1" type="Sprite2D" parent="MediumLevel/Generated" unique_id=907357805]
 z_index = -1
-position = Vector2(448, 662)
+position = Vector2(448, 692)
 texture = ExtResource("17_reqmo")
 
-[node name="Tile_4_1" type="Sprite2D" parent="MediumLevel/Generated" index="10" unique_id=1701117080]
+[node name="StartPlatform_Tile_4_1" type="Sprite2D" parent="MediumLevel/Generated" unique_id=340585969]
 z_index = -1
-position = Vector2(576, 662)
+position = Vector2(576, 692)
 texture = ExtResource("18_vystq")
 
-[node name="ShotgunPlatform" type="StaticBody2D" parent="MediumLevel/Generated" index="11" unique_id=850105578]
-position = Vector2(832, 394)
+[node name="FirstJump" type="StaticBody2D" parent="MediumLevel/Generated" unique_id=2096638477]
+position = Vector2(952, 424)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MediumLevel/Generated/ShotgunPlatform" index="0" unique_id=823366661]
-shape = SubResource("RectangleShape2D_medium_shotgun")
+[node name="@CollisionShape2D@9" type="CollisionShape2D" parent="MediumLevel/Generated/FirstJump" unique_id=1394250714]
+shape = SubResource("RectangleShape2D_5jpku")
 
-[node name="@Sprite2D@49360" type="Sprite2D" parent="MediumLevel/Generated" index="12" unique_id=966940615]
+[node name="FirstJump_Tile_0_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1287934145]
 z_index = -1
-position = Vector2(704, 394)
+position = Vector2(824, 424)
 texture = ExtResource("19_o7ep5")
 
-[node name="@Sprite2D@49361" type="Sprite2D" parent="MediumLevel/Generated" index="13" unique_id=1020916025]
+[node name="FirstJump_Tile_1_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1118314357]
 z_index = -1
-position = Vector2(832, 394)
+position = Vector2(952, 424)
 texture = ExtResource("20_vp5vm")
 
-[node name="@Sprite2D@49362" type="Sprite2D" parent="MediumLevel/Generated" index="14" unique_id=67479416]
+[node name="FirstJump_Tile_2_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=2048319079]
 z_index = -1
-position = Vector2(960, 394)
+position = Vector2(1080, 424)
 texture = ExtResource("21_rphxm")
 
-[node name="CenterPlatform" type="StaticBody2D" parent="MediumLevel/Generated" index="15" unique_id=1704530443]
-position = Vector2(1344, 494)
+[node name="BrokenBridge" type="StaticBody2D" parent="MediumLevel/Generated" unique_id=1867439308]
+position = Vector2(1388, 519)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MediumLevel/Generated/CenterPlatform" index="0" unique_id=133992377]
-shape = SubResource("RectangleShape2D_medium_center")
+[node name="@CollisionShape2D@10" type="CollisionShape2D" parent="MediumLevel/Generated/BrokenBridge" unique_id=882313973]
+shape = SubResource("RectangleShape2D_u704q")
 
-[node name="@Sprite2D@49364" type="Sprite2D" parent="MediumLevel/Generated" index="16" unique_id=1258657090]
+[node name="BrokenBridge_Tile_0_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1234981977]
 z_index = -1
-position = Vector2(1216, 494)
+position = Vector2(1324, 519)
 texture = ExtResource("19_o7ep5")
 
-[node name="@Sprite2D@49365" type="Sprite2D" parent="MediumLevel/Generated" index="17" unique_id=1930009475]
+[node name="BrokenBridge_Tile_1_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=640612142]
 z_index = -1
-position = Vector2(1344, 494)
-texture = ExtResource("20_vp5vm")
-
-[node name="@Sprite2D@49366" type="Sprite2D" parent="MediumLevel/Generated" index="18" unique_id=1279902850]
-z_index = -1
-position = Vector2(1472, 494)
+position = Vector2(1452, 519)
 texture = ExtResource("21_rphxm")
 
-[node name="HighTower" type="StaticBody2D" parent="MediumLevel/Generated" index="19" unique_id=1809400635]
-position = Vector2(1920, 526)
+[node name="CryptTower" type="StaticBody2D" parent="MediumLevel/Generated" unique_id=1496076269]
+position = Vector2(1916, 452)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MediumLevel/Generated/HighTower" index="0" unique_id=2684954]
-shape = SubResource("RectangleShape2D_medium_tower")
+[node name="@CollisionShape2D@11" type="CollisionShape2D" parent="MediumLevel/Generated/CryptTower" unique_id=274102156]
+shape = SubResource("RectangleShape2D_oi5bp")
 
-[node name="@Sprite2D@49368" type="Sprite2D" parent="MediumLevel/Generated" index="20" unique_id=1635455121]
+[node name="CryptTower_Tile_0_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1547897475]
 z_index = -1
-position = Vector2(1728, 334)
+position = Vector2(1724, 324)
 texture = ExtResource("13_ofvf2")
 
-[node name="@Sprite2D@49369" type="Sprite2D" parent="MediumLevel/Generated" index="21" unique_id=1252307054]
+[node name="CryptTower_Tile_1_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1002357969]
 z_index = -1
-position = Vector2(1856, 334)
+position = Vector2(1852, 324)
 texture = ExtResource("14_gtr7n")
 
-[node name="@Sprite2D@49370" type="Sprite2D" parent="MediumLevel/Generated" index="22" unique_id=1134430555]
+[node name="CryptTower_Tile_2_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1283748464]
 z_index = -1
-position = Vector2(1984, 334)
+position = Vector2(1980, 324)
 texture = ExtResource("14_gtr7n")
 
-[node name="@Sprite2D@49371" type="Sprite2D" parent="MediumLevel/Generated" index="23" unique_id=1869384722]
+[node name="CryptTower_Tile_3_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1871791360]
 z_index = -1
-position = Vector2(2112, 334)
+position = Vector2(2108, 324)
 texture = ExtResource("15_hyscg")
 
-[node name="@Sprite2D@49372" type="Sprite2D" parent="MediumLevel/Generated" index="24" unique_id=106614721]
+[node name="CryptTower_Tile_0_1" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1778744080]
 z_index = -1
-position = Vector2(1728, 462)
+position = Vector2(1724, 452)
 texture = ExtResource("22_ohty1")
 
-[node name="@Sprite2D@49373" type="Sprite2D" parent="MediumLevel/Generated" index="25" unique_id=1726929725]
+[node name="CryptTower_Tile_1_1" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1588914514]
 z_index = -1
-position = Vector2(1856, 462)
+position = Vector2(1852, 452)
 texture = ExtResource("23_cyycj")
 
-[node name="@Sprite2D@49374" type="Sprite2D" parent="MediumLevel/Generated" index="26" unique_id=1493054493]
+[node name="CryptTower_Tile_2_1" type="Sprite2D" parent="MediumLevel/Generated" unique_id=897594651]
 z_index = -1
-position = Vector2(1984, 462)
+position = Vector2(1980, 452)
 texture = ExtResource("23_cyycj")
 
-[node name="@Sprite2D@49375" type="Sprite2D" parent="MediumLevel/Generated" index="27" unique_id=2106258537]
+[node name="CryptTower_Tile_3_1" type="Sprite2D" parent="MediumLevel/Generated" unique_id=463617692]
 z_index = -1
-position = Vector2(2112, 462)
+position = Vector2(2108, 452)
 texture = ExtResource("24_sjvys")
 
-[node name="Tile_0_2" type="Sprite2D" parent="MediumLevel/Generated" index="28" unique_id=379657806]
+[node name="CryptTower_Tile_0_2" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1531497289]
 z_index = -1
-position = Vector2(1728, 590)
-texture = ExtResource("22_ohty1")
-
-[node name="Tile_1_2" type="Sprite2D" parent="MediumLevel/Generated" index="29" unique_id=1400881324]
-z_index = -1
-position = Vector2(1856, 590)
-texture = ExtResource("23_cyycj")
-
-[node name="Tile_2_2" type="Sprite2D" parent="MediumLevel/Generated" index="30" unique_id=1436262022]
-z_index = -1
-position = Vector2(1984, 590)
-texture = ExtResource("23_cyycj")
-
-[node name="Tile_3_2" type="Sprite2D" parent="MediumLevel/Generated" index="31" unique_id=723119784]
-z_index = -1
-position = Vector2(2112, 590)
-texture = ExtResource("24_sjvys")
-
-[node name="Tile_0_3" type="Sprite2D" parent="MediumLevel/Generated" index="32" unique_id=730218470]
-z_index = -1
-position = Vector2(1728, 718)
+position = Vector2(1724, 580)
 texture = ExtResource("16_yu85r")
 
-[node name="Tile_1_3" type="Sprite2D" parent="MediumLevel/Generated" index="33" unique_id=487405849]
+[node name="CryptTower_Tile_1_2" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1423649828]
 z_index = -1
-position = Vector2(1856, 718)
+position = Vector2(1852, 580)
 texture = ExtResource("17_reqmo")
 
-[node name="Tile_2_3" type="Sprite2D" parent="MediumLevel/Generated" index="34" unique_id=1706184987]
+[node name="CryptTower_Tile_2_2" type="Sprite2D" parent="MediumLevel/Generated" unique_id=875184509]
 z_index = -1
-position = Vector2(1984, 718)
+position = Vector2(1980, 580)
 texture = ExtResource("17_reqmo")
 
-[node name="Tile_3_3" type="Sprite2D" parent="MediumLevel/Generated" index="35" unique_id=877113107]
+[node name="CryptTower_Tile_3_2" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1780966373]
 z_index = -1
-position = Vector2(2112, 718)
+position = Vector2(2108, 580)
 texture = ExtResource("18_vystq")
 
-[node name="StepPlatform" type="StaticBody2D" parent="MediumLevel/Generated" index="36" unique_id=175768637]
-position = Vector2(2432, 474)
+[node name="DropFight" type="StaticBody2D" parent="MediumLevel/Generated" unique_id=2109040543]
+position = Vector2(2516, 684)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MediumLevel/Generated/StepPlatform" index="0" unique_id=1088560442]
-shape = SubResource("RectangleShape2D_medium_step")
+[node name="@CollisionShape2D@12" type="CollisionShape2D" parent="MediumLevel/Generated/DropFight" unique_id=426137215]
+shape = SubResource("RectangleShape2D_woy1f")
 
-[node name="@Sprite2D@49377" type="Sprite2D" parent="MediumLevel/Generated" index="37" unique_id=66814855]
+[node name="DropFight_Tile_0_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=12355806]
 z_index = -1
-position = Vector2(2368, 474)
+position = Vector2(2324, 684)
 texture = ExtResource("19_o7ep5")
 
-[node name="@Sprite2D@49378" type="Sprite2D" parent="MediumLevel/Generated" index="38" unique_id=2055441302]
+[node name="DropFight_Tile_1_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1248398211]
 z_index = -1
-position = Vector2(2496, 474)
+position = Vector2(2452, 684)
+texture = ExtResource("20_vp5vm")
+
+[node name="DropFight_Tile_2_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=2129523244]
+z_index = -1
+position = Vector2(2580, 684)
+texture = ExtResource("20_vp5vm")
+
+[node name="DropFight_Tile_3_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=5932724]
+z_index = -1
+position = Vector2(2708, 684)
 texture = ExtResource("21_rphxm")
 
-[node name="LowerFightPlatform" type="StaticBody2D" parent="MediumLevel/Generated" index="39" unique_id=1084451685]
-position = Vector2(2432, 714)
+[node name="NarrowStep" type="StaticBody2D" parent="MediumLevel/Generated" unique_id=642935960]
+position = Vector2(2988, 489)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MediumLevel/Generated/LowerFightPlatform" index="0" unique_id=51150526]
-shape = SubResource("RectangleShape2D_medium_lower")
+[node name="@CollisionShape2D@13" type="CollisionShape2D" parent="MediumLevel/Generated/NarrowStep" unique_id=661019193]
+shape = SubResource("RectangleShape2D_pfkyu")
 
-[node name="@Sprite2D@49380" type="Sprite2D" parent="MediumLevel/Generated" index="40" unique_id=143029868]
+[node name="NarrowStep_Tile_0_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1877379174]
 z_index = -1
-position = Vector2(2240, 714)
+position = Vector2(2924, 489)
 texture = ExtResource("19_o7ep5")
 
-[node name="@Sprite2D@49381" type="Sprite2D" parent="MediumLevel/Generated" index="41" unique_id=2012678982]
+[node name="NarrowStep_Tile_1_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=481931819]
 z_index = -1
-position = Vector2(2368, 714)
-texture = ExtResource("20_vp5vm")
-
-[node name="@Sprite2D@49382" type="Sprite2D" parent="MediumLevel/Generated" index="42" unique_id=1546246969]
-z_index = -1
-position = Vector2(2496, 714)
-texture = ExtResource("20_vp5vm")
-
-[node name="@Sprite2D@49383" type="Sprite2D" parent="MediumLevel/Generated" index="43" unique_id=866531367]
-z_index = -1
-position = Vector2(2624, 714)
+position = Vector2(3052, 489)
 texture = ExtResource("21_rphxm")
 
-[node name="ExitPlatform" type="StaticBody2D" parent="MediumLevel/Generated" index="44" unique_id=369934077]
-position = Vector2(3008, 628)
+[node name="ExitPlatform" type="StaticBody2D" parent="MediumLevel/Generated" unique_id=732599864]
+position = Vector2(3496, 463)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MediumLevel/Generated/ExitPlatform" index="0" unique_id=268638615]
-shape = SubResource("RectangleShape2D_medium_exit")
+[node name="@CollisionShape2D@14" type="CollisionShape2D" parent="MediumLevel/Generated/ExitPlatform" unique_id=285668037]
+shape = SubResource("RectangleShape2D_bd3y8")
 
-[node name="@Sprite2D@49385" type="Sprite2D" parent="MediumLevel/Generated" index="45" unique_id=787419548]
+[node name="ExitPlatform_Tile_0_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1165093554]
 z_index = -1
-position = Vector2(2880, 564)
+position = Vector2(3304, 399)
 texture = ExtResource("13_ofvf2")
 
-[node name="@Sprite2D@49386" type="Sprite2D" parent="MediumLevel/Generated" index="46" unique_id=242004138]
+[node name="ExitPlatform_Tile_1_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1389139125]
 z_index = -1
-position = Vector2(3008, 564)
+position = Vector2(3432, 399)
 texture = ExtResource("14_gtr7n")
 
-[node name="@Sprite2D@49387" type="Sprite2D" parent="MediumLevel/Generated" index="47" unique_id=1265137583]
+[node name="ExitPlatform_Tile_2_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1011379482]
 z_index = -1
-position = Vector2(3136, 564)
+position = Vector2(3560, 399)
+texture = ExtResource("14_gtr7n")
+
+[node name="ExitPlatform_Tile_3_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1640687954]
+z_index = -1
+position = Vector2(3688, 399)
 texture = ExtResource("15_hyscg")
 
-[node name="@Sprite2D@49388" type="Sprite2D" parent="MediumLevel/Generated" index="48" unique_id=206558357]
+[node name="ExitPlatform_Tile_0_1" type="Sprite2D" parent="MediumLevel/Generated" unique_id=769185109]
 z_index = -1
-position = Vector2(2880, 692)
+position = Vector2(3304, 527)
 texture = ExtResource("16_yu85r")
 
-[node name="@Sprite2D@49389" type="Sprite2D" parent="MediumLevel/Generated" index="49" unique_id=2041222942]
+[node name="ExitPlatform_Tile_1_1" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1968218592]
 z_index = -1
-position = Vector2(3008, 692)
+position = Vector2(3432, 527)
 texture = ExtResource("17_reqmo")
 
-[node name="@Sprite2D@49390" type="Sprite2D" parent="MediumLevel/Generated" index="50" unique_id=1068225038]
+[node name="ExitPlatform_Tile_2_1" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1479982807]
 z_index = -1
-position = Vector2(3136, 692)
+position = Vector2(3560, 527)
+texture = ExtResource("17_reqmo")
+
+[node name="ExitPlatform_Tile_3_1" type="Sprite2D" parent="MediumLevel/Generated" unique_id=593672873]
+z_index = -1
+position = Vector2(3688, 527)
 texture = ExtResource("18_vystq")
 
-[node name="SpikePitHazard" type="Area2D" parent="MediumLevel/Generated" index="51" unique_id=1198570446]
-position = Vector2(1216, 722)
+[node name="SpikePitHazard" type="Area2D" parent="MediumLevel/Generated" unique_id=324386033]
+position = Vector2(896, 740)
 script = ExtResource("14_hazard")
 
-[node name="Spike_0" type="Sprite2D" parent="MediumLevel/Generated" index="52" unique_id=1163983642]
-position = Vector2(960, 690)
+[node name="@CollisionShape2D@15" type="CollisionShape2D" parent="MediumLevel/Generated/SpikePitHazard" unique_id=1704121688]
+shape = SubResource("RectangleShape2D_j2fm5")
+
+[node name="Spike_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1840817050]
+z_index = 0
+position = Vector2(704, 708)
 texture = ExtResource("5_spike")
 
-[node name="Spike_1" type="Sprite2D" parent="MediumLevel/Generated" index="53" unique_id=1285147876]
-position = Vector2(1088, 690)
+[node name="Spike_1" type="Sprite2D" parent="MediumLevel/Generated" unique_id=478329484]
+z_index = 0
+position = Vector2(832, 708)
 texture = ExtResource("5_spike")
 
-[node name="Spike_2" type="Sprite2D" parent="MediumLevel/Generated" index="54" unique_id=1771411505]
-position = Vector2(1216, 690)
+[node name="Spike_2" type="Sprite2D" parent="MediumLevel/Generated" unique_id=866557261]
+z_index = 0
+position = Vector2(960, 708)
 texture = ExtResource("5_spike")
 
-[node name="Spike_3" type="Sprite2D" parent="MediumLevel/Generated" index="55" unique_id=452740824]
-position = Vector2(1344, 690)
+[node name="Spike_3" type="Sprite2D" parent="MediumLevel/Generated" unique_id=102598604]
+z_index = 0
+position = Vector2(1088, 708)
 texture = ExtResource("5_spike")
 
-[node name="Spike_4" type="Sprite2D" parent="MediumLevel/Generated" index="56" unique_id=619128629]
-position = Vector2(1472, 690)
+[node name="@Area2D@16" type="Area2D" parent="MediumLevel/Generated" unique_id=265061452]
+position = Vector2(1710, 740)
+script = ExtResource("14_hazard")
+
+[node name="@CollisionShape2D@17" type="CollisionShape2D" parent="MediumLevel/Generated/@Area2D@16" unique_id=1272333575]
+shape = SubResource("RectangleShape2D_y043w")
+
+[node name="@Sprite2D@18" type="Sprite2D" parent="MediumLevel/Generated" unique_id=840253687]
+z_index = 0
+position = Vector2(1582, 708)
 texture = ExtResource("5_spike")
 
-[node name="StartTree" type="Sprite2D" parent="MediumLevel/Generated" index="57" unique_id=1378278037]
-z_index = 30
-position = Vector2(81, 316.8375)
-scale = Vector2(1.35, 1.4323221)
-texture = ExtResource("9_tree")
+[node name="@Sprite2D@19" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1239189370]
+z_index = 0
+position = Vector2(1710, 708)
+texture = ExtResource("5_spike")
 
-[node name="StartSkeleton" type="Sprite2D" parent="MediumLevel/Generated" index="58" unique_id=690749404]
-z_index = 3
-position = Vector2(275, 440)
-scale = Vector2(1.25, 1.25)
+[node name="@Sprite2D@20" type="Sprite2D" parent="MediumLevel/Generated" unique_id=647999675]
+z_index = 0
+position = Vector2(1838, 708)
+texture = ExtResource("5_spike")
+
+[node name="@Area2D@21" type="Area2D" parent="MediumLevel/Generated" unique_id=1938996597]
+position = Vector2(2964, 740)
+script = ExtResource("14_hazard")
+
+[node name="@CollisionShape2D@22" type="CollisionShape2D" parent="MediumLevel/Generated/@Area2D@21" unique_id=815326537]
+shape = SubResource("RectangleShape2D_617bh")
+
+[node name="@Sprite2D@23" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1373280121]
+z_index = 0
+position = Vector2(2836, 708)
+texture = ExtResource("5_spike")
+
+[node name="@Sprite2D@24" type="Sprite2D" parent="MediumLevel/Generated" unique_id=909830667]
+z_index = 0
+position = Vector2(2964, 708)
+texture = ExtResource("5_spike")
+
+[node name="@Sprite2D@25" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1128118633]
+z_index = 0
+position = Vector2(3092, 708)
+texture = ExtResource("5_spike")
+
+[node name="StartFence" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1691857747]
+z_index = 0
+position = Vector2(130, 462)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("46_wiga1")
+
+[node name="StartSkeleton" type="Sprite2D" parent="MediumLevel/Generated" unique_id=2077142383]
+z_index = 0
+position = Vector2(350, 458)
+scale = Vector2(1.15, 1.15)
 texture = ExtResource("12_skeleton")
 
-[node name="StartSign" type="Sprite2D" parent="MediumLevel/Generated" index="59" unique_id=67348800]
-z_index = 3
-position = Vector2(425, 424)
-scale = Vector2(1.05, 1.05)
-texture = ExtResource("13_sign")
+[node name="StartBarrel" type="Sprite2D" parent="MediumLevel/Generated" unique_id=446601377]
+z_index = 0
+position = Vector2(535, 440)
+scale = Vector2(0.95, 0.95)
+texture = ExtResource("47_6ob6g")
 
-[node name="StartCrate" type="Sprite2D" parent="MediumLevel/Generated" index="60" unique_id=1586748444]
-z_index = 3
-position = Vector2(535, 418)
-texture = ExtResource("6_crate")
+[node name="FirstLantern" type="Sprite2D" parent="MediumLevel/Generated" unique_id=649570474]
+z_index = 0
+position = Vector2(820, 260)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("18_o7kvl")
 
-[node name="ShotgunTombstone" type="Sprite2D" parent="MediumLevel/Generated" index="61" unique_id=747281024]
-z_index = 3
-position = Vector2(710, 271)
+[node name="FirstTombstone" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1317951625]
+z_index = 0
+position = Vector2(1031.0001, 324)
 scale = Vector2(1.55, 1.55)
-texture = ExtResource("7_tomb_a")
-
-[node name="ShotgunBush" type="Sprite2D" parent="MediumLevel/Generated" index="62" unique_id=1693786373]
-z_index = 30
-position = Vector2(920, 312)
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("10_bush")
-
-[node name="CenterCrate" type="Sprite2D" parent="MediumLevel/Generated" index="63" unique_id=476675267]
-z_index = 3
-position = Vector2(1390, 376)
-texture = ExtResource("6_crate")
-
-[node name="CenterDeadBush" type="Sprite2D" parent="MediumLevel/Generated" index="64" unique_id=2009682580]
-z_index = 30
-position = Vector2(1225, 403.275)
-scale = Vector2(0.85, 0.96554035)
-texture = ExtResource("11_dead_bush")
-
-[node name="TowerTombstone" type="Sprite2D" parent="MediumLevel/Generated" index="65" unique_id=1434971704]
-z_index = 3
-position = Vector2(1785, 204)
-scale = Vector2(1.75, 1.75)
-texture = ExtResource("7_tomb_a")
-
-[node name="TowerBush" type="Sprite2D" parent="MediumLevel/Generated" index="66" unique_id=354731733]
-z_index = 30
-position = Vector2(1732, 250)
-scale = Vector2(0.8, 0.8)
-texture = ExtResource("10_bush")
-
-[node name="TowerCrate" type="Sprite2D" parent="MediumLevel/Generated" index="67" unique_id=1891012937]
-z_index = 3
-position = Vector2(2095, 217)
-texture = ExtResource("6_crate")
-
-[node name="LowerCrate" type="Sprite2D" parent="MediumLevel/Generated" index="68" unique_id=1834148719]
-z_index = 3
-position = Vector2(2420, 597)
-texture = ExtResource("6_crate")
-
-[node name="LowerDeadBush" type="Sprite2D" parent="MediumLevel/Generated" index="69" unique_id=564016247]
-z_index = 30
-position = Vector2(2250, 630.27496)
-scale = Vector2(0.85, 1.1547301)
-texture = ExtResource("11_dead_bush")
-
-[node name="ExitTombstone" type="Sprite2D" parent="MediumLevel/Generated" index="70" unique_id=2145261494]
-z_index = 3
-position = Vector2(2920, 450)
-scale = Vector2(1.8, 1.8)
 texture = ExtResource("8_tomb_b")
 
-[node name="ExitTree" type="Sprite2D" parent="MediumLevel/Generated" index="71" unique_id=543487422]
-z_index = 30
-position = Vector2(3050, 385)
-scale = Vector2(-1.15, 1.15)
-texture = ExtResource("9_tree")
+[node name="BridgeLeft_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=973500119]
+z_index = -2
+position = Vector2(1288, 415)
+texture = ExtResource("20_5hg6j")
 
-[node name="RoundLabel" parent="PlayerHUD" parent_id_path=PackedInt32Array(1158069440) index="4" unique_id=1378954021]
+[node name="BridgeRight_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=929645413]
+z_index = -2
+position = Vector2(1352, 415)
+texture = ExtResource("21_0gfma")
+
+[node name="BridgeLeft_1" type="Sprite2D" parent="MediumLevel/Generated" unique_id=2112365041]
+z_index = -2
+position = Vector2(1416, 415)
+texture = ExtResource("20_5hg6j")
+
+[node name="BridgeRight_1" type="Sprite2D" parent="MediumLevel/Generated" unique_id=318964616]
+z_index = -2
+position = Vector2(1480, 415)
+texture = ExtResource("21_0gfma")
+
+[node name="TowerCrypt" type="Sprite2D" parent="MediumLevel/Generated" unique_id=702469953]
+z_index = 0
+position = Vector2(1816.9999, 100)
+scale = Vector2(0.86, 0.86)
+texture = ExtResource("22_wkxlr")
+
+[node name="TowerBush" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1111887004]
+z_index = 0
+position = Vector2(2075, 223)
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("11_dead_bush")
+
+[node name="DropCoffin" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1612003649]
+z_index = 0
+position = Vector2(2701, 521)
+scale = Vector2(0.82, 0.82)
+texture = ExtResource("25_xs0au")
+
+[node name="DropSkull" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1765171328]
+z_index = 0
+position = Vector2(2670, 585)
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("48_eeked")
+
+[node name="StepCrate" type="Sprite2D" parent="MediumLevel/Generated" unique_id=278076288]
+z_index = 0
+position = Vector2(2954, 388)
+scale = Vector2(0.95, 0.95)
+texture = ExtResource("6_crate")
+
+[node name="ExitLantern" type="Sprite2D" parent="MediumLevel/Generated" unique_id=329029493]
+z_index = 0
+position = Vector2(3325, 230)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("18_o7kvl")
+
+[node name="ExitTree" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1777568999]
+z_index = 0
+position = Vector2(3579, 187)
+scale = Vector2(-0.82569623, 1.1456677)
+texture = ExtResource("15_e00hd")
+
+[node name="PlayerHUD" type="CanvasLayer" parent="." unique_id=1158069440]
+process_mode = 3
+script = ExtResource("49_67kvf")
+
+[node name="HealthBar" type="ProgressBar" parent="PlayerHUD" unique_id=1184578042]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 216.0
+offset_bottom = 32.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_health_fill")
+value = 100.0
+show_percentage = false
+
+[node name="HealthLabel" type="Label" parent="PlayerHUD" unique_id=1085616806]
+offset_left = 16.0
+offset_top = 36.0
+offset_right = 160.0
+offset_bottom = 60.0
+text = "Life: 100"
+
+[node name="EnemyCountLabel" type="Label" parent="PlayerHUD" unique_id=1358564899]
+offset_left = 16.0
+offset_top = 62.0
+offset_right = 160.0
+offset_bottom = 86.0
+text = "Enemies: 0"
+
+[node name="LivesLabel" type="Label" parent="PlayerHUD" unique_id=1979271889]
+offset_left = 16.0
 offset_top = 88.0
+offset_right = 160.0
 offset_bottom = 112.0
+text = "Lives: 0/5"
 
-[node name="MenuButton" parent="PlayerHUD" parent_id_path=PackedInt32Array(1158069440) index="5" unique_id=96562753]
+[node name="RoundLabel" type="Label" parent="PlayerHUD" unique_id=1378954021]
+visible = false
+offset_left = 16.0
+offset_top = 88.0
+offset_right = 100.0
+offset_bottom = 112.0
+text = "0/0"
+
+[node name="MenuButton" type="Button" parent="PlayerHUD" unique_id=96562753]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
 offset_left = -40.0
-offset_top = 0.0
-offset_right = 0.0
 offset_bottom = 32.0
 grow_horizontal = 0
+text = "..."
 
-[node name="PauseMenu" parent="PlayerHUD" parent_id_path=PackedInt32Array(1158069440) index="6" unique_id=833667631]
+[node name="PauseMenu" type="Panel" parent="PlayerHUD" unique_id=833667631]
+process_mode = 3
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -95.0
+offset_right = 150.0
+offset_bottom = 95.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pause_panel")
 
-[node name="Box" parent="PlayerHUD/PauseMenu" index="0" unique_id=1436296251]
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
+[node name="Box" type="VBoxContainer" parent="PlayerHUD/PauseMenu" unique_id=1436296251]
+layout_mode = 0
+theme_override_constants/separation = 12
+alignment = 1
 
-[node name="EnemySpawner" parent="." index="9" unique_id=1527017218]
-spawn_count = 4
+[node name="Title" type="Label" parent="PlayerHUD/PauseMenu/Box" unique_id=1007556667]
+layout_mode = 2
+text = "Paused"
+horizontal_alignment = 1
+
+[node name="OnlineStatusLabel" type="Label" parent="PlayerHUD/PauseMenu/Box" unique_id=879405599]
+layout_mode = 2
+text = "Online: offline"
+horizontal_alignment = 1
+
+[node name="ReturnButton" type="Button" parent="PlayerHUD/PauseMenu/Box" unique_id=1046057901]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+text = "Return to Game"
+
+[node name="MainMenuButton" type="Button" parent="PlayerHUD/PauseMenu/Box" unique_id=1644607706]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+text = "Main Menu"
+
+[node name="OnlineManager" type="CanvasLayer" parent="." unique_id=404326727]
+script = ExtResource("50_5w5xo")
+golem_player_scene = ExtResource("51_g88q2")
+
+[node name="EnemySpawner" type="Node2D" parent="." unique_id=1527017218]
+script = ExtResource("52_nfej5")
+enemy_scene = ExtResource("53_lgm7t")
+spawn_count = 7
 spawn_seed = 2201
-spawn_areas = Array[Rect2]([Rect2(720, 335, 220, 1), Rect2(1230, 435, 220, 1), Rect2(1740, 275, 350, 1), Rect2(2245, 655, 360, 1), Rect2(2885, 505, 230, 1)])
+spawn_areas = Array[Rect2]([Rect2(780, 300, 320, 1), Rect2(1280, 395, 210, 1), Rect2(1705, 200, 420, 1), Rect2(2295, 560, 420, 1), Rect2(2875, 365, 210, 1), Rect2(3285, 275, 410, 1)])
+enemy_max_life = 170
+
+[node name="HealthDropSpawner" type="CanvasLayer" parent="." unique_id=348391563]
+script = ExtResource("54_6576a")

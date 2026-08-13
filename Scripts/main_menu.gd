@@ -9,9 +9,11 @@ const MAX_ROOM_PLAYERS := 2
 const STEAM_LOBBY_REFRESH_INTERVAL := 2.0
 const LANG_ENG := "eng"
 const LANG_GEO := "geo"
+const ICE_GOLEM_UNLOCK_COINS := 2500
 const CHARACTER_DISPLAY_NAMES := {
 	"player": "Ash Golem",
-	"golem": "Stone Golem"
+	"golem": "Stone Golem",
+	"ice_golem": "Ice Golem"
 }
 const TEXT := {
 	LANG_ENG: {
@@ -25,15 +27,18 @@ const TEXT := {
 		"choose_character": "Choose Character",
 		"online_room": "Online",
 		"how_to_play": "How to Play",
-		"how_to_play_text": "Move with Left/Right arrows.\nJump with Space.\nUse hands with A and foot kick with S.\nDefeat enemies, avoid spikes, and collect hearts for health.\nFirst heart appears after 35 seconds, then every 90 seconds.",
+		"how_to_play_text": "Move with Left/Right arrows.\nJump with Up Arrow.\nUse hands with A and foot kick with S.\nDefeat enemies, avoid spikes, and collect hearts for health.\nFirst heart appears after 35 seconds, then every 90 seconds.",
 		"how_attack": "Hands: A",
 		"how_kick": "Foot: S",
 		"how_heart": "First heart: 35s, then 90s",
-		"how_jump": "Jump: Space",
+		"how_jump": "Jump: Up Arrow",
 		"credits": "Credits",
 		"credits_text": "Silent City\nCreated by Luka Guledani / SonnyRenderer\n\nCharacter and asset credits:\nKenney - Animated Characters Retro 1.1\nLicense: Creative Commons Zero (CC0)\nwww.kenney.nl\n\nGraveyard platform tileset\nGameArt2D / CraftPix freebie license\nhttps://www.gameart2d.com/free-graveyard-platformer-tileset.html\n\nThank you for playing.",
 		"exit": "Exit",
 		"select": "Select",
+		"locked": "Locked %d/%d",
+		"coins": "Coins: %d",
+		"character_locked": "%s unlocks at %d coins. You have %d.",
 		"choose_first": "Choose a character before starting.",
 		"start_game": "Start Game",
 		"back": "Back",
@@ -82,11 +87,11 @@ const TEXT := {
 		"choose_character": "აირჩიე პერსონაჟი",
 		"online_room": "ონლაინი",
 		"how_to_play": "როგორ ვითამაშოთ",
-		"how_to_play_text": "იმოძრავე მარცხენა/მარჯვენა ისრებით.\nახტომა: Space.\nხელით დარტყმა: A, ფეხით დარტყმა: S.\nდაამარცხე მტრები, მოერიდე ეკლებს და აიღე გულები სიცოცხლისთვის.\nპირველი გული მოდის 35 წამში, შემდეგ ყოველ 90 წამში.",
+		"how_to_play_text": "იმოძრავე მარცხენა/მარჯვენა ისრებით.\nახტომა: Up Arrow.\nხელით დარტყმა: A, ფეხით დარტყმა: S.\nდაამარცხე მტრები, მოერიდე ეკლებს და აიღე გულები სიცოცხლისთვის.\nპირველი გული მოდის 35 წამში, შემდეგ ყოველ 90 წამში.",
 		"how_attack": "ხელები: A",
 		"how_kick": "ფეხი: S",
 		"how_heart": "პირველი: 35წმ, მერე 90წმ",
-		"how_jump": "ახტომა: Space",
+		"how_jump": "ახტომა: Up Arrow",
 		"credits": "კრედიტები",
 		"credits_text": "Silent City\nშექმნა: Luka Guledani / SonnyRenderer\n\nპერსონაჟებისა და ასეტების კრედიტები:\nKenney - Animated Characters Retro 1.1\nლიცენზია: Creative Commons Zero (CC0)\nwww.kenney.nl\n\nGraveyard platform tileset\nGameArt2D / CraftPix freebie license\nhttps://www.gameart2d.com/free-graveyard-platformer-tileset.html\n\nმადლობა თამაშისთვის.",
 		"exit": "გასვლა",
@@ -165,10 +170,13 @@ const ONLINE_TUTORIAL_STEPS := {
 @onready var hard_button: Button = $Content/Root/Pages/ChooseLevel/HardButton
 @onready var level_back_button: Button = $Content/Root/Pages/ChooseLevel/BackButton
 @onready var choose_header: Label = $Content/Root/Pages/ChooseCharacter/Header
+@onready var wallet_label: Label = $Content/Root/Pages/ChooseCharacter/WalletLabel
 @onready var player_card: PanelContainer = $Content/Root/Pages/ChooseCharacter/Cards/PlayerCard
 @onready var golem_card: PanelContainer = $Content/Root/Pages/ChooseCharacter/Cards/GolemCard
+@onready var ice_golem_card: PanelContainer = $Content/Root/Pages/ChooseCharacter/Cards/IceGolemCard
 @onready var player_select_button: Button = $Content/Root/Pages/ChooseCharacter/Cards/PlayerCard/Box/SelectButton
 @onready var golem_select_button: Button = $Content/Root/Pages/ChooseCharacter/Cards/GolemCard/Box/SelectButton
+@onready var ice_golem_select_button: Button = $Content/Root/Pages/ChooseCharacter/Cards/IceGolemCard/Box/SelectButton
 @onready var character_status: Label = $Content/Root/Pages/ChooseCharacter/StatusLabel
 @onready var choose_start_button: Button = $Content/Root/Pages/ChooseCharacter/StartButton
 @onready var choose_online_button: Button = $Content/Root/Pages/ChooseCharacter/OnlineButton
@@ -231,10 +239,13 @@ func _ready() -> void:
 	level_back_button.pressed.connect(func(): _show_page(home_page))
 	player_select_button.pressed.connect(func(): _select_character("player"))
 	golem_select_button.pressed.connect(func(): _select_character("golem"))
+	ice_golem_select_button.pressed.connect(func(): _select_character("ice_golem"))
 	_make_character_card_tappable(player_card, "player")
 	_make_character_card_tappable(golem_card, "golem")
+	_make_character_card_tappable(ice_golem_card, "ice_golem")
 	player_select_button.visible = true
 	golem_select_button.visible = true
+	ice_golem_select_button.visible = true
 	choose_start_button.pressed.connect(_open_level_select_from_character)
 	choose_online_button.pressed.connect(_open_online_page)
 	choose_back_button.pressed.connect(_back_from_character_page)
@@ -256,6 +267,9 @@ func _ready() -> void:
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.connection_failed.connect(_on_connection_failed)
 	_connect_steam_manager()
+	var settings := _settings()
+	if settings and settings.has_signal("saved_coins_changed"):
+		settings.saved_coins_changed.connect(func(_saved_coins: int): _update_character_cards())
 	_apply_language()
 	_update_character_cards()
 	_update_online_room_text()
@@ -325,6 +339,9 @@ func _apply_language() -> void:
 	choose_header.text = _t("choose_character")
 	player_select_button.text = _t("select")
 	golem_select_button.text = _t("select")
+	ice_golem_select_button.text = _ice_golem_button_text()
+	if wallet_label:
+		wallet_label.text = _t("coins") % _saved_coins()
 	choose_start_button.text = _t("start_game")
 	choose_online_button.text = _t("online_room")
 	choose_back_button.text = _t("back")
@@ -455,6 +472,12 @@ func _open_level_select_from_character() -> void:
 func _select_character(character: String) -> void:
 	if _is_online_character_locked():
 		return
+	if not _is_character_unlocked(character):
+		var character_name := String(CHARACTER_DISPLAY_NAMES.get(character, "Ice Golem"))
+		var unlock_cost := _character_unlock_cost(character)
+		character_status.text = _t("character_locked") % [character_name, unlock_cost, _saved_coins()]
+		_update_character_cards()
+		return
 	if _is_character_taken_by_other_player(character):
 		return
 
@@ -493,6 +516,9 @@ func _make_character_card_tappable(card: Control, character: String) -> void:
 func _select_character_from_card_input(event: InputEvent, character: String) -> void:
 	if _is_online_character_locked():
 		return
+	if not _is_character_unlocked(character):
+		_select_character(character)
+		return
 	if _is_character_taken_by_other_player(character):
 		return
 
@@ -509,31 +535,31 @@ func _select_character_from_card_input(event: InputEvent, character: String) -> 
 
 
 func _update_character_cards() -> void:
-	player_card.modulate = Color(1.0, 1.0, 1.0)
-	golem_card.modulate = Color(1.0, 1.0, 1.0)
-	_set_card_crossed(player_card, false)
-	_set_card_crossed(golem_card, false)
-	_set_character_card_available(player_card, true)
-	_set_character_card_available(golem_card, true)
+	if wallet_label:
+		wallet_label.text = _t("coins") % _saved_coins()
+	for character in ["player", "golem", "ice_golem"]:
+		var card := _character_card(character)
+		if not card:
+			continue
+		card.modulate = Color(1.0, 1.0, 1.0)
+		_set_card_crossed(card, false)
+		_set_character_card_available(card, _is_character_unlocked(character))
+	_set_ice_golem_button_text()
 	if joined_room_waiting_for_character and other_player_character_chosen:
-		if other_player_character == "golem":
-			golem_card.modulate = Color(0.45, 0.45, 0.45)
-			_set_card_crossed(golem_card, true)
-			_set_character_card_available(golem_card, false)
-		else:
-			player_card.modulate = Color(0.45, 0.45, 0.45)
-			_set_card_crossed(player_card, true)
-			_set_character_card_available(player_card, false)
+		var taken_card := _character_card(other_player_character)
+		if taken_card:
+			taken_card.modulate = Color(0.45, 0.45, 0.45)
+			_set_card_crossed(taken_card, true)
+			_set_character_card_available(taken_card, false)
 	var settings := _settings()
 	if not settings or settings.get("character_chosen") != true:
 		character_status.text = _t("choose_first")
 		_set_character_buttons_enabled(true)
 		_apply_taken_character_input_state()
 		return
-	if String(settings.get("selected_character")) == "golem":
-		golem_card.modulate = Color(0.65, 1.0, 0.65)
-	else:
-		player_card.modulate = Color(0.65, 1.0, 0.65)
+	var selected_card := _character_card(String(settings.get("selected_character")))
+	if selected_card:
+		selected_card.modulate = Color(0.65, 1.0, 0.65)
 	_set_character_buttons_enabled(not _is_online_character_locked())
 	_apply_taken_character_input_state()
 
@@ -572,10 +598,47 @@ func _selected_main_scene() -> String:
 	return MAIN_SCENE
 
 
+func _valid_online_scene_path(scene_path: String) -> String:
+	match scene_path:
+		MAIN_SCENE, MEDIUM_SCENE, HARD_SCENE:
+			return scene_path
+	return MAIN_SCENE
+
+
+func _level_for_scene_path(scene_path: String) -> String:
+	match _valid_online_scene_path(scene_path):
+		HARD_SCENE:
+			return "hard"
+		MEDIUM_SCENE:
+			return "medium"
+	return "easy"
+
+
+func _store_online_scene_path(scene_path: String) -> String:
+	var valid_scene_path := _valid_online_scene_path(scene_path)
+	var settings := _settings()
+	if settings:
+		settings.set("online_scene_path", valid_scene_path)
+		settings.set("selected_level", _level_for_scene_path(valid_scene_path))
+		settings.set("level_chosen", true)
+	return valid_scene_path
+
+
+func _online_scene_path_from_settings() -> String:
+	var settings := _settings()
+	if settings:
+		return _valid_online_scene_path(String(settings.get("online_scene_path")))
+	return MAIN_SCENE
+
+
+func _pending_lobby_scene_path() -> String:
+	return _valid_online_scene_path(String(pending_join_lobby.get("scene_path", MAIN_SCENE)))
+
+
 func _host_online_game() -> void:
 	if _is_hosting_room():
 		online_status.text = _t("hosting_active")
-		get_tree().change_scene_to_file(MAIN_SCENE)
+		get_tree().change_scene_to_file(_online_scene_path_from_settings())
 		return
 
 	_clear_peer()
@@ -653,16 +716,17 @@ func _try_auto_start_online_match() -> void:
 	online_match_starting = true
 	joined_room_waiting_for_character = false
 	var host_character := String(settings.get("selected_character"))
+	var scene_path := _store_online_scene_path(_selected_main_scene())
 	var steam_manager := _steam_manager()
 	if steam_manager and steam_manager.has_method("set_lobby_match_state"):
-		steam_manager.set_lobby_match_state("playing", host_character, remote_client_character)
+		steam_manager.set_lobby_match_state("playing", host_character, remote_client_character, scene_path)
 	character_status.text = _t("both_ready")
 	online_status.text = _t("both_ready")
 	online_start_button.visible = false
 	_update_room_buttons()
 	_sync_online_character_state()
-	rpc("_start_online_match")
-	get_tree().change_scene_to_file(MAIN_SCENE)
+	rpc("_start_online_match", scene_path)
+	get_tree().change_scene_to_file(scene_path)
 
 
 func _join_online_game() -> void:
@@ -697,12 +761,13 @@ func _prepare_join_selected_lobby(lobby_data: Dictionary) -> void:
 		settings.set("online_mode", true)
 		settings.set("online_role", "client")
 		if _is_pending_join_lobby_playing():
+			_store_online_scene_path(_pending_lobby_scene_path())
 			var saved_client_character := String(pending_join_lobby.get("client_character", "")).strip_edges()
 			var saved_host_character := String(pending_join_lobby.get("host_character", "")).strip_edges()
-			if saved_client_character in ["player", "golem"]:
+			if saved_client_character in ["player", "golem", "ice_golem"]:
 				settings.set("selected_character", saved_client_character)
 			settings.set("character_chosen", true)
-			if saved_host_character in ["player", "golem"]:
+			if saved_host_character in ["player", "golem", "ice_golem"]:
 				settings.set("online_remote_character", saved_host_character)
 		else:
 			settings.set("character_chosen", false)
@@ -728,7 +793,7 @@ func _finish_steam_join_lobby(lobby_id: int) -> void:
 	multiplayer.multiplayer_peer = peer
 	if _is_pending_join_lobby_playing():
 		online_status.text = "Rejoining match..."
-		get_tree().change_scene_to_file(MAIN_SCENE)
+		get_tree().change_scene_to_file(_store_online_scene_path(_pending_lobby_scene_path()))
 	else:
 		online_status.text = _t("joining")
 
@@ -762,7 +827,7 @@ func _on_connected_to_server() -> void:
 	if settings and settings.get("online_mode") == true and String(settings.get("online_role")) == "client":
 		if _is_pending_join_lobby_playing():
 			online_status.text = "Rejoining match..."
-			get_tree().change_scene_to_file(MAIN_SCENE)
+			get_tree().change_scene_to_file(_store_online_scene_path(_pending_lobby_scene_path()))
 			return
 		joined_room_waiting_for_character = true
 		other_player_character = ""
@@ -976,10 +1041,15 @@ func _lock_online_character_selection() -> void:
 
 
 func _set_character_buttons_enabled(enabled: bool) -> void:
-	player_select_button.disabled = not enabled
-	golem_select_button.disabled = not enabled
-	player_card.mouse_filter = Control.MOUSE_FILTER_STOP if enabled else Control.MOUSE_FILTER_IGNORE
-	golem_card.mouse_filter = Control.MOUSE_FILTER_STOP if enabled else Control.MOUSE_FILTER_IGNORE
+	for character in ["player", "golem", "ice_golem"]:
+		var card := _character_card(character)
+		var select_button := _character_select_button(character)
+		var available := enabled and _is_character_unlocked(character)
+		if select_button:
+			select_button.disabled = not available
+		if card:
+			card.mouse_filter = Control.MOUSE_FILTER_STOP if available else Control.MOUSE_FILTER_IGNORE
+	_set_ice_golem_button_text()
 
 
 func _set_character_card_available(card: Control, available: bool) -> void:
@@ -992,10 +1062,65 @@ func _set_character_card_available(card: Control, available: bool) -> void:
 func _apply_taken_character_input_state() -> void:
 	if not joined_room_waiting_for_character or not other_player_character_chosen:
 		return
-	if other_player_character == "golem":
-		_set_character_card_available(golem_card, false)
-	else:
-		_set_character_card_available(player_card, false)
+	var card := _character_card(other_player_character)
+	if card:
+		_set_character_card_available(card, false)
+
+
+func _character_card(character: String) -> PanelContainer:
+	match character:
+		"golem":
+			return golem_card
+		"ice_golem":
+			return ice_golem_card
+		_:
+			return player_card
+
+
+func _character_select_button(character: String) -> Button:
+	match character:
+		"golem":
+			return golem_select_button
+		"ice_golem":
+			return ice_golem_select_button
+		_:
+			return player_select_button
+
+
+func _saved_coins() -> int:
+	var settings := _settings()
+	if settings and settings.has_method("get_saved_coins"):
+		return int(settings.call("get_saved_coins"))
+	if settings:
+		return int(settings.get("saved_coins"))
+	return 0
+
+
+func _character_unlock_cost(character: String) -> int:
+	var settings := _settings()
+	if settings and settings.has_method("get_character_unlock_cost"):
+		return int(settings.call("get_character_unlock_cost", character))
+	if character == "ice_golem":
+		return ICE_GOLEM_UNLOCK_COINS
+	return 0
+
+
+func _is_character_unlocked(character: String) -> bool:
+	var settings := _settings()
+	if settings and settings.has_method("is_character_unlocked"):
+		return bool(settings.call("is_character_unlocked", character))
+	return _saved_coins() >= _character_unlock_cost(character)
+
+
+func _ice_golem_button_text() -> String:
+	if _is_character_unlocked("ice_golem"):
+		return _t("select")
+	return _t("locked") % [_saved_coins(), _character_unlock_cost("ice_golem")]
+
+
+func _set_ice_golem_button_text() -> void:
+	if ice_golem_select_button:
+		ice_golem_select_button.text = _ice_golem_button_text()
 
 
 func _set_card_crossed(card: Control, crossed: bool) -> void:
@@ -1085,13 +1210,13 @@ func _online_character_state_updated(host_character_chosen: bool, host_character
 
 
 @rpc("authority", "reliable")
-func _start_online_match() -> void:
+func _start_online_match(scene_path: String = MAIN_SCENE) -> void:
 	var settings := _settings()
 	if settings:
 		settings.set("character_chosen", true)
 	joined_room_waiting_for_character = false
 	online_match_starting = true
-	get_tree().change_scene_to_file(MAIN_SCENE)
+	get_tree().change_scene_to_file(_store_online_scene_path(scene_path))
 
 
 func _make_room_id() -> String:

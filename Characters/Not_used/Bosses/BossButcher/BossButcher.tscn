@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://Characters/Not_used/Bosses/BossButcher/boss_butcher.gd" id="1_boss_script"]
+[ext_resource type="SpriteFrames" path="res://Characters/Not_used/Bosses/BossButcher/boss_butcher_sprite_frames.tres" id="2_boss_frames"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_boss_body"]
+radius = 27.0
+height = 104.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_fill"]
+bg_color = Color(0.75, 0.07, 0.07, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_bg"]
+bg_color = Color(0.08, 0.02, 0.02, 0.85)
+
+[node name="BossButcher" type="CharacterBody2D"]
+z_index = 35
+script = ExtResource("1_boss_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -48)
+shape = SubResource("CapsuleShape2D_boss_body")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 10
+position = Vector2(0, -90)
+scale = Vector2(0.35, 0.35)
+sprite_frames = ExtResource("2_boss_frames")
+animation = &"Idle"
+
+[node name="HookLine" type="Line2D" parent="."]
+z_index = 12
+visible = false
+width = 7.0
+default_color = Color(0.25, 0.12, 0.07, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -78.0
+offset_top = -168.0
+offset_right = 78.0
+offset_bottom = -156.0
+max_value = 450.0
+value = 450.0
+show_percentage = false
+theme_override_styles/background = SubResource("StyleBoxFlat_health_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_health_fill")

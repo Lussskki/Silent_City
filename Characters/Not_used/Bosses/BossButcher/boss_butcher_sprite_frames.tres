@@ -1,0 +1,380 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://bi0mkxrptvl23"]
+
+[ext_resource type="Texture2D" uid="uid://cnrs2wfhm7mib" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Boom/BossButcher_Boom_000.png" id="1_saix6"]
+[ext_resource type="Texture2D" uid="uid://biwjdg3q2f6v4" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Boom/BossButcher_Boom_001.png" id="2_i3pv6"]
+[ext_resource type="Texture2D" uid="uid://bdr0o7akeanw5" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Boom/BossButcher_Boom_002.png" id="3_45yyd"]
+[ext_resource type="Texture2D" uid="uid://08sxnwx3pjwl" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Boom/BossButcher_Boom_003.png" id="4_7a5bs"]
+[ext_resource type="Texture2D" uid="uid://g722trj11j4l" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Boom/BossButcher_Boom_004.png" id="5_nbxpx"]
+[ext_resource type="Texture2D" uid="uid://c75qdr8363hvd" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Boom/BossButcher_Boom_005.png" id="6_rg15t"]
+[ext_resource type="Texture2D" uid="uid://cqll5fsjxbfcu" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Boom/BossButcher_Boom_006.png" id="7_y8e54"]
+[ext_resource type="Texture2D" uid="uid://bhdg7b61fqxe8" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Boom/BossButcher_Boom_007.png" id="8_hem7j"]
+[ext_resource type="Texture2D" uid="uid://fjlg3sfchypa" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Dying/BossButcher_Dying_000.png" id="9_i1jt4"]
+[ext_resource type="Texture2D" uid="uid://dkf20mqfrtw8s" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Dying/BossButcher_Dying_001.png" id="10_cmec1"]
+[ext_resource type="Texture2D" uid="uid://bgx8eg0yihue2" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Dying/BossButcher_Dying_002.png" id="11_m18ce"]
+[ext_resource type="Texture2D" uid="uid://d2cb2puouxnte" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Dying/BossButcher_Dying_003.png" id="12_o0las"]
+[ext_resource type="Texture2D" uid="uid://dp8larcdh0r2m" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Dying/BossButcher_Dying_004.png" id="13_dge4y"]
+[ext_resource type="Texture2D" uid="uid://cgkx05qxsryhy" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Dying/BossButcher_Dying_005.png" id="14_mp3n1"]
+[ext_resource type="Texture2D" uid="uid://bm1mq4v1j7y65" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Dying/BossButcher_Dying_006.png" id="15_bm0yl"]
+[ext_resource type="Texture2D" uid="uid://deqmulsh5fqvx" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Dying/BossButcher_Dying_007.png" id="16_vwu6p"]
+[ext_resource type="Texture2D" uid="uid://7kmyijfj36sl" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hit 1/BossButcher_Hit_1_000.png" id="17_arwjf"]
+[ext_resource type="Texture2D" uid="uid://dc3pfrl6fwxkv" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hit 1/BossButcher_Hit_1_001.png" id="18_ext28"]
+[ext_resource type="Texture2D" uid="uid://cx4l3nqqxodwr" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hit 1/BossButcher_Hit_1_002.png" id="19_2a73y"]
+[ext_resource type="Texture2D" uid="uid://dc0qxxkfl251e" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hit 1/BossButcher_Hit_1_003.png" id="20_yuoau"]
+[ext_resource type="Texture2D" uid="uid://d2k2tdnfv05tf" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hit 1/BossButcher_Hit_1_004.png" id="21_tqi1c"]
+[ext_resource type="Texture2D" uid="uid://dqqwlkswlrunt" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hit 1/BossButcher_Hit_1_005.png" id="22_trfoq"]
+[ext_resource type="Texture2D" uid="uid://uvwwxtstlatu" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hit 1/BossButcher_Hit_1_006.png" id="23_iu31o"]
+[ext_resource type="Texture2D" uid="uid://djwusab68i7bp" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hit 1/BossButcher_Hit_1_007.png" id="24_a6n01"]
+[ext_resource type="Texture2D" uid="uid://dsjs0n1np3xvf" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hit 2/BossButcher_Hit_2_000.png" id="25_vrbtk"]
+[ext_resource type="Texture2D" uid="uid://be0m7y7pqi0mk" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hit 2/BossButcher_Hit_2_001.png" id="26_arahb"]
+[ext_resource type="Texture2D" uid="uid://dgq2plngxljp8" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hit 2/BossButcher_Hit_2_002.png" id="27_waeif"]
+[ext_resource type="Texture2D" uid="uid://dpuqxvmafkr70" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hit 2/BossButcher_Hit_2_003.png" id="28_dhf6q"]
+[ext_resource type="Texture2D" uid="uid://cu3jcy5n6nmxn" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hit 2/BossButcher_Hit_2_004.png" id="29_0405y"]
+[ext_resource type="Texture2D" uid="uid://c0hg06ky1vlvx" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hit 2/BossButcher_Hit_2_005.png" id="30_crda8"]
+[ext_resource type="Texture2D" uid="uid://wbksmjde3ulx" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hit 2/BossButcher_Hit_2_006.png" id="31_k3rr8"]
+[ext_resource type="Texture2D" uid="uid://cyorqucw1hyyc" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hit 2/BossButcher_Hit_2_007.png" id="32_v4x02"]
+[ext_resource type="Texture2D" uid="uid://dcad74bi6rwpl" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hook Kill/BossButcher_Hook_Kill_000.png" id="33_hk027"]
+[ext_resource type="Texture2D" uid="uid://bcg7n5om16uqq" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hook Kill/BossButcher_Hook_Kill_001.png" id="34_1fm1l"]
+[ext_resource type="Texture2D" uid="uid://duijtnf1cb7p1" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hook Kill/BossButcher_Hook_Kill_002.png" id="35_jd7x7"]
+[ext_resource type="Texture2D" uid="uid://dwf80xbli83yk" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hook Kill/BossButcher_Hook_Kill_003.png" id="36_xrrab"]
+[ext_resource type="Texture2D" uid="uid://cwpx4g5xn4or" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hook Kill/BossButcher_Hook_Kill_004.png" id="37_qxstm"]
+[ext_resource type="Texture2D" uid="uid://ds2kce8nr2tn6" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hook Kill/BossButcher_Hook_Kill_005.png" id="38_q6pso"]
+[ext_resource type="Texture2D" uid="uid://bqt1apa6r1g0u" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hook Kill/BossButcher_Hook_Kill_006.png" id="39_sj0d8"]
+[ext_resource type="Texture2D" uid="uid://bi3cnuoow6cak" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hook Kill/BossButcher_Hook_Kill_007.png" id="40_nq6mx"]
+[ext_resource type="Texture2D" uid="uid://bhwcmkjkeae7a" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hurt/BossButcher_Hurt_000.png" id="41_ustnu"]
+[ext_resource type="Texture2D" uid="uid://b3mx0i40bjnvd" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hurt/BossButcher_Hurt_001.png" id="42_lsag0"]
+[ext_resource type="Texture2D" uid="uid://c2koejy758gyb" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hurt/BossButcher_Hurt_002.png" id="43_ebd5s"]
+[ext_resource type="Texture2D" uid="uid://oj3apatygst0" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hurt/BossButcher_Hurt_003.png" id="44_ht78v"]
+[ext_resource type="Texture2D" uid="uid://b3sa56hi75gwu" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hurt/BossButcher_Hurt_004.png" id="45_eqd08"]
+[ext_resource type="Texture2D" uid="uid://d0242mfmiqlus" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hurt/BossButcher_Hurt_005.png" id="46_dl7ks"]
+[ext_resource type="Texture2D" uid="uid://cbcnarnfu0hgo" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hurt/BossButcher_Hurt_006.png" id="47_5eaya"]
+[ext_resource type="Texture2D" uid="uid://c27tmjqs7eoyb" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Hurt/BossButcher_Hurt_007.png" id="48_f1g1o"]
+[ext_resource type="Texture2D" uid="uid://bdxtcyhlondcf" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Idle/BossButcher_Idle_000.png" id="49_x17ni"]
+[ext_resource type="Texture2D" uid="uid://11l8ba18s7s6" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Idle/BossButcher_Idle_001.png" id="50_kb474"]
+[ext_resource type="Texture2D" uid="uid://dj5urtvs23dh3" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Idle/BossButcher_Idle_002.png" id="51_n7grp"]
+[ext_resource type="Texture2D" uid="uid://bwwmcpphqnric" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Idle/BossButcher_Idle_003.png" id="52_tclkk"]
+[ext_resource type="Texture2D" uid="uid://xsbtqibmmbf1" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Idle/BossButcher_Idle_004.png" id="53_upmoy"]
+[ext_resource type="Texture2D" uid="uid://brp2e5sixfwl2" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Idle/BossButcher_Idle_005.png" id="54_pxvbp"]
+[ext_resource type="Texture2D" uid="uid://b4v1jdkls7rww" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Idle/BossButcher_Idle_006.png" id="55_lq15p"]
+[ext_resource type="Texture2D" uid="uid://bfmfd1yv51brw" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Idle/BossButcher_Idle_007.png" id="56_bid8j"]
+[ext_resource type="Texture2D" uid="uid://dthkxunko267x" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Jump Loop/BossButcher_Jump_Loop_000.png" id="57_gnjas"]
+[ext_resource type="Texture2D" uid="uid://crogt4cp1qs85" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Jump Loop/BossButcher_Jump_Loop_001.png" id="58_q6txv"]
+[ext_resource type="Texture2D" uid="uid://da6bud4hbp85p" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Jump Loop/BossButcher_Jump_Loop_002.png" id="59_tm4m4"]
+[ext_resource type="Texture2D" uid="uid://bg5pwsxjxp8yy" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Jump Loop/BossButcher_Jump_Loop_003.png" id="60_7etey"]
+[ext_resource type="Texture2D" uid="uid://dm4sqqfrv5ho4" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Jump Loop/BossButcher_Jump_Loop_004.png" id="61_gnpp8"]
+[ext_resource type="Texture2D" uid="uid://bkx4y6qbob6i2" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Jump Loop/BossButcher_Jump_Loop_005.png" id="62_vufpo"]
+[ext_resource type="Texture2D" uid="uid://0lrajtsmncf7" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Jump Loop/BossButcher_Jump_Loop_006.png" id="63_eywsc"]
+[ext_resource type="Texture2D" uid="uid://bafqjr7cypbh6" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Jump Loop/BossButcher_Jump_Loop_007.png" id="64_qekde"]
+[ext_resource type="Texture2D" uid="uid://7ws6lx8ft5hc" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Jump Start/BossButcher_Jump_Start_000.png" id="65_c0rgw"]
+[ext_resource type="Texture2D" uid="uid://bkni1vwwhhnn5" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Jump Start/BossButcher_Jump_Start_001.png" id="66_skyio"]
+[ext_resource type="Texture2D" uid="uid://d1417hwyaduis" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Jump Start/BossButcher_Jump_Start_002.png" id="67_eiplv"]
+[ext_resource type="Texture2D" uid="uid://272w8kuywpb1" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Jump Start/BossButcher_Jump_Start_003.png" id="68_qbi5r"]
+[ext_resource type="Texture2D" uid="uid://0rwvrop8palo" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Jump Start/BossButcher_Jump_Start_004.png" id="69_5wmny"]
+[ext_resource type="Texture2D" uid="uid://dvmpqr0dtgfjk" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Jump Start/BossButcher_Jump_Start_005.png" id="70_ytl35"]
+[ext_resource type="Texture2D" uid="uid://b3oompv58gchd" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Jump Start/BossButcher_Jump_Start_006.png" id="71_405ah"]
+[ext_resource type="Texture2D" uid="uid://bo4j0e120w1qx" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Jump Start/BossButcher_Jump_Start_007.png" id="72_cutgu"]
+[ext_resource type="Texture2D" uid="uid://dmyy4k1o32p6j" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Walking/BossButcher_Walking_000.png" id="73_p42v5"]
+[ext_resource type="Texture2D" uid="uid://dxjsvyo7s70vc" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Walking/BossButcher_Walking_001.png" id="74_afh01"]
+[ext_resource type="Texture2D" uid="uid://cd2npt5xmc0fp" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Walking/BossButcher_Walking_002.png" id="75_vpk2p"]
+[ext_resource type="Texture2D" uid="uid://cqi72m035dovb" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Walking/BossButcher_Walking_003.png" id="76_0ak2h"]
+[ext_resource type="Texture2D" uid="uid://bqootpmxj8wtj" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Walking/BossButcher_Walking_004.png" id="77_k62jm"]
+[ext_resource type="Texture2D" uid="uid://x7whbb580y8u" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Walking/BossButcher_Walking_005.png" id="78_4tg3t"]
+[ext_resource type="Texture2D" uid="uid://ch80662seglyy" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Walking/BossButcher_Walking_006.png" id="79_sk1ck"]
+[ext_resource type="Texture2D" uid="uid://rpkep8a8noy2" path="res://Characters/Not_used/Bosses/BossButcher/PNG Sequences/Walking/BossButcher_Walking_007.png" id="80_pdd03"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_saix6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_i3pv6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_45yyd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_7a5bs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_nbxpx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_rg15t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_y8e54")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_hem7j")
+}],
+"loop": 0,
+"name": &"Boom",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_i1jt4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_cmec1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_m18ce")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_o0las")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_dge4y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_mp3n1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_bm0yl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_vwu6p")
+}],
+"loop": 0,
+"name": &"Dying",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_arwjf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_ext28")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_2a73y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_yuoau")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_tqi1c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_trfoq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_iu31o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_a6n01")
+}],
+"loop": 0,
+"name": &"Hit 1",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("25_vrbtk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_arahb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_waeif")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_dhf6q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_0405y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_crda8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_k3rr8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_v4x02")
+}],
+"loop": 0,
+"name": &"Hit 2",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("33_hk027")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_1fm1l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_jd7x7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_xrrab")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_qxstm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_q6pso")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_sj0d8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_nq6mx")
+}],
+"loop": 0,
+"name": &"Hook Kill",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("41_ustnu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_lsag0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_ebd5s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_ht78v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_eqd08")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_dl7ks")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_5eaya")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_f1g1o")
+}],
+"loop": 0,
+"name": &"Hurt",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("49_x17ni")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_kb474")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_n7grp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_tclkk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_upmoy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_pxvbp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_lq15p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_bid8j")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("57_gnjas")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_q6txv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_tm4m4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_7etey")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_gnpp8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_vufpo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_eywsc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_qekde")
+}],
+"loop": 1,
+"name": &"Jump Loop",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("65_c0rgw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("66_skyio")
+}, {
+"duration": 1.0,
+"texture": ExtResource("67_eiplv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_qbi5r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("69_5wmny")
+}, {
+"duration": 1.0,
+"texture": ExtResource("70_ytl35")
+}, {
+"duration": 1.0,
+"texture": ExtResource("71_405ah")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72_cutgu")
+}],
+"loop": 0,
+"name": &"Jump Start",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("73_p42v5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("74_afh01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("75_vpk2p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("76_0ak2h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("77_k62jm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("78_4tg3t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("79_sk1ck")
+}, {
+"duration": 1.0,
+"texture": ExtResource("80_pdd03")
+}],
+"loop": 1,
+"name": &"Walking",
+"speed": 6.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]

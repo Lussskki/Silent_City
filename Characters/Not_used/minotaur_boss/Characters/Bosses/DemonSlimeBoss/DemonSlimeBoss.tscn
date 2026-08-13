@@ -1,0 +1,114 @@
+[gd_scene format=3 uid="uid://bjm0w6h814o4u"]
+
+[ext_resource type="Script" uid="uid://cigvc8lk00jpw" path="res://Characters/Not_used/minotaur_boss/Scripts/demon_slime_boss.gd" id="1_script"]
+[ext_resource type="SpriteFrames" path="res://Characters/Not_used/minotaur_boss/Resources/minotaur_boss_sprite_frames.tres" id="2_frames"]
+[ext_resource type="Texture2D" path="res://Characters/Not_used/minotaur_boss/Characters/Bosses/mino_v1.1_free/bonus_mino_healthbar_UI/mino_health_under.png" id="3_health_under"]
+[ext_resource type="Texture2D" path="res://Characters/Not_used/minotaur_boss/Characters/Bosses/mino_v1.1_free/bonus_mino_healthbar_UI/mino_health_progress.png" id="4_health_progress"]
+[ext_resource type="Texture2D" path="res://Characters/Not_used/minotaur_boss/Characters/Bosses/mino_v1.1_free/bonus_mino_healthbar_UI/mino_health_over.png" id="5_health_over"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 28.0
+height = 104.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_taunt"]
+font_size = 14
+font_color = Color(1, 0.9, 0.55, 1)
+outline_size = 4
+outline_color = Color(0.05, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_boss_title"]
+font_size = 38
+font_color = Color(1, 0.78, 0.32, 1)
+outline_size = 8
+outline_color = Color(0.05, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_screen_taunt"]
+font_size = 30
+font_color = Color(1, 0.88, 0.08, 1)
+outline_size = 8
+outline_color = Color(0.05, 0, 0, 1)
+
+[node name="DemonSlimeBoss" type="CharacterBody2D" unique_id=214846041]
+z_index = 36
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1108418927]
+position = Vector2(0, -52)
+shape = SubResource("CapsuleShape2D_body")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1134115619]
+z_index = 10
+texture_filter = 1
+position = Vector2(-12, -126)
+scale = Vector2(2.3, 2.3)
+sprite_frames = ExtResource("2_frames")
+animation = &"Idle"
+
+[node name="BossHealthLayer" type="CanvasLayer" parent="." unique_id=212312766]
+layer = 48
+
+[node name="HealthBar" type="Control" parent="BossHealthLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -160.0
+offset_top = 18.0
+offset_right = 160.0
+offset_bottom = 146.0
+
+[node name="Under" type="TextureRect" parent="BossHealthLayer/HealthBar"]
+scale = Vector2(2, 2)
+texture = ExtResource("3_health_under")
+
+[node name="ProgressClip" type="Control" parent="BossHealthLayer/HealthBar"]
+clip_contents = true
+offset_left = 16.0
+offset_right = 304.0
+offset_bottom = 128.0
+
+[node name="Progress" type="TextureRect" parent="BossHealthLayer/HealthBar/ProgressClip"]
+scale = Vector2(2, 2)
+texture = ExtResource("4_health_progress")
+
+[node name="Over" type="TextureRect" parent="BossHealthLayer/HealthBar"]
+scale = Vector2(2, 2)
+texture = ExtResource("5_health_over")
+
+[node name="TauntLabel" type="Label" parent="." unique_id=1029683509]
+visible = false
+offset_left = -172.0
+offset_top = -282.0
+offset_right = 172.0
+offset_bottom = -252.0
+text = "You, I am immortal you can't hide me"
+label_settings = SubResource("LabelSettings_taunt")
+horizontal_alignment = 1
+
+[node name="CinematicLayer" type="CanvasLayer" parent="." unique_id=1437506098]
+layer = 50
+visible = false
+
+[node name="TopBar" type="ColorRect" parent="CinematicLayer" unique_id=754783429]
+color = Color(0, 0, 0, 1)
+
+[node name="BottomBar" type="ColorRect" parent="CinematicLayer" unique_id=1652753988]
+color = Color(0, 0, 0, 1)
+
+[node name="TitleLabel" type="Label" parent="CinematicLayer" unique_id=1698270556]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 76.0
+offset_bottom = 134.0
+text = "MINOTAUR"
+label_settings = SubResource("LabelSettings_boss_title")
+horizontal_alignment = 1
+
+[node name="ScreenTauntLabel" type="Label" parent="CinematicLayer" unique_id=1477911678]
+visible = false
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 170.0
+offset_bottom = 230.0
+text = "You, I am immortal you can't hide me"
+label_settings = SubResource("LabelSettings_screen_taunt")
+horizontal_alignment = 1

@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://Scripts/coin.gd" id="1_coin_script"]
+[ext_resource type="Texture2D" path="res://Sprites/Coins/gold/golden.rotate.png" id="2_coin_texture"]
+[ext_resource type="Texture2D" path="res://Sprites/Coins/pick_up_effect.png" id="3_pickup_effect"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_coin"]
+radius = 34.0
+
+[node name="Coin" type="Area2D"]
+z_index = 46
+collision_mask = 1
+script = ExtResource("1_coin_script")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="CoinSprite" type="Sprite2D" parent="Visual"]
+texture = ExtResource("2_coin_texture")
+centered = true
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="PickupEffect" type="Sprite2D" parent="Visual"]
+visible = false
+texture = ExtResource("3_pickup_effect")
+centered = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_coin")

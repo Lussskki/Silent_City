@@ -23,10 +23,13 @@ var match_label: Label
 var match_restart_button: Button
 var match_exit_button: Button
 var second_player_label: Label
+var power_bar: ProgressBar
+var power_label: Label
 var enemies_seen_once := false
 var game_result_shown := false
 var result_check_delay := 0.35
 var death_recorded := false
+var force_close_online_on_exit := false
 
 
 func _ready() -> void:
@@ -39,8 +42,10 @@ func _ready() -> void:
 	_create_chat_ui()
 	_create_match_popup()
 	_create_second_player_label()
+	_create_power_ui()
 	_connect_round_counter()
 	_connect_local_player()
+	_layout_status_hud()
 	_update_enemy_count()
 	_update_try_count()
 	_update_second_player_status()
@@ -57,6 +62,7 @@ func _process(delta: float) -> void:
 	if local_player and local_player != player:
 		_connect_local_player()
 	_update_chat_visibility()
+	_layout_status_hud()
 	var enemies_left := _update_enemy_count()
 	_update_second_player_status()
 	_update_offline_result(delta, enemies_left)
@@ -116,6 +122,9 @@ func _connect_local_player() -> void:
 	if player and player.has_signal("life_changed"):
 		if player.life_changed.is_connected(_on_player_life_changed):
 			player.life_changed.disconnect(_on_player_life_changed)
+	if player and player.has_signal("power_changed"):
+		if player.power_changed.is_connected(_on_player_power_changed):
+			player.power_changed.disconnect(_on_player_power_changed)
 
 	player = get_tree().get_first_node_in_group("LocalPlayer")
 	if not player:
@@ -123,6 +132,12 @@ func _connect_local_player() -> void:
 	if player and player.has_signal("life_changed"):
 		player.life_changed.connect(_on_player_life_changed)
 		_on_player_life_changed(int(player.get("life")), int(player.get("max_life")))
+	if player and player.has_signal("power_changed"):
+		player.power_changed.connect(_on_player_power_changed)
+		var max_power := 100
+		if player.has_method("get_max_coin_power"):
+			max_power = int(player.call("get_max_coin_power"))
+		_on_player_power_changed(int(player.get("coin_power")), max_power)
 
 
 func _on_player_life_changed(life: int, max_life: int) -> void:
@@ -135,6 +150,53 @@ func _on_player_life_changed(life: int, max_life: int) -> void:
 		_handle_offline_death()
 
 
+func _on_player_power_changed(power: int, max_power: int) -> void:
+	if not power_bar or not power_label:
+		return
+	power_bar.max_value = max_power
+	power_bar.value = power
+	power_label.text = "Power: %d/%d" % [power, max_power]
+	power_label.add_theme_color_override("font_color", Color(1.0, 0.88, 0.32) if power >= max_power else Color.WHITE)
+
+
+func _layout_status_hud() -> void:
+	var online := _is_online_game()
+	_place_control(health_bar, 16.0, 16.0, 216.0, 32.0)
+	_place_control(health_label, 16.0, 36.0, 240.0, 58.0)
+
+	if online:
+		enemy_count_label.visible = false
+		lives_label.visible = false
+		round_label.visible = true
+		_place_control(round_label, 16.0, 62.0, 240.0, 84.0)
+		if second_player_label:
+			_place_control(second_player_label, 16.0, 86.0, 280.0, 108.0)
+		_place_control(power_bar, 16.0, 116.0, 216.0, 132.0)
+		_place_control(power_label, 16.0, 136.0, 260.0, 158.0)
+	else:
+		enemy_count_label.visible = true
+		round_label.visible = false
+		if second_player_label:
+			second_player_label.visible = false
+		_place_control(enemy_count_label, 16.0, 62.0, 240.0, 84.0)
+		_place_control(lives_label, 16.0, 88.0, 240.0, 110.0)
+		_place_control(power_bar, 16.0, 116.0, 216.0, 132.0)
+		_place_control(power_label, 16.0, 136.0, 260.0, 158.0)
+
+
+func _place_control(control: Control, left: float, top: float, right: float, bottom: float) -> void:
+	if not control:
+		return
+	control.anchor_left = 0.0
+	control.anchor_top = 0.0
+	control.anchor_right = 0.0
+	control.anchor_bottom = 0.0
+	control.offset_left = left
+	control.offset_top = top
+	control.offset_right = right
+	control.offset_bottom = bottom
+
+
 func _update_enemy_count() -> int:
 	var enemies_left := 0
 	for enemy in get_tree().get_nodes_in_group("Enemy"):
@@ -144,6 +206,7 @@ func _update_enemy_count() -> int:
 			continue
 		enemies_left += 1
 	enemy_count_label.text = "Enemies: %d" % enemies_left
+	enemy_count_label.visible = not _is_online_game()
 	return enemies_left
 
 
@@ -163,6 +226,11 @@ func _is_offline_game() -> bool:
 	var settings := get_node_or_null("/root/GameSettings")
 	var settings_online: bool = settings != null and settings.get("online_mode") == true
 	return not multiplayer.has_multiplayer_peer() and not settings_online
+
+
+func _is_online_game() -> bool:
+	var settings := get_node_or_null("/root/GameSettings")
+	return multiplayer.has_multiplayer_peer() or (settings != null and settings.get("online_mode") == true)
 
 
 func _handle_offline_death() -> void:
@@ -233,6 +301,11 @@ func _show_result_popup(result_text: String, button_text: String, pause_game := 
 		_stop_local_player_control()
 
 
+func show_online_disconnect_popup(message: String) -> void:
+	force_close_online_on_exit = true
+	_show_result_popup(message, "Log Out", true, false)
+
+
 func _stop_local_player_control() -> void:
 	var local_player := get_tree().get_first_node_in_group("LocalPlayer")
 	if not local_player:
@@ -251,36 +324,51 @@ func _create_match_popup() -> void:
 	match_popup.anchor_top = 0.5
 	match_popup.anchor_right = 0.5
 	match_popup.anchor_bottom = 0.5
-	match_popup.offset_left = -170.0
-	match_popup.offset_top = -95.0
-	match_popup.offset_right = 170.0
-	match_popup.offset_bottom = 95.0
+	match_popup.offset_left = -220.0
+	match_popup.offset_top = -92.0
+	match_popup.offset_right = 220.0
+	match_popup.offset_bottom = 92.0
+	match_popup.add_theme_stylebox_override("panel", _modal_panel_style())
 	add_child(match_popup)
 
 	var box := VBoxContainer.new()
+	box.anchor_left = 0.0
+	box.anchor_top = 0.0
 	box.anchor_right = 1.0
 	box.anchor_bottom = 1.0
-	box.offset_left = 18.0
-	box.offset_top = 16.0
-	box.offset_right = -18.0
-	box.offset_bottom = -16.0
+	box.offset_left = 24.0
+	box.offset_top = 22.0
+	box.offset_right = -24.0
+	box.offset_bottom = -22.0
 	box.alignment = BoxContainer.ALIGNMENT_CENTER
-	box.add_theme_constant_override("separation", 16)
+	box.add_theme_constant_override("separation", 18)
 	match_popup.add_child(box)
 
 	match_label = Label.new()
+	match_label.custom_minimum_size = Vector2(360.0, 62.0)
 	match_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	match_label.add_theme_font_size_override("font_size", 28)
+	match_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	match_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	match_label.add_theme_font_size_override("font_size", 24)
+	match_label.add_theme_color_override("font_color", Color(0.96, 0.99, 1.0, 1.0))
 	box.add_child(match_label)
 
 	match_restart_button = Button.new()
 	match_restart_button.text = "Restart"
 	match_restart_button.visible = false
+	match_restart_button.custom_minimum_size = Vector2(180.0, 38.0)
 	match_restart_button.pressed.connect(_restart_current_level)
 	box.add_child(match_restart_button)
 
 	match_exit_button = Button.new()
 	match_exit_button.text = "Exit Online"
+	match_exit_button.custom_minimum_size = Vector2(180.0, 38.0)
+	match_exit_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	match_exit_button.add_theme_stylebox_override("normal", _modal_button_style(Color(0.11, 0.13, 0.15, 0.96)))
+	match_exit_button.add_theme_stylebox_override("hover", _modal_button_style(Color(0.18, 0.21, 0.24, 1.0)))
+	match_exit_button.add_theme_stylebox_override("pressed", _modal_button_style(Color(0.07, 0.08, 0.095, 1.0)))
+	match_exit_button.add_theme_font_size_override("font_size", 16)
+	match_exit_button.add_theme_color_override("font_color", Color(0.95, 0.98, 1.0, 1.0))
 	match_exit_button.pressed.connect(_exit_online_match)
 	box.add_child(match_exit_button)
 
@@ -295,6 +383,31 @@ func _create_second_player_label() -> void:
 	second_player_label.offset_bottom = second_player_label.offset_top + 24.0
 	second_player_label.text = "Second Player: Off"
 	add_child(second_player_label)
+
+
+func _create_power_ui() -> void:
+	power_bar = ProgressBar.new()
+	power_bar.name = "CoinPowerBar"
+	power_bar.offset_left = 16.0
+	power_bar.offset_top = 114.0
+	power_bar.offset_right = 216.0
+	power_bar.offset_bottom = 130.0
+	power_bar.max_value = 100.0
+	power_bar.value = 0.0
+	power_bar.show_percentage = false
+	var fill := StyleBoxFlat.new()
+	fill.bg_color = Color(0.95, 0.68, 0.14, 1.0)
+	power_bar.add_theme_stylebox_override("fill", fill)
+	add_child(power_bar)
+
+	power_label = Label.new()
+	power_label.name = "CoinPowerLabel"
+	power_label.offset_left = 16.0
+	power_label.offset_top = 134.0
+	power_label.offset_right = 220.0
+	power_label.offset_bottom = 158.0
+	power_label.text = "Power: 0/50"
+	add_child(power_label)
 
 
 func _create_chat_ui() -> void:
@@ -435,6 +548,36 @@ func _panel_style() -> StyleBoxFlat:
 	return style
 
 
+func _modal_panel_style() -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.025, 0.032, 0.038, 0.96)
+	style.border_width_left = 2
+	style.border_width_top = 2
+	style.border_width_right = 2
+	style.border_width_bottom = 2
+	style.border_color = Color(0.32, 0.38, 0.42, 0.95)
+	style.corner_radius_top_left = 6
+	style.corner_radius_top_right = 6
+	style.corner_radius_bottom_right = 6
+	style.corner_radius_bottom_left = 6
+	return style
+
+
+func _modal_button_style(color: Color) -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = color
+	style.border_width_left = 1
+	style.border_width_top = 1
+	style.border_width_right = 1
+	style.border_width_bottom = 1
+	style.border_color = Color(0.42, 0.48, 0.52, 0.9)
+	style.corner_radius_top_left = 4
+	style.corner_radius_top_right = 4
+	style.corner_radius_bottom_right = 4
+	style.corner_radius_bottom_left = 4
+	return style
+
+
 func _update_chat_visibility() -> void:
 	if not chat_button:
 		return
@@ -539,7 +682,7 @@ func _go_to_main_menu() -> void:
 func _exit_online_match() -> void:
 	get_tree().paused = false
 	var settings := get_node_or_null("/root/GameSettings")
-	var match_is_finished: bool = settings != null and settings.has_method("is_online_match_over") and settings.is_online_match_over()
+	var match_is_finished: bool = force_close_online_on_exit or (settings != null and settings.has_method("is_online_match_over") and settings.is_online_match_over())
 	var online_manager := get_tree().get_first_node_in_group("OnlineManager")
 	if online_manager and online_manager.has_method("close_online_session"):
 		online_manager.close_online_session(match_is_finished)

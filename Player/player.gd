@@ -7,14 +7,37 @@ const MAX_JUMPS = 2
 const SLIDE_SPEED = 400.0
 const SLIDE_ANGLE = 15.0
 const NETWORK_SYNC_INTERVAL = 0.033
-const REMOTE_POSITION_SMOOTHING = 14.0
-const REMOTE_EXTRAPOLATION_LIMIT = 0.12
-const DEFAULT_SPRITE_OFFSET := Vector2(0, -24)
-const GOLEM_SPRITE_OFFSET := Vector2(0, -24)
+const REMOTE_POSITION_SMOOTHING = 20.0
+const DEFAULT_SPRITE_OFFSET := Vector2(0, -16)
+const GOLEM_SPRITE_OFFSET := Vector2(0, -16)
+const ICE_GOLEM_SPRITE_OFFSET := Vector2(0, -16)
+const ICE_GOLEM_FRAMES_ROOT := "res://Characters/Golem_1/PNG/PNG Sequences"
+const GOLEM_ANIMATION_DIRS := {
+	"Idle": "Idle",
+	"Walking": "Walking",
+	"Running": "Running",
+	"Jump Looping": "Jump Loop",
+	"Falling Down": "Falling Down",
+	"Slashing": "Slashing",
+	"Slashing In Air": "Slashing in The Air",
+	"Run Slashing": "Run Slashing",
+	"Kicking": "Kicking",
+	"Hurt": "Hurt",
+	"Throwing": "Throwing",
+	"Throwing In Air": "Throwing in The Air",
+	"Dying": "Dying",
+	"Sliding": "Sliding"
+}
 const HURT_ANIMATION_TIME := 0.28
+const MAX_POWER := 50
+const SHOCKWAVE_DAMAGE := 55
+const SHOCKWAVE_RADIUS := 360.0
+const SHOCKWAVE_VERTICAL_TOLERANCE := 115.0
+const SHOCKWAVE_KNOCKBACK := Vector2(420, -120)
 
 
 signal life_changed(life: int, max_life: int)
+signal power_changed(power: int, max_power: int)
 
 @export_group("Character Sounds")
 @export var jump_sound: AudioStream
@@ -49,6 +72,7 @@ var attacking = false
 var is_sliding = false
 var dead = false
 var life: int = 100
+var coin_power: int = 0
 var jump_audio: AudioStreamPlayer2D
 var run_audio: AudioStreamPlayer2D
 var attack_audio: AudioStreamPlayer2D
@@ -66,6 +90,7 @@ var remote_target_velocity := Vector2.ZERO
 var remote_state_age := 0.0
 var hit_targets := {}
 var was_on_floor := false
+var sprite_flip_inverted := false
 
 func _ready():
 	_set_player_groups(true)
@@ -75,6 +100,7 @@ func _ready():
 	remote_target_position = global_position
 	life = max_life
 	life_changed.emit(life, max_life)
+	power_changed.emit(coin_power, MAX_POWER)
 	if not _apply_selected_character():
 		_load_dynamic_sprite_frames()
 		sprite.position = DEFAULT_SPRITE_OFFSET
@@ -113,15 +139,21 @@ func _physics_process(delta):
 	else:
 		jumps_left = MAX_JUMPS
 
+	var gameplay_input_blocked := _is_gameplay_input_blocked()
+	if gameplay_input_blocked:
+		attacking = false
+		attack_hit_timer = 0.0
+		hit_targets.clear()
+
 	# Jump
-	if Input.is_action_just_pressed("ui_accept") and jumps_left > 0 and not is_sliding:
+	if not gameplay_input_blocked and Input.is_action_just_pressed("ui_up") and jumps_left > 0 and not is_sliding:
 		attacking = false
 		velocity.y = JUMP_VELOCITY
 		jumps_left -= 1
 		_play_sound(jump_audio)
 
 	# Attack
-	if Input.is_action_just_pressed("attack") and not attacking:
+	if not gameplay_input_blocked and Input.is_action_just_pressed("attack") and not attacking:
 		_play_sound(attack_audio)
 		if is_on_floor():
 			if Input.is_action_pressed("run"):
@@ -132,24 +164,29 @@ func _physics_process(delta):
 			_begin_attack("Slashing In Air", slash_hit_window)
 
 	# Kick
-	if Input.is_action_just_pressed("kick") and not attacking:
+	if not gameplay_input_blocked and Input.is_action_just_pressed("kick") and not attacking:
 		_play_sound(kick_audio)
 		_begin_attack("Kicking", kick_hit_window)
 
+	if not gameplay_input_blocked and Input.is_action_just_pressed("special_power"):
+		_try_activate_shockwave()
+
 	# Movement
-	var direction := Input.get_axis("move_left", "move_right")
-	if is_zero_approx(direction):
-		direction = Input.get_axis("ui_left", "ui_right")
+	var direction := 0.0
+	if not gameplay_input_blocked:
+		direction = Input.get_axis("move_left", "move_right")
+		if is_zero_approx(direction):
+			direction = Input.get_axis("ui_left", "ui_right")
 	var speed := WALK_SPEED
 
-	if Input.is_action_pressed("run"):
+	if not gameplay_input_blocked and Input.is_action_pressed("run"):
 		speed = RUN_SPEED
 
 	_update_run_sound(delta, direction)
 
 	if direction != 0:
 		velocity.x = direction * speed
-		sprite.flip_h = direction < 0
+		face_right(direction > 0)
 
 		# áƒ“áƒáƒ®áƒ áƒ˜áƒš áƒáƒ“áƒ’áƒ˜áƒšáƒ–áƒ” INPUT - Y áƒ£áƒœáƒ“áƒ áƒ˜áƒ§áƒáƒ¡ downhill áƒ›áƒ˜áƒ›áƒáƒ áƒ—áƒ£áƒšáƒ”áƒ‘áƒ
 		if is_on_floor():
@@ -217,7 +254,7 @@ func _physics_process(delta):
 			_safe_play("Sliding")
 
 	elif direction != 0:
-		if Input.is_action_pressed("run"):
+		if not gameplay_input_blocked and Input.is_action_pressed("run"):
 			if sprite.animation != "Running":
 				_safe_play("Running")
 		else:
@@ -227,6 +264,11 @@ func _physics_process(delta):
 	else:
 		if sprite.animation != "Idle":
 			_safe_play("Idle")
+
+
+func _is_gameplay_input_blocked() -> bool:
+	var focus_owner := get_viewport().gui_get_focus_owner()
+	return focus_owner is LineEdit or focus_owner is TextEdit
 
 
 func _on_animation_finished():
@@ -345,8 +387,20 @@ func get_attack_knockback() -> Vector2:
 	if sprite.animation != "Kicking":
 		return Vector2.ZERO
 
-	var facing_direction := -1.0 if sprite.flip_h else 1.0
+	var facing_direction := _facing_direction()
 	return Vector2(kick_knockback_force.x * facing_direction, kick_knockback_force.y)
+
+
+func set_sprite_flip_inverted(inverted: bool) -> void:
+	sprite_flip_inverted = inverted
+
+
+func face_right(should_face_right: bool) -> void:
+	sprite.flip_h = not should_face_right
+
+
+func _facing_direction() -> float:
+	return -1.0 if sprite.flip_h else 1.0
 
 
 func take_damage(amount: int) -> void:
@@ -382,6 +436,86 @@ func heal(amount: int) -> int:
 	)
 	_send_network_state(0.0, true)
 	return healed
+
+
+func collect_coin_power(amount: int) -> void:
+	if dead:
+		return
+	var settings := get_node_or_null("/root/GameSettings")
+	if settings and settings.has_method("add_saved_coins"):
+		settings.call("add_saved_coins", amount)
+	coin_power = min(coin_power + amount, MAX_POWER)
+	power_changed.emit(coin_power, MAX_POWER)
+
+
+func get_max_coin_power() -> int:
+	return MAX_POWER
+
+
+func _try_activate_shockwave() -> void:
+	if dead or not local_player:
+		return
+	if coin_power < MAX_POWER:
+		return
+	if not is_on_floor():
+		return
+
+	coin_power = 0
+	power_changed.emit(coin_power, MAX_POWER)
+	_play_shockwave_visual()
+	_damage_shockwave_targets()
+	_send_network_state(0.0, true)
+
+
+func _play_shockwave_visual() -> void:
+	var shockwave := Node2D.new()
+	shockwave.name = "GolemShockwave"
+	shockwave.global_position = global_position + Vector2(0.0, 28.0)
+	shockwave.z_index = 60
+	get_tree().current_scene.add_child(shockwave)
+
+	for index in 3:
+		var ring := Line2D.new()
+		ring.width = 8.0 - index * 1.5
+		ring.default_color = Color(0.92, 0.74, 0.28, 0.82 - index * 0.16)
+		ring.points = PackedVector2Array([
+			Vector2(-24, 0),
+			Vector2(-10, -8),
+			Vector2(10, -8),
+			Vector2(24, 0)
+		])
+		shockwave.add_child(ring)
+		var tween := create_tween()
+		tween.set_parallel(true)
+		tween.tween_property(ring, "scale", Vector2(6.5 + index * 1.6, 1.0 + index * 0.18), 0.28 + index * 0.05)
+		tween.tween_property(ring, "modulate:a", 0.0, 0.28 + index * 0.05)
+
+	var cleanup := create_tween()
+	cleanup.tween_interval(0.45)
+	cleanup.tween_callback(shockwave.queue_free)
+
+
+func _damage_shockwave_targets() -> void:
+	var origin := get_hit_position()
+	for enemy in get_tree().get_nodes_in_group("Enemy"):
+		if not enemy is Node2D:
+			continue
+		if enemy.get("dead") == true:
+			continue
+
+		var enemy_position: Vector2 = enemy.global_position
+		if enemy.has_method("get_hit_position"):
+			enemy_position = enemy.get_hit_position()
+		var offset := enemy_position - origin
+		if abs(offset.x) > SHOCKWAVE_RADIUS:
+			continue
+		if abs(offset.y) > SHOCKWAVE_VERTICAL_TOLERANCE:
+			continue
+
+		if enemy.has_method("take_damage"):
+			enemy.call("take_damage", SHOCKWAVE_DAMAGE)
+		if enemy.has_method("apply_knockback") and not is_zero_approx(offset.x):
+			enemy.call("apply_knockback", Vector2(sign(offset.x) * SHOCKWAVE_KNOCKBACK.x, SHOCKWAVE_KNOCKBACK.y))
 
 
 @rpc("any_peer", "reliable")
@@ -455,6 +589,13 @@ func _send_network_state(delta: float, force := false) -> void:
 		return
 
 	network_sync_timer = NETWORK_SYNC_INTERVAL
+	var online_manager := get_tree().get_first_node_in_group("OnlineManager")
+	if online_manager:
+		online_manager.rpc("_receive_player_network_state", global_position, velocity, sprite.flip_h, String(sprite.animation), life, dead)
+		if force:
+			online_manager.rpc("_receive_forced_player_network_state", global_position, velocity, sprite.flip_h, String(sprite.animation), life, dead)
+		return
+
 	rpc("_receive_network_state", global_position, velocity, sprite.flip_h, String(sprite.animation), life, dead)
 	if force:
 		rpc("_receive_forced_network_state", global_position, velocity, sprite.flip_h, String(sprite.animation), life, dead)
@@ -523,10 +664,8 @@ func _update_remote_network_motion(delta: float) -> void:
 	if dead:
 		return
 
-	remote_state_age = min(remote_state_age + delta, REMOTE_EXTRAPOLATION_LIMIT)
-	var predicted_position := remote_target_position + remote_target_velocity * remote_state_age
 	var smoothing := 1.0 - exp(-REMOTE_POSITION_SMOOTHING * delta)
-	global_position = global_position.lerp(predicted_position, smoothing)
+	global_position = global_position.lerp(remote_target_position, smoothing)
 
 
 func _load_dynamic_sprite_frames() -> void:
@@ -539,40 +678,7 @@ func _load_dynamic_sprite_frames() -> void:
 	if dynamic_frames_root.is_empty():
 		return
 
-	var frames := SpriteFrames.new()
-	var animation_dirs := {
-		"Idle": "Idle",
-		"Walking": "Walking",
-		"Running": "Running",
-		"Jump Looping": "Jump Loop",
-		"Falling Down": "Falling Down",
-		"Slashing": "Slashing",
-		"Slashing In Air": "Slashing in The Air",
-		"Run Slashing": "Run Slashing",
-		"Kicking": "Kicking",
-		"Hurt": "Hurt",
-		"Throwing": "Throwing",
-		"Throwing In Air": "Throwing in The Air",
-		"Dying": "Dying",
-		"Sliding": "Sliding"
-	}
-
-	for animation_name in animation_dirs:
-		var folder_name: String = animation_dirs[animation_name]
-		var folder_path := "%s/%s" % [dynamic_frames_root, folder_name]
-		var image_files := _get_png_files(folder_path)
-		if image_files.is_empty():
-			continue
-
-		frames.add_animation(animation_name)
-		frames.set_animation_speed(animation_name, 12.0)
-		frames.set_animation_loop(animation_name, animation_name in ["Idle", "Walking", "Running", "Jump Looping", "Falling Down"])
-
-		for file_name in image_files:
-			var texture := load("%s/%s" % [folder_path, file_name]) as Texture2D
-			if texture:
-				frames.add_frame(animation_name, texture)
-
+	var frames := _build_sprite_frames_from_root(dynamic_frames_root)
 	if frames.has_animation("Idle"):
 		sprite.sprite_frames = frames
 		sprite.play("Idle")
@@ -584,7 +690,18 @@ func _apply_selected_character() -> bool:
 	var settings := get_node_or_null("/root/GameSettings")
 	if not settings:
 		return false
-	if String(settings.get("selected_character")) != "golem":
+	var selected_character := String(settings.get("selected_character"))
+	if selected_character == "ice_golem":
+		var ice_frames := _build_sprite_frames_from_root(ICE_GOLEM_FRAMES_ROOT)
+		if ice_frames.has_animation("Idle"):
+			sprite.sprite_frames = ice_frames
+			sprite.position = ICE_GOLEM_SPRITE_OFFSET
+			set_sprite_flip_inverted(true)
+			sprite.play("Idle")
+			_apply_stone_golem_sounds()
+			return true
+		return false
+	if selected_character != "golem":
 		return false
 
 	var golem_frames := load("res://Resources/golem_sprite_frames.tres") as SpriteFrames
@@ -592,10 +709,30 @@ func _apply_selected_character() -> bool:
 		sprite.sprite_frames = golem_frames
 		_add_animation_from_folder(sprite.sprite_frames, "Hurt", "res://Characters/Golem/PNG/PNG Sequences/Hurt", 12.0, false)
 		sprite.position = GOLEM_SPRITE_OFFSET
+		set_sprite_flip_inverted(true)
 		sprite.play("Idle")
 		_apply_stone_golem_sounds()
 		return true
 	return false
+
+
+func _build_sprite_frames_from_root(frames_root: String) -> SpriteFrames:
+	var frames := SpriteFrames.new()
+	for animation_name in GOLEM_ANIMATION_DIRS:
+		var folder_name: String = GOLEM_ANIMATION_DIRS[animation_name]
+		var folder_path := "%s/%s" % [frames_root, folder_name]
+		var image_files := _get_png_files(folder_path)
+		if image_files.is_empty():
+			continue
+
+		frames.add_animation(animation_name)
+		frames.set_animation_speed(animation_name, 12.0)
+		frames.set_animation_loop(animation_name, animation_name in ["Idle", "Walking", "Running", "Jump Looping", "Falling Down"])
+		for file_name in image_files:
+			var texture := load("%s/%s" % [folder_path, file_name]) as Texture2D
+			if texture:
+				frames.add_frame(animation_name, texture)
+	return frames
 
 
 func _apply_stone_golem_sounds() -> void:
@@ -695,7 +832,7 @@ func _damage_nearby_enemies() -> void:
 	var damage := get_attack_damage()
 	var knockback := get_attack_knockback()
 	var hit_origin: Vector2 = sprite.global_position
-	var facing_direction := -1.0 if sprite.flip_h else 1.0
+	var facing_direction := _facing_direction()
 	for enemy in get_tree().get_nodes_in_group("Enemy"):
 		if not enemy is Node2D:
 			continue
@@ -713,7 +850,7 @@ func _damage_nearby_enemies() -> void:
 func _damage_nearby_players() -> void:
 	var damage := get_attack_damage()
 	var hit_origin: Vector2 = sprite.global_position
-	var facing_direction := -1.0 if sprite.flip_h else 1.0
+	var facing_direction := _facing_direction()
 
 	for other_player in get_tree().get_nodes_in_group("Player"):
 		if other_player == self:
@@ -762,10 +899,10 @@ func _try_damage_target(target: Node, damage: int, knockback := Vector2.ZERO) ->
 		and api.has_multiplayer_peer()
 		and target_peer_id > 0
 		and target_peer_id != api.get_unique_id()
-		and target_peer_id in api.get_peers()
 	):
-		if knockback != Vector2.ZERO and target.has_method("network_take_kick"):
-			target.rpc_id(target_peer_id, "network_take_kick", damage, knockback)
+		var online_manager := get_tree().get_first_node_in_group("OnlineManager")
+		if online_manager:
+			online_manager.rpc_id(target_peer_id, "_receive_player_damage", damage)
 			dealt_damage = true
 		elif target.has_method("network_take_damage"):
 			target.rpc_id(target_peer_id, "network_take_damage", damage)

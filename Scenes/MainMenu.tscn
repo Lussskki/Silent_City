@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_menu_script"]
 [ext_resource type="Texture2D" path="res://Sprites/Background/BG.png" id="2_bg"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" path="res://Resources/How_to_play/2.png" id="6_how_heart"]
 [ext_resource type="Texture2D" path="res://Resources/How_to_play/3.png" id="7_how_jump"]
 [ext_resource type="Texture2D" path="res://Resources/How_to_play/4.png" id="8_how_kick"]
+[ext_resource type="Texture2D" path="res://Characters/Golem_1/PNG/PNG Sequences/Idle/0_Golem_Idle_000.png" id="9_ice_golem_preview"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -183,7 +184,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -330.0
 offset_top = -155.0
-offset_right = 330.0
+offset_right = 390.0
 offset_bottom = 155.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -196,20 +197,27 @@ theme_override_font_sizes/font_size = 28
 text = "Choose Character"
 horizontal_alignment = 1
 
+[node name="WalletLabel" type="Label" parent="Content/Root/Pages/ChooseCharacter"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.82, 0.2, 1)
+theme_override_font_sizes/font_size = 18
+text = "Coins: 0"
+horizontal_alignment = 1
+
 [node name="Cards" type="HBoxContainer" parent="Content/Root/Pages/ChooseCharacter"]
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
 [node name="PlayerCard" type="PanelContainer" parent="Content/Root/Pages/ChooseCharacter/Cards"]
-custom_minimum_size = Vector2(260, 190)
+custom_minimum_size = Vector2(220, 190)
 layout_mode = 2
 
 [node name="Box" type="VBoxContainer" parent="Content/Root/Pages/ChooseCharacter/Cards/PlayerCard"]
 layout_mode = 2
 
 [node name="Preview" type="TextureRect" parent="Content/Root/Pages/ChooseCharacter/Cards/PlayerCard/Box"]
-custom_minimum_size = Vector2(240, 115)
+custom_minimum_size = Vector2(200, 115)
 layout_mode = 2
 texture = ExtResource("3_player_preview")
 expand_mode = 1
@@ -227,14 +235,14 @@ theme_override_font_sizes/font_size = 18
 text = "Select"
 
 [node name="GolemCard" type="PanelContainer" parent="Content/Root/Pages/ChooseCharacter/Cards"]
-custom_minimum_size = Vector2(260, 190)
+custom_minimum_size = Vector2(220, 190)
 layout_mode = 2
 
 [node name="Box" type="VBoxContainer" parent="Content/Root/Pages/ChooseCharacter/Cards/GolemCard"]
 layout_mode = 2
 
 [node name="Preview" type="TextureRect" parent="Content/Root/Pages/ChooseCharacter/Cards/GolemCard/Box"]
-custom_minimum_size = Vector2(240, 115)
+custom_minimum_size = Vector2(200, 115)
 layout_mode = 2
 texture = ExtResource("4_golem_preview")
 expand_mode = 1
@@ -250,6 +258,31 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Select"
+
+[node name="IceGolemCard" type="PanelContainer" parent="Content/Root/Pages/ChooseCharacter/Cards"]
+custom_minimum_size = Vector2(220, 190)
+layout_mode = 2
+
+[node name="Box" type="VBoxContainer" parent="Content/Root/Pages/ChooseCharacter/Cards/IceGolemCard"]
+layout_mode = 2
+
+[node name="Preview" type="TextureRect" parent="Content/Root/Pages/ChooseCharacter/Cards/IceGolemCard/Box"]
+custom_minimum_size = Vector2(200, 115)
+layout_mode = 2
+texture = ExtResource("9_ice_golem_preview")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Content/Root/Pages/ChooseCharacter/Cards/IceGolemCard/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+text = "Ice Golem"
+horizontal_alignment = 1
+
+[node name="SelectButton" type="Button" parent="Content/Root/Pages/ChooseCharacter/Cards/IceGolemCard/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Locked"
 
 [node name="StatusLabel" type="Label" parent="Content/Root/Pages/ChooseCharacter"]
 layout_mode = 2
@@ -375,7 +408,7 @@ stretch_mode = 5
 layout_mode = 2
 theme_override_colors/font_color = Color(0.92, 0.98, 1, 1)
 theme_override_font_sizes/font_size = 16
-text = "Jump: Space"
+text = "Jump: Up Arrow"
 horizontal_alignment = 1
 
 [node name="Instructions" type="Label" parent="Content/Root/Pages/HowToPlay"]
@@ -384,7 +417,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.92, 0.98, 1, 1)
 theme_override_font_sizes/font_size = 18
 text = "Move with Left/Right arrows.
-Jump with Space.
+Jump with Up Arrow.
 Use hands with A and foot kick with S.
 Defeat enemies, avoid spikes, and collect hearts for health."
 horizontal_alignment = 1

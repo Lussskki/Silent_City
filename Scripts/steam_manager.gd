@@ -99,7 +99,7 @@ func get_lobbies() -> Array:
 	return available_lobbies.duplicate(true)
 
 
-func set_lobby_match_state(state: String, host_character: String = "", client_character: String = "") -> void:
+func set_lobby_match_state(state: String, host_character: String = "", client_character: String = "", scene_path: String = "") -> void:
 	if not initialized or not steam or current_lobby_id == 0:
 		return
 	steam.call("setLobbyData", current_lobby_id, "state", state)
@@ -107,6 +107,8 @@ func set_lobby_match_state(state: String, host_character: String = "", client_ch
 		steam.call("setLobbyData", current_lobby_id, "host_character", host_character)
 	if not client_character.is_empty():
 		steam.call("setLobbyData", current_lobby_id, "client_character", client_character)
+	if not scene_path.is_empty():
+		steam.call("setLobbyData", current_lobby_id, "scene_path", scene_path)
 
 
 func create_host_peer() -> MultiplayerPeer:
@@ -202,6 +204,7 @@ func _on_lobby_created(connect_result: int, lobby_id: int) -> void:
 	steam.call("setLobbyData", current_lobby_id, "state", "waiting")
 	steam.call("setLobbyData", current_lobby_id, "host_character", "")
 	steam.call("setLobbyData", current_lobby_id, "client_character", "")
+	steam.call("setLobbyData", current_lobby_id, "scene_path", "res://Scenes/main.tscn")
 	if steam.has_method("setLobbyJoinable"):
 		steam.call("setLobbyJoinable", current_lobby_id, true)
 	lobby_created.emit(current_lobby_id)
@@ -234,6 +237,7 @@ func _add_lobby(lobby_id: int) -> void:
 	var lobby_state := "waiting"
 	var host_character := ""
 	var client_character := ""
+	var scene_path := "res://Scenes/main.tscn"
 	var game_key := ""
 	if steam:
 		var name = steam.call("getLobbyData", lobby_id, "name")
@@ -243,6 +247,9 @@ func _add_lobby(lobby_id: int) -> void:
 		lobby_state = String(steam.call("getLobbyData", lobby_id, "state"))
 		host_character = String(steam.call("getLobbyData", lobby_id, "host_character"))
 		client_character = String(steam.call("getLobbyData", lobby_id, "client_character"))
+		var lobby_scene_path := String(steam.call("getLobbyData", lobby_id, "scene_path"))
+		if not lobby_scene_path.strip_edges().is_empty():
+			scene_path = lobby_scene_path
 	if game_key != GAME_LOBBY_KEY:
 		return
 	if lobby_state.strip_edges().is_empty():
@@ -255,6 +262,7 @@ func _add_lobby(lobby_id: int) -> void:
 		"state": lobby_state,
 		"host_character": host_character,
 		"client_character": client_character,
+		"scene_path": scene_path,
 	})
 
 
