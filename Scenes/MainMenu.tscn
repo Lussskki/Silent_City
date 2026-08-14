@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_menu_script"]
 [ext_resource type="Texture2D" path="res://Sprites/Background/BG.png" id="2_bg"]
@@ -9,6 +9,9 @@
 [ext_resource type="Texture2D" path="res://Resources/How_to_play/3.png" id="7_how_jump"]
 [ext_resource type="Texture2D" path="res://Resources/How_to_play/4.png" id="8_how_kick"]
 [ext_resource type="Texture2D" path="res://Characters/Golem_1/PNG/PNG Sequences/Idle/0_Golem_Idle_000.png" id="9_ice_golem_preview"]
+[ext_resource type="Texture2D" path="res://Resources/MapPreviews/easy_map.png" id="10_easy_map_preview"]
+[ext_resource type="Texture2D" path="res://Resources/MapPreviews/medium_map.png" id="11_medium_map_preview"]
+[ext_resource type="Texture2D" path="res://Resources/MapPreviews/hard_map.png" id="12_hard_map_preview"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -84,9 +87,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -150.0
-offset_top = -176.0
+offset_top = -210.0
 offset_right = 150.0
-offset_bottom = 176.0
+offset_bottom = 210.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 12
@@ -96,6 +99,12 @@ custom_minimum_size = Vector2(320, 46)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Start"
+
+[node name="MapButton" type="Button" parent="Content/Root/Pages/Home"]
+custom_minimum_size = Vector2(320, 46)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Map"
 
 [node name="ChooseButton" type="Button" parent="Content/Root/Pages/Home"]
 custom_minimum_size = Vector2(320, 46)
@@ -135,42 +144,159 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -140.0
-offset_right = 150.0
-offset_bottom = 140.0
+offset_left = -305.0
+offset_top = -62.0
+offset_right = 305.0
+offset_bottom = 270.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 14
+theme_override_constants/separation = 12
 
-[node name="Header" type="Label" parent="Content/Root/Pages/ChooseLevel"]
+[node name="MapTitle" type="Label" parent="Content/Root/Pages/ChooseLevel"]
+custom_minimum_size = Vector2(610, 44)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
 theme_override_font_sizes/font_size = 28
-text = "Choose Level"
+text = "Choose Your Map"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="EasyButton" type="Button" parent="Content/Root/Pages/ChooseLevel"]
-custom_minimum_size = Vector2(320, 46)
+[node name="MapCards" type="HBoxContainer" parent="Content/Root/Pages/ChooseLevel"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Easy"
+theme_override_constants/separation = 12
+alignment = 1
 
-[node name="MediumButton" type="Button" parent="Content/Root/Pages/ChooseLevel"]
-custom_minimum_size = Vector2(320, 46)
+[node name="EasyButton" type="Button" parent="Content/Root/Pages/ChooseLevel/MapCards"]
+clip_contents = true
+custom_minimum_size = Vector2(178, 120)
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Medium"
+tooltip_text = "Easy Map"
 
-[node name="HardButton" type="Button" parent="Content/Root/Pages/ChooseLevel"]
-custom_minimum_size = Vector2(320, 46)
+[node name="Preview" type="TextureRect" parent="Content/Root/Pages/ChooseLevel/MapCards/EasyButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("10_easy_map_preview")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Title" type="Label" parent="Content/Root/Pages/ChooseLevel/MapCards/EasyButton"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 18
+text = "Easy Map"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MediumButton" type="Button" parent="Content/Root/Pages/ChooseLevel/MapCards"]
+clip_contents = true
+custom_minimum_size = Vector2(178, 120)
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Hard"
+tooltip_text = "Medium Map"
+
+[node name="Preview" type="TextureRect" parent="Content/Root/Pages/ChooseLevel/MapCards/MediumButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("11_medium_map_preview")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Title" type="Label" parent="Content/Root/Pages/ChooseLevel/MapCards/MediumButton"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 18
+text = "Medium Map"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HardButton" type="Button" parent="Content/Root/Pages/ChooseLevel/MapCards"]
+clip_contents = true
+custom_minimum_size = Vector2(178, 120)
+layout_mode = 2
+tooltip_text = "Hard Map"
+
+[node name="Preview" type="TextureRect" parent="Content/Root/Pages/ChooseLevel/MapCards/HardButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("12_hard_map_preview")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Title" type="Label" parent="Content/Root/Pages/ChooseLevel/MapCards/HardButton"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 18
+text = "Hard Map"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GalleryHint" type="Label" parent="Content/Root/Pages/ChooseLevel"]
+custom_minimum_size = Vector2(560, 52)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.86, 0.94, 0.96, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 19
+text = "Map preview only. To play, go back and press Start from the main menu."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="BackButton" type="Button" parent="Content/Root/Pages/ChooseLevel"]
 custom_minimum_size = Vector2(320, 42)
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 20
 text = "Back"
 
@@ -506,6 +632,23 @@ theme_override_font_sizes/font_size = 28
 text = "Online"
 horizontal_alignment = 1
 
+[node name="ModeButtons" type="HBoxContainer" parent="Content/Root/Pages/Online"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="WifiButton" type="Button" parent="Content/Root/Pages/Online/ModeButtons"]
+custom_minimum_size = Vector2(183, 42)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "ვაიფაი"
+
+[node name="SteamButton" type="Button" parent="Content/Root/Pages/Online/ModeButtons"]
+custom_minimum_size = Vector2(183, 42)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "სტიმ მეგობარი"
+
 [node name="AddressBox" type="PanelContainer" parent="Content/Root/Pages/Online"]
 visible = false
 custom_minimum_size = Vector2(380, 56)
@@ -515,15 +658,24 @@ layout_mode = 2
 custom_minimum_size = Vector2(360, 42)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-placeholder_text = "Steam lobby search"
+placeholder_text = "ვაიფაი"
 
 [node name="RoomNameInput" type="LineEdit" parent="Content/Root/Pages/Online"]
 custom_minimum_size = Vector2(380, 42)
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 placeholder_text = "Room name"
-text = "Silent City"
+text = "ჩუმი ქალაქი"
 alignment = 1
+
+[node name="RoomNameHint" type="Label" parent="Content/Root/Pages/Online"]
+custom_minimum_size = Vector2(380, 24)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.91, 0.94, 1)
+theme_override_font_sizes/font_size = 16
+text = "შეგიძლია შეცვალო სერვერის სახელი"
+horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="Buttons" type="HBoxContainer" parent="Content/Root/Pages/Online"]
 layout_mode = 2
@@ -533,25 +685,24 @@ theme_override_constants/separation = 14
 custom_minimum_size = Vector2(183, 44)
 layout_mode = 2
 theme_override_font_sizes/font_size = 21
-text = "Create Room"
+text = "Wi-Fi დაწყება"
 
 [node name="JoinButton" type="Button" parent="Content/Root/Pages/Online/Buttons"]
 custom_minimum_size = Vector2(183, 44)
 layout_mode = 2
 theme_override_font_sizes/font_size = 21
-text = "Join"
+text = "დაკავშირება"
 
 [node name="StatusLabel" type="Label" parent="Content/Root/Pages/Online"]
 custom_minimum_size = Vector2(380, 76)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9, 1, 0.9, 1)
 theme_override_font_sizes/font_size = 18
-text = "Create a room or join a room that appears here."
+text = "ვეძებთ ახლომდებარე Wi-Fi კავშირებს."
 horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="LobbySelect" type="ItemList" parent="Content/Root/Pages/Online"]
-visible = false
 custom_minimum_size = Vector2(380, 96)
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
@@ -608,7 +759,7 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0.92, 0.98, 1, 1)
 theme_override_font_sizes/font_size = 18
-text = "Create Room opens a Steam room for other players."
+text = "Start Wi-Fi and nearby players can connect."
 horizontal_alignment = 1
 autowrap_mode = 3
 

@@ -126,7 +126,7 @@ static func _build_hard(root: Node2D, hazard_script: Script) -> void:
 	_add_spike_pit(root, Vector2(3350, 728), 2, hazard_script)
 
 	_add_sprite(root, "StartDeadTree", TREE, Vector2(95, 390), Vector2(1.05, 1.05))
-	_add_sprite(root, "StartFence", FENCE_A, Vector2(290, 488), Vector2(1.05, 1.05), 40)
+	_add_sprite(root, "StartFence", FENCE_A, Vector2(290, 488), Vector2(1.05, 1.05))
 	_add_sprite(root, "NeedleALantern", LANTERN, Vector2(710, 285), Vector2(0.78, 0.78))
 	_add_sprite(root, "NeedleARock", STONE, Vector2(850, 334), Vector2(0.95, 0.95))
 	_add_sprite(root, "NeedleBBox", BOX, Vector2(1184, 206), Vector2(0.9, 0.9))

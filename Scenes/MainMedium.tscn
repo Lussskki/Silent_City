@@ -45,7 +45,6 @@
 [ext_resource type="AudioStream" uid="uid://6qw52k8gxjdf" path="res://Resources/character_voices/61_Hit_03.wav" id="33_aaagc"]
 [ext_resource type="AudioStream" uid="uid://jc86kj4mpjrm" path="res://Resources/character_voices/45_Landing_01.wav" id="34_d0b6v"]
 [ext_resource type="SpriteFrames" path="res://Resources/ash_golem_sprite_frames.tres" id="35_hf065"]
-[ext_resource type="Texture2D" uid="uid://deluw1k1qu860" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Fence 02.png" id="46_wiga1"]
 [ext_resource type="Texture2D" uid="uid://dpwqqjwg2afdd" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Wooden Barrel.png" id="47_6ob6g"]
 [ext_resource type="Texture2D" uid="uid://b8yw283cmml8p" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Skull.png" id="48_eeked"]
 [ext_resource type="Script" uid="uid://f3kytvyw6lfm" path="res://Scripts/player_hud.gd" id="49_67kvf"]
@@ -134,7 +133,7 @@ autoplay = true
 
 [node name="BackgroundA" type="Sprite2D" parent="." unique_id=1062492226]
 z_index = -50
-position = Vector2(845.99994, 461.32507)
+position = Vector2(842.99994, 440.99997)
 scale = Vector2(1.054, 1.0772967)
 texture = ExtResource("2_osxoy")
 
@@ -372,45 +371,37 @@ script = ExtResource("14_hazard")
 shape = SubResource("RectangleShape2D_2daye")
 
 [node name="Spike_0" type="Sprite2D" parent="Level" unique_id=381795930]
-z_index = 0
 position = Vector2(1504, 706)
 texture = ExtResource("5_spike")
 
 [node name="Spike_1" type="Sprite2D" parent="Level" unique_id=2057020201]
-z_index = 0
 position = Vector2(1632, 706)
 texture = ExtResource("5_spike")
 
 [node name="Spike_2" type="Sprite2D" parent="Level" unique_id=1137053516]
-z_index = 0
 position = Vector2(1760, 706)
 texture = ExtResource("5_spike")
 
 [node name="StartTree" type="Sprite2D" parent="Level" unique_id=468416153]
-z_index = 0
 position = Vector2(160, 280)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("15_e00hd")
 
 [node name="StartFenceA" type="Sprite2D" parent="Level" unique_id=1440487224]
-z_index = 0
 position = Vector2(390, 454)
 scale = Vector2(1.1, 1.1)
 texture = ExtResource("16_ssblv")
 
 [node name="StartSign" type="Sprite2D" parent="Level" unique_id=2139204321]
-z_index = 0
 position = Vector2(710, 414)
 texture = ExtResource("17_tf75i")
 
 [node name="BridgeLantern" type="Sprite2D" parent="Level" unique_id=1214634190]
-z_index = 0
 position = Vector2(1035, 310)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("18_o7kvl")
 
 [node name="BridgeBox" type="Sprite2D" parent="Level" unique_id=660107442]
-z_index = 0
 position = Vector2(1290, 348)
 texture = ExtResource("19_d82j4")
 
@@ -455,37 +446,31 @@ position = Vector2(1408, 370)
 texture = ExtResource("21_0gfma")
 
 [node name="Crypt" type="Sprite2D" parent="Level" unique_id=1488790737]
-z_index = 0
 position = Vector2(1690, 178)
 scale = Vector2(0.82, 0.82)
 texture = ExtResource("22_wkxlr")
 
 [node name="CryptBush" type="Sprite2D" parent="Level" unique_id=631493836]
-z_index = 0
 position = Vector2(1950, 302)
 scale = Vector2(0.85, 0.85)
 texture = ExtResource("23_xth7k")
 
 [node name="StepRock" type="Sprite2D" parent="Level" unique_id=1165245636]
-z_index = 0
 position = Vector2(2265, 426)
 scale = Vector2(1.15, 1.15)
 texture = ExtResource("24_m4m21")
 
 [node name="FinalCoffin" type="Sprite2D" parent="Level" unique_id=986486957]
-z_index = 0
 position = Vector2(2900, 340)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("25_xs0au")
 
 [node name="FinalTombstone" type="Sprite2D" parent="Level" unique_id=268478990]
-z_index = 0
 position = Vector2(3170, 348)
 scale = Vector2(1.8, 1.8)
 texture = ExtResource("7_tomb_a")
 
 [node name="FinalTree" type="Sprite2D" parent="Level" unique_id=1586702866]
-z_index = 0
 position = Vector2(3340, 300)
 scale = Vector2(-1.05, 1.05)
 texture = ExtResource("9_tree")
@@ -803,22 +788,18 @@ script = ExtResource("14_hazard")
 shape = SubResource("RectangleShape2D_j2fm5")
 
 [node name="Spike_0" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1840817050]
-z_index = 0
 position = Vector2(704, 708)
 texture = ExtResource("5_spike")
 
 [node name="Spike_1" type="Sprite2D" parent="MediumLevel/Generated" unique_id=478329484]
-z_index = 0
 position = Vector2(832, 708)
 texture = ExtResource("5_spike")
 
 [node name="Spike_2" type="Sprite2D" parent="MediumLevel/Generated" unique_id=866557261]
-z_index = 0
 position = Vector2(960, 708)
 texture = ExtResource("5_spike")
 
 [node name="Spike_3" type="Sprite2D" parent="MediumLevel/Generated" unique_id=102598604]
-z_index = 0
 position = Vector2(1088, 708)
 texture = ExtResource("5_spike")
 
@@ -830,17 +811,14 @@ script = ExtResource("14_hazard")
 shape = SubResource("RectangleShape2D_y043w")
 
 [node name="@Sprite2D@18" type="Sprite2D" parent="MediumLevel/Generated" unique_id=840253687]
-z_index = 0
 position = Vector2(1582, 708)
 texture = ExtResource("5_spike")
 
 [node name="@Sprite2D@19" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1239189370]
-z_index = 0
 position = Vector2(1710, 708)
 texture = ExtResource("5_spike")
 
 [node name="@Sprite2D@20" type="Sprite2D" parent="MediumLevel/Generated" unique_id=647999675]
-z_index = 0
 position = Vector2(1838, 708)
 texture = ExtResource("5_spike")
 
@@ -852,46 +830,33 @@ script = ExtResource("14_hazard")
 shape = SubResource("RectangleShape2D_617bh")
 
 [node name="@Sprite2D@23" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1373280121]
-z_index = 0
 position = Vector2(2836, 708)
 texture = ExtResource("5_spike")
 
 [node name="@Sprite2D@24" type="Sprite2D" parent="MediumLevel/Generated" unique_id=909830667]
-z_index = 0
 position = Vector2(2964, 708)
 texture = ExtResource("5_spike")
 
 [node name="@Sprite2D@25" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1128118633]
-z_index = 0
 position = Vector2(3092, 708)
 texture = ExtResource("5_spike")
 
-[node name="StartFence" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1691857747]
-z_index = 0
-position = Vector2(130, 462)
-scale = Vector2(1.2, 1.2)
-texture = ExtResource("46_wiga1")
-
 [node name="StartSkeleton" type="Sprite2D" parent="MediumLevel/Generated" unique_id=2077142383]
-z_index = 0
-position = Vector2(350, 458)
+position = Vector2(369, 478.00003)
 scale = Vector2(1.15, 1.15)
 texture = ExtResource("12_skeleton")
 
 [node name="StartBarrel" type="Sprite2D" parent="MediumLevel/Generated" unique_id=446601377]
-z_index = 0
-position = Vector2(535, 440)
+position = Vector2(532, 456)
 scale = Vector2(0.95, 0.95)
 texture = ExtResource("47_6ob6g")
 
 [node name="FirstLantern" type="Sprite2D" parent="MediumLevel/Generated" unique_id=649570474]
-z_index = 0
 position = Vector2(820, 260)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("18_o7kvl")
 
 [node name="FirstTombstone" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1317951625]
-z_index = 0
 position = Vector2(1031.0001, 324)
 scale = Vector2(1.55, 1.55)
 texture = ExtResource("8_tomb_b")
@@ -917,43 +882,36 @@ position = Vector2(1480, 415)
 texture = ExtResource("21_0gfma")
 
 [node name="TowerCrypt" type="Sprite2D" parent="MediumLevel/Generated" unique_id=702469953]
-z_index = 0
 position = Vector2(1816.9999, 100)
 scale = Vector2(0.86, 0.86)
 texture = ExtResource("22_wkxlr")
 
 [node name="TowerBush" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1111887004]
-z_index = 0
-position = Vector2(2075, 223)
+position = Vector2(2078.9998, 243)
 scale = Vector2(0.85, 0.85)
 texture = ExtResource("11_dead_bush")
 
 [node name="DropCoffin" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1612003649]
-z_index = 0
 position = Vector2(2701, 521)
 scale = Vector2(0.82, 0.82)
 texture = ExtResource("25_xs0au")
 
 [node name="DropSkull" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1765171328]
-z_index = 0
 position = Vector2(2670, 585)
 scale = Vector2(1.1, 1.1)
 texture = ExtResource("48_eeked")
 
 [node name="StepCrate" type="Sprite2D" parent="MediumLevel/Generated" unique_id=278076288]
-z_index = 0
 position = Vector2(2954, 388)
 scale = Vector2(0.95, 0.95)
 texture = ExtResource("6_crate")
 
 [node name="ExitLantern" type="Sprite2D" parent="MediumLevel/Generated" unique_id=329029493]
-z_index = 0
 position = Vector2(3325, 230)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("18_o7kvl")
 
 [node name="ExitTree" type="Sprite2D" parent="MediumLevel/Generated" unique_id=1777568999]
-z_index = 0
 position = Vector2(3579, 187)
 scale = Vector2(-0.82569623, 1.1456677)
 texture = ExtResource("15_e00hd")
@@ -1064,3 +1022,11 @@ enemy_max_life = 170
 
 [node name="HealthDropSpawner" type="CanvasLayer" parent="." unique_id=348391563]
 script = ExtResource("54_6576a")
+
+[node name="Tree" type="Sprite2D" parent="." unique_id=775603552]
+position = Vector2(-4302, 2954)
+texture = ExtResource("9_tree")
+
+[node name="Tree2" type="Sprite2D" parent="." unique_id=210518308]
+position = Vector2(85, 386)
+texture = ExtResource("9_tree")
