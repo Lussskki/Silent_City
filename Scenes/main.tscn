@@ -36,9 +36,17 @@
 [ext_resource type="Script" uid="uid://f3kytvyw6lfm" path="res://Scripts/player_hud.gd" id="40_player_hud"]
 [ext_resource type="Script" uid="uid://l5xletxmo2lc" path="res://Scripts/online_manager.gd" id="41_online_manager"]
 [ext_resource type="PackedScene" uid="uid://ktuf83rha8ye" path="res://Scenes/GolemPlayer.tscn" id="42_golem_player"]
-[ext_resource type="PackedScene" path="res://Enemies/enemy.tscn" id="43_enemy_scene"]
+[ext_resource type="PackedScene" uid="uid://dl15tgg4t44xm" path="res://Enemies/enemy.tscn" id="43_enemy_scene"]
 [ext_resource type="Script" uid="uid://dqflgmk88ohqg" path="res://Enemies/enemy_spawner.gd" id="44_enemy_spawner"]
 [ext_resource type="Script" uid="uid://c3yfa45lm07da" path="res://Scripts/health_drop_spawner.gd" id="45_health_drop_spawner"]
+[ext_resource type="Texture2D" uid="uid://bgnq7npmjdtwu" path="res://Sprites/Hud/drawn_health_bar_empty_small.png" id="47_health_empty"]
+[ext_resource type="Texture2D" uid="uid://c2ev38mwbo8nv" path="res://Sprites/Hud/drawn_power_bar_empty_small.png" id="49_power_empty"]
+[ext_resource type="Texture2D" uid="uid://c7gq7cft7nemx" path="res://Sprites/Hud/drawn_health_bar_fill_small.png" id="51_health_fill"]
+[ext_resource type="Texture2D" uid="uid://on57v5ad1axp" path="res://Sprites/Hud/drawn_power_bar_fill_small.png" id="52_power_fill"]
+[ext_resource type="Texture2D" uid="uid://cx7kqahg1vnta" path="res://Sprites/Hud/hud_life_label_small.png" id="53_life_text"]
+[ext_resource type="Texture2D" uid="uid://b1xonas0dxph2" path="res://Sprites/Hud/hud_power_label_small.png" id="54_power_text"]
+[ext_resource type="Texture2D" uid="uid://dmpdp3hr7t8o1" path="res://Sprites/Hud/hud_enemies_label_small.png" id="55_enemies_text"]
+[ext_resource type="Texture2D" uid="uid://dy14viarf88gg" path="res://Sprites/Hud/hud_lives_label_small.png" id="56_lives_text"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_54nrm"]
 size = Vector2(768, 256)
@@ -64,9 +72,6 @@ size = Vector2(4400, 220)
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_player"]
 radius = 6.0
 height = 18.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_fill"]
-bg_color = Color(0.75, 0.06, 0.06, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pause_panel"]
 bg_color = Color(0.02, 0.025, 0.03, 0.94)
@@ -440,6 +445,7 @@ attack_sound = ExtResource("35_attack_sound")
 kick_sound = ExtResource("36_kick_sound")
 hit_sound = ExtResource("36_kick_sound")
 landing_sound = ExtResource("39_landing_sound")
+max_coin_power = 30
 dynamic_frames_root = "res://Player/player_assets/PNG Sequences"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1781632174]
@@ -464,35 +470,87 @@ limit_bottom = 902
 process_mode = 3
 script = ExtResource("40_player_hud")
 
-[node name="HealthBar" type="ProgressBar" parent="PlayerHUD" unique_id=1184578042]
+[node name="LifeText" type="TextureRect" parent="PlayerHUD" unique_id=673333252]
 offset_left = 16.0
-offset_top = 16.0
-offset_right = 216.0
-offset_bottom = 32.0
-theme_override_styles/fill = SubResource("StyleBoxFlat_health_fill")
+offset_top = 4.0
+offset_right = 72.0
+offset_bottom = 36.0
+texture = ExtResource("53_life_text")
+expand_mode = 1
+
+[node name="HealthBar" type="TextureProgressBar" parent="PlayerHUD" unique_id=1184578042]
+offset_left = 16.0
+offset_top = 34.0
+offset_right = 166.0
+offset_bottom = 53.0
 value = 100.0
-show_percentage = false
+texture_under = ExtResource("47_health_empty")
+texture_progress = ExtResource("51_health_fill")
 
 [node name="HealthLabel" type="Label" parent="PlayerHUD" unique_id=1085616806]
+visible = false
 offset_left = 16.0
-offset_top = 36.0
+offset_top = 8.0
 offset_right = 160.0
-offset_bottom = 60.0
-text = "Life: 100"
+offset_bottom = 30.0
+text = "Life:"
 
-[node name="EnemyCountLabel" type="Label" parent="PlayerHUD" unique_id=1358564899]
+[node name="PowerText" type="TextureRect" parent="PlayerHUD" unique_id=4914904]
 offset_left = 16.0
-offset_top = 62.0
-offset_right = 160.0
-offset_bottom = 86.0
-text = "Enemies: 0"
+offset_top = 58.0
+offset_right = 96.0
+offset_bottom = 87.0
+texture = ExtResource("54_power_text")
+expand_mode = 1
 
-[node name="LivesLabel" type="Label" parent="PlayerHUD" unique_id=1979271889]
+[node name="CoinPowerBar" type="TextureProgressBar" parent="PlayerHUD" unique_id=1202991260]
 offset_left = 16.0
 offset_top = 88.0
-offset_right = 160.0
-offset_bottom = 112.0
-text = "Lives: 0/5"
+offset_right = 166.0
+offset_bottom = 107.0
+max_value = 30.0
+texture_under = ExtResource("49_power_empty")
+texture_progress = ExtResource("52_power_fill")
+
+[node name="CoinPowerLabel" type="Label" parent="PlayerHUD" unique_id=875334383]
+visible = false
+offset_left = 16.0
+offset_top = 62.0
+offset_right = 260.0
+offset_bottom = 84.0
+text = "Power:"
+
+[node name="EnemiesText" type="TextureRect" parent="PlayerHUD" unique_id=1697683058]
+offset_left = 16.0
+offset_top = 116.0
+offset_right = 110.0
+offset_bottom = 145.0
+texture = ExtResource("55_enemies_text")
+expand_mode = 1
+
+[node name="EnemyCountLabel" type="Label" parent="PlayerHUD" unique_id=1358564899]
+visible = false
+offset_left = 128.0
+offset_top = 120.0
+offset_right = 182.0
+offset_bottom = 144.0
+text = "0"
+
+[node name="LivesText" type="TextureRect" parent="PlayerHUD" unique_id=1163426834]
+offset_left = 16.0
+offset_top = 148.0
+offset_right = 88.0
+offset_bottom = 178.0
+texture = ExtResource("56_lives_text")
+expand_mode = 1
+
+[node name="LivesLabel" type="Label" parent="PlayerHUD" unique_id=1979271889]
+visible = false
+offset_left = 106.0
+offset_top = 152.0
+offset_right = 172.0
+offset_bottom = 176.0
+text = "0/5"
 
 [node name="RoundLabel" type="Label" parent="PlayerHUD" unique_id=1378954021]
 visible = false
@@ -564,11 +622,11 @@ golem_player_scene = ExtResource("42_golem_player")
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=1527017218]
 script = ExtResource("44_enemy_spawner")
 enemy_scene = ExtResource("43_enemy_scene")
-spawn_count = 6
+spawn_count = 4
 spawn_seed = 1201
-spawn_areas = Array[Rect2]([Rect2(260, 420, 460, 1), Rect2(980, 350, 360, 1), Rect2(1610, 290, 340, 1), Rect2(2230, 410, 260, 1), Rect2(2820, 360, 500, 1)])
-enemy_max_life = 130
-enemy_attack_damage = 10
+spawn_areas = Array[Rect2]([Rect2(700, 420, 160, 1), Rect2(980, 350, 360, 1), Rect2(1610, 290, 340, 1), Rect2(2230, 410, 260, 1), Rect2(2820, 360, 500, 1)])
+enemy_max_life = 90
+enemy_attack_damage = 6
 
 [node name="HealthDropSpawner" type="CanvasLayer" parent="." unique_id=348391563]
 script = ExtResource("45_health_drop_spawner")

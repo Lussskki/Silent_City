@@ -580,11 +580,22 @@ theme_override_font_sizes/font_size = 30
 text = "Credits"
 horizontal_alignment = 1
 
-[node name="CreditsText" type="Label" parent="Content/Root/Pages/Credits"]
+[node name="CreditsScroll" type="ScrollContainer" parent="Content/Root/Pages/Credits"]
 custom_minimum_size = Vector2(680, 330)
 layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="CreditsText" type="RichTextLabel" parent="Content/Root/Pages/Credits/CreditsScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.92, 0.98, 1, 1)
+theme_override_colors/default_color = Color(0.92, 0.98, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_selected_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 18
+bbcode_enabled = true
 text = "Silent City
 Created by Luka Guledani / SonnyRenderer
 
@@ -597,9 +608,15 @@ Graveyard platform tileset
 GameArt2D / CraftPix freebie license
 https://www.gameart2d.com/free-graveyard-platformer-tileset.html
 
+QA/Testers:
+1. Giorgi Gugunava
+2. Iakob Janiashvili
+3. Discord/Sonny'sGaming server community
+
+[url=https://discord.gg/DNUu88kwwd]Join Discord Server[/url]
+
 Thank you for playing."
-horizontal_alignment = 1
-vertical_alignment = 1
+fit_content = true
 autowrap_mode = 3
 
 [node name="BackButton" type="Button" parent="Content/Root/Pages/Credits"]
@@ -797,4 +814,3 @@ offset_bottom = 52.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 18
 text = "GEO"
-
