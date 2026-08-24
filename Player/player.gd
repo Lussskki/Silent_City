@@ -29,7 +29,6 @@ const GOLEM_ANIMATION_DIRS := {
 	"Sliding": "Sliding"
 }
 const HURT_ANIMATION_TIME := 0.28
-const MAX_POWER := 50
 const SHOCKWAVE_DAMAGE := 55
 const SHOCKWAVE_RADIUS := 360.0
 const SHOCKWAVE_VERTICAL_TOLERANCE := 115.0
@@ -50,6 +49,7 @@ signal power_changed(power: int, max_power: int)
 @export_range(0.1, 2.0, 0.05) var run_sound_interval := 0.35
 @export_group("Player Life")
 @export var max_life: int = 100
+@export var max_coin_power := 50
 @export_group("Combat")
 @export var attack_hit_radius := 185.0
 @export var attack_vertical_tolerance := 125.0
@@ -100,7 +100,7 @@ func _ready():
 	remote_target_position = global_position
 	life = max_life
 	life_changed.emit(life, max_life)
-	power_changed.emit(coin_power, MAX_POWER)
+	power_changed.emit(coin_power, max_coin_power)
 	if not _apply_selected_character():
 		_load_dynamic_sprite_frames()
 		sprite.position = DEFAULT_SPRITE_OFFSET
@@ -114,12 +114,10 @@ func _ready():
 	landing_audio = _create_sound_player("LandingSound", landing_sound)
 	was_on_floor = is_on_floor()
 
-	# áƒ¢áƒáƒ˜áƒšáƒ”áƒ‘áƒ˜áƒ¡ áƒ¤áƒ”áƒ áƒ“áƒáƒ‘áƒ˜ áƒ™áƒ˜áƒ‘áƒ”áƒ¡áƒáƒ•áƒ˜áƒ— áƒ™áƒ•áƒáƒ“áƒ áƒáƒ¢áƒ”áƒ‘áƒ˜áƒ¡áƒ’áƒáƒœ áƒ¨áƒ”áƒ“áƒ’áƒ”áƒ‘áƒ (~51Â°).
-	# áƒáƒ› áƒžáƒáƒ áƒáƒ›áƒ”áƒ¢áƒ áƒ”áƒ‘áƒ˜áƒ— áƒžáƒ”áƒ áƒ¡áƒáƒœáƒáƒŸáƒ˜ áƒ™áƒ˜áƒ‘áƒ”áƒ¡ áƒ’áƒšáƒ£áƒ• áƒ¤áƒ”áƒ áƒ“áƒáƒ‘áƒáƒ“ áƒáƒ¦áƒ˜áƒ¥áƒ•áƒáƒ›áƒ¡ áƒ“áƒ
-	# áƒ¡áƒáƒ¤áƒ”áƒ®áƒ£áƒ áƒ”áƒ‘áƒ–áƒ” áƒáƒ¦áƒáƒ  áƒáƒ®áƒ¢áƒ”áƒ‘áƒ áƒ–áƒ”áƒ›áƒáƒ—-áƒ¥áƒ•áƒ”áƒ›áƒáƒ—.
-	floor_max_angle = deg_to_rad(60)   # áƒªáƒ˜áƒªáƒáƒ‘áƒ áƒ™áƒ˜áƒ‘áƒ” â€žáƒ˜áƒáƒ¢áƒáƒ™áƒáƒ“" áƒ©áƒáƒ˜áƒ—áƒ•áƒáƒšáƒáƒ¡
-	floor_snap_length = 80.0            # áƒ¡áƒáƒ¤áƒ”áƒ®áƒ£áƒ áƒ”áƒ‘áƒ–áƒ” áƒ›áƒ˜áƒ¬áƒ”áƒ‘áƒ”áƒ‘áƒ, áƒ°áƒáƒ”áƒ áƒ¨áƒ˜ áƒáƒ¦áƒáƒ  áƒáƒ®áƒ¢áƒ”áƒ¡
-	floor_constant_speed = true         # áƒ¤áƒ”áƒ áƒ“áƒáƒ‘áƒ–áƒ” áƒ¡áƒ˜áƒ©áƒ¥áƒáƒ áƒ” áƒ›áƒ£áƒ“áƒ›áƒ˜áƒ•áƒ˜ áƒ“áƒáƒ áƒ©áƒ”áƒ¡
+
+	floor_max_angle = deg_to_rad(60)   
+	floor_snap_length = 80.0           
+	floor_constant_speed = true         
 
 func _physics_process(delta):
 	if not local_player:
@@ -444,24 +442,24 @@ func collect_coin_power(amount: int) -> void:
 	var settings := get_node_or_null("/root/GameSettings")
 	if settings and settings.has_method("add_saved_coins"):
 		settings.call("add_saved_coins", amount)
-	coin_power = min(coin_power + amount, MAX_POWER)
-	power_changed.emit(coin_power, MAX_POWER)
+	coin_power = min(coin_power + amount, max_coin_power)
+	power_changed.emit(coin_power, max_coin_power)
 
 
 func get_max_coin_power() -> int:
-	return MAX_POWER
+	return max_coin_power
 
 
 func _try_activate_shockwave() -> void:
 	if dead or not local_player:
 		return
-	if coin_power < MAX_POWER:
+	if coin_power < max_coin_power:
 		return
 	if not is_on_floor():
 		return
 
 	coin_power = 0
-	power_changed.emit(coin_power, MAX_POWER)
+	power_changed.emit(coin_power, max_coin_power)
 	_play_shockwave_visual()
 	_damage_shockwave_targets()
 	_send_network_state(0.0, true)
@@ -474,25 +472,38 @@ func _play_shockwave_visual() -> void:
 	shockwave.z_index = 60
 	get_tree().current_scene.add_child(shockwave)
 
-	for index in 3:
-		var ring := Line2D.new()
-		ring.width = 8.0 - index * 1.5
-		ring.default_color = Color(0.92, 0.74, 0.28, 0.82 - index * 0.16)
-		ring.points = PackedVector2Array([
-			Vector2(-24, 0),
-			Vector2(-10, -8),
-			Vector2(10, -8),
-			Vector2(24, 0)
-		])
-		shockwave.add_child(ring)
-		var tween := create_tween()
-		tween.set_parallel(true)
-		tween.tween_property(ring, "scale", Vector2(6.5 + index * 1.6, 1.0 + index * 0.18), 0.28 + index * 0.05)
-		tween.tween_property(ring, "modulate:a", 0.0, 0.28 + index * 0.05)
+	for index in 8:
+		var burst := Sprite2D.new()
+		burst.texture = _blue_power_impact_texture(index)
+		burst.centered = true
+		burst.position = Vector2(34.0 + index * 24.0, 0.0)
+		burst.scale = Vector2(2.6, 2.6)
+		burst.modulate = Color(0.65, 0.96, 1.0, 1.0)
+		shockwave.add_child(burst)
+
+		var mirror_burst := burst.duplicate() as Sprite2D
+		mirror_burst.position.x = -burst.position.x
+		shockwave.add_child(mirror_burst)
+
+		var burst_tween := create_tween()
+		burst_tween.set_parallel(true)
+		burst_tween.tween_property(burst, "position:y", -18.0, 0.36)
+		burst_tween.tween_property(burst, "scale", Vector2(3.6, 3.6), 0.36)
+		burst_tween.tween_property(burst, "modulate:a", 0.0, 0.36)
+		burst_tween.tween_property(mirror_burst, "position:y", -18.0, 0.36)
+		burst_tween.tween_property(mirror_burst, "scale", Vector2(3.6, 3.6), 0.36)
+		burst_tween.tween_property(mirror_burst, "modulate:a", 0.0, 0.36)
 
 	var cleanup := create_tween()
-	cleanup.tween_interval(0.45)
+	cleanup.tween_interval(0.5)
 	cleanup.tween_callback(shockwave.queue_free)
+
+
+func _blue_power_impact_texture(index: int) -> AtlasTexture:
+	var atlas := AtlasTexture.new()
+	atlas.atlas = load("res://Sprites/Powers/Impact/blue_impact_32x32_sheet.png") as Texture2D
+	atlas.region = Rect2((index % 8) * 32, 0, 32, 32)
+	return atlas
 
 
 func _damage_shockwave_targets() -> void:
