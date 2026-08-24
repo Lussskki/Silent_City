@@ -13,17 +13,17 @@ extends Node2D
 	Rect2(-1120, -170, 360, 1)
 ]
 @export var edge_padding := 45.0
+@export var minimum_spacing := 190.0
 @export var enemy_max_life := 140
 @export var enemy_attack_damage := 12
 @export var enemy_move_speed := 95.0
 @export var enemy_attack_cooldown := 1.0
-@export var enemy_character_name := ""
+@export var enemy_character_name := "Zombie,Robot"
+@export var enemy_sprite_ground_offset := 12.0
 
 const CHARACTER_NAMES := [
-	"Adventurer",
-	"Female",
-	"Soldier",
-	"Zombie"
+	"Zombie",
+	"Robot"
 ]
 
 func _ready() -> void:
@@ -75,13 +75,12 @@ func _spawn_enemies() -> void:
 		enemy.name = "Enemy_%d" % index
 		enemy.position = Vector2(spawn_x, spawn_y)
 		enemy.set("random_character", false)
-		var selected_character := enemy_character_name.strip_edges()
-		if selected_character.is_empty():
-			selected_character = CHARACTER_NAMES[character_indices[index % character_indices.size()]]
+		var selected_character := _pick_character(index, character_indices)
 		enemy.set("character_name", selected_character)
 		enemy.set("max_life", enemy_max_life)
 		enemy.set("attack_damage", enemy_attack_damage)
 		enemy.set("move_speed", enemy_move_speed)
+		enemy.set("sprite_ground_offset", enemy_sprite_ground_offset)
 		enemy.set("patrol_min_x", left_x)
 		enemy.set("patrol_max_x", right_x)
 		enemy.set("attack_cooldown", enemy_attack_cooldown)
@@ -108,14 +107,20 @@ func _build_area_assignments(requested_amount: int, area_indices: Array[int]) ->
 
 
 func _area_capacity(area: Rect2) -> int:
-	var usable_width: float = max(area.size.x - edge_padding * 2.0, area.size.x)
-	return max(1, int(floor(usable_width / 75.0)))
+	var left_x := area.position.x + edge_padding
+	var right_x := area.end.x - edge_padding
+	if right_x <= left_x:
+		left_x = area.position.x
+		right_x = area.end.x
+
+	var usable_width: float = max(0.0, right_x - left_x)
+	return max(1, int(floor(usable_width / minimum_spacing)) + 1)
 
 
 func _slot_x(left_x: float, right_x: float, slot_index: int, slot_count: int) -> float:
 	if slot_count <= 1:
 		return (left_x + right_x) * 0.5
-	var ratio := float(slot_index + 1) / float(slot_count + 1)
+	var ratio := float(slot_index) / float(slot_count - 1)
 	return lerp(left_x, right_x, ratio)
 
 
@@ -142,3 +147,19 @@ func _shuffled_indices(size: int, rng: RandomNumberGenerator) -> Array[int]:
 		indices[swap_index] = value
 
 	return indices
+
+
+func _pick_character(spawn_index: int, character_indices: Array[int]) -> String:
+	var configured_names := _configured_character_names()
+	if configured_names.is_empty():
+		return CHARACTER_NAMES[character_indices[spawn_index % character_indices.size()]]
+	return configured_names[spawn_index % configured_names.size()]
+
+
+func _configured_character_names() -> Array[String]:
+	var names: Array[String] = []
+	for raw_name in enemy_character_name.split(",", false):
+		var character_name_value := raw_name.strip_edges()
+		if character_name_value in CHARACTER_NAMES:
+			names.append(character_name_value)
+	return names

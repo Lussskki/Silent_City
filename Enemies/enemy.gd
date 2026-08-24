@@ -5,30 +5,63 @@ extends CharacterBody2D
 @export var chase_distance := 520.0
 @export var attack_distance := 95.0
 @export var attack_vertical_tolerance := 95.0
+@export var robot_shock_distance := 260.0
 @export var attack_damage: int = 10
 @export var attack_cooldown := 1.0
+@export var robot_shock_bonus_damage := 3
 @export var hurt_cooldown := 0.35
 @export var knockback_time := 0.22
-@export var coin_drop_chance := 0.85
 @export var coin_power_value := 10
 @export var patrol_min_x := 0.0
 @export var patrol_max_x := 0.0
 @export var sight_vertical_tolerance := 120.0
 @export var random_character := true
 @export var character_name := ""
+@export var sprite_ground_offset := 18.0
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var health_bar: ProgressBar = $HealthBar
 
 const CHARACTER_NAMES := [
-	"Adventurer",
-	"Female",
-	"Soldier",
-	"Zombie"
+	"Zombie",
+	"Robot"
 ]
 
-const SPRITE_GROUND_Y := 0.0
+const HEALTH_BAR_WIDTH := 68.0
+const HEALTH_BAR_HEIGHT := 10.0
+const HEALTH_BAR_GAP := 6.0
+const SPRITE_VISIBLE_TOP_PADDING := 20.0
 const COIN_SCENE := preload("res://Scenes/Coin.tscn")
+const ROBOT_SHOCK_FRAME_PATHS := [
+	"res://Sprites/Powers/RobotShock/robot_shock_1.png",
+	"res://Sprites/Powers/RobotShock/robot_shock_2.png",
+	"res://Sprites/Powers/RobotShock/robot_shock_3.png",
+	"res://Sprites/Powers/RobotShock/robot_shock_4.png"
+]
+const CHARACTER_PROFILES := {
+	"Zombie": {
+		"pose_dir": "res://Characters/Zombie/PNG/Poses",
+		"prefix": "character_zombie",
+		"idle": "idle",
+		"walk": ["walk0", "walk1", "walk2", "walk3"],
+		"attack": "attack1",
+		"hurt": "hurt",
+		"scale": Vector2(0.95, 0.95),
+		"ground_offset": 12.0,
+		"health_top_padding": 22.0
+	},
+	"Robot": {
+		"pose_dir": "res://Characters/Robot/PNG/Poses",
+		"prefix": "character_robot",
+		"idle": "idle",
+		"walk": ["walk0", "walk1", "walk2", "walk3"],
+		"attack": "attack2",
+		"hurt": "hurt",
+		"scale": Vector2(0.95, 0.95),
+		"ground_offset": 12.0,
+		"health_top_padding": 22.0
+	}
+}
 
 var life: int = 100
 var player: Node2D
@@ -40,6 +73,7 @@ var idle_texture: Texture2D
 var walk_textures: Array[Texture2D] = []
 var attack_texture: Texture2D
 var hurt_texture: Texture2D
+var health_top_padding := SPRITE_VISIBLE_TOP_PADDING
 var flip_direction := false
 var network_sync_timer := 0.0
 var remote_target_position := Vector2.ZERO
@@ -217,7 +251,10 @@ func _try_attack_player() -> void:
 
 	attack_timer = attack_cooldown
 	_show_attack_pose()
-	_damage_player(player, attack_damage)
+	if _is_robot():
+		_shock_player(player)
+	else:
+		_damage_player(player, attack_damage)
 
 
 func _damage_player(target: Node, amount: int) -> void:
@@ -232,6 +269,137 @@ func _damage_player(target: Node, amount: int) -> void:
 			return
 
 	target.take_damage(amount)
+
+
+func _shock_player(target: Node) -> void:
+	_damage_player(target, attack_damage + robot_shock_bonus_damage)
+	if target is Node2D:
+		_play_shock_visual(target as Node2D)
+	if not target is CanvasItem:
+		return
+
+	var shocked_target := target as CanvasItem
+	shocked_target.modulate = Color(0.45, 0.9, 1.0)
+	get_tree().create_timer(0.18).timeout.connect(func():
+		if is_instance_valid(shocked_target) and not shocked_target.get("dead") == true:
+			shocked_target.modulate = Color.WHITE
+	)
+
+
+func _play_shock_visual(target: Node2D) -> void:
+	var scene := get_tree().current_scene
+	if not scene:
+		return
+
+	var origin := get_hit_position()
+	var target_position := target.global_position
+	if target.has_method("get_hit_position"):
+		target_position = target.get_hit_position()
+
+	var shock := Node2D.new()
+	shock.name = "RobotShock"
+	shock.global_position = origin
+	shock.z_index = 95
+	scene.add_child(shock)
+
+	var local_target := target_position - origin
+	var shock_sprite := _make_robot_shock_animation()
+	if shock_sprite:
+		shock_sprite.position = local_target * 0.5
+		shock_sprite.rotation = local_target.angle()
+		shock_sprite.scale = Vector2(max(local_target.length() / 256.0, 0.4), 1.25)
+		shock.add_child(shock_sprite)
+		shock_sprite.play("shock")
+
+	var bolt := Line2D.new()
+	bolt.default_color = Color(0.05, 0.85, 1.0, 1.0)
+	bolt.width = 14.0
+	bolt.joint_mode = Line2D.LINE_JOINT_ROUND
+	bolt.begin_cap_mode = Line2D.LINE_CAP_ROUND
+	bolt.end_cap_mode = Line2D.LINE_CAP_ROUND
+	bolt.points = _shock_points(Vector2.ZERO, local_target, 24.0)
+	shock.add_child(bolt)
+
+	var core := Line2D.new()
+	core.default_color = Color(0.9, 1.0, 1.0, 1.0)
+	core.width = 6.0
+	core.joint_mode = Line2D.LINE_JOINT_ROUND
+	core.begin_cap_mode = Line2D.LINE_CAP_ROUND
+	core.end_cap_mode = Line2D.LINE_CAP_ROUND
+	core.points = bolt.points
+	shock.add_child(core)
+
+	var branch := Line2D.new()
+	branch.default_color = Color(0.35, 0.95, 1.0, 0.9)
+	branch.width = 5.0
+	branch.joint_mode = Line2D.LINE_JOINT_ROUND
+	branch.begin_cap_mode = Line2D.LINE_CAP_ROUND
+	branch.end_cap_mode = Line2D.LINE_CAP_ROUND
+	branch.points = _shock_points(Vector2.ZERO, local_target, -34.0)
+	shock.add_child(branch)
+
+	var pulse := Line2D.new()
+	pulse.default_color = Color(0.25, 0.95, 1.0, 1.0)
+	pulse.width = 7.0
+	pulse.closed = true
+	pulse.points = _circle_points(local_target, 34.0, 24)
+	shock.add_child(pulse)
+
+	var tween := create_tween()
+	tween.set_parallel(true)
+	if shock_sprite:
+		tween.tween_property(shock_sprite, "modulate:a", 0.0, 0.42)
+	tween.tween_property(bolt, "default_color:a", 0.0, 0.42)
+	tween.tween_property(core, "default_color:a", 0.0, 0.42)
+	tween.tween_property(branch, "default_color:a", 0.0, 0.42)
+	tween.tween_property(pulse, "default_color:a", 0.0, 0.42)
+	tween.tween_property(pulse, "scale", Vector2(1.9, 1.9), 0.42)
+	tween.chain().tween_callback(shock.queue_free)
+
+
+func _make_robot_shock_animation() -> AnimatedSprite2D:
+	var frames := SpriteFrames.new()
+	frames.add_animation("shock")
+	frames.set_animation_loop("shock", false)
+	frames.set_animation_speed("shock", 18.0)
+
+	for frame_path in ROBOT_SHOCK_FRAME_PATHS:
+		var frame_texture := load(frame_path) as Texture2D
+		if frame_texture:
+			frames.add_frame("shock", frame_texture)
+
+	if frames.get_frame_count("shock") == 0:
+		return null
+
+	var shock_sprite := AnimatedSprite2D.new()
+	shock_sprite.sprite_frames = frames
+	shock_sprite.animation = "shock"
+	shock_sprite.centered = true
+	shock_sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
+	return shock_sprite
+
+
+func _shock_points(origin: Vector2, target_position: Vector2, amplitude: float) -> PackedVector2Array:
+	var points := PackedVector2Array()
+	var direction := target_position - origin
+	var normal := Vector2(-direction.y, direction.x).normalized()
+	var segments := 7
+	for index in range(segments + 1):
+		var ratio := float(index) / float(segments)
+		var point := origin.lerp(target_position, ratio)
+		if index > 0 and index < segments:
+			var offset := amplitude if index % 2 == 0 else -amplitude
+			point += normal * offset
+		points.append(point)
+	return points
+
+
+func _circle_points(center: Vector2, radius: float, segments: int) -> PackedVector2Array:
+	var points := PackedVector2Array()
+	for index in segments:
+		var angle := TAU * float(index) / float(segments)
+		points.append(center + Vector2(cos(angle), sin(angle)) * radius)
+	return points
 
 
 func _try_take_player_hit(distance: float) -> void:
@@ -261,6 +429,8 @@ func _get_player_hit_position() -> Vector2:
 
 func _is_player_in_attack_range() -> bool:
 	var hit_offset := _get_player_hit_position() - get_hit_position()
+	if _is_robot():
+		return abs(hit_offset.x) <= robot_shock_distance and abs(hit_offset.y) <= attack_vertical_tolerance
 	return abs(hit_offset.x) <= attack_distance and abs(hit_offset.y) <= attack_vertical_tolerance
 
 
@@ -301,6 +471,7 @@ func _walk(direction: float, speed: float, delta: float) -> void:
 func _update_health_bar() -> void:
 	health_bar.max_value = max_life
 	health_bar.value = life
+	_align_health_bar()
 
 
 func _die() -> void:
@@ -320,15 +491,23 @@ func _drop_coins() -> void:
 	var api := get_multiplayer()
 	if api and api.has_multiplayer_peer() and not api.is_server():
 		return
-	if randf() > coin_drop_chance:
+
+	# Every killed enemy always drops one coin.
+	var coin := COIN_SCENE.instantiate() as Node2D
+	if not coin:
 		return
 
-	var coin := COIN_SCENE.instantiate() as Node2D
 	coin.set("power_value", coin_power_value)
 	coin.global_position = get_hit_position() + Vector2(randf_range(-14.0, 14.0), 14.0)
 	coin.set("ground_y", global_position.y - 42.0)
 	coin.set("launch_velocity", Vector2(randf_range(-90.0, 90.0), randf_range(-230.0, -160.0)))
-	get_tree().current_scene.add_child(coin)
+
+	var scene := get_tree().current_scene
+	if not scene:
+		coin.queue_free()
+		return
+
+	scene.add_child(coin)
 
 
 func _setup_random_character() -> void:
@@ -336,17 +515,25 @@ func _setup_random_character() -> void:
 	character_key = character_name
 	if random_character or character_key.is_empty():
 		character_key = names.pick_random()
+	if not CHARACTER_PROFILES.has(character_key):
+		character_key = "Zombie"
 
-	var prefix := character_key.to_lower()
-	var pose_dir := "res://Characters/%s/Poses" % character_key
+	var profile: Dictionary = CHARACTER_PROFILES[character_key]
+	var prefix: String = profile["prefix"]
+	var pose_dir: String = profile["pose_dir"]
+	var walk_names: Array = profile["walk"]
+	sprite.scale = profile["scale"]
+	sprite_ground_offset = float(profile["ground_offset"])
+	health_top_padding = float(profile["health_top_padding"])
 
-	idle_texture = load("%s/%s_idle.png" % [pose_dir, prefix]) as Texture2D
-	walk_textures = [
-		load("%s/%s_walk1.png" % [pose_dir, prefix]) as Texture2D,
-		load("%s/%s_walk2.png" % [pose_dir, prefix]) as Texture2D
-	]
-	attack_texture = load("%s/%s_action1.png" % [pose_dir, prefix]) as Texture2D
-	hurt_texture = load("%s/%s_hurt.png" % [pose_dir, prefix]) as Texture2D
+	idle_texture = _load_character_pose(pose_dir, prefix, profile["idle"])
+	walk_textures = []
+	for walk_name in walk_names:
+		var walk_texture := _load_character_pose(pose_dir, prefix, walk_name)
+		if walk_texture:
+			walk_textures.append(walk_texture)
+	attack_texture = _load_character_pose(pose_dir, prefix, profile["attack"])
+	hurt_texture = _load_character_pose(pose_dir, prefix, profile["hurt"])
 
 	if idle_texture:
 		sprite.texture = idle_texture
@@ -394,7 +581,27 @@ func _align_sprite_to_ground() -> void:
 		return
 
 	var texture_height := float(sprite.texture.get_height())
-	sprite.position.y = SPRITE_GROUND_Y - (texture_height * abs(sprite.scale.y) * 0.5)
+	sprite.position.y = sprite_ground_offset - (texture_height * abs(sprite.scale.y) * 0.5)
+	_align_health_bar()
+
+
+func _align_health_bar() -> void:
+	if not sprite or not sprite.texture or not health_bar:
+		return
+
+	var sprite_top: float = sprite.position.y - (float(sprite.texture.get_height()) * 0.5 - health_top_padding) * abs(sprite.scale.y)
+	health_bar.offset_left = -HEALTH_BAR_WIDTH * 0.5
+	health_bar.offset_right = HEALTH_BAR_WIDTH * 0.5
+	health_bar.offset_bottom = sprite_top - HEALTH_BAR_GAP
+	health_bar.offset_top = health_bar.offset_bottom - HEALTH_BAR_HEIGHT
+
+
+func _load_character_pose(pose_dir: String, prefix: String, pose_name: String) -> Texture2D:
+	return load("%s/%s_%s.png" % [pose_dir, prefix, pose_name]) as Texture2D
+
+
+func _is_robot() -> bool:
+	return character_key == "Robot"
 
 
 func _send_network_state(delta: float) -> void:
