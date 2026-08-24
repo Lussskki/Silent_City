@@ -1,42 +1,92 @@
 extends Control
 
+const MAIN_MENU_CONTROLLER_PATH := "res://Scripts/Menus/main_menu/main_menu_controller.gd"
+const DIFFICULTY_MENU_PATH := "res://Scripts/Menus/difficulty/difficulty_menu.gd"
+const CHARACTER_MENU_PATH := "res://Scripts/Menus/choose_character/character_menu.gd"
+const ONLINE_MENU_PATH := "res://Scripts/Menus/online/online_menu.gd"
+const SETTINGS_MENU_PATH := "res://Scripts/Menus/settings/settings_menu.gd"
+
 const MAIN_SCENE := "res://Scenes/main.tscn"
 const MEDIUM_SCENE := "res://Scenes/MainMedium.tscn"
 const HARD_SCENE := "res://Scenes/MainHard.tscn"
-const ONLINE_PORT := 8910
-const ROOM_NAME := "Silent City Room"
-const MAX_ROOM_PLAYERS := 2
-const STEAM_LOBBY_REFRESH_INTERVAL := 2.0
-const WIFI_DISCOVERY_PORT := 8911
-const WIFI_DISCOVERY_INTERVAL := 1.0
-const WIFI_DISCOVERY_TIMEOUT := 4.0
-const WIFI_DISCOVERY_TAG := "silent_city_wifi_room"
 const LANG_ENG := "eng"
 const LANG_GEO := "geo"
-const ONLINE_MODE_WIFI := "wifi"
-const ONLINE_MODE_STEAM := "steam"
-const ICE_GOLEM_UNLOCK_COINS := 2500
-const CHARACTER_DISPLAY_NAMES := {
-	"player": "Ash Golem",
-	"golem": "Stone Golem",
-	"ice_golem": "Ice Golem"
-}
+const MAIN_MENU_BUTTON_SIZE := Vector2(320.0, 46.0)
+
+const DIFFICULTY_CARD_SIZE := Vector2(190.0, 190.0)
+const LANGUAGE_BUTTON_SIZE := Vector2(86.0, 36.0)
+
+# ONLINE BACK:
+# The previous online_back_button.png is the cropped asset.
+# Reuse the complete Back sprite that already works on the Character page.
+
+# -----------------------------------------------------------------------------
+# MAIN TITLE / SUBTITLE PNG SETTINGS
+# Change ONLY these paths to your PNG files.
+# The PNGs should have transparent backgrounds.
+# -----------------------------------------------------------------------------
+const MENU_TITLE_PNG := "res://Resources/Buttons/Silent_City.png"
+const MENU_SUBTITLE_ENG_PNG := "res://Resources/Buttons/Silent_City_Title.png"
+
+# Optional Georgian subtitle PNG. Leave empty to keep Georgian as normal text.
+const MENU_SUBTITLE_GEO_PNG := ""
+
+# Main title/subtitle display sizes.
+const MENU_TITLE_IMAGE_SIZE := Vector2(560.0, 105.0)
+const MENU_SUBTITLE_IMAGE_SIZE := Vector2(420.0, 72.0)
+
+# Runtime transparency cleanup used by the MAIN title/subtitle PNGs.
+const MENU_ALPHA_BRIGHTNESS_THRESHOLD := 0.72
+const MENU_ALPHA_NEUTRAL_TOLERANCE := 0.16
+
+# -----------------------------------------------------------------------------
+# MAIN MENU PERFORMANCE
+# -----------------------------------------------------------------------------
+# The menu cleans/crops several PNGs at runtime. Those operations scan image
+# pixels and are expensive. The cache is stored on the persistent GameSettings
+# autoload so returning from gameplay does NOT process all PNGs again.
+const MENU_TEXTURE_CACHE_META := "_silent_city_menu_texture_cache_v1"
+
+# -----------------------------------------------------------------------------
+# FAST SINGLE-PLAYER START
+# -----------------------------------------------------------------------------
+# Load the three gameplay scenes in the background while the player is using
+# the menu. This prevents synchronous scene loading from blocking the main
+# thread for several seconds after selecting a difficulty.
+const BACKGROUND_GAME_SCENES := [
+	MAIN_SCENE,
+	MEDIUM_SCENE,
+	HARD_SCENE
+]
+
 const TEXT := {
 	LANG_ENG: {
 		"language_button": "GEO",
 		"subtitle": "Choose your fight",
 		"start": "Start",
-		"map": "Map",
-		"choose_your_map": "Choose Your Map",
-		"easy": "Easy Map",
-		"medium": "Medium Map",
-		"hard": "Hard Map",
-		"map_gallery_hint": "Map preview only. To play, go back and press Start from the main menu.",
-		"map_selected_wait": "Selected: %s. You have to wait 2 seconds because it has a time to wait xD",
+		"map": "Difficulty",
+		"choose_your_map": "Choose Your Difficulty",
+		"easy": "Easy",
+		"medium": "Medium",
+		"hard": "Hard",
+		"map_gallery_hint": "Preview only. To play, go back and press Start from the main menu.",
+		"map_selected_wait": "Selected: %s. You have to wait 2 seconds because there’s a cooldown xD",
 		"choose_map_to_start": "Choose a map to start the match.",
-		"choose_character": "Choose Character",
+		"choose_character": "Choose your character",
 		"online_room": "Online",
-		"wifi_multiplayer": "wifi",
+		"settings": "Settings",
+		"audio": "Audio",
+		"master_volume": "Master Volume",
+		"graphics": "Graphics",
+		"fullscreen": "Fullscreen",
+		"vsync": "VSync",
+		"resolution": "Resolution",
+		"fps_limit": "FPS Limit",
+		"renderer": "Renderer",
+		"on": "On",
+		"off": "Off",
+		"unlimited": "Unlimited",
+		"wifi_multiplayer": "WIFI",
 		"steam_friend": "Steam Friend",
 		"how_to_play": "How to Play",
 		"how_to_play_text": "Move with Left/Right arrows.\nJump with Up Arrow.\nUse hands with A and foot kick with S.\nDefeat enemies, avoid spikes, and collect hearts for health.\nFirst heart appears after 35 seconds, then every 90 seconds.",
@@ -45,7 +95,7 @@ const TEXT := {
 		"how_heart": "First heart: 35s, then 90s",
 		"how_jump": "Jump: Up Arrow",
 		"credits": "Credits",
-		"credits_text": "Silent City\nCreated by Luka Guledani / SonnyRenderer\n\nCharacter and asset credits:\nKenney - Animated Characters Retro 1.1\nLicense: Creative Commons Zero (CC0)\nwww.kenney.nl\n\nGraveyard platform tileset\nGameArt2D / CraftPix freebie license\nhttps://www.gameart2d.com/free-graveyard-platformer-tileset.html\n\nThank you for playing.",
+		"credits_text": "Silent City\nCreated by Luka Guledani / SonnyRenderer\n\nCharacter and asset credits:\nKenney - Animated Characters Retro 1.1\nLicense: Creative Commons Zero (CC0)\nwww.kenney.nl\n\nGraveyard platform tileset\nGameArt2D / CraftPix freebie license\nhttps://www.gameart2d.com/free-graveyard-platformer-tileset.html\n\nQA/Testers:\n1. Giorgi Gugunava\n2. Iakob Janiashvili\n3. Discord/Sonny'sGaming server community\n\n[url=https://discord.gg/DNUu88kwwd]Join Discord Server[/url]\n\nThank you for playing.",
 		"exit": "Exit",
 		"select": "Select",
 		"locked": "Locked %d/%d",
@@ -55,7 +105,7 @@ const TEXT := {
 		"start_game": "Start Game",
 		"back": "Back",
 		"host_room": "Create Room",
-		"wifi_create": "Start Wi-Fi",
+		"wifi_create": "Start WiFi",
 		"return_to_match": "Return to Game",
 		"join": "Join",
 		"wifi_join": "Connect",
@@ -108,16 +158,28 @@ const TEXT := {
 		"language_button": "ENG",
 		"subtitle": "აირჩიე ბრძოლა",
 		"start": "დაწყება",
-		"map": "რუკები",
-		"choose_your_map": "აირჩიე რუკა",
+		"map": "სირთულე",
+		"choose_your_map": "აირჩიე სირთულე",
 		"easy": "მარტივი",
 		"medium": "საშუალო",
 		"hard": "რთული",
-		"map_gallery_hint": "ეს მხოლოდ რუკების ნახვაა. სათამაშოდ დაბრუნდი მთავარ მენიუში და დააჭირე Start-ს.",
+		"map_gallery_hint": "ეს მხოლოდ სირთულის ნახვაა. სათამაშოდ დაბრუნდი მთავარ მენიუში და დააჭირე Start-ს.",
 		"map_selected_wait": "არჩეულია: %s. უნდა დაელოდო 2 წამი, იმიტომ რომ ლოდინის დრო აქვს xD",
-		"choose_map_to_start": "აირჩიე რუკა, რომ მატჩი დაიწყოს.",
+		"choose_map_to_start": "აირჩიე სიძლიერე, რომ მატჩი დაიწყოს.",
 		"choose_character": "აირჩიე პერსონაჟი",
 		"online_room": "ონლაინი",
+		"settings": "პარამეტრები",
+		"audio": "ხმა",
+		"master_volume": "მთავარი ხმა",
+		"graphics": "გრაფიკა",
+		"fullscreen": "სრული ეკრანი",
+		"vsync": "VSync",
+		"resolution": "რეზოლუცია",
+		"fps_limit": "FPS ლიმიტი",
+		"renderer": "რენდერი",
+		"on": "ჩართული",
+		"off": "გამორთული",
+		"unlimited": "ულიმიტო",
 		"wifi_multiplayer": "ვაიფაი",
 		"steam_friend": "სტიმ მეგობარი",
 		"how_to_play": "როგორ ვითამაშოთ",
@@ -127,7 +189,7 @@ const TEXT := {
 		"how_heart": "პირველი: 35წმ, მერე 90წმ",
 		"how_jump": "ახტომა: Up Arrow",
 		"credits": "კრედიტები",
-		"credits_text": "Silent City\nშექმნა: Luka Guledani / SonnyRenderer\n\nპერსონაჟებისა და ასეტების კრედიტები:\nKenney - Animated Characters Retro 1.1\nლიცენზია: Creative Commons Zero (CC0)\nwww.kenney.nl\n\nGraveyard platform tileset\nGameArt2D / CraftPix freebie license\nhttps://www.gameart2d.com/free-graveyard-platformer-tileset.html\n\nმადლობა თამაშისთვის.",
+		"credits_text": "Silent City\nშექმნა: Luka Guledani / SonnyRenderer\n\nპერსონაჟებისა და ასეტების კრედიტები:\nKenney - Animated Characters Retro 1.1\nლიცენზია: Creative Commons Zero (CC0)\nwww.kenney.nl\n\nGraveyard platform tileset\nGameArt2D / CraftPix freebie license\nhttps://www.gameart2d.com/free-graveyard-platformer-tileset.html\n\nQA/ტესტერები:\n1. Giorgi Gugunava\n2. Iakob Janiashvili\n3. Discord/Sonny'sGaming server community\n\n[url=https://discord.gg/DNUu88kwwd]Discord სერვერზე შესვლა[/url]\n\nმადლობა თამაშისთვის.",
 		"exit": "გასვლა",
 		"select": "არჩევა",
 		"choose_first": "ჯერ აირჩიე პერსონაჟი.",
@@ -184,40 +246,34 @@ const TEXT := {
 		"room_players": "%s - %d/%d მოთამაშე"
 	}
 }
-const ONLINE_TUTORIAL_STEPS := {
-	LANG_ENG: [
-		"Wi-Fi is for players on the same network.",
-		"Steam Friend keeps the Steam lobby flow for Steam players.",
-		"For Wi-Fi, start a connection and nearby players can find it automatically.",
-		"For Steam, open rooms appear automatically. Select one and press Join.",
-		"Both players choose different characters. The match starts by itself.",
-		"The server player can leave to menu and press Return to Game to rejoin."
-	],
-	LANG_GEO: [
-		"Wi-Fi არის ერთსა და იმავე ქსელში მოთამაშეებისთვის.",
-		"სტიმ მეგობარი ინარჩუნებს სტიმ ლობის სისტემას სტიმ მოთამაშეებისთვის.",
-		"Wi-Fi-ში დაიწყე კავშირი და ახლომდებარე მოთამაშეები ავტომატურად იპოვიან.",
-		"სტიმში ღია ოთახები ავტომატურად გამოჩნდება. აირჩიე ოთახი და დააჭირე შესვლას.",
-		"ორივე მოთამაშე ირჩევს განსხვავებულ პერსონაჟს. მატჩი თვითონ იწყება.",
-		"სერვერის მოთამაშეს შეუძლია მენიუში გასვლა და თამაშში დაბრუნებით დაბრუნება."
-	]
-}
-
 @onready var pages: Control = $Content/Root/Pages
 @onready var language_button: Button = $LanguageButton
 @onready var subtitle_label: Label = $Content/Root/Subtitle
+
+# The original scene already contains the text title. We find it at runtime
+# and draw the PNG inside the same UI slot, so you do NOT need to rebuild
+# the scene tree.
+var menu_title_label: Label = null
+var menu_title_image: TextureRect = null
+var menu_subtitle_image: TextureRect = null
+
+# Character-select header.
+
+# Points to a persistent Dictionary stored on /root/GameSettings.
+# It survives MainMenu scene destruction/recreation while gameplay is running.
+var menu_texture_cache: Dictionary = {}
+
+# Native C++ GDExtension helper. Owns the complete runtime texture pipeline.
+var menu_optimizer = null
 @onready var home_page: VBoxContainer = $Content/Root/Pages/Home
 @onready var level_page: VBoxContainer = $Content/Root/Pages/ChooseLevel
 @onready var choose_page: VBoxContainer = $Content/Root/Pages/ChooseCharacter
-@onready var how_to_play_page: VBoxContainer = $Content/Root/Pages/HowToPlay
-@onready var credits_page: VBoxContainer = $Content/Root/Pages/Credits
 @onready var online_page: VBoxContainer = $Content/Root/Pages/Online
+
 @onready var home_start_button: Button = $Content/Root/Pages/Home/StartButton
 @onready var home_map_button: Button = $Content/Root/Pages/Home/MapButton
 @onready var home_choose_button: Button = $Content/Root/Pages/Home/ChooseButton
 @onready var home_online_button: Button = $Content/Root/Pages/Home/OnlineButton
-@onready var home_how_to_play_button: Button = $Content/Root/Pages/Home/HowToPlayButton
-@onready var home_credits_button: Button = $Content/Root/Pages/Home/CreditsButton
 @onready var home_exit_button: Button = $Content/Root/Pages/Home/ExitButton
 @onready var easy_button: Button = $Content/Root/Pages/ChooseLevel/MapCards/EasyButton
 @onready var medium_button: Button = $Content/Root/Pages/ChooseLevel/MapCards/MediumButton
@@ -228,148 +284,295 @@ const ONLINE_TUTORIAL_STEPS := {
 @onready var map_title_label: Label = $Content/Root/Pages/ChooseLevel/MapTitle
 @onready var map_gallery_hint: Label = $Content/Root/Pages/ChooseLevel/GalleryHint
 @onready var level_back_button: Button = $Content/Root/Pages/ChooseLevel/BackButton
-@onready var choose_header: Label = $Content/Root/Pages/ChooseCharacter/Header
-@onready var wallet_label: Label = $Content/Root/Pages/ChooseCharacter/WalletLabel
-@onready var player_card: PanelContainer = $Content/Root/Pages/ChooseCharacter/Cards/PlayerCard
-@onready var golem_card: PanelContainer = $Content/Root/Pages/ChooseCharacter/Cards/GolemCard
-@onready var ice_golem_card: PanelContainer = $Content/Root/Pages/ChooseCharacter/Cards/IceGolemCard
-@onready var player_select_button: Button = $Content/Root/Pages/ChooseCharacter/Cards/PlayerCard/Box/SelectButton
-@onready var golem_select_button: Button = $Content/Root/Pages/ChooseCharacter/Cards/GolemCard/Box/SelectButton
-@onready var ice_golem_select_button: Button = $Content/Root/Pages/ChooseCharacter/Cards/IceGolemCard/Box/SelectButton
-@onready var character_status: Label = $Content/Root/Pages/ChooseCharacter/StatusLabel
-@onready var choose_start_button: Button = $Content/Root/Pages/ChooseCharacter/StartButton
-@onready var choose_online_button: Button = $Content/Root/Pages/ChooseCharacter/OnlineButton
-@onready var choose_back_button: Button = $Content/Root/Pages/ChooseCharacter/BackButton
-@onready var how_to_play_header: Label = $Content/Root/Pages/HowToPlay/Header
-@onready var how_to_play_instructions: Label = $Content/Root/Pages/HowToPlay/Instructions
-@onready var how_attack_label: Label = $Content/Root/Pages/HowToPlay/Cards/AttackCard/Text
-@onready var how_kick_label: Label = $Content/Root/Pages/HowToPlay/Cards/KickCard/Text
-@onready var how_heart_label: Label = $Content/Root/Pages/HowToPlay/Cards/HeartCard/Text
-@onready var how_jump_label: Label = $Content/Root/Pages/HowToPlay/Cards/JumpCard/Text
-@onready var how_to_play_back_button: Button = $Content/Root/Pages/HowToPlay/BackButton
-@onready var credits_header: Label = $Content/Root/Pages/Credits/Header
-@onready var credits_text: Label = $Content/Root/Pages/Credits/CreditsText
-@onready var credits_back_button: Button = $Content/Root/Pages/Credits/BackButton
-@onready var online_tutorial_overlay: Control = $Content/Root/Pages/TutorialOverlay
-@onready var online_tutorial_title: Label = $Content/Root/Pages/TutorialOverlay/Card/Box/Title
-@onready var online_tutorial_text: Label = $Content/Root/Pages/TutorialOverlay/Card/Box/Text
-@onready var online_tutorial_next: Button = $Content/Root/Pages/TutorialOverlay/Card/Box/Buttons/NextButton
-@onready var online_tutorial_skip: Button = $Content/Root/Pages/TutorialOverlay/Card/Box/Buttons/SkipButton
-@onready var online_tutorial_back: Button = $Content/Root/Pages/TutorialOverlay/Card/Box/Buttons/BackButton
-@onready var wifi_mode_button: Button = $Content/Root/Pages/Online/ModeButtons/WifiButton
-@onready var steam_mode_button: Button = $Content/Root/Pages/Online/ModeButtons/SteamButton
-@onready var online_address_box: Control = $Content/Root/Pages/Online/AddressBox
-@onready var online_address_input: LineEdit = $Content/Root/Pages/Online/AddressBox/AddressInput
-@onready var room_name_input: LineEdit = $Content/Root/Pages/Online/RoomNameInput
-@onready var room_name_hint: Label = $Content/Root/Pages/Online/RoomNameHint
-@onready var online_header: Label = $Content/Root/Pages/Online/Header
-@onready var online_status: Label = $Content/Root/Pages/Online/StatusLabel
-@onready var lobby_select: ItemList = $Content/Root/Pages/Online/LobbySelect
-@onready var host_button: Button = $Content/Root/Pages/Online/Buttons/HostButton
-@onready var join_button: Button = $Content/Root/Pages/Online/Buttons/JoinButton
-@onready var online_start_button: Button = $Content/Root/Pages/Online/StartOnlineButton
-@onready var online_back_button: Button = $Content/Root/Pages/Online/BackButton
 
-var hosted_player_count := 1
-var hosted_room_id := ""
-var joined_room_waiting_for_character := false
-var online_tutorial_step := 0
-var remote_client_character := "golem"
-var remote_client_character_chosen := false
-var other_player_character := ""
-var other_player_character_chosen := false
-var steam_lobbies: Array = []
-var steam_lobby_refresh_timer := 0.0
-var steam_lobby_searching := false
-var steam_lobby_wide_searching := false
-var online_match_starting := false
-var pending_join_lobby: Dictionary = {}
-var online_connection_mode := ONLINE_MODE_WIFI
-var wifi_rooms: Array = []
-var wifi_room_seen_at := {}
-var wifi_discovery_listener: PacketPeerUDP
-var wifi_discovery_broadcaster: PacketPeerUDP
-var wifi_discovery_timer := 0.0
-var level_select_starts_game := false
-var level_page_preview_only := false
+# Difficulty state/UI now lives in difficulty_menu.gd and is loaded lazily.
+var difficulty_menu = null
+
+# Character Select state/UI now lives in character_menu.gd and is loaded lazily.
+var character_menu = null
+
+# Online Wi-Fi/Steam state/UI now lives in online_menu.gd and is loaded lazily.
+var online_menu = null
+
+# Settings coordinator owns Settings/Audio/Graphics/Credits.
+var settings_menu = null
+
+# Kept only because the threaded gameplay scene loader clears this flag.
 var level_start_pending := false
-var hovered_level := ""
+
+# Top-level Home / Settings navigation now lives in:
+# res://Scripts/Menus/main_menu/main_menu_controller.gd
+var main_menu_controller = null
 
 
 func _ready() -> void:
+	# Must be first because shared PNG cleanup uses this persistent cache.
+	_attach_persistent_menu_texture_cache()
+	menu_optimizer = MenuOptimizer.new()
+	menu_optimizer.set_texture_cache(menu_texture_cache)
+
 	_setup_language()
+	_setup_menu_header_images()
+
+	# Settings code is split out. Startup creates ONLY the visible Home
+	# Settings button and applies saved Audio/Graphics preferences.
+	_setup_settings_runtime()
+
+	# Home-only artwork. Hidden Settings/Audio/Graphics/Credits sprites are
+	# no longer processed during application startup.
+	_apply_main_menu_button_sprites()
+
 	language_button.pressed.connect(_toggle_language)
-	home_start_button.pressed.connect(_open_start_flow)
-	home_map_button.pressed.connect(_open_map_select_from_home)
-	home_choose_button.pressed.connect(func(): _show_page(choose_page))
-	home_online_button.pressed.connect(_open_online_page)
-	home_how_to_play_button.pressed.connect(func(): _show_page(how_to_play_page))
-	home_credits_button.pressed.connect(func(): _show_page(credits_page))
-	home_exit_button.pressed.connect(_exit_game)
-	easy_button.pressed.connect(func(): _select_level("easy"))
-	medium_button.pressed.connect(func(): _select_level("medium"))
-	hard_button.pressed.connect(func(): _select_level("hard"))
-	_connect_map_card_hover(easy_button, "easy")
-	_connect_map_card_hover(medium_button, "medium")
-	_connect_map_card_hover(hard_button, "hard")
-	level_back_button.pressed.connect(func(): _show_page(home_page))
-	player_select_button.pressed.connect(func(): _select_character("player"))
-	golem_select_button.pressed.connect(func(): _select_character("golem"))
-	ice_golem_select_button.pressed.connect(func(): _select_character("ice_golem"))
-	_make_character_card_tappable(player_card, "player")
-	_make_character_card_tappable(golem_card, "golem")
-	_make_character_card_tappable(ice_golem_card, "ice_golem")
-	player_select_button.visible = true
-	golem_select_button.visible = true
-	ice_golem_select_button.visible = true
-	choose_start_button.pressed.connect(_open_level_select_from_character)
-	choose_online_button.pressed.connect(_open_online_page)
-	choose_back_button.pressed.connect(_back_from_character_page)
-	how_to_play_back_button.pressed.connect(func(): _show_page(home_page))
-	credits_back_button.pressed.connect(func(): _show_page(home_page))
-	wifi_mode_button.pressed.connect(func(): _set_online_connection_mode(ONLINE_MODE_WIFI))
-	steam_mode_button.pressed.connect(func(): _set_online_connection_mode(ONLINE_MODE_STEAM))
-	host_button.pressed.connect(_host_online_game)
-	join_button.pressed.connect(_join_online_game)
-	lobby_select.item_activated.connect(func(_index: int): _join_online_game())
-	online_start_button.pressed.connect(_start_online_host_game)
-	online_tutorial_next.pressed.connect(_advance_online_tutorial)
-	online_tutorial_skip.pressed.connect(_finish_online_tutorial)
-	online_tutorial_back.pressed.connect(_back_from_online)
-	online_back_button.pressed.connect(_back_from_online)
-	online_address_box.visible = false
-	multiplayer.peer_connected.connect(_on_peer_connected)
-	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
-	multiplayer.connected_to_server.connect(_on_connected_to_server)
-	multiplayer.connection_failed.connect(_on_connection_failed)
-	_connect_steam_manager()
+
+	_setup_main_menu_controller()
+
 	var settings := _settings()
 	if settings and settings.has_signal("saved_coins_changed"):
-		settings.saved_coins_changed.connect(func(_saved_coins: int): _update_character_cards())
+		settings.saved_coins_changed.connect(
+			func(_saved_coins: int):
+				_update_character_cards()
+		)
+
 	_apply_language()
-	_update_character_cards()
-	_update_online_room_text()
-	_update_lobby_select()
-	online_start_button.visible = false
-	_update_room_buttons()
 	_show_page(home_page)
 
 
-func _process(delta: float) -> void:
-	if wifi_discovery_broadcaster:
-		_process_wifi_discovery(delta)
-	if not online_page or not online_page.visible:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+func _setup_menu_header_images() -> void:
+	menu_title_label = get_node_or_null("Content/Root/Title") as Label
+
+	if menu_title_label:
+		menu_title_image = _create_image_inside_label(
+			menu_title_label,
+			"MenuTitleImage",
+			MENU_TITLE_IMAGE_SIZE
+		)
+
+	if subtitle_label:
+		menu_subtitle_image = _create_image_inside_label(
+			subtitle_label,
+			"MenuSubtitleImage",
+			MENU_SUBTITLE_IMAGE_SIZE
+		)
+
+	_update_menu_header_images()
+
+
+
+func _create_image_inside_label(label: Label, node_name: String, image_size: Vector2) -> TextureRect:
+	if not label:
+		return null
+
+	# Keep enough room in the VBox/Container for the PNG.
+	label.custom_minimum_size = image_size
+
+	var image := label.get_node_or_null(node_name) as TextureRect
+	if not image:
+		image = TextureRect.new()
+		image.name = node_name
+		label.add_child(image)
+
+	# Fill the Label's complete rectangle but preserve the PNG's aspect ratio.
+	image.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	image.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	image.show_behind_parent = false
+	return image
+
+
+
+func _update_menu_header_images() -> void:
+	# -----------------------
+	# SILENT CITY title image
+	# -----------------------
+	if menu_title_label and menu_title_image:
+		var title_texture: Texture2D = menu_optimizer.load_menu_texture(
+			MENU_TITLE_PNG,
+			MENU_ALPHA_BRIGHTNESS_THRESHOLD,
+			MENU_ALPHA_NEUTRAL_TOLERANCE
+		)
+		if title_texture:
+			menu_title_image.texture = title_texture
+			menu_title_image.visible = true
+			# Remove the old normal text, while keeping the Label itself in the
+			# layout so the PNG stays in exactly the same menu position.
+			menu_title_label.text = ""
+		else:
+			menu_title_image.texture = null
+			menu_title_image.visible = false
+			# Fallback if the PNG path is wrong/missing.
+			menu_title_label.text = "Silent City"
+
+	# -----------------------------
+	# CHOOSE YOUR FIGHT subtitle PNG
+	# -----------------------------
+	if subtitle_label and menu_subtitle_image:
+		var subtitle_path := MENU_SUBTITLE_ENG_PNG
+		if _language() == LANG_GEO:
+			subtitle_path = MENU_SUBTITLE_GEO_PNG
+
+		var subtitle_texture: Texture2D = menu_optimizer.load_menu_texture(
+			subtitle_path,
+			MENU_ALPHA_BRIGHTNESS_THRESHOLD,
+			MENU_ALPHA_NEUTRAL_TOLERANCE
+		)
+		if subtitle_texture:
+			menu_subtitle_image.texture = subtitle_texture
+			menu_subtitle_image.visible = true
+			subtitle_label.text = ""
+		else:
+			menu_subtitle_image.texture = null
+			menu_subtitle_image.visible = false
+			# If no PNG exists for the current language, keep your old translated
+			# subtitle text instead of showing nothing.
+			subtitle_label.text = _t("subtitle")
+
+
+func _apply_main_menu_button_sprites() -> void:
+	_apply_button_sprite(
+		home_start_button,
+		"res://Resources/Buttons/menu_button_start.png",
+		MAIN_MENU_BUTTON_SIZE
+	)
+	_apply_button_sprite(
+		home_map_button,
+		"res://Resources/Buttons/menu_button_difficulty.png",
+		MAIN_MENU_BUTTON_SIZE
+	)
+	_apply_button_sprite(
+		home_choose_button,
+		"res://Resources/Buttons/menu_button_choose_character.png",
+		MAIN_MENU_BUTTON_SIZE
+	)
+	_apply_button_sprite(
+		home_online_button,
+		"res://Resources/Buttons/menu_button_online.png",
+		MAIN_MENU_BUTTON_SIZE
+	)
+	_apply_button_sprite(
+		home_exit_button,
+		"res://Resources/Buttons/menu_button_exit.png",
+		MAIN_MENU_BUTTON_SIZE
+	)
+	_apply_button_sprite(
+		language_button,
+		"res://Resources/Buttons/menu_button_geo.png",
+		LANGUAGE_BUTTON_SIZE
+	)
+
+func _apply_button_sprite(button: Button, texture_path: String, minimum_size: Vector2) -> void:
+	if not button:
 		return
-	if online_connection_mode == ONLINE_MODE_WIFI:
-		if not wifi_discovery_broadcaster:
-			_process_wifi_discovery(delta)
+
+	var texture: Texture2D = menu_optimizer.load_clean_ui_texture(
+		texture_path,
+		true,
+		10,
+		0.38,
+		0.20
+	)
+	if not texture:
 		return
-	if _is_hosting_room() or _is_joining_room() or not _steam_ready():
+
+	button.custom_minimum_size = minimum_size
+	button.add_theme_stylebox_override("normal", _button_texture_style(texture))
+	button.add_theme_stylebox_override("hover", _button_texture_style(texture))
+	button.add_theme_stylebox_override("pressed", _button_texture_style(texture))
+	button.add_theme_stylebox_override("disabled", _button_texture_style(texture))
+	button.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	button.add_theme_color_override("font_color", Color(0.94, 0.98, 1.0, 1.0))
+	button.add_theme_color_override("font_hover_color", Color(0.78, 1.0, 0.94, 1.0))
+	button.add_theme_color_override("font_pressed_color", Color(0.62, 0.88, 0.82, 1.0))
+	button.add_theme_color_override("font_disabled_color", Color(0.58, 0.66, 0.68, 0.9))
+	button.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.9))
+	button.add_theme_constant_override("shadow_offset_x", 2)
+	button.add_theme_constant_override("shadow_offset_y", 2)
+
+
+
+
+func _button_texture_style(texture: Texture2D) -> StyleBoxTexture:
+	var style := StyleBoxTexture.new()
+	style.texture = texture
+	return style
+
+
+func _apply_line_edit_sprite(line_edit: LineEdit, texture_path: String, minimum_size: Vector2) -> void:
+	if not line_edit:
 		return
-	steam_lobby_refresh_timer -= delta
-	if steam_lobby_refresh_timer <= 0.0:
-		steam_lobby_refresh_timer = STEAM_LOBBY_REFRESH_INTERVAL
-		_request_steam_lobbies(false)
+	var texture: Texture2D = menu_optimizer.load_clean_ui_texture(texture_path, false)
+	if not texture:
+		return
+	line_edit.custom_minimum_size = minimum_size
+	line_edit.add_theme_stylebox_override("normal", _button_texture_style(texture))
+	line_edit.add_theme_stylebox_override("focus", _button_texture_style(texture))
+	line_edit.add_theme_color_override("font_color", Color(0.94, 0.98, 1.0, 1.0))
+	line_edit.add_theme_color_override("font_placeholder_color", Color(0.7, 0.8, 0.82, 0.9))
+	line_edit.add_theme_color_override("caret_color", Color(0.78, 1.0, 0.94, 1.0))
+
+
+func _apply_panel_sprite(panel: Control, texture_path: String, minimum_size: Vector2) -> void:
+	if not panel:
+		return
+	var texture: Texture2D = menu_optimizer.load_clean_ui_texture(texture_path, false)
+	if not texture:
+		return
+	panel.custom_minimum_size = minimum_size
+	panel.add_theme_stylebox_override("panel", _button_texture_style(texture))
+
+
+func _apply_item_list_sprite(item_list: ItemList, texture_path: String, minimum_size: Vector2) -> void:
+	if not item_list:
+		return
+	var texture: Texture2D = menu_optimizer.load_clean_ui_texture(texture_path, false)
+	if not texture:
+		return
+	item_list.custom_minimum_size = minimum_size
+	item_list.add_theme_stylebox_override("panel", _button_texture_style(texture))
+	item_list.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	item_list.add_theme_color_override("font_color", Color(0.82, 0.9, 0.92, 1.0))
+	item_list.add_theme_color_override("font_selected_color", Color(0.94, 0.98, 1.0, 1.0))
+
+
+func _apply_label_panel_sprite(label: Label, texture_path: String, minimum_size: Vector2) -> void:
+	if not label:
+		return
+	var texture: Texture2D = menu_optimizer.load_clean_ui_texture(texture_path, false)
+	if not texture:
+		return
+	label.custom_minimum_size = minimum_size
+	label.add_theme_stylebox_override("normal", _button_texture_style(texture))
+
+
+
 
 
 func _setup_language() -> void:
@@ -407,13 +610,16 @@ func _toggle_language() -> void:
 func _apply_language() -> void:
 	language_button.text = _t("language_button")
 	subtitle_label.text = _t("subtitle")
+
 	home_start_button.text = _t("start")
 	home_map_button.text = _t("map")
 	home_choose_button.text = _t("choose_character")
 	home_online_button.text = _t("online_room")
-	home_how_to_play_button.text = _t("how_to_play")
-	home_credits_button.text = _t("credits")
 	home_exit_button.text = _t("exit")
+
+	if settings_menu:
+		settings_menu.refresh_language()
+
 	easy_button.tooltip_text = _t("easy")
 	medium_button.tooltip_text = _t("medium")
 	hard_button.tooltip_text = _t("hard")
@@ -423,53 +629,115 @@ func _apply_language() -> void:
 	hard_map_label.text = _t("hard")
 	map_gallery_hint.text = _t("map_gallery_hint")
 	level_back_button.text = _t("back")
-	choose_header.text = _t("choose_character")
-	player_select_button.text = _t("select")
-	golem_select_button.text = _t("select")
-	ice_golem_select_button.text = _ice_golem_button_text()
-	if wallet_label:
-		wallet_label.text = _t("coins") % _saved_coins()
-	choose_start_button.text = _t("start_game")
-	choose_online_button.text = _t("online_room")
-	choose_back_button.text = _t("back")
-	how_to_play_header.text = _t("how_to_play")
-	how_to_play_instructions.text = _t("how_to_play_text")
-	how_attack_label.text = _t("how_attack")
-	how_kick_label.text = _t("how_kick")
-	how_heart_label.text = _t("how_heart")
-	how_jump_label.text = _t("how_jump")
-	how_to_play_back_button.text = _t("back")
-	credits_header.text = _t("credits")
-	credits_text.text = _t("credits_text")
-	credits_back_button.text = _t("back")
-	online_header.text = _t("online_room")
-	wifi_mode_button.text = _t("wifi_multiplayer")
-	steam_mode_button.text = _t("steam_friend")
-	online_address_input.placeholder_text = _t("wifi_address_placeholder")
-	room_name_hint.text = _t("room_name_hint")
-	_apply_default_connection_name()
-	_update_online_action_button_text()
-	online_start_button.text = _t("start_online_room")
-	online_back_button.text = _t("back")
-	online_tutorial_title.text = _t("tutorial_title")
-	online_tutorial_back.text = _t("back")
-	online_tutorial_skip.text = _t("skip")
-	_update_online_tutorial()
 
+	if character_menu:
+		character_menu.refresh_language()
+
+	if online_menu:
+		online_menu.refresh_language()
+
+	_update_menu_header_images()
+
+
+func _setup_settings_runtime() -> void:
+	if settings_menu:
+		return
+
+	if not ResourceLoader.exists(SETTINGS_MENU_PATH):
+		push_error("Settings menu file not found: " + SETTINGS_MENU_PATH)
+		return
+
+	var script = load(SETTINGS_MENU_PATH)
+	if script == null:
+		push_error("Settings menu could not be loaded: " + SETTINGS_MENU_PATH)
+		return
+
+	settings_menu = script.new()
+	settings_menu.name = "SettingsMenuModule"
+	add_child(settings_menu)
+
+	settings_menu.setup_runtime(
+		pages,
+		home_page,
+		{
+			"show_page": Callable(self, "_show_page"),
+			"translate": Callable(self, "_t"),
+			"apply_button_sprite": Callable(
+				self,
+				"_apply_button_sprite"
+			)
+		}
+	)
+
+
+func _open_settings_page() -> void:
+	if not settings_menu:
+		_setup_settings_runtime()
+
+	if settings_menu:
+		settings_menu.open()
+
+
+
+func _setup_main_menu_controller() -> void:
+	if main_menu_controller:
+		return
+
+	if not ResourceLoader.exists(MAIN_MENU_CONTROLLER_PATH):
+		push_error(
+			"Main menu controller file not found: "
+			+ MAIN_MENU_CONTROLLER_PATH
+		)
+		return
+
+	var controller_script = load(MAIN_MENU_CONTROLLER_PATH)
+
+	if controller_script == null:
+		push_error(
+			"Main menu controller could not be loaded: "
+			+ MAIN_MENU_CONTROLLER_PATH
+		)
+		return
+
+	main_menu_controller = controller_script.new()
+	add_child(main_menu_controller)
+
+	var settings_button: Button = null
+	if settings_menu:
+		settings_button = settings_menu.get_settings_button()
+
+	main_menu_controller.setup({
+		"pages": pages,
+		"home_page": home_page,
+		"home_start_button": home_start_button,
+		"home_map_button": home_map_button,
+		"home_choose_button": home_choose_button,
+		"home_online_button": home_online_button,
+		"settings_button": settings_button,
+		"exit_button": home_exit_button
+	})
+
+	main_menu_controller.start_requested.connect(_open_start_flow)
+	main_menu_controller.character_requested.connect(
+		_open_character_page_from_home
+	)
+	main_menu_controller.difficulty_preview_requested.connect(
+		_open_map_select_from_home
+	)
+	main_menu_controller.online_requested.connect(_open_online_page)
+	main_menu_controller.settings_requested.connect(_open_settings_page)
+	main_menu_controller.exit_requested.connect(_exit_game)
 
 func _show_page(page: Control) -> void:
+	if main_menu_controller:
+		main_menu_controller.show_page(page)
+		return
+
+	# Safe fallback if the controller has not been created yet.
 	for child in pages.get_children():
 		if child is Control:
 			child.visible = child == page
 
-
-func _apply_default_connection_name() -> void:
-	if not room_name_input:
-		return
-	var current_name := room_name_input.text.strip_edges()
-	var default_names := [TEXT[LANG_ENG].get("default_connection_name", "Silent City"), TEXT[LANG_GEO].get("default_connection_name", "ჩუმი ქალაქი"), "Silent City"]
-	if current_name.is_empty() or default_names.has(current_name):
-		room_name_input.text = _t("default_connection_name")
 
 
 func _exit_game() -> void:
@@ -477,201 +745,331 @@ func _exit_game() -> void:
 	get_tree().quit()
 
 
+
+func _ensure_online_menu():
+	if online_menu:
+		return online_menu
+
+	if not ResourceLoader.exists(ONLINE_MENU_PATH):
+		push_error("Online menu file not found: " + ONLINE_MENU_PATH)
+		return null
+
+	var online_script = load(ONLINE_MENU_PATH)
+	if online_script == null:
+		push_error("Online menu could not be loaded: " + ONLINE_MENU_PATH)
+		return null
+
+	online_menu = online_script.new()
+
+	# RPC node paths must be identical on both peers.
+	online_menu.name = "OnlineMenuModule"
+	add_child(online_menu)
+
+	online_menu.setup(
+		pages,
+		online_page,
+		{
+			"settings": _settings(),
+			"show_page": Callable(self, "_show_page"),
+			"translate": Callable(self, "_t"),
+			"language": Callable(self, "_language"),
+			"apply_button_sprite": Callable(
+				self,
+				"_apply_button_sprite"
+			),
+			"apply_line_edit_sprite": Callable(
+				self,
+				"_apply_line_edit_sprite"
+			),
+			"apply_panel_sprite": Callable(
+				self,
+				"_apply_panel_sprite"
+			),
+			"apply_label_panel_sprite": Callable(
+				self,
+				"_apply_label_panel_sprite"
+			),
+			"apply_item_list_sprite": Callable(
+				self,
+				"_apply_item_list_sprite"
+			),
+			"selected_main_scene": Callable(
+				self,
+				"_selected_main_scene"
+			)
+		}
+	)
+
+	online_menu.character_page_requested.connect(
+		_open_character_page
+	)
+	online_menu.character_status_requested.connect(
+		_set_character_status
+	)
+	online_menu.character_refresh_requested.connect(
+		_update_character_cards
+	)
+	online_menu.playable_level_requested.connect(
+		_open_playable_level_select
+	)
+
+	return online_menu
+
+
 func _open_online_page() -> void:
-	_sync_online_state_with_peer()
-	_update_online_room_text()
-	_show_page(online_page)
-	if online_connection_mode == ONLINE_MODE_STEAM:
-		_request_steam_lobbies(true)
-	else:
-		_start_wifi_listener()
-	_show_online_tutorial_once()
+	var menu = _ensure_online_menu()
+	if menu:
+		menu.open()
 
 
-func _set_online_connection_mode(mode: String) -> void:
-	if _is_hosting_room() or _is_joining_room():
-		_update_online_mode_ui()
+func _online_character_state() -> Dictionary:
+	if online_menu:
+		return online_menu.get_character_state()
+
+	return {
+		"joined_waiting": false,
+		"other_chosen": false,
+		"other_character": ""
+	}
+
+
+func _clear_peer() -> void:
+	if online_menu:
+		online_menu.clear_peer()
 		return
-	online_connection_mode = ONLINE_MODE_STEAM if mode == ONLINE_MODE_STEAM else ONLINE_MODE_WIFI
-	steam_lobbies.clear()
-	wifi_rooms.clear()
-	wifi_room_seen_at.clear()
-	steam_lobby_searching = false
-	steam_lobby_wide_searching = false
-	_stop_wifi_discovery()
-	_update_online_room_text()
-	if online_page and online_page.visible and online_connection_mode == ONLINE_MODE_STEAM:
-		_request_steam_lobbies(true)
-	elif online_page and online_page.visible:
-		_start_wifi_listener()
+
+	# Fallback for Exit / offline flow when Online was never opened.
+	var steam_manager := get_node_or_null("/root/SteamManager")
+	if steam_manager and steam_manager.has_method("leave_lobby"):
+		steam_manager.leave_lobby()
+
+	var peer := multiplayer.multiplayer_peer
+	if peer and peer.has_method("close"):
+		peer.close()
+
+	multiplayer.multiplayer_peer = null
 
 
-func _update_online_mode_ui() -> void:
-	if wifi_mode_button:
-		wifi_mode_button.button_pressed = false
-	if steam_mode_button:
-		steam_mode_button.button_pressed = false
-	if online_address_box:
-		online_address_box.visible = false
 
 func _open_start_flow() -> void:
+	# The player has committed to Single Player now.
+	# Use the time spent choosing character/difficulty to load levels quietly.
+	_preload_game_scenes_in_background()
+
 	var settings := _settings()
 	if settings:
 		settings.set("character_chosen", false)
 		settings.set("level_chosen", false)
-	level_page_preview_only = false
-	level_select_starts_game = false
 	level_start_pending = false
 	map_gallery_hint.visible = false
-	_update_map_cards()
+	if difficulty_menu:
+		difficulty_menu.reset_for_start_flow()
+
+	var menu = _ensure_character_menu()
+	if menu:
+		menu.reset_for_start_flow()
+		_sync_character_menu_state()
+		menu.open()
+
+
+
+
+
+func _ensure_character_menu():
+	if character_menu:
+		return character_menu
+
+	if not ResourceLoader.exists(CHARACTER_MENU_PATH):
+		push_error("Character menu file not found: " + CHARACTER_MENU_PATH)
+		return null
+
+	var character_script = load(CHARACTER_MENU_PATH)
+	if character_script == null:
+		push_error("Character menu could not be loaded: " + CHARACTER_MENU_PATH)
+		return null
+
+	character_menu = character_script.new()
+	add_child(character_menu)
+
+	character_menu.setup(
+		choose_page,
+		{
+			"settings": _settings(),
+			"menu_texture_cache": menu_texture_cache,
+			"show_page": Callable(self, "_show_page"),
+			"translate": Callable(self, "_t"),
+			"apply_button_sprite": Callable(self, "_apply_button_sprite"),
+			"remove_outer_white_background": Callable(
+				menu_optimizer,
+				"remove_outer_white_background"
+			),
+			"remove_outer_white_fringe": Callable(
+				menu_optimizer,
+				"remove_white_fringe"
+			),
+			"remove_baked_checkerboard_background": Callable(
+				menu_optimizer,
+				"remove_baked_checkerboard_background"
+			)
+		}
+	)
+
+	character_menu.character_selected.connect(_on_character_selected)
+	character_menu.start_requested.connect(_open_level_select_from_character)
+	character_menu.online_requested.connect(_open_online_page)
+	character_menu.back_requested.connect(_back_from_character_page)
+
+	_sync_character_menu_state()
+	return character_menu
+
+
+func _sync_character_menu_state() -> void:
+	if not character_menu:
+		return
+
+	var state := _online_character_state()
+	var joined_waiting := bool(state.get("joined_waiting", false))
+	var other_chosen := bool(state.get("other_chosen", false))
+	var other_character := String(state.get("other_character", ""))
+
+	var settings := _settings()
+	var locked: bool = (
+		joined_waiting
+		and settings != null
+		and bool(settings.get("online_mode")) == true
+		and bool(settings.get("character_chosen")) == true
+	)
+
+	character_menu.set_online_state(
+		joined_waiting,
+		other_chosen,
+		other_character,
+		locked
+	)
+
+
+
+func _open_character_page(status_override: String = "") -> void:
+	var menu = _ensure_character_menu()
+	if not menu:
+		return
+
+	_sync_character_menu_state()
+	menu.open(status_override)
+
+
+func _open_character_page_from_home() -> void:
+	_open_character_page()
+
+
+func _set_character_status(text: String) -> void:
+	if character_menu:
+		character_menu.set_status(text)
+		return
+
+	# Cheap fallback: do not force Character sprites to load only to update
+	# a hidden status Label.
+	var status := choose_page.get_node_or_null("StatusLabel") as Label
+	if status:
+		status.text = text
+
+
+func _on_character_selected(character: String) -> void:
+	var menu = _ensure_character_menu()
+	if not menu:
+		return
+
+	var character_name: String = String(menu.display_name(character))
+
+	if online_menu and online_menu.is_waiting_for_character():
+		_sync_character_menu_state()
+		menu.set_buttons_enabled(false)
+		online_menu.local_character_selected(character)
+	else:
+		_set_character_status(_t("selected") % character_name)
+
 	_update_character_cards()
-	_show_page(choose_page)
 
 
-func _open_map_select_from_home() -> void:
-	level_page_preview_only = true
-	level_select_starts_game = false
-	level_start_pending = false
-	map_gallery_hint.visible = true
-	_update_map_cards()
-	_show_page(level_page)
+
+func _ensure_difficulty_menu():
+	if difficulty_menu:
+		return difficulty_menu
+
+	if not ResourceLoader.exists(DIFFICULTY_MENU_PATH):
+		push_error("Difficulty menu file not found: " + DIFFICULTY_MENU_PATH)
+		return null
+
+	var difficulty_script = load(DIFFICULTY_MENU_PATH)
+	if difficulty_script == null:
+		push_error("Difficulty menu could not be loaded: " + DIFFICULTY_MENU_PATH)
+		return null
+
+	difficulty_menu = difficulty_script.new()
+	add_child(difficulty_menu)
+
+	difficulty_menu.setup(
+		{
+			"level_page": level_page,
+			"choose_page": choose_page,
+			"home_page": home_page,
+			"easy_button": easy_button,
+			"medium_button": medium_button,
+			"hard_button": hard_button,
+			"map_title_label": map_title_label,
+			"map_gallery_hint": map_gallery_hint,
+			"level_back_button": level_back_button
+		},
+		{
+			"menu_texture_cache": menu_texture_cache,
+			"show_page": Callable(self, "_show_page"),
+			"translate": Callable(self, "_t"),
+			"apply_button_sprite": Callable(self, "_apply_button_sprite"),
+			"remove_outer_white_background": Callable(
+				menu_optimizer,
+				"remove_outer_white_background"
+			),
+			"remove_outer_white_fringe": Callable(
+				menu_optimizer,
+				"remove_white_fringe"
+			)
+		}
+	)
+
+	difficulty_menu.level_selected.connect(_on_difficulty_level_selected)
+	return difficulty_menu
 
 
-func _select_level(level: String) -> void:
-	if level_page_preview_only:
-		map_gallery_hint.text = _t("map_gallery_hint")
-		return
-	if level_start_pending:
-		return
-
+func _on_difficulty_level_selected(level: String) -> void:
 	var settings := _settings()
 	if settings:
 		settings.set("selected_level", level)
 		settings.set("level_chosen", true)
-	_update_map_cards(level)
-	if level_select_starts_game:
-		level_start_pending = true
-		map_gallery_hint.visible = true
-		map_gallery_hint.text = _t("map_selected_wait") % _level_display_name(level)
-		await get_tree().create_timer(2.0).timeout
-		level_start_pending = false
-		_start_game()
-		return
-	_show_page(choose_page)
+
+	level_start_pending = true
+	_start_game()
 
 
-func _connect_map_card_hover(button: Button, level: String) -> void:
-	button.mouse_entered.connect(func():
-		hovered_level = level
-		_update_map_cards()
-	)
-	button.mouse_exited.connect(func():
-		if hovered_level == level:
-			hovered_level = ""
-		_update_map_cards()
-	)
-	button.focus_entered.connect(func():
-		hovered_level = level
-		_update_map_cards()
-	)
-	button.focus_exited.connect(func():
-		if hovered_level == level:
-			hovered_level = ""
-		_update_map_cards()
-	)
-
-
-func _update_map_cards(forced_selected_level: String = "") -> void:
-	var selected_level := forced_selected_level
-	var settings := _settings()
-	if selected_level.is_empty() and settings and settings.get("level_chosen") == true:
-		selected_level = String(settings.get("selected_level"))
-	for level in ["easy", "medium", "hard"]:
-		var button := _map_button(level)
-		if not button:
-			continue
-		if level == selected_level:
-			button.modulate = Color(0.72, 1.0, 0.72, 1.0)
-		elif level == hovered_level:
-			button.modulate = Color(1.18, 1.18, 1.18, 1.0)
-		else:
-			button.modulate = Color(1.0, 1.0, 1.0, 1.0)
-
-
-func _map_button(level: String) -> Button:
-	match level:
-		"medium":
-			return medium_button
-		"hard":
-			return hard_button
-		_:
-			return easy_button
-
-
-func _level_display_name(level: String) -> String:
-	match level:
-		"medium":
-			return _t("medium")
-		"hard":
-			return _t("hard")
-		_:
-			return _t("easy")
-
-
-func _show_online_tutorial_once() -> void:
-	var settings := _settings()
-	if settings and settings.get("online_tutorial_seen") == true:
-		online_tutorial_overlay.visible = false
-		return
-
-	online_tutorial_step = 0
-	online_tutorial_overlay.visible = true
-	_update_online_tutorial()
-
-
-func _update_online_tutorial() -> void:
-	var steps: Array = ONLINE_TUTORIAL_STEPS.get(_language(), ONLINE_TUTORIAL_STEPS[LANG_ENG])
-	online_tutorial_text.text = String(steps[online_tutorial_step])
-	online_tutorial_next.text = _t("done") if online_tutorial_step >= steps.size() - 1 else _t("next")
-
-
-func _advance_online_tutorial() -> void:
-	var steps: Array = ONLINE_TUTORIAL_STEPS.get(_language(), ONLINE_TUTORIAL_STEPS[LANG_ENG])
-	if online_tutorial_step >= steps.size() - 1:
-		_finish_online_tutorial()
-		return
-
-	online_tutorial_step += 1
-	_update_online_tutorial()
-
-
-func _finish_online_tutorial() -> void:
-	var settings := _settings()
-	if settings:
-		settings.set("online_tutorial_seen", true)
-	online_tutorial_overlay.visible = false
+func _open_map_select_from_home() -> void:
+	var menu = _ensure_difficulty_menu()
+	if menu:
+		menu.open_preview()
 
 
 func _back_from_character_page() -> void:
-	if joined_room_waiting_for_character:
-		var settings := _settings()
-		if settings:
-			settings.call("reset_online")
-			settings.set("character_chosen", false)
-		_clear_peer()
-		joined_room_waiting_for_character = false
-		other_player_character = ""
-		other_player_character_chosen = false
+	if online_menu and online_menu.is_waiting_for_character():
+		online_menu.leave_from_character_page()
 		_show_page(home_page)
 		return
 
 	_show_page(home_page)
 
 
+
 func _open_level_select_from_character() -> void:
 	var settings := _settings()
 	if not settings or settings.get("character_chosen") != true:
-		character_status.text = _t("choose_first")
+		_set_character_status(_t("choose_first"))
 		return
 	if settings.get("online_mode") == true:
 		if String(settings.get("online_role")) == "host":
@@ -682,117 +1080,53 @@ func _open_level_select_from_character() -> void:
 	_open_playable_level_select()
 
 
+
 func _open_playable_level_select() -> void:
 	var settings := _settings()
 	if settings:
 		settings.set("level_chosen", false)
-	level_page_preview_only = false
-	level_start_pending = false
-	level_select_starts_game = true
-	map_gallery_hint.visible = false
-	_update_map_cards()
-	_show_page(level_page)
+
+	var menu = _ensure_difficulty_menu()
+	if menu:
+		menu.open_playable()
 
 
-func _select_character(character: String) -> void:
-	if _is_online_character_locked():
-		return
-	if not _is_character_unlocked(character):
-		var character_name := String(CHARACTER_DISPLAY_NAMES.get(character, "Ice Golem"))
-		var unlock_cost := _character_unlock_cost(character)
-		character_status.text = _t("character_locked") % [character_name, unlock_cost, _saved_coins()]
-		_update_character_cards()
-		return
-	if _is_character_taken_by_other_player(character):
-		return
-
-	var settings := _settings()
-	if settings:
-		settings.set("selected_character", character)
-		settings.set("character_chosen", true)
-	var character_name := String(CHARACTER_DISPLAY_NAMES.get(character, "Ash Golem"))
-	if joined_room_waiting_for_character:
-		_lock_online_character_selection()
-		if _is_joining_room():
-			rpc_id(1, "_client_online_character_selected", character)
-			character_status.text = _t("waiting_for_host_start")
-			online_status.text = _t("waiting_for_host_start")
-		else:
-			character_status.text = _t("selected_online") % character_name
-			online_status.text = _t("selected_online") % character_name
-			_sync_online_character_state()
-			_try_auto_start_online_match()
-	else:
-		character_status.text = _t("selected") % character_name
-	_update_character_cards()
-	_update_room_buttons()
 
 
-func _make_character_card_tappable(card: Control, character: String) -> void:
-	card.mouse_filter = Control.MOUSE_FILTER_STOP
-	card.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	card.gui_input.connect(func(event: InputEvent): _select_character_from_card_input(event, character))
-	for child in card.find_children("*", "Control"):
-		var control := child as Control
-		control.mouse_filter = Control.MOUSE_FILTER_PASS
-		control.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 
-
-func _select_character_from_card_input(event: InputEvent, character: String) -> void:
-	if _is_online_character_locked():
-		return
-	if not _is_character_unlocked(character):
-		_select_character(character)
-		return
-	if _is_character_taken_by_other_player(character):
-		return
-
-	if event is InputEventMouseButton:
-		var mouse_event := event as InputEventMouseButton
-		if mouse_event.button_index == MOUSE_BUTTON_LEFT and mouse_event.pressed:
-			_select_character(character)
-			accept_event()
-	elif event is InputEventScreenTouch:
-		var touch_event := event as InputEventScreenTouch
-		if touch_event.pressed:
-			_select_character(character)
-			accept_event()
 
 
 func _update_character_cards() -> void:
-	if wallet_label:
-		wallet_label.text = _t("coins") % _saved_coins()
-	for character in ["player", "golem", "ice_golem"]:
-		var card := _character_card(character)
-		if not card:
-			continue
-		card.modulate = Color(1.0, 1.0, 1.0)
-		_set_card_crossed(card, false)
-		_set_character_card_available(card, _is_character_unlocked(character))
-	_set_ice_golem_button_text()
-	if joined_room_waiting_for_character and other_player_character_chosen:
-		var taken_card := _character_card(other_player_character)
-		if taken_card:
-			taken_card.modulate = Color(0.45, 0.45, 0.45)
-			_set_card_crossed(taken_card, true)
-			_set_character_card_available(taken_card, false)
-	var settings := _settings()
-	if not settings or settings.get("character_chosen") != true:
-		character_status.text = _t("choose_first")
-		_set_character_buttons_enabled(true)
-		_apply_taken_character_input_state()
+	if not character_menu:
 		return
-	var selected_card := _character_card(String(settings.get("selected_character")))
-	if selected_card:
-		selected_card.modulate = Color(0.65, 1.0, 0.65)
-	_set_character_buttons_enabled(not _is_online_character_locked())
-	_apply_taken_character_input_state()
+
+	var state := _online_character_state()
+	var joined_waiting := bool(state.get("joined_waiting", false))
+	var other_chosen := bool(state.get("other_chosen", false))
+	var other_character := String(state.get("other_character", ""))
+
+	var settings := _settings()
+	var locked: bool = (
+		joined_waiting
+		and settings != null
+		and bool(settings.get("online_mode")) == true
+		and bool(settings.get("character_chosen")) == true
+	)
+
+	character_menu.set_online_state(
+		joined_waiting,
+		other_chosen,
+		other_character,
+		locked
+	)
+	character_menu.refresh()
+
 
 
 func _start_game() -> void:
 	var settings := _settings()
 	if not settings or settings.get("character_chosen") != true:
-		character_status.text = _t("choose_first")
+		_set_character_status(_t("choose_first"))
 		return
 
 	if settings.get("level_chosen") != true:
@@ -801,15 +1135,83 @@ func _start_game() -> void:
 
 	if settings.get("online_mode") == true:
 		if String(settings.get("online_role")) == "host":
-			_start_online_host_game()
+			var menu = _ensure_online_menu()
+			if menu:
+				menu.start_online_host_game()
 		elif String(settings.get("online_role")) == "client":
-			character_status.text = _t("waiting_for_host_start")
+			_set_character_status(_t("waiting_for_host_start"))
 		return
 
 	settings.call("reset_online")
 	settings.call("start_offline_level", String(settings.get("selected_level")))
 	_clear_peer()
-	get_tree().change_scene_to_file(_selected_main_scene())
+
+	# Avoid a blocking synchronous scene load on the main thread.
+	_change_to_preloaded_game_scene(_selected_main_scene())
+
+
+func _preload_game_scenes_in_background() -> void:
+	for scene_path: String in BACKGROUND_GAME_SCENES:
+		var status := ResourceLoader.load_threaded_get_status(scene_path)
+
+		if status != ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
+			continue
+
+		var error := ResourceLoader.load_threaded_request(
+			scene_path,
+			"PackedScene",
+			true
+		)
+
+		if error != OK:
+			print("Background scene preload failed to start: ", scene_path, " error=", error)
+
+
+func _change_to_preloaded_game_scene(scene_path: String) -> void:
+	var status := ResourceLoader.load_threaded_get_status(scene_path)
+
+	if status == ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
+		var request_error := ResourceLoader.load_threaded_request(
+			scene_path,
+			"PackedScene",
+			true
+		)
+
+		if request_error != OK:
+			level_start_pending = false
+			get_tree().change_scene_to_file(scene_path)
+			return
+
+	# Poll once per frame. The window remains responsive while resources load.
+	while true:
+		var progress: Array = []
+		status = ResourceLoader.load_threaded_get_status(scene_path, progress)
+
+		if not progress.is_empty() and map_gallery_hint:
+			var percent := int(round(float(progress[0]) * 100.0))
+			map_gallery_hint.text = "Loading... %d%%" % clampi(percent, 0, 100)
+
+		if status == ResourceLoader.THREAD_LOAD_LOADED:
+			var packed_scene := ResourceLoader.load_threaded_get(scene_path) as PackedScene
+			level_start_pending = false
+
+			if packed_scene:
+				get_tree().change_scene_to_packed(packed_scene)
+			else:
+				get_tree().change_scene_to_file(scene_path)
+			return
+
+		if status == ResourceLoader.THREAD_LOAD_FAILED:
+			level_start_pending = false
+			get_tree().change_scene_to_file(scene_path)
+			return
+
+		if status == ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
+			level_start_pending = false
+			get_tree().change_scene_to_file(scene_path)
+			return
+
+		await get_tree().process_frame
 
 
 func _selected_main_scene() -> String:
@@ -821,913 +1223,28 @@ func _selected_main_scene() -> String:
 		if selected_level == "medium":
 			return MEDIUM_SCENE
 	return MAIN_SCENE
+	
+func _attach_persistent_menu_texture_cache() -> void:
+	var settings := get_node_or_null("/root/GameSettings")
 
-
-func _valid_online_scene_path(scene_path: String) -> String:
-	match scene_path:
-		MAIN_SCENE, MEDIUM_SCENE, HARD_SCENE:
-			return scene_path
-	return MAIN_SCENE
-
-
-func _level_for_scene_path(scene_path: String) -> String:
-	match _valid_online_scene_path(scene_path):
-		HARD_SCENE:
-			return "hard"
-		MEDIUM_SCENE:
-			return "medium"
-	return "easy"
-
-
-func _store_online_scene_path(scene_path: String) -> String:
-	var valid_scene_path := _valid_online_scene_path(scene_path)
-	var settings := _settings()
-	if settings:
-		settings.set("online_scene_path", valid_scene_path)
-		settings.set("selected_level", _level_for_scene_path(valid_scene_path))
-		settings.set("level_chosen", true)
-	return valid_scene_path
-
-
-func _online_scene_path_from_settings() -> String:
-	var settings := _settings()
-	if settings:
-		return _valid_online_scene_path(String(settings.get("online_scene_path")))
-	return MAIN_SCENE
-
-
-func _pending_lobby_scene_path() -> String:
-	return _valid_online_scene_path(String(pending_join_lobby.get("scene_path", MAIN_SCENE)))
-
-
-func _host_online_game() -> void:
-	if _is_hosting_room():
-		online_status.text = _t("hosting_active")
-		get_tree().change_scene_to_file(_online_scene_path_from_settings())
+	# Fallback for safety if the autoload is unavailable.
+	if not settings:
+		menu_texture_cache = {}
 		return
 
-	if online_connection_mode == ONLINE_MODE_WIFI:
-		_host_wifi_game()
-		return
+	if not settings.has_meta(MENU_TEXTURE_CACHE_META):
+		settings.set_meta(MENU_TEXTURE_CACHE_META, {})
 
-	_clear_peer()
-	steam_lobbies.clear()
-	_update_lobby_select()
-	if not _steam_ready():
-		online_status.text = _steam_not_ready_message()
-		return
-	online_status.text = _t("steam_creating_lobby")
-	host_button.disabled = true
-	join_button.disabled = true
-	_steam_manager().create_lobby(_room_name())
+	var cached_value = settings.get_meta(MENU_TEXTURE_CACHE_META)
 
-
-func _host_wifi_game() -> void:
-	_clear_peer()
-	steam_lobbies.clear()
-	_update_lobby_select()
-	online_status.text = _t("wifi_creating_room")
-	host_button.disabled = true
-	join_button.disabled = true
-	var peer := ENetMultiplayerPeer.new()
-	var error := peer.create_server(ONLINE_PORT, MAX_ROOM_PLAYERS - 1)
-	if error != OK:
-		online_status.text = _t("host_failed") % _error_message(error)
-		_update_room_buttons()
-		return
-	_start_wifi_broadcaster()
-	_prepare_online_host(peer)
-
-
-func _finish_steam_host_lobby(_lobby_id: int) -> void:
-	if online_connection_mode != ONLINE_MODE_STEAM:
-		return
-	var peer := _steam_manager().create_host_peer() as MultiplayerPeer
-	if not peer:
-		online_status.text = _t("steam_transport_missing")
-		_update_room_buttons()
-		return
-
-	_prepare_online_host(peer)
-
-
-func _prepare_online_host(peer: MultiplayerPeer) -> void:
-	var settings := _settings()
-	if settings:
-		settings.set("online_mode", true)
-		settings.set("online_role", "host")
-		settings.set("character_chosen", false)
-		if settings.has_method("reset_online_rounds"):
-			settings.reset_online_rounds()
-	multiplayer.multiplayer_peer = peer
-	hosted_player_count = 1
-	hosted_room_id = _make_room_id()
-	remote_client_character = "golem"
-	remote_client_character_chosen = false
-	other_player_character = ""
-	other_player_character_chosen = false
-	online_match_starting = false
-	steam_lobbies.clear()
-	wifi_rooms.clear()
-	wifi_room_seen_at.clear()
-	_update_lobby_select()
-	_set_online_status_with_player_line(_online_room_open_text())
-	online_start_button.visible = false
-	_update_room_buttons()
-	joined_room_waiting_for_character = true
-	character_status.text = _t("connected_choose")
-	_update_character_cards()
-	_show_page(choose_page)
-
-
-func _start_online_host_game() -> void:
-	_try_auto_start_online_match()
-
-
-func _try_auto_start_online_match() -> void:
-	var settings := _settings()
-	if online_match_starting:
-		return
-	if not settings or settings.get("online_mode") != true or String(settings.get("online_role")) != "host":
-		return
-	if settings.get("character_chosen") != true:
-		joined_room_waiting_for_character = true
-		character_status.text = _t("connected_choose")
-		_update_character_cards()
-		return
-	if multiplayer.get_peers().is_empty():
-		_set_online_status_with_player_line(_online_room_waiting_text())
-		return
-	if not remote_client_character_chosen:
-		character_status.text = _t("waiting_for_player_choice")
-		online_status.text = _t("waiting_for_player_choice")
-		return
-	if settings.get("level_chosen") != true:
-		character_status.text = _t("choose_map_to_start")
-		online_status.text = _t("choose_map_to_start")
-		_open_playable_level_select()
-		return
-
-	online_match_starting = true
-	joined_room_waiting_for_character = false
-	var host_character := String(settings.get("selected_character"))
-	var scene_path := _store_online_scene_path(_selected_main_scene())
-	var steam_manager := _steam_manager()
-	if steam_manager and steam_manager.has_method("set_lobby_match_state"):
-		steam_manager.set_lobby_match_state("playing", host_character, remote_client_character, scene_path)
-	character_status.text = _t("both_ready")
-	online_status.text = _t("both_ready")
-	online_start_button.visible = false
-	_update_room_buttons()
-	_sync_online_character_state()
-	rpc("_start_online_match", scene_path)
-	get_tree().change_scene_to_file(scene_path)
-
-
-func _join_online_game() -> void:
-	if _is_hosting_room():
-		online_status.text = _t("hosting_device")
-		return
-
-	if online_connection_mode == ONLINE_MODE_WIFI:
-		_join_wifi_game()
-		return
-
-	if not _steam_ready():
-		online_status.text = _steam_not_ready_message()
-		return
-
-	if not steam_lobbies.is_empty():
-		var selected_items := lobby_select.get_selected_items()
-		var selected_index := int(selected_items[0]) if not selected_items.is_empty() else 0
-		if selected_index >= steam_lobbies.size():
-			selected_index = 0
-		var lobby_id := int(steam_lobbies[selected_index].get("id", 0))
-		_prepare_join_selected_lobby(steam_lobbies[selected_index])
-		_steam_manager().join_lobby(lobby_id)
-		online_status.text = _t("joining")
-		return
-
-	online_status.text = _t("steam_no_lobby")
-	_request_steam_lobbies(true)
-
-
-func _join_wifi_game() -> void:
-	if wifi_rooms.is_empty():
-		online_status.text = _t("invalid_address")
-		_start_wifi_listener()
-		return
-	var selected_items := lobby_select.get_selected_items()
-	var selected_index := int(selected_items[0]) if not selected_items.is_empty() else 0
-	if selected_index >= wifi_rooms.size():
-		selected_index = 0
-	var room = wifi_rooms[selected_index]
-	var ip := String(room.get("ip", "")).strip_edges()
-	if ip.is_empty():
-		online_status.text = _t("invalid_address")
-		return
-
-	_clear_peer()
-	pending_join_lobby.clear()
-	var settings := _settings()
-	if settings:
-		settings.set("online_mode", true)
-		settings.set("online_role", "client")
-		settings.set("character_chosen", false)
-		if settings.has_method("reset_online_rounds"):
-			settings.reset_online_rounds()
-	remote_client_character = "golem"
-	remote_client_character_chosen = false
-	other_player_character = ""
-	other_player_character_chosen = false
-	online_match_starting = false
-	var peer := ENetMultiplayerPeer.new()
-	var error := peer.create_client(ip, int(room.get("port", ONLINE_PORT)))
-	if error != OK:
-		online_status.text = _t("join_failed") % _error_message(error)
-		if settings:
-			settings.call("reset_online")
-		_update_room_buttons()
-		return
-	multiplayer.multiplayer_peer = peer
-	online_status.text = _t("joining")
-	_update_room_buttons()
-
-
-func _prepare_join_selected_lobby(lobby_data: Dictionary) -> void:
-	_clear_peer()
-	pending_join_lobby = lobby_data.duplicate(true)
-	var settings := _settings()
-	if settings:
-		settings.set("online_mode", true)
-		settings.set("online_role", "client")
-		if _is_pending_join_lobby_playing():
-			_store_online_scene_path(_pending_lobby_scene_path())
-			var saved_client_character := String(pending_join_lobby.get("client_character", "")).strip_edges()
-			var saved_host_character := String(pending_join_lobby.get("host_character", "")).strip_edges()
-			if saved_client_character in ["player", "golem", "ice_golem"]:
-				settings.set("selected_character", saved_client_character)
-			settings.set("character_chosen", true)
-			if saved_host_character in ["player", "golem", "ice_golem"]:
-				settings.set("online_remote_character", saved_host_character)
-		else:
-			settings.set("character_chosen", false)
-		if settings.has_method("reset_online_rounds"):
-			settings.reset_online_rounds()
-	remote_client_character = "golem"
-	remote_client_character_chosen = false
-	other_player_character = ""
-	other_player_character_chosen = false
-	online_match_starting = false
-	steam_lobbies.clear()
-	_update_lobby_select()
-
-
-func _finish_steam_join_lobby(lobby_id: int) -> void:
-	if online_connection_mode != ONLINE_MODE_STEAM:
-		return
-	if not _is_joining_room():
-		return
-	var peer := _steam_manager().create_client_peer_for_lobby(lobby_id) as MultiplayerPeer
-	if not peer:
-		online_status.text = _t("steam_transport_missing")
-		_update_room_buttons()
-		return
-	multiplayer.multiplayer_peer = peer
-	if _is_pending_join_lobby_playing():
-		online_status.text = "Rejoining match..."
-		get_tree().change_scene_to_file(_store_online_scene_path(_pending_lobby_scene_path()))
+	if cached_value is Dictionary:
+		# Dictionaries are reference types, so every MainMenu instance now uses
+		# the exact same cache stored on the persistent autoload.
+		menu_texture_cache = cached_value
 	else:
-		online_status.text = _t("joining")
-
-
-func _on_steam_lobby_list_updated(lobbies: Array) -> void:
-	steam_lobby_searching = false
-	if online_connection_mode != ONLINE_MODE_STEAM:
-		return
-	if _is_hosting_room() or (_is_joining_room() and multiplayer.multiplayer_peer != null):
-		return
-	if lobbies.is_empty() and not steam_lobby_wide_searching:
-		online_status.text = "Still searching Steam rooms..."
-		_request_steam_lobbies(false, true)
-		return
-	steam_lobby_wide_searching = false
-	if lobbies.is_empty() and not steam_lobbies.is_empty():
-		online_status.text = "Steam refresh missed the room. Select it and press Join."
-		_update_lobby_select()
-		_update_room_buttons()
-		return
-	steam_lobbies = lobbies.duplicate(true)
-	_update_lobby_select()
-	if lobbies.is_empty():
-		online_status.text = _t("steam_no_lobby")
-		_update_room_buttons()
-		return
-	online_status.text = _t("steam_lobby_count")
-	_update_room_buttons()
-
-
-func _on_connected_to_server() -> void:
-	var settings := _settings()
-	if settings and settings.get("online_mode") == true and String(settings.get("online_role")) == "client":
-		if _is_pending_join_lobby_playing():
-			online_status.text = "Rejoining match..."
-			get_tree().change_scene_to_file(_store_online_scene_path(_pending_lobby_scene_path()))
-			return
-		joined_room_waiting_for_character = true
-		other_player_character = ""
-		other_player_character_chosen = false
-		online_match_starting = false
-		settings.set("character_chosen", false)
-		character_status.text = _t("connected_choose")
-		_update_character_cards()
-		_show_page(choose_page)
-
-
-func _on_peer_connected(peer_id: int) -> void:
-	var settings := _settings()
-	if settings and settings.get("online_mode") == true and String(settings.get("online_role")) == "host":
-		hosted_player_count = min(multiplayer.get_peers().size() + 1, MAX_ROOM_PLAYERS)
-		remote_client_character_chosen = false
-		other_player_character = ""
-		other_player_character_chosen = false
-		online_match_starting = false
-		_set_online_status_with_player_line(_t("player_connected"))
-		_update_room_buttons()
-		_sync_online_character_state.call_deferred()
-
-
-func _on_peer_disconnected(_peer_id: int) -> void:
-	var settings := _settings()
-	if settings and settings.get("online_mode") == true and String(settings.get("online_role")) == "host":
-		hosted_player_count = min(multiplayer.get_peers().size() + 1, MAX_ROOM_PLAYERS)
-		remote_client_character_chosen = false
-		other_player_character = ""
-		other_player_character_chosen = false
-		online_match_starting = false
-		_set_online_status_with_player_line(_online_room_waiting_text())
-		_update_character_cards()
-		_update_room_buttons()
-
-
-func _on_connection_failed() -> void:
-	online_status.text = _t("connection_failed")
-	var settings := _settings()
-	if settings:
-		settings.call("reset_online")
-	other_player_character = ""
-	other_player_character_chosen = false
-	online_match_starting = false
-	_clear_peer()
-	if online_connection_mode == ONLINE_MODE_WIFI and online_page and online_page.visible:
-		_start_wifi_listener()
-	online_start_button.visible = false
-	_update_room_buttons()
-
-
-func _back_from_online() -> void:
-	var settings := _settings()
-	if settings:
-		settings.call("reset_online")
-	_clear_peer()
-	hosted_player_count = 1
-	hosted_room_id = ""
-	joined_room_waiting_for_character = false
-	remote_client_character = "golem"
-	remote_client_character_chosen = false
-	other_player_character = ""
-	other_player_character_chosen = false
-	online_match_starting = false
-	pending_join_lobby.clear()
-	online_start_button.visible = false
-	steam_lobbies.clear()
-	wifi_rooms.clear()
-	wifi_room_seen_at.clear()
-	_stop_wifi_discovery()
-	_update_lobby_select()
-	online_status.text = _online_default_status_text()
-	_update_room_buttons()
-	_show_page(home_page)
-
-
-func _update_online_room_text() -> void:
-	_sync_online_state_with_peer()
-	_update_online_mode_ui()
-	_update_lobby_select()
-	_set_online_status_with_player_line(_online_default_status_text())
-	_update_room_buttons()
-
-
-func _request_steam_lobbies(show_search_text: bool, wide_search: bool = false) -> void:
-	if online_connection_mode != ONLINE_MODE_STEAM or steam_lobby_searching or not _steam_ready() or _is_hosting_room() or _is_joining_room():
-		return
-	steam_lobby_searching = true
-	steam_lobby_wide_searching = wide_search
-	if show_search_text:
-		online_status.text = _t("steam_finding_lobby")
-	_steam_manager().request_lobbies(wide_search)
-
-
-func _start_wifi_listener() -> void:
-	if wifi_discovery_listener:
-		return
-	wifi_discovery_listener = PacketPeerUDP.new()
-	var error := wifi_discovery_listener.bind(WIFI_DISCOVERY_PORT)
-	if error != OK:
-		wifi_discovery_listener = null
-		online_status.text = _t("wifi_no_room")
-		return
-	wifi_discovery_timer = 0.0
-
-
-func _start_wifi_broadcaster() -> void:
-	_stop_wifi_listener()
-	if wifi_discovery_broadcaster:
-		return
-	wifi_discovery_broadcaster = PacketPeerUDP.new()
-	wifi_discovery_broadcaster.set_broadcast_enabled(true)
-	wifi_discovery_broadcaster.set_dest_address("255.255.255.255", WIFI_DISCOVERY_PORT)
-	wifi_discovery_timer = 0.0
-
-
-func _stop_wifi_listener() -> void:
-	if wifi_discovery_listener:
-		wifi_discovery_listener.close()
-	wifi_discovery_listener = null
-
-
-func _stop_wifi_discovery() -> void:
-	_stop_wifi_listener()
-	if wifi_discovery_broadcaster:
-		wifi_discovery_broadcaster.close()
-	wifi_discovery_broadcaster = null
-
-
-func _process_wifi_discovery(delta: float) -> void:
-	if wifi_discovery_broadcaster:
-		wifi_discovery_timer -= delta
-		if wifi_discovery_timer <= 0.0:
-			wifi_discovery_timer = WIFI_DISCOVERY_INTERVAL
-			_broadcast_wifi_room()
-	if wifi_discovery_listener:
-		_read_wifi_discovery_packets()
-		_prune_wifi_rooms()
-
-
-func _broadcast_wifi_room() -> void:
-	if not wifi_discovery_broadcaster:
-		return
-	var payload := {
-		"tag": WIFI_DISCOVERY_TAG,
-		"name": _room_name(),
-		"port": ONLINE_PORT,
-		"players": min(multiplayer.get_peers().size() + 1, MAX_ROOM_PLAYERS),
-		"max_players": MAX_ROOM_PLAYERS,
-	}
-	wifi_discovery_broadcaster.put_packet(JSON.stringify(payload).to_utf8_buffer())
-
-
-func _read_wifi_discovery_packets() -> void:
-	while wifi_discovery_listener and wifi_discovery_listener.get_available_packet_count() > 0:
-		var packet := wifi_discovery_listener.get_packet()
-		var text := packet.get_string_from_utf8()
-		var parsed = JSON.parse_string(text)
-		if not (parsed is Dictionary):
-			continue
-		var data = parsed
-		if String(data.get("tag", "")) != WIFI_DISCOVERY_TAG:
-			continue
-		var ip := wifi_discovery_listener.get_packet_ip()
-		if ip.is_empty():
-			continue
-		var room := {
-			"id": ip,
-			"name": String(data.get("name", ROOM_NAME)),
-			"ip": ip,
-			"port": int(data.get("port", ONLINE_PORT)),
-			"players": int(data.get("players", 1)),
-			"max_players": int(data.get("max_players", MAX_ROOM_PLAYERS)),
-		}
-		_upsert_wifi_room(room)
-
-
-func _upsert_wifi_room(room: Dictionary) -> void:
-	var id := String(room.get("id", ""))
-	if id.is_empty():
-		return
-	wifi_room_seen_at[id] = Time.get_ticks_msec()
-	for index in wifi_rooms.size():
-		var existing_room = wifi_rooms[index]
-		if String(existing_room.get("id", "")) == id:
-			wifi_rooms[index] = room
-			_update_lobby_select()
-			_update_wifi_search_status()
-			_update_room_buttons()
-			return
-	wifi_rooms.append(room)
-	_update_lobby_select()
-	_update_wifi_search_status()
-	_update_room_buttons()
-
-
-func _prune_wifi_rooms() -> void:
-	var now := Time.get_ticks_msec()
-	var changed := false
-	for index in range(wifi_rooms.size() - 1, -1, -1):
-		var room = wifi_rooms[index]
-		var id := String(room.get("id", ""))
-		var last_seen := int(wifi_room_seen_at.get(id, 0))
-		if now - last_seen > int(WIFI_DISCOVERY_TIMEOUT * 1000.0):
-			wifi_rooms.remove_at(index)
-			wifi_room_seen_at.erase(id)
-			changed = true
-	if changed:
-		_update_lobby_select()
-		_update_wifi_search_status()
-		_update_room_buttons()
-
-
-func _update_wifi_search_status() -> void:
-	if not online_page or not online_page.visible or online_connection_mode != ONLINE_MODE_WIFI:
-		return
-	if _is_hosting_room() or _is_joining_room():
-		return
-	online_status.text = _t("wifi_room_found") if not wifi_rooms.is_empty() else _t("wifi_no_room")
-
-
-func _online_default_status_text() -> String:
-	return _t("steam_status_default") if online_connection_mode == ONLINE_MODE_STEAM else _t("wifi_status_default")
-
-
-func _online_room_open_text() -> String:
-	return _t("steam_room_open") if online_connection_mode == ONLINE_MODE_STEAM else _t("wifi_room_open")
-
-
-func _online_room_waiting_text() -> String:
-	return _t("steam_room_waiting") if online_connection_mode == ONLINE_MODE_STEAM else _t("wifi_room_waiting")
-
-
-func _clear_peer() -> void:
-	_stop_wifi_discovery()
-	var steam_manager := _steam_manager()
-	if steam_manager and steam_manager.has_method("leave_lobby"):
-		steam_manager.leave_lobby()
-	var peer := multiplayer.multiplayer_peer
-	if peer and peer.has_method("close"):
-		peer.close()
-	multiplayer.multiplayer_peer = null
+		menu_texture_cache = {}
+		settings.set_meta(MENU_TEXTURE_CACHE_META, menu_texture_cache)
 
 
 func _settings() -> Node:
 	return get_node_or_null("/root/GameSettings")
-
-
-func _update_lobby_select() -> void:
-	if not lobby_select:
-		return
-	lobby_select.clear()
-	if online_connection_mode == ONLINE_MODE_WIFI:
-		if wifi_rooms.is_empty():
-			lobby_select.visible = true
-			lobby_select.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			lobby_select.add_item(_t("wifi_no_room_list"))
-			return
-		lobby_select.visible = true
-		lobby_select.mouse_filter = Control.MOUSE_FILTER_STOP
-		for index in wifi_rooms.size():
-			var room = wifi_rooms[index]
-			var room_name := String(room.get("name", ROOM_NAME))
-			lobby_select.add_item(_t("wifi_connection_item") % room_name)
-		lobby_select.select(0)
-		return
-	if steam_lobbies.is_empty():
-		lobby_select.visible = false
-		lobby_select.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		return
-	lobby_select.visible = true
-	lobby_select.mouse_filter = Control.MOUSE_FILTER_STOP
-	for index in steam_lobbies.size():
-		var lobby = steam_lobbies[index]
-		var lobby_name := String(lobby.get("name", "Silent City"))
-		if String(lobby.get("state", "waiting")) == "playing":
-			lobby_name = "%s - Playing" % lobby_name
-		lobby_select.add_item(lobby_name)
-	lobby_select.select(0)
-
-
-func _is_pending_join_lobby_playing() -> bool:
-	return String(pending_join_lobby.get("state", "waiting")) == "playing"
-
-
-func _steam_manager() -> Node:
-	return get_node_or_null("/root/SteamManager")
-
-
-func _room_name() -> String:
-	var room_name := room_name_input.text.strip_edges()
-	return room_name if not room_name.is_empty() else _t("default_connection_name")
-
-
-func _steam_ready() -> bool:
-	var steam_manager := _steam_manager()
-	return steam_manager and steam_manager.has_method("is_ready") and steam_manager.is_ready()
-
-
-func _steam_not_ready_message() -> String:
-	var steam_manager := _steam_manager()
-	if steam_manager and steam_manager.has_method("get_last_error"):
-		var message := String(steam_manager.get_last_error())
-		if not message.is_empty():
-			return message
-	return _t("steam_not_ready")
-
-
-func _connect_steam_manager() -> void:
-	var steam_manager := _steam_manager()
-	if not steam_manager:
-		return
-	if steam_manager.has_signal("lobby_created") and not steam_manager.lobby_created.is_connected(_finish_steam_host_lobby):
-		steam_manager.lobby_created.connect(_finish_steam_host_lobby)
-	if steam_manager.has_signal("lobby_joined") and not steam_manager.lobby_joined.is_connected(_finish_steam_join_lobby):
-		steam_manager.lobby_joined.connect(_finish_steam_join_lobby)
-	if steam_manager.has_signal("lobby_list_updated") and not steam_manager.lobby_list_updated.is_connected(_on_steam_lobby_list_updated):
-		steam_manager.lobby_list_updated.connect(_on_steam_lobby_list_updated)
-	if steam_manager.has_signal("steam_failed") and not steam_manager.steam_failed.is_connected(_on_steam_failed):
-		steam_manager.steam_failed.connect(_on_steam_failed)
-
-
-func _on_steam_failed(message: String) -> void:
-	if online_connection_mode == ONLINE_MODE_STEAM and online_page and online_page.visible:
-		online_status.text = message
-	_update_room_buttons()
-
-
-func _get_entered_online_address() -> Dictionary:
-	var result := {
-		"ip": "",
-		"port": ONLINE_PORT
-	}
-	var address := online_address_input.text.strip_edges()
-	if address.is_empty():
-		return result
-	var parts := address.split(":", false, 1)
-	result["ip"] = String(parts[0]).strip_edges()
-	if parts.size() > 1 and String(parts[1]).is_valid_int():
-		result["port"] = int(parts[1])
-	return result
-
-
-func _is_hosting_room() -> bool:
-	var settings := _settings()
-	return settings and settings.get("online_mode") == true and String(settings.get("online_role")) == "host" and multiplayer.has_multiplayer_peer()
-
-
-func _is_joining_room() -> bool:
-	var settings := _settings()
-	return settings and settings.get("online_mode") == true and String(settings.get("online_role")) == "client"
-
-
-func _update_room_buttons() -> void:
-	if not host_button or not join_button or not online_start_button:
-		return
-
-	_sync_online_state_with_peer()
-	_update_online_mode_ui()
-	var hosting := _is_hosting_room()
-	var joining := _is_joining_room()
-	var has_peer := multiplayer.multiplayer_peer != null
-	host_button.disabled = joining
-	_update_online_action_button_text()
-	if online_connection_mode == ONLINE_MODE_STEAM:
-		join_button.disabled = hosting or steam_lobbies.is_empty() or (joining and has_peer)
-	else:
-		join_button.disabled = hosting or wifi_rooms.is_empty() or (joining and has_peer)
-	online_start_button.visible = false
-	online_start_button.disabled = true
-
-
-func _update_online_action_button_text() -> void:
-	if not host_button or not join_button:
-		return
-	if _is_hosting_room():
-		host_button.text = _t("return_to_match")
-	else:
-		host_button.text = _t("host_room") if online_connection_mode == ONLINE_MODE_STEAM else _t("wifi_create")
-	join_button.text = _t("join") if online_connection_mode == ONLINE_MODE_STEAM else _t("wifi_join")
-
-
-func _lock_online_character_selection() -> void:
-	_set_character_buttons_enabled(false)
-
-
-func _set_character_buttons_enabled(enabled: bool) -> void:
-	for character in ["player", "golem", "ice_golem"]:
-		var card := _character_card(character)
-		var select_button := _character_select_button(character)
-		var available := enabled and _is_character_unlocked(character)
-		if select_button:
-			select_button.disabled = not available
-		if card:
-			card.mouse_filter = Control.MOUSE_FILTER_STOP if available else Control.MOUSE_FILTER_IGNORE
-	_set_ice_golem_button_text()
-
-
-func _set_character_card_available(card: Control, available: bool) -> void:
-	var select_button := card.get_node_or_null("Box/SelectButton") as Button
-	if select_button:
-		select_button.disabled = not available
-	card.mouse_filter = Control.MOUSE_FILTER_STOP if available else Control.MOUSE_FILTER_IGNORE
-
-
-func _apply_taken_character_input_state() -> void:
-	if not joined_room_waiting_for_character or not other_player_character_chosen:
-		return
-	var card := _character_card(other_player_character)
-	if card:
-		_set_character_card_available(card, false)
-
-
-func _character_card(character: String) -> PanelContainer:
-	match character:
-		"golem":
-			return golem_card
-		"ice_golem":
-			return ice_golem_card
-		_:
-			return player_card
-
-
-func _character_select_button(character: String) -> Button:
-	match character:
-		"golem":
-			return golem_select_button
-		"ice_golem":
-			return ice_golem_select_button
-		_:
-			return player_select_button
-
-
-func _saved_coins() -> int:
-	var settings := _settings()
-	if settings and settings.has_method("get_saved_coins"):
-		return int(settings.call("get_saved_coins"))
-	if settings:
-		return int(settings.get("saved_coins"))
-	return 0
-
-
-func _character_unlock_cost(character: String) -> int:
-	var settings := _settings()
-	if settings and settings.has_method("get_character_unlock_cost"):
-		return int(settings.call("get_character_unlock_cost", character))
-	if character == "ice_golem":
-		return ICE_GOLEM_UNLOCK_COINS
-	return 0
-
-
-func _is_character_unlocked(character: String) -> bool:
-	var settings := _settings()
-	if settings and settings.has_method("is_character_unlocked"):
-		return bool(settings.call("is_character_unlocked", character))
-	return _saved_coins() >= _character_unlock_cost(character)
-
-
-func _ice_golem_button_text() -> String:
-	if _is_character_unlocked("ice_golem"):
-		return _t("select")
-	return _t("locked") % [_saved_coins(), _character_unlock_cost("ice_golem")]
-
-
-func _set_ice_golem_button_text() -> void:
-	if ice_golem_select_button:
-		ice_golem_select_button.text = _ice_golem_button_text()
-
-
-func _set_card_crossed(card: Control, crossed: bool) -> void:
-	var cross := card.get_node_or_null("SelectedCross") as Label
-	if not crossed:
-		if cross:
-			cross.visible = false
-		return
-
-	if not cross:
-		cross = Label.new()
-		cross.name = "SelectedCross"
-		cross.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		cross.set_anchors_preset(Control.PRESET_FULL_RECT)
-		cross.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		cross.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		cross.add_theme_font_size_override("font_size", 92)
-		cross.add_theme_color_override("font_color", Color(1.0, 0.12, 0.08, 0.86))
-		cross.text = "X"
-		card.add_child(cross)
-	cross.visible = true
-	cross.move_to_front()
-
-
-func _is_online_character_locked() -> bool:
-	var settings := _settings()
-	return joined_room_waiting_for_character and settings and settings.get("online_mode") == true and settings.get("character_chosen") == true
-
-
-func _is_character_taken_by_other_player(character: String) -> bool:
-	return joined_room_waiting_for_character and other_player_character_chosen and other_player_character == character
-
-
-@rpc("any_peer", "reliable")
-func _client_online_character_selected(character: String) -> void:
-	if not _is_hosting_room():
-		return
-
-	var sender_id := multiplayer.get_remote_sender_id()
-	if sender_id == 0 or not multiplayer.get_peers().has(sender_id):
-		return
-	var settings := _settings()
-	if settings and settings.get("character_chosen") == true and String(settings.get("selected_character")) == character:
-		_sync_online_character_state()
-		return
-
-	remote_client_character = character
-	remote_client_character_chosen = true
-	other_player_character = character
-	other_player_character_chosen = true
-	if settings:
-		settings.set("online_remote_character", character)
-	_set_online_status_with_player_line(_t("player_connected"))
-	_update_character_cards()
-	_update_room_buttons()
-	_sync_online_character_state()
-	_try_auto_start_online_match()
-
-
-func _sync_online_character_state() -> void:
-	if not _is_hosting_room():
-		return
-	var settings := _settings()
-	var host_character := "player"
-	var host_character_chosen := false
-	if settings:
-		host_character = String(settings.get("selected_character"))
-		host_character_chosen = settings.get("character_chosen") == true
-	rpc("_online_character_state_updated", host_character_chosen, host_character, remote_client_character_chosen, remote_client_character)
-
-
-@rpc("authority", "reliable")
-func _online_character_state_updated(host_character_chosen: bool, host_character: String, _client_character_chosen: bool, _client_character: String) -> void:
-	if _is_hosting_room():
-		return
-	if not _is_joining_room():
-		return
-
-	other_player_character = host_character
-	other_player_character_chosen = host_character_chosen
-	var settings := _settings()
-	if settings and settings.get("character_chosen") == true and host_character_chosen and String(settings.get("selected_character")) == host_character:
-		settings.set("character_chosen", false)
-		character_status.text = _t("connected_choose")
-	_update_character_cards()
-	_update_room_buttons()
-
-
-@rpc("authority", "reliable")
-func _start_online_match(scene_path: String = MAIN_SCENE) -> void:
-	var settings := _settings()
-	if settings:
-		settings.set("character_chosen", true)
-	joined_room_waiting_for_character = false
-	online_match_starting = true
-	get_tree().change_scene_to_file(_store_online_scene_path(scene_path))
-
-
-func _make_room_id() -> String:
-	return "%d-%d" % [Time.get_ticks_msec(), randi()]
-
-
-func _sync_online_state_with_peer() -> void:
-	var settings := _settings()
-	if not settings:
-		return
-	if settings.get("online_mode") != true:
-		return
-	if multiplayer.has_multiplayer_peer():
-		return
-	settings.call("reset_online")
-	joined_room_waiting_for_character = false
-	remote_client_character = "golem"
-	remote_client_character_chosen = false
-	other_player_character = ""
-	other_player_character_chosen = false
-	online_match_starting = false
-	pending_join_lobby.clear()
-
-
-func _set_online_status_with_player_line(base_text: String) -> void:
-	if not online_status:
-		return
-	online_status.text = base_text
-
-
-func _error_message(error: int) -> String:
-	if error == ERR_CANT_CREATE:
-		return "20 no network permission/port busy"
-	return str(error)

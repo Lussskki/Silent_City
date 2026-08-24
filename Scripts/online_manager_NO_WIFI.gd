@@ -1,12 +1,11 @@
 extends CanvasLayer
 
-const PORT := 8910
 const MAX_CLIENTS := 1
 const SECOND_PLAYER_NAME := "SecondPlayer"
 const SECOND_PLAYER_SPAWNS_BY_SCENE := {
 	"res://Scenes/main.tscn": Vector2(3264, 404),
-	"res://Scenes/MainMedium.tscn": Vector2(3264, 410),
-	"res://Scenes/MainHard.tscn": Vector2(3264, 195),
+	"res://Scenes/MainMedium.tscn": Vector2(3008, 410),
+	"res://Scenes/MainHard.tscn": Vector2(3282, 195),
 }
 const ASH_GOLEM_FRAMES_ROOT := "res://Player/player_assets/PNG Sequences"
 const ONLINE_CHARACTER_SPRITE_OFFSETS := {
@@ -33,9 +32,6 @@ const ASH_GOLEM_ANIMATION_DIRS := {
 
 @export var golem_player_scene: PackedScene
 
-@onready var ip_input := get_node_or_null("Panel/IPInput") as LineEdit
-@onready var host_button := get_node_or_null("Panel/HostButton") as Button
-@onready var join_button := get_node_or_null("Panel/JoinButton") as Button
 @onready var status_label := get_node_or_null("Panel/StatusLabel") as Label
 
 var main_player: Node
@@ -66,10 +62,6 @@ func _ready() -> void:
 	_cache_scene_spawns()
 	_configure_main_player(true)
 	_hide_second_player()
-	if host_button:
-		host_button.pressed.connect(_host_game)
-	if join_button:
-		join_button.pressed.connect(_join_game)
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
@@ -81,38 +73,6 @@ func _ready() -> void:
 	_set_status("Online: Offline")
 	_bootstrap_menu_connection.call_deferred()
 
-
-func _host_game() -> void:
-	_reset_network()
-
-	var peer := ENetMultiplayerPeer.new()
-	var error := peer.create_server(PORT, MAX_CLIENTS)
-	if error != OK:
-		_set_status("Online host failed: %s" % _error_message(error))
-		return
-
-	multiplayer.multiplayer_peer = peer
-	_configure_main_player(true)
-	_set_status("Online: Hosting")
-
-
-func _join_game() -> void:
-	_reset_network()
-
-	var address := _parse_join_address(ip_input.text if ip_input else "")
-	var join_ip := String(address.get("ip", "")).strip_edges()
-	if join_ip.is_empty():
-		_set_status("Online join failed: no Wi-Fi host address")
-		return
-
-	var peer := ENetMultiplayerPeer.new()
-	var error := peer.create_client(join_ip, int(address["port"]))
-	if error != OK:
-		_set_status("Online join failed: %s" % _error_message(error))
-		return
-
-	multiplayer.multiplayer_peer = peer
-	_set_status("Online: Joining...")
 
 
 func _on_connected_to_server() -> void:
@@ -184,9 +144,8 @@ func close_online_session(match_finished: bool = false) -> void:
 		rpc("_finished_match_room_closed")
 		await get_tree().process_frame
 
-	# IMPORTANT FOR WI-FI:
-	# Always close the ENet peer when leaving the match.
-	# Do not keep an old host room alive in Main Menu.
+	# Always close the active multiplayer peer when leaving the match.
+	# Do not keep an old room/session alive in Main Menu.
 	_close_online_session_local()
 
 
@@ -397,21 +356,6 @@ func _remove_spawned_players() -> void:
 	_hide_second_player()
 
 
-func _reset_network() -> void:
-	# A fresh Wi-Fi Host/Join must never inherit the previous session state.
-	closing_online_session = false
-	client_ready_sent = false
-
-	_reset_steam_session()
-
-	var peer := multiplayer.multiplayer_peer
-	if peer and peer.has_method("close"):
-		peer.close()
-	multiplayer.multiplayer_peer = null
-
-	_remove_spawned_players()
-	_configure_main_player(true)
-
 
 func _hide_second_player() -> void:
 	var player := get_parent().get_node_or_null(SECOND_PLAYER_NAME) as Node2D
@@ -533,36 +477,6 @@ func _set_status(text: String) -> void:
 	if status_label:
 		status_label.text = text
 
-
-func _error_message(error: int) -> String:
-	if error == ERR_CANT_CREATE:
-		return "20 no network permission/port busy"
-	return str(error)
-
-
-func _parse_join_address(text: String) -> Dictionary:
-	var value := text.strip_edges()
-
-	# Empty input should not accidentally try localhost.
-	# Wi-Fi discovery/menu should provide the host LAN IP.
-	if value.is_empty():
-		return {
-			"ip": "",
-			"port": PORT
-		}
-
-	var result := {
-		"ip": value,
-		"port": PORT
-	}
-
-	if value.contains(":"):
-		var parts := value.split(":", false, 1)
-		result["ip"] = parts[0].strip_edges()
-		if parts.size() > 1 and parts[1].is_valid_int():
-			result["port"] = int(parts[1])
-
-	return result
 
 
 func _cache_scene_spawns() -> void:

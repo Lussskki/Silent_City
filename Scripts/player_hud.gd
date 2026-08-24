@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-@onready var health_bar: ProgressBar = $HealthBar
+@onready var health_bar: Range = $HealthBar
 @onready var health_label: Label = $HealthLabel
 @onready var enemy_count_label: Label = $EnemyCountLabel
 @onready var lives_label: Label = $LivesLabel
@@ -10,11 +10,21 @@ extends CanvasLayer
 @onready var online_status_label: Label = $PauseMenu/Box/OnlineStatusLabel
 @onready var return_button: Button = $PauseMenu/Box/ReturnButton
 @onready var main_menu_button: Button = $PauseMenu/Box/MainMenuButton
+@onready var power_bar: Range = get_node_or_null("CoinPowerBar") as Range
+@onready var power_label: Label = get_node_or_null("CoinPowerLabel") as Label
+@onready var life_text: TextureRect = get_node_or_null("LifeText") as TextureRect
+@onready var power_text: TextureRect = get_node_or_null("PowerText") as TextureRect
+@onready var enemies_text: TextureRect = get_node_or_null("EnemiesText") as TextureRect
+@onready var lives_text: TextureRect = get_node_or_null("LivesText") as TextureRect
 
 var chat_button: Button
 var chat_badge: Label
 var chat_panel: Panel
 var chat_messages: RichTextLabel
+var chat_sprite_messages: VBoxContainer
+var chat_placeholder_text: TextureRect
+var chat_input_sprite_row: HBoxContainer
+var chat_input_caret: TextureRect
 var chat_input: LineEdit
 var chat_send_button: Button
 var player: Node
@@ -23,13 +33,55 @@ var match_label: Label
 var match_restart_button: Button
 var match_exit_button: Button
 var second_player_label: Label
-var power_bar: ProgressBar
-var power_label: Label
+var enemy_value_row: HBoxContainer
+var lives_value_row: HBoxContainer
+var rounds_text: TextureRect
+var rounds_value_row: HBoxContainer
+var second_player_text: TextureRect
+var second_player_status_text: TextureRect
 var enemies_seen_once := false
 var game_result_shown := false
 var result_check_delay := 0.35
 var death_recorded := false
 var force_close_online_on_exit := false
+var chat_caret_time := 0.0
+
+var pause_title_sprite: TextureRect
+var pause_audio_button: Button
+var pause_master_volume_button: Button
+var pause_audio_back_button: Button
+var pause_audio_volume_index := 0
+var pause_audio_submenu_open := false
+
+const HUD_BAR_WIDTH := 150.0
+const HUD_BAR_HEIGHT := 19.0
+const HUD_VALUE_HEIGHT := 22.0
+const CHAT_MESSAGE_TEXT_HEIGHT := 16.0
+const CHAT_MESSAGE_FIRST_LINE_WIDTH := 244.0
+const CHAT_MESSAGE_NEXT_LINE_WIDTH := 266.0
+
+# Pause-menu audio settings. Uses the SAME config file as Main Menu -> Settings -> Audio.
+const AUDIO_CONFIG_PATH := "user://audio_settings.cfg"
+const AUDIO_VOLUME_STEPS := [100, 75, 50, 25, 0]
+
+# ESC / Pause menu sprite assets.
+# Change only these paths if your PNG names/locations are different.
+const PAUSE_TITLE_PNG := "res://Resources/Buttons/Paused.png"
+const PAUSE_AUDIO_PNG := "res://Resources/Buttons/Audio.png"
+const PAUSE_RETURN_PNG := "res://Resources/Buttons/return_to_game.png"
+const PAUSE_MAIN_MENU_PNG := "res://Resources/Buttons/main_menu.png"
+
+# Audio submenu sprites. Change only these paths if your file names differ.
+const PAUSE_VOLUME_100_PNG := "res://Resources/Buttons/100.png"
+const PAUSE_VOLUME_75_PNG := "res://Resources/Buttons/75.png"
+const PAUSE_VOLUME_50_PNG := "res://Resources/Buttons/50.png"
+const PAUSE_VOLUME_25_PNG := "res://Resources/Buttons/25.png"
+const PAUSE_VOLUME_0_PNG := "res://Resources/Buttons/0.png"
+const PAUSE_AUDIO_BACK_PNG := "res://Resources/Buttons/in_game_back.png"
+
+const PAUSE_TITLE_SIZE := Vector2(330.0, 70.0)
+const PAUSE_BUTTON_SIZE := Vector2(330.0, 56.0)
+const PAUSE_AUDIO_SUB_BUTTON_SIZE := Vector2(330.0, 56.0)
 
 
 func _ready() -> void:
@@ -38,11 +90,15 @@ func _ready() -> void:
 	menu_button.pressed.connect(_open_pause_menu)
 	return_button.pressed.connect(_return_to_game)
 	main_menu_button.pressed.connect(_go_to_main_menu)
+	_setup_pause_audio_menu()
+	_setup_pause_sprite_ui()
+	_load_pause_audio_settings()
 	pause_menu.visible = false
 	_create_chat_ui()
 	_create_match_popup()
 	_create_second_player_label()
-	_create_power_ui()
+	_create_hud_value_rows()
+	_create_online_hud_sprites()
 	_connect_round_counter()
 	_connect_local_player()
 	_layout_status_hud()
@@ -65,12 +121,17 @@ func _process(delta: float) -> void:
 	_layout_status_hud()
 	var enemies_left := _update_enemy_count()
 	_update_second_player_status()
+	_update_chat_input_caret(delta)
 	_update_offline_result(delta, enemies_left)
 
 
 func _normalize_pause_menu_layout() -> void:
 	layer = 100
 	menu_button.z_index = 100
+	menu_button.visible = false
+	menu_button.disabled = true
+	menu_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	menu_button.focus_mode = Control.FOCUS_NONE
 	menu_button.anchor_left = 1.0
 	menu_button.anchor_top = 0.0
 	menu_button.anchor_right = 1.0
@@ -85,23 +146,13 @@ func _normalize_pause_menu_layout() -> void:
 	pause_menu.anchor_top = 0.5
 	pause_menu.anchor_right = 0.5
 	pause_menu.anchor_bottom = 0.5
-	pause_menu.offset_left = -170.0
-	pause_menu.offset_top = -105.0
-	pause_menu.offset_right = 170.0
-	pause_menu.offset_bottom = 105.0
+	pause_menu.offset_left = -205.0
+	pause_menu.offset_top = -155.0
+	pause_menu.offset_right = 205.0
+	pause_menu.offset_bottom = 155.0
 
-	var panel_style := StyleBoxFlat.new()
-	panel_style.bg_color = Color(0.02, 0.025, 0.03, 0.98)
-	panel_style.border_width_left = 2
-	panel_style.border_width_top = 2
-	panel_style.border_width_right = 2
-	panel_style.border_width_bottom = 2
-	panel_style.border_color = Color(0.34, 0.39, 0.43, 1.0)
-	panel_style.corner_radius_top_left = 4
-	panel_style.corner_radius_top_right = 4
-	panel_style.corner_radius_bottom_right = 4
-	panel_style.corner_radius_bottom_left = 4
-	pause_menu.add_theme_stylebox_override("panel", panel_style)
+	# Remove the old black PauseMenu rectangle completely.
+	pause_menu.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
 
 	var box := pause_menu.get_node_or_null("Box") as VBoxContainer
 	if not box:
@@ -115,7 +166,431 @@ func _normalize_pause_menu_layout() -> void:
 	box.offset_right = -18.0
 	box.offset_bottom = -16.0
 	box.alignment = BoxContainer.ALIGNMENT_CENTER
-	box.add_theme_constant_override("separation", 12)
+	box.add_theme_constant_override("separation", 4)
+	if online_status_label:
+		online_status_label.visible = false
+		online_status_label.custom_minimum_size = Vector2.ZERO
+		online_status_label.text = ""
+
+
+func _setup_pause_sprite_ui() -> void:
+	var box := pause_menu.get_node_or_null("Box") as VBoxContainer
+	if not box:
+		return
+
+	# Hide the old normal "Paused" Label if it exists in the scene.
+	for child in box.get_children():
+		if child is Label:
+			var label := child as Label
+			if label.text.strip_edges().to_lower() == "paused":
+				label.visible = false
+				label.custom_minimum_size = Vector2.ZERO
+
+	pause_title_sprite = box.get_node_or_null("PauseTitleSprite") as TextureRect
+	if not pause_title_sprite:
+		pause_title_sprite = TextureRect.new()
+		pause_title_sprite.name = "PauseTitleSprite"
+		pause_title_sprite.custom_minimum_size = PAUSE_TITLE_SIZE
+		pause_title_sprite.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		pause_title_sprite.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		pause_title_sprite.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		pause_title_sprite.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		pause_title_sprite.process_mode = Node.PROCESS_MODE_ALWAYS
+		box.add_child(pause_title_sprite)
+		box.move_child(pause_title_sprite, 0)
+
+	pause_title_sprite.texture = _load_clean_pause_texture(PAUSE_TITLE_PNG)
+
+	_apply_pause_button_sprite(
+		pause_audio_button,
+		PAUSE_AUDIO_PNG,
+		PAUSE_BUTTON_SIZE
+	)
+	_apply_pause_button_sprite(
+		return_button,
+		PAUSE_RETURN_PNG,
+		PAUSE_BUTTON_SIZE
+	)
+	_apply_pause_button_sprite(
+		main_menu_button,
+		PAUSE_MAIN_MENU_PNG,
+		PAUSE_BUTTON_SIZE
+	)
+
+	# Audio submenu also uses PNG sprites; no normal Godot text/buttons remain.
+	_refresh_pause_audio_submenu_sprites()
+
+
+func _apply_pause_button_sprite(
+	button: Button,
+	texture_path: String,
+	minimum_size: Vector2
+) -> void:
+	if not button:
+		return
+
+	var texture := _load_clean_pause_texture(texture_path)
+	if not texture:
+		push_warning("Pause sprite not found or could not be loaded: " + texture_path)
+		return
+
+	# Text is already painted into the PNG itself.
+	button.text = ""
+	button.custom_minimum_size = minimum_size
+	button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	button.focus_mode = Control.FOCUS_NONE
+
+	button.add_theme_stylebox_override("normal", _pause_texture_style(texture))
+	button.add_theme_stylebox_override("hover", _pause_texture_style(texture))
+	button.add_theme_stylebox_override("pressed", _pause_texture_style(texture))
+	button.add_theme_stylebox_override("disabled", _pause_texture_style(texture))
+	button.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+
+
+func _pause_texture_style(texture: Texture2D) -> StyleBoxTexture:
+	var style := StyleBoxTexture.new()
+	style.texture = texture
+	return style
+
+
+func _pause_volume_sprite_path() -> String:
+	var percent: int = int(AUDIO_VOLUME_STEPS[pause_audio_volume_index])
+
+	match percent:
+		100:
+			return PAUSE_VOLUME_100_PNG
+		75:
+			return PAUSE_VOLUME_75_PNG
+		50:
+			return PAUSE_VOLUME_50_PNG
+		25:
+			return PAUSE_VOLUME_25_PNG
+		0:
+			return PAUSE_VOLUME_0_PNG
+
+	return PAUSE_VOLUME_100_PNG
+
+
+func _refresh_pause_audio_submenu_sprites() -> void:
+	if pause_master_volume_button:
+		_apply_pause_button_sprite(
+			pause_master_volume_button,
+			_pause_volume_sprite_path(),
+			PAUSE_AUDIO_SUB_BUTTON_SIZE
+		)
+
+	if pause_audio_back_button:
+		_apply_pause_button_sprite(
+			pause_audio_back_button,
+			PAUSE_AUDIO_BACK_PNG,
+			PAUSE_AUDIO_SUB_BUTTON_SIZE
+		)
+
+
+func _load_clean_pause_texture(texture_path: String) -> Texture2D:
+	if not ResourceLoader.exists(texture_path):
+		return null
+
+	var source := load(texture_path) as Texture2D
+	if not source:
+		return null
+
+	var image := source.get_image()
+	if not image or image.is_empty():
+		return source
+
+	image.convert(Image.FORMAT_RGBA8)
+
+	# AI-generated PNGs sometimes contain a baked white / light-gray background.
+	# Remove ONLY bright neutral pixels connected to the outside edges, so the
+	# actual dark/icy sprite remains intact.
+	_remove_outer_light_background(image)
+
+	# Remove a few remaining bright neutral halo pixels next to transparency.
+	_remove_light_edge_fringe(image, 5)
+
+	var used_rect := image.get_used_rect()
+	if (
+		used_rect.size.x > 0
+		and used_rect.size.y > 0
+		and (
+			used_rect.position != Vector2i.ZERO
+			or used_rect.size != image.get_size()
+		)
+	):
+		image = image.get_region(used_rect)
+
+	return ImageTexture.create_from_image(image)
+
+
+func _remove_outer_light_background(image: Image) -> void:
+	var width := image.get_width()
+	var height := image.get_height()
+	if width <= 0 or height <= 0:
+		return
+
+	var stack: Array[Vector2i] = []
+
+	for x in range(width):
+		_try_queue_light_pixel(image, Vector2i(x, 0), stack)
+		if height > 1:
+			_try_queue_light_pixel(image, Vector2i(x, height - 1), stack)
+
+	for y in range(1, height - 1):
+		_try_queue_light_pixel(image, Vector2i(0, y), stack)
+		if width > 1:
+			_try_queue_light_pixel(image, Vector2i(width - 1, y), stack)
+
+	var directions: Array[Vector2i] = [
+		Vector2i(1, 0),
+		Vector2i(-1, 0),
+		Vector2i(0, 1),
+		Vector2i(0, -1)
+	]
+
+	while not stack.is_empty():
+		var point: Vector2i = stack.pop_back()
+
+		for direction: Vector2i in directions:
+			var next: Vector2i = point + direction
+			if (
+				next.x < 0
+				or next.y < 0
+				or next.x >= width
+				or next.y >= height
+			):
+				continue
+
+			_try_queue_light_pixel(image, next, stack)
+
+
+func _try_queue_light_pixel(
+	image: Image,
+	point: Vector2i,
+	stack: Array[Vector2i]
+) -> void:
+	var color := image.get_pixelv(point)
+	if not _is_pause_background_color(color, 0.68, 0.20):
+		return
+
+	# Mark immediately so the same pixel cannot be queued twice.
+	image.set_pixelv(point, Color(0.0, 0.0, 0.0, 0.0))
+	stack.append(point)
+
+
+func _remove_light_edge_fringe(image: Image, passes: int) -> void:
+	var width := image.get_width()
+	var height := image.get_height()
+	var directions: Array[Vector2i] = [
+		Vector2i(1, 0),
+		Vector2i(-1, 0),
+		Vector2i(0, 1),
+		Vector2i(0, -1),
+		Vector2i(1, 1),
+		Vector2i(-1, 1),
+		Vector2i(1, -1),
+		Vector2i(-1, -1)
+	]
+
+	for _pass in range(passes):
+		var to_clear: Array[Vector2i] = []
+
+		for y in range(height):
+			for x in range(width):
+				var color := image.get_pixel(x, y)
+				if not _is_pause_background_color(color, 0.76, 0.16):
+					continue
+
+				var touches_transparency := false
+				for direction: Vector2i in directions:
+					var next: Vector2i = Vector2i(x, y) + direction
+					if (
+						next.x < 0
+						or next.y < 0
+						or next.x >= width
+						or next.y >= height
+					):
+						touches_transparency = true
+						break
+
+					if image.get_pixelv(next).a <= 0.02:
+						touches_transparency = true
+						break
+
+				if touches_transparency:
+					to_clear.append(Vector2i(x, y))
+
+		if to_clear.is_empty():
+			break
+
+		for point: Vector2i in to_clear:
+			image.set_pixelv(point, Color(0.0, 0.0, 0.0, 0.0))
+
+
+func _is_pause_background_color(
+	color: Color,
+	min_brightness: float,
+	neutral_tolerance: float
+) -> bool:
+	if color.a <= 0.02:
+		return false
+
+	var maximum: float = maxf(color.r, maxf(color.g, color.b))
+	var minimum: float = minf(color.r, minf(color.g, color.b))
+	var brightness: float = (color.r + color.g + color.b) / 3.0
+
+	return (
+		brightness >= min_brightness
+		and (maximum - minimum) <= neutral_tolerance
+	)
+
+
+func _setup_pause_audio_menu() -> void:
+	var box := pause_menu.get_node_or_null("Box") as VBoxContainer
+	if not box:
+		return
+
+	pause_audio_button = box.get_node_or_null("AudioButton") as Button
+	if not pause_audio_button:
+		pause_audio_button = Button.new()
+		pause_audio_button.name = "AudioButton"
+		pause_audio_button.custom_minimum_size = Vector2(260.0, 40.0)
+		pause_audio_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		pause_audio_button.process_mode = Node.PROCESS_MODE_ALWAYS
+		box.add_child(pause_audio_button)
+		if return_button and return_button.get_parent() == box:
+			box.move_child(pause_audio_button, return_button.get_index())
+
+	pause_master_volume_button = box.get_node_or_null("MasterVolumeButton") as Button
+	if not pause_master_volume_button:
+		pause_master_volume_button = Button.new()
+		pause_master_volume_button.name = "MasterVolumeButton"
+		pause_master_volume_button.custom_minimum_size = Vector2(260.0, 40.0)
+		pause_master_volume_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		pause_master_volume_button.process_mode = Node.PROCESS_MODE_ALWAYS
+		box.add_child(pause_master_volume_button)
+
+	pause_audio_back_button = box.get_node_or_null("AudioBackButton") as Button
+	if not pause_audio_back_button:
+		pause_audio_back_button = Button.new()
+		pause_audio_back_button.name = "AudioBackButton"
+		pause_audio_back_button.custom_minimum_size = Vector2(260.0, 40.0)
+		pause_audio_back_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		pause_audio_back_button.process_mode = Node.PROCESS_MODE_ALWAYS
+		box.add_child(pause_audio_back_button)
+
+	if not pause_audio_button.pressed.is_connected(_open_pause_audio):
+		pause_audio_button.pressed.connect(_open_pause_audio)
+	if not pause_master_volume_button.pressed.is_connected(_cycle_pause_master_volume):
+		pause_master_volume_button.pressed.connect(_cycle_pause_master_volume)
+	if not pause_audio_back_button.pressed.is_connected(_return_to_game):
+		pause_audio_back_button.pressed.connect(_return_to_game)
+
+	_show_pause_root()
+	_refresh_pause_audio_text()
+
+
+func _show_pause_root() -> void:
+	pause_audio_submenu_open = false
+	if pause_title_sprite:
+		pause_title_sprite.visible = true
+	if pause_audio_button:
+		pause_audio_button.visible = true
+	if return_button:
+		return_button.visible = true
+	if main_menu_button:
+		main_menu_button.visible = true
+	if pause_master_volume_button:
+		pause_master_volume_button.visible = false
+	if pause_audio_back_button:
+		pause_audio_back_button.visible = false
+	_refresh_pause_audio_text()
+
+
+func _open_pause_audio() -> void:
+	pause_audio_submenu_open = true
+	if pause_title_sprite:
+		pause_title_sprite.visible = false
+	if pause_audio_button:
+		pause_audio_button.visible = false
+	if return_button:
+		return_button.visible = false
+	if main_menu_button:
+		main_menu_button.visible = false
+	if pause_master_volume_button:
+		pause_master_volume_button.visible = true
+	if pause_audio_back_button:
+		pause_audio_back_button.visible = true
+	_refresh_pause_audio_text()
+
+
+func _refresh_pause_audio_text() -> void:
+	# All pause-menu text is painted into PNG sprites now.
+	if pause_audio_button:
+		pause_audio_button.text = ""
+	if pause_master_volume_button:
+		pause_master_volume_button.text = ""
+	if pause_audio_back_button:
+		pause_audio_back_button.text = ""
+
+	_refresh_pause_audio_submenu_sprites()
+
+
+func _master_audio_bus_index() -> int:
+	var index := AudioServer.get_bus_index("Master")
+	if index < 0:
+		return 0
+	return index
+
+
+func _cycle_pause_master_volume() -> void:
+	pause_audio_volume_index += 1
+	if pause_audio_volume_index >= AUDIO_VOLUME_STEPS.size():
+		pause_audio_volume_index = 0
+	_apply_pause_master_volume()
+	_save_pause_audio_settings()
+	_refresh_pause_audio_text()
+
+
+func _apply_pause_master_volume() -> void:
+	pause_audio_volume_index = clampi(pause_audio_volume_index, 0, AUDIO_VOLUME_STEPS.size() - 1)
+	var percent := int(AUDIO_VOLUME_STEPS[pause_audio_volume_index])
+	var bus_index := _master_audio_bus_index()
+	if percent <= 0:
+		AudioServer.set_bus_mute(bus_index, true)
+	else:
+		AudioServer.set_bus_mute(bus_index, false)
+		AudioServer.set_bus_volume_db(bus_index, linear_to_db(float(percent) / 100.0))
+
+
+func _find_pause_audio_volume_index(percent: int) -> int:
+	for index in range(AUDIO_VOLUME_STEPS.size()):
+		if int(AUDIO_VOLUME_STEPS[index]) == percent:
+			return index
+	return 0
+
+
+func _load_pause_audio_settings() -> void:
+	var config := ConfigFile.new()
+	var result := config.load(AUDIO_CONFIG_PATH)
+	if result != OK:
+		pause_audio_volume_index = 0
+		_apply_pause_master_volume()
+		_save_pause_audio_settings()
+		_refresh_pause_audio_text()
+		return
+	var saved_percent := int(config.get_value("audio", "master_volume_percent", 100))
+	pause_audio_volume_index = _find_pause_audio_volume_index(saved_percent)
+	_apply_pause_master_volume()
+	_refresh_pause_audio_text()
+
+
+func _save_pause_audio_settings() -> void:
+	var config := ConfigFile.new()
+	config.load(AUDIO_CONFIG_PATH)
+	var percent := int(AUDIO_VOLUME_STEPS[pause_audio_volume_index])
+	config.set_value("audio", "master_volume_percent", percent)
+	config.save(AUDIO_CONFIG_PATH)
 
 
 func _connect_local_player() -> void:
@@ -143,7 +618,8 @@ func _connect_local_player() -> void:
 func _on_player_life_changed(life: int, max_life: int) -> void:
 	health_bar.max_value = max_life
 	health_bar.value = life
-	health_label.text = "Life: %d" % life
+	health_label.text = "Life:"
+	health_label.visible = false
 	if life > 0:
 		death_recorded = false
 	elif _is_offline_game():
@@ -155,33 +631,117 @@ func _on_player_power_changed(power: int, max_power: int) -> void:
 		return
 	power_bar.max_value = max_power
 	power_bar.value = power
-	power_label.text = "Power: %d/%d" % [power, max_power]
+	power_label.text = "Power:"
+	power_label.visible = false
 	power_label.add_theme_color_override("font_color", Color(1.0, 0.88, 0.32) if power >= max_power else Color.WHITE)
 
 
 func _layout_status_hud() -> void:
 	var online := _is_online_game()
-	_place_control(health_bar, 16.0, 16.0, 216.0, 32.0)
-	_place_control(health_label, 16.0, 36.0, 240.0, 58.0)
+	_show_texture_label(life_text)
+	_show_texture_label(power_text)
+	_show_texture_label(enemies_text)
+	_show_texture_label(lives_text)
+	health_label.visible = false
+	power_label.visible = false
+	_place_control(life_text, 16.0, 4.0, 72.0, 36.0)
+	_place_control(health_bar, 16.0, 34.0, 16.0 + HUD_BAR_WIDTH, 34.0 + HUD_BAR_HEIGHT)
+	_place_control(power_text, 16.0, 58.0, 96.0, 87.0)
+	_place_control(power_bar, 16.0, 88.0, 16.0 + HUD_BAR_WIDTH, 88.0 + HUD_BAR_HEIGHT)
 
 	if online:
 		enemy_count_label.visible = false
 		lives_label.visible = false
-		round_label.visible = true
-		_place_control(round_label, 16.0, 62.0, 240.0, 84.0)
+		_set_row_visible(enemy_value_row, false)
+		_set_row_visible(lives_value_row, false)
+		_set_row_visible(rounds_value_row, true)
+		_show_texture_label(rounds_text)
+		_show_texture_label(second_player_text)
+		_show_texture_label(second_player_status_text)
+		_hide_texture_label(enemies_text)
+		_hide_texture_label(lives_text)
+		round_label.visible = false
+		_place_control(rounds_text, 16.0, 116.0, 105.0, 143.0)
+		_place_control(rounds_value_row, 110.0, 119.0, 190.0, 145.0)
+		_place_control(second_player_text, 16.0, 148.0, 145.0, 174.0)
+		_place_control(second_player_status_text, 150.0, 148.0, 190.0, 174.0)
 		if second_player_label:
-			_place_control(second_player_label, 16.0, 86.0, 280.0, 108.0)
-		_place_control(power_bar, 16.0, 116.0, 216.0, 132.0)
-		_place_control(power_label, 16.0, 136.0, 260.0, 158.0)
+			second_player_label.visible = false
 	else:
-		enemy_count_label.visible = true
+		enemy_count_label.visible = false
+		lives_label.visible = false
+		_set_row_visible(enemy_value_row, true)
+		_set_row_visible(lives_value_row, true)
+		_set_row_visible(rounds_value_row, false)
+		_hide_texture_label(rounds_text)
+		_hide_texture_label(second_player_text)
+		_hide_texture_label(second_player_status_text)
 		round_label.visible = false
 		if second_player_label:
 			second_player_label.visible = false
-		_place_control(enemy_count_label, 16.0, 62.0, 240.0, 84.0)
-		_place_control(lives_label, 16.0, 88.0, 240.0, 110.0)
-		_place_control(power_bar, 16.0, 116.0, 216.0, 132.0)
-		_place_control(power_label, 16.0, 136.0, 260.0, 158.0)
+		_place_control(enemies_text, 16.0, 116.0, 110.0, 145.0)
+		_place_control(enemy_value_row, 116.0, 119.0, 190.0, 145.0)
+		_place_control(lives_text, 16.0, 148.0, 88.0, 178.0)
+		_place_control(lives_value_row, 94.0, 151.0, 180.0, 177.0)
+
+
+func _hide_texture_label(label: TextureRect) -> void:
+	if label:
+		label.visible = false
+
+
+func _show_texture_label(label: TextureRect) -> void:
+	if label:
+		label.visible = true
+		label.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		label.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+
+
+func _set_row_visible(row: Control, is_visible: bool) -> void:
+	if row:
+		row.visible = is_visible
+
+
+func _set_hud_value(row: HBoxContainer, value: String, online_style := false) -> void:
+	if not row:
+		return
+	if String(row.get_meta("hud_value", "")) == value and bool(row.get_meta("online_style", false)) == online_style:
+		return
+	row.set_meta("hud_value", value)
+	row.set_meta("online_style", online_style)
+	for child in row.get_children():
+		row.remove_child(child)
+		child.queue_free()
+
+	var index := 0
+	while index < value.length():
+		var character := value.substr(index, 1)
+		var texture := _hud_value_texture(character, online_style)
+		if texture:
+			var character_rect := TextureRect.new()
+			character_rect.texture = texture
+			character_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			character_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			character_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			var texture_size := texture.get_size()
+			var width := HUD_VALUE_HEIGHT
+			if texture_size.y > 0:
+				width = max(8.0, HUD_VALUE_HEIGHT * texture_size.x / texture_size.y)
+			character_rect.custom_minimum_size = Vector2(width, HUD_VALUE_HEIGHT)
+			row.add_child(character_rect)
+		index += 1
+
+
+func _hud_value_texture(character: String, online_style := false) -> Texture2D:
+	match character:
+		":":
+			return load("res://Sprites/Hud/online_colon.png" if online_style else "res://Sprites/Hud/hud_colon.png") as Texture2D
+		"/":
+			return load("res://Sprites/Hud/online_slash.png" if online_style else "res://Sprites/Hud/hud_slash.png") as Texture2D
+		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
+			return load("res://Sprites/Hud/hud_num_%s.png" % character) as Texture2D
+		_:
+			return null
 
 
 func _place_control(control: Control, left: float, top: float, right: float, bottom: float) -> void:
@@ -205,8 +765,9 @@ func _update_enemy_count() -> int:
 		if enemy.get("dead") == true:
 			continue
 		enemies_left += 1
-	enemy_count_label.text = "Enemies: %d" % enemies_left
-	enemy_count_label.visible = not _is_online_game()
+	enemy_count_label.text = str(enemies_left)
+	enemy_count_label.visible = false
+	_set_hud_value(enemy_value_row, ":%d" % enemies_left)
 	return enemies_left
 
 
@@ -252,12 +813,20 @@ func _handle_offline_death() -> void:
 func _update_try_count() -> void:
 	if not lives_label:
 		return
-	lives_label.visible = _is_offline_game()
+	lives_label.visible = false
 	var settings := get_node_or_null("/root/GameSettings")
+	var tries_text := "0/5"
 	if settings and settings.has_method("offline_tries_text"):
-		lives_label.text = String(settings.call("offline_tries_text"))
-	else:
-		lives_label.text = "Lives: 0/5"
+		tries_text = _number_text_after_colon(String(settings.call("offline_tries_text")))
+	lives_label.text = tries_text
+	_set_hud_value(lives_value_row, ":%s" % tries_text)
+
+
+func _number_text_after_colon(value: String) -> String:
+	var colon := value.find(":")
+	if colon == -1:
+		return value
+	return value.substr(colon + 1).strip_edges()
 
 
 func _connect_round_counter() -> void:
@@ -266,7 +835,7 @@ func _connect_round_counter() -> void:
 		round_label.visible = false
 		return
 
-	round_label.visible = multiplayer.has_multiplayer_peer()
+	round_label.visible = false
 	if settings.has_signal("online_rounds_changed") and not settings.online_rounds_changed.is_connected(_on_online_rounds_changed):
 		settings.online_rounds_changed.connect(_on_online_rounds_changed)
 	if settings.has_signal("online_match_finished") and not settings.online_match_finished.is_connected(_on_online_match_finished):
@@ -279,6 +848,8 @@ func _connect_round_counter() -> void:
 
 func _on_online_rounds_changed(rounds_played: int, max_rounds: int) -> void:
 	round_label.text = "Rounds: %d/%d" % [rounds_played, max_rounds]
+	round_label.visible = false
+	_set_hud_value(rounds_value_row, ":%d/%d" % [rounds_played, max_rounds], true)
 
 
 func _on_online_match_finished(winner_name: String) -> void:
@@ -385,35 +956,52 @@ func _create_second_player_label() -> void:
 	add_child(second_player_label)
 
 
-func _create_power_ui() -> void:
-	power_bar = ProgressBar.new()
-	power_bar.name = "CoinPowerBar"
-	power_bar.offset_left = 16.0
-	power_bar.offset_top = 114.0
-	power_bar.offset_right = 216.0
-	power_bar.offset_bottom = 130.0
-	power_bar.max_value = 100.0
-	power_bar.value = 0.0
-	power_bar.show_percentage = false
-	var fill := StyleBoxFlat.new()
-	fill.bg_color = Color(0.95, 0.68, 0.14, 1.0)
-	power_bar.add_theme_stylebox_override("fill", fill)
-	add_child(power_bar)
+func _create_hud_value_rows() -> void:
+	enemy_value_row = HBoxContainer.new()
+	enemy_value_row.name = "EnemyValueSprites"
+	enemy_value_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	enemy_value_row.add_theme_constant_override("separation", 0)
+	add_child(enemy_value_row)
 
-	power_label = Label.new()
-	power_label.name = "CoinPowerLabel"
-	power_label.offset_left = 16.0
-	power_label.offset_top = 134.0
-	power_label.offset_right = 220.0
-	power_label.offset_bottom = 158.0
-	power_label.text = "Power: 0/50"
-	add_child(power_label)
+	lives_value_row = HBoxContainer.new()
+	lives_value_row.name = "LivesValueSprites"
+	lives_value_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	lives_value_row.add_theme_constant_override("separation", 0)
+	add_child(lives_value_row)
+
+
+func _create_online_hud_sprites() -> void:
+	rounds_text = _new_hud_texture("RoundsText", "res://Sprites/Hud/online_rounds_label.png")
+	add_child(rounds_text)
+
+	rounds_value_row = HBoxContainer.new()
+	rounds_value_row.name = "RoundsValueSprites"
+	rounds_value_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	rounds_value_row.add_theme_constant_override("separation", 0)
+	add_child(rounds_value_row)
+
+	second_player_text = _new_hud_texture("SecondPlayerText", "res://Sprites/Hud/online_second_player_label.png")
+	add_child(second_player_text)
+
+	second_player_status_text = _new_hud_texture("SecondPlayerStatusText", "res://Sprites/Hud/online_off_label.png")
+	add_child(second_player_status_text)
+
+
+func _new_hud_texture(node_name: String, texture_path: String) -> TextureRect:
+	var rect := TextureRect.new()
+	rect.name = node_name
+	rect.visible = false
+	rect.texture = load(texture_path) as Texture2D
+	rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return rect
 
 
 func _create_chat_ui() -> void:
 	chat_button = Button.new()
 	chat_button.name = "ChatButton"
-	chat_button.text = "Chat"
+	chat_button.text = ""
 	chat_button.tooltip_text = "Chat"
 	chat_button.focus_mode = Control.FOCUS_NONE
 	chat_button.z_index = 100
@@ -421,14 +1009,15 @@ func _create_chat_ui() -> void:
 	chat_button.anchor_top = 0.0
 	chat_button.anchor_right = 1.0
 	chat_button.anchor_bottom = 0.0
-	chat_button.offset_left = -104.0
-	chat_button.offset_top = 12.0
-	chat_button.offset_right = -64.0
-	chat_button.offset_bottom = 52.0
-	chat_button.add_theme_stylebox_override("normal", _circle_button_style(Color(0.04, 0.065, 0.08, 0.92), Color(0.70, 0.78, 0.84, 0.95)))
-	chat_button.add_theme_stylebox_override("hover", _circle_button_style(Color(0.08, 0.14, 0.17, 0.96), Color(0.88, 0.96, 1.0, 1.0)))
-	chat_button.add_theme_stylebox_override("pressed", _circle_button_style(Color(0.02, 0.045, 0.06, 1.0), Color(0.95, 1.0, 1.0, 1.0)))
-	chat_button.add_theme_font_size_override("font_size", 12)
+	chat_button.offset_left = -76.0
+	chat_button.offset_top = 8.0
+	chat_button.offset_right = -22.0
+	chat_button.offset_bottom = 58.0
+	chat_button.icon = load("res://Sprites/Hud/notification_chat_empty.png") as Texture2D
+	chat_button.expand_icon = true
+	chat_button.add_theme_stylebox_override("normal", _transparent_style())
+	chat_button.add_theme_stylebox_override("hover", _transparent_style())
+	chat_button.add_theme_stylebox_override("pressed", _transparent_style())
 	chat_button.pressed.connect(_toggle_chat_panel)
 	add_child(chat_button)
 
@@ -443,9 +1032,9 @@ func _create_chat_ui() -> void:
 	chat_badge.anchor_top = 0.0
 	chat_badge.anchor_right = 1.0
 	chat_badge.anchor_bottom = 0.0
-	chat_badge.offset_left = -72.0
+	chat_badge.offset_left = -52.0
 	chat_badge.offset_top = 2.0
-	chat_badge.offset_right = -48.0
+	chat_badge.offset_right = -28.0
 	chat_badge.offset_bottom = 26.0
 	chat_badge.add_theme_font_size_override("font_size", 18)
 	chat_badge.add_theme_color_override("font_color", Color(1.0, 0.95, 0.18, 1.0))
@@ -463,55 +1052,128 @@ func _create_chat_ui() -> void:
 	chat_panel.offset_left = -356.0
 	chat_panel.offset_top = 62.0
 	chat_panel.offset_right = -20.0
-	chat_panel.offset_bottom = 300.0
-	chat_panel.add_theme_stylebox_override("panel", _panel_style())
+	chat_panel.offset_bottom = 301.0
+	chat_panel.add_theme_stylebox_override("panel", _transparent_style())
 	add_child(chat_panel)
+
+	var chat_panel_texture := TextureRect.new()
+	chat_panel_texture.name = "OnlineChatPanelTexture"
+	chat_panel_texture.anchor_right = 1.0
+	chat_panel_texture.anchor_bottom = 1.0
+	chat_panel_texture.texture = load("res://Sprites/Hud/online2_chat_panel.png") as Texture2D
+	chat_panel_texture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	chat_panel_texture.stretch_mode = TextureRect.STRETCH_SCALE
+	chat_panel_texture.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	chat_panel.add_child(chat_panel_texture)
 
 	var box := VBoxContainer.new()
 	box.anchor_right = 1.0
 	box.anchor_bottom = 1.0
-	box.offset_left = 12.0
-	box.offset_top = 12.0
-	box.offset_right = -12.0
-	box.offset_bottom = -12.0
-	box.add_theme_constant_override("separation", 8)
+	box.offset_left = 26.0
+	box.offset_top = 54.0
+	box.offset_right = -25.0
+	box.offset_bottom = -22.0
+	box.add_theme_constant_override("separation", 4)
 	chat_panel.add_child(box)
 
-	var title_row := HBoxContainer.new()
-	box.add_child(title_row)
-
-	var title := Label.new()
-	title.text = "Online Chat"
-	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	title.add_theme_font_size_override("font_size", 18)
-	title_row.add_child(title)
-
 	var close_button := Button.new()
-	close_button.text = "X"
-	close_button.custom_minimum_size = Vector2(32, 28)
+	close_button.name = "OnlineChatCloseButton"
+	close_button.text = ""
+	close_button.anchor_left = 1.0
+	close_button.anchor_top = 0.0
+	close_button.anchor_right = 1.0
+	close_button.anchor_bottom = 0.0
+	close_button.offset_left = -42.0
+	close_button.offset_top = 8.0
+	close_button.offset_right = -6.0
+	close_button.offset_bottom = 44.0
+	close_button.add_theme_stylebox_override("normal", _transparent_style())
+	close_button.add_theme_stylebox_override("hover", _transparent_style())
+	close_button.add_theme_stylebox_override("pressed", _transparent_style())
 	close_button.pressed.connect(func(): chat_panel.visible = false)
-	title_row.add_child(close_button)
+	chat_panel.add_child(close_button)
 
 	chat_messages = RichTextLabel.new()
-	chat_messages.bbcode_enabled = false
+	chat_messages.bbcode_enabled = true
 	chat_messages.scroll_following = true
 	chat_messages.fit_content = false
-	chat_messages.custom_minimum_size = Vector2(0, 132)
-	chat_messages.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	box.add_child(chat_messages)
+	chat_messages.visible = false
+	chat_messages.custom_minimum_size = Vector2.ZERO
+	chat_messages.add_theme_stylebox_override("normal", _transparent_style())
+
+	var message_scroll := ScrollContainer.new()
+	message_scroll.name = "ChatSpriteScroll"
+	message_scroll.custom_minimum_size = Vector2(0, 132)
+	message_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	message_scroll.clip_contents = true
+	message_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	box.add_child(message_scroll)
+
+	chat_sprite_messages = VBoxContainer.new()
+	chat_sprite_messages.name = "ChatSpriteMessages"
+	chat_sprite_messages.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	chat_sprite_messages.add_theme_constant_override("separation", 1)
+	message_scroll.add_child(chat_sprite_messages)
 
 	var input_row := HBoxContainer.new()
 	box.add_child(input_row)
 
+	var input_stack := Control.new()
+	input_stack.custom_minimum_size = Vector2(0, 36)
+	input_stack.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	input_stack.clip_contents = true
+	input_row.add_child(input_stack)
+
+	chat_placeholder_text = TextureRect.new()
+	chat_placeholder_text.name = "ChatPlaceholderText"
+	chat_placeholder_text.anchor_right = 1.0
+	chat_placeholder_text.anchor_bottom = 1.0
+	chat_placeholder_text.offset_left = 4.0
+	chat_placeholder_text.offset_top = 4.0
+	chat_placeholder_text.offset_right = 132.0
+	chat_placeholder_text.offset_bottom = 24.0
+	chat_placeholder_text.texture = load("res://Sprites/Hud/online2_write_message_label_input.png") as Texture2D
+	chat_placeholder_text.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	chat_placeholder_text.stretch_mode = TextureRect.STRETCH_KEEP
+	chat_placeholder_text.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	input_stack.add_child(chat_placeholder_text)
+
+	chat_input_sprite_row = HBoxContainer.new()
+	chat_input_sprite_row.name = "ChatInputSpriteText"
+	chat_input_sprite_row.anchor_right = 1.0
+	chat_input_sprite_row.anchor_bottom = 1.0
+	chat_input_sprite_row.offset_left = 8.0
+	chat_input_sprite_row.offset_top = 1.0
+	chat_input_sprite_row.offset_right = -10.0
+	chat_input_sprite_row.offset_bottom = -2.0
+	chat_input_sprite_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	chat_input_sprite_row.add_theme_constant_override("separation", -3)
+	input_stack.add_child(chat_input_sprite_row)
+
 	chat_input = LineEdit.new()
-	chat_input.placeholder_text = "Write message..."
+	chat_input.anchor_right = 1.0
+	chat_input.anchor_bottom = 1.0
+	chat_input.placeholder_text = ""
 	chat_input.max_length = 120
-	chat_input.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	chat_input.add_theme_stylebox_override("normal", _transparent_style())
+	chat_input.add_theme_stylebox_override("focus", _transparent_style())
+	chat_input.add_theme_font_size_override("font_size", 16)
+	chat_input.add_theme_color_override("font_color", Color(1.0, 1.0, 1.0, 0.0))
+	chat_input.add_theme_color_override("font_placeholder_color", Color(1.0, 1.0, 1.0, 0.0))
+	chat_input.add_theme_color_override("caret_color", Color(1.0, 1.0, 1.0, 0.0))
+	chat_input.text_changed.connect(_update_chat_input_sprites)
+	chat_input.focus_entered.connect(_on_chat_input_focus_changed)
+	chat_input.focus_exited.connect(_on_chat_input_focus_changed)
 	chat_input.text_submitted.connect(func(_text: String): _send_chat_message())
-	input_row.add_child(chat_input)
+	input_stack.add_child(chat_input)
+	_attach_chat_input_caret()
 
 	chat_send_button = Button.new()
-	chat_send_button.text = "Send"
+	chat_send_button.text = ""
+	chat_send_button.custom_minimum_size = Vector2(76.0, 36.0)
+	chat_send_button.add_theme_stylebox_override("normal", _transparent_style())
+	chat_send_button.add_theme_stylebox_override("hover", _transparent_style())
+	chat_send_button.add_theme_stylebox_override("pressed", _transparent_style())
 	chat_send_button.pressed.connect(_send_chat_message)
 	input_row.add_child(chat_send_button)
 
@@ -546,6 +1208,10 @@ func _panel_style() -> StyleBoxFlat:
 	style.corner_radius_bottom_right = 6
 	style.corner_radius_bottom_left = 6
 	return style
+
+
+func _transparent_style() -> StyleBoxEmpty:
+	return StyleBoxEmpty.new()
 
 
 func _modal_panel_style() -> StyleBoxFlat:
@@ -584,7 +1250,7 @@ func _update_chat_visibility() -> void:
 	var online := multiplayer.has_multiplayer_peer()
 	chat_button.visible = online
 	if chat_badge:
-		chat_badge.visible = chat_badge.visible and online
+		chat_badge.visible = false
 	if chat_panel:
 		chat_panel.visible = chat_panel.visible and online
 
@@ -596,7 +1262,9 @@ func _toggle_chat_panel() -> void:
 	if chat_panel.visible and chat_input:
 		if chat_badge:
 			chat_badge.visible = false
-		chat_input.grab_focus()
+		_set_chat_notification(false)
+		chat_caret_time = 0.0
+		_update_chat_input_sprites(chat_input.text)
 
 
 func _send_chat_message() -> void:
@@ -609,23 +1277,238 @@ func _send_chat_message() -> void:
 	if online_manager and online_manager.has_method("send_chat_message"):
 		online_manager.call("send_chat_message", message)
 	chat_input.clear()
+	_update_chat_input_sprites("")
 
 
 func add_chat_message(author: String, message: String, notify := false) -> void:
-	if not chat_messages:
+	if not chat_sprite_messages:
 		return
-	chat_messages.append_text("%s: %s\n" % [author, message])
-	if notify and chat_badge and chat_panel and not chat_panel.visible:
-		chat_badge.visible = true
+	var player_tag := "P2" if notify else "P1"
+	_add_sprite_chat_line("%s: %s" % [player_tag, message], notify)
+	if notify and chat_panel and not chat_panel.visible:
+		_set_chat_notification(true)
+
+
+func _update_chat_input_sprites(value: String) -> void:
+	if not chat_input_sprite_row:
+		return
+	var input_active := _is_chat_input_active()
+	if chat_placeholder_text:
+		chat_placeholder_text.visible = value.is_empty() and not input_active
+	chat_input_sprite_row.offset_top = 1.0 if value.is_empty() else -9.0
+	_set_sprite_text(chat_input_sprite_row, _chat_input_visible_text(value), 13.0)
+	if value.is_empty() and not input_active:
+		var spacer := Control.new()
+		spacer.name = "PlaceholderCaretSpacer"
+		spacer.custom_minimum_size = Vector2(92.0, 13.0)
+		chat_input_sprite_row.add_child(spacer)
+	_attach_chat_input_caret()
+
+
+func _attach_chat_input_caret() -> void:
+	if not chat_input_sprite_row:
+		return
+	if not chat_input_caret:
+		chat_input_caret = TextureRect.new()
+		chat_input_caret.name = "InputCaret"
+		chat_input_caret.texture = load("res://Sprites/Hud/hud_line.png") as Texture2D
+		chat_input_caret.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		chat_input_caret.stretch_mode = TextureRect.STRETCH_SCALE
+		chat_input_caret.custom_minimum_size = Vector2(4.0, 12.0)
+		chat_input_caret.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		chat_input_caret.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var current_parent := chat_input_caret.get_parent()
+	if current_parent:
+		current_parent.remove_child(chat_input_caret)
+	chat_input_sprite_row.add_child(chat_input_caret)
+
+
+func _update_chat_input_caret(delta: float) -> void:
+	if not chat_input_caret:
+		return
+	chat_caret_time += delta
+	chat_input_caret.visible = _is_chat_input_active() and fposmod(chat_caret_time, 1.0) < 0.65
+
+
+func _on_chat_input_focus_changed() -> void:
+	chat_caret_time = 0.0
+	if chat_input:
+		_update_chat_input_sprites(chat_input.text)
+	if chat_input_caret:
+		chat_input_caret.visible = _is_chat_input_active()
+
+
+func _is_chat_input_active() -> bool:
+	return chat_panel != null and chat_panel.visible and chat_input != null and chat_input.has_focus()
+
+
+func _set_chat_notification(has_unread: bool) -> void:
+	if not chat_button:
+		return
+	chat_button.icon = load("res://Sprites/Hud/notification_chat_exclamation.png" if has_unread else "res://Sprites/Hud/notification_chat_empty.png") as Texture2D
+
+
+func _chat_input_visible_text(value: String) -> String:
+	var max_chars := 24
+	if value.length() <= max_chars:
+		return value
+	return value.substr(value.length() - max_chars, max_chars)
+
+
+func _add_sprite_chat_line(text: String, is_second_player: bool) -> void:
+	var message_block := VBoxContainer.new()
+	message_block.name = "ChatMessageBlock"
+	message_block.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	message_block.add_theme_constant_override("separation", 0)
+	chat_sprite_messages.add_child(message_block)
+
+	var lines := _wrap_sprite_text(text, CHAT_MESSAGE_TEXT_HEIGHT, CHAT_MESSAGE_FIRST_LINE_WIDTH, CHAT_MESSAGE_NEXT_LINE_WIDTH)
+	for line_index in range(lines.size()):
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", -2)
+		row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		message_block.add_child(row)
+
+		if line_index == 0:
+			var icon := TextureRect.new()
+			icon.name = "PlayerIcon"
+			icon.texture = load("res://Sprites/Hud/online_player_two_icon.png" if is_second_player else "res://Sprites/Hud/online_player_one_icon.png") as Texture2D
+			icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			icon.custom_minimum_size = Vector2(18, 18)
+			row.add_child(icon)
+		else:
+			var indent := Control.new()
+			indent.name = "PlayerIcon"
+			indent.custom_minimum_size = Vector2(20.0, CHAT_MESSAGE_TEXT_HEIGHT)
+			row.add_child(indent)
+
+		_set_sprite_text(row, lines[line_index], CHAT_MESSAGE_TEXT_HEIGHT)
+
+	while chat_sprite_messages.get_child_count() > 5:
+		var old_message := chat_sprite_messages.get_child(0)
+		chat_sprite_messages.remove_child(old_message)
+		old_message.queue_free()
+
+
+func _wrap_sprite_text(text: String, height: float, first_line_width: float, next_line_width: float) -> PackedStringArray:
+	var lines := PackedStringArray()
+	var current_line := ""
+	var max_width := first_line_width
+	var words := text.split(" ", false)
+	for word in words:
+		var candidate := word if current_line.is_empty() else "%s %s" % [current_line, word]
+		if _sprite_text_width(candidate, height) <= max_width:
+			current_line = candidate
+			continue
+
+		if not current_line.is_empty():
+			lines.append(current_line)
+			current_line = ""
+			max_width = next_line_width
+
+		var word_lines := _wrap_sprite_word(word, height, max_width, next_line_width)
+		for index in range(word_lines.size()):
+			if index < word_lines.size() - 1:
+				lines.append(word_lines[index])
+				max_width = next_line_width
+			else:
+				current_line = word_lines[index]
+
+	if not current_line.is_empty() or lines.is_empty():
+		lines.append(current_line)
+	return lines
+
+
+func _wrap_sprite_word(word: String, height: float, first_line_width: float, next_line_width: float) -> PackedStringArray:
+	var lines := PackedStringArray()
+	var current_line := ""
+	var max_width := first_line_width
+	for index in range(word.length()):
+		var character := word.substr(index, 1)
+		var candidate := current_line + character
+		if not current_line.is_empty() and _sprite_text_width(candidate, height) > max_width:
+			lines.append(current_line)
+			current_line = character
+			max_width = next_line_width
+		else:
+			current_line = candidate
+	if not current_line.is_empty():
+		lines.append(current_line)
+	return lines
+
+
+func _sprite_text_width(text: String, height: float) -> float:
+	var width := 0.0
+	for index in range(text.length()):
+		width += _sprite_character_width(text.unicode_at(index), height)
+		if index > 0:
+			width -= 2.0
+	return width
+
+
+func _sprite_character_width(code: int, height: float) -> float:
+	if code == 32:
+		return height * 0.45
+	var texture := _alphabet_texture(code)
+	if not texture:
+		return 0.0
+	var texture_size := texture.get_size()
+	if texture_size.y <= 0:
+		return height
+	return max(5.0, height * texture_size.x / texture_size.y)
+
+
+func _set_sprite_text(row: HBoxContainer, text: String, height: float) -> void:
+	for child in row.get_children():
+		if child.name == "PlayerIcon":
+			continue
+		row.remove_child(child)
+		child.queue_free()
+
+	for index in range(text.length()):
+		var code := text.unicode_at(index)
+		if code == 32:
+			var spacer := Control.new()
+			spacer.custom_minimum_size = Vector2(height * 0.45, height)
+			row.add_child(spacer)
+			continue
+		var texture := _alphabet_texture(code)
+		if not texture:
+			continue
+		var char_rect := TextureRect.new()
+		char_rect.texture = texture
+		char_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		char_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		char_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var texture_size := texture.get_size()
+		var width := height
+		if texture_size.y > 0:
+			width = max(5.0, height * texture_size.x / texture_size.y)
+		char_rect.custom_minimum_size = Vector2(width, height)
+		row.add_child(char_rect)
+
+
+func _alphabet_texture(code: int) -> Texture2D:
+	var path := "res://Sprites/Hud/Alphabet/u%04X.png" % code
+	if not ResourceLoader.exists(path):
+		return null
+	return load(path) as Texture2D
 
 
 func _update_second_player_status() -> void:
 	if not second_player_label:
 		return
-	second_player_label.visible = multiplayer.has_multiplayer_peer()
-	if not second_player_label.visible:
+	second_player_label.visible = false
+	var online := multiplayer.has_multiplayer_peer()
+	_show_texture_label(second_player_status_text)
+	if not online:
+		_hide_texture_label(second_player_status_text)
 		return
-	second_player_label.text = "Second Player: %s" % ("On" if _is_second_player_connected() else "Off")
+	var connected := _is_second_player_connected()
+	second_player_label.text = "Second Player: %s" % ("On" if connected else "Off")
+	if second_player_status_text:
+		second_player_status_text.texture = load("res://Sprites/Hud/online_on_label.png" if connected else "res://Sprites/Hud/online_off_label.png") as Texture2D
 
 
 func _is_second_player_connected() -> bool:
@@ -651,7 +1534,10 @@ func _restart_current_level() -> void:
 
 
 func _open_pause_menu() -> void:
-	online_status_label.text = _online_status_text()
+	if online_status_label:
+		online_status_label.visible = false
+		online_status_label.text = ""
+	_show_pause_root()
 	pause_menu.visible = true
 	get_tree().paused = true
 
@@ -671,6 +1557,7 @@ func _online_status_text() -> String:
 
 
 func _return_to_game() -> void:
+	_show_pause_root()
 	pause_menu.visible = false
 	get_tree().paused = false
 
