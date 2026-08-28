@@ -243,35 +243,35 @@ func is_second_player_connected() -> bool:
 
 
 @rpc("any_peer", "unreliable_ordered")
-func _receive_player_network_state(remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool = false) -> void:
+func _receive_player_network_state(remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool = false, remote_defending: bool = false) -> void:
 	var api := get_multiplayer()
 	if api == null or not api.has_multiplayer_peer():
 		return
 	var peer_id := api.get_remote_sender_id()
 	if peer_id == 0:
 		return
-	_apply_player_network_state(peer_id, remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead)
+	_apply_player_network_state(peer_id, remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead, remote_defending)
 
 
 @rpc("any_peer", "reliable")
-func _receive_forced_player_network_state(remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool = false) -> void:
+func _receive_forced_player_network_state(remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool = false, remote_defending: bool = false) -> void:
 	var api := get_multiplayer()
 	if api == null or not api.has_multiplayer_peer():
 		return
 	var peer_id := api.get_remote_sender_id()
 	if peer_id == 0:
 		return
-	_apply_player_network_state(peer_id, remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead)
+	_apply_player_network_state(peer_id, remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead, remote_defending)
 
 
-func _apply_player_network_state(peer_id: int, remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool) -> void:
+func _apply_player_network_state(peer_id: int, remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool, remote_defending: bool = false) -> void:
 	var player := _remote_player_for_peer(peer_id)
 	if not player:
 		return
 	if peer_id != 1 and is_zero_approx(remote_velocity.x):
 		remote_flip_h = true
 	if player.has_method("_apply_remote_network_state"):
-		player.call("_apply_remote_network_state", remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead)
+		player.call("_apply_remote_network_state", remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead, remote_defending)
 
 
 @rpc("any_peer", "reliable")

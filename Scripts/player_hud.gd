@@ -32,6 +32,8 @@ var match_popup: Panel
 var match_label: Label
 var match_restart_button: Button
 var match_exit_button: Button
+var match_box: VBoxContainer
+var match_result_sprite: TextureRect
 var second_player_label: Label
 var enemy_value_row: HBoxContainer
 var lives_value_row: HBoxContainer
@@ -52,13 +54,20 @@ var pause_master_volume_button: Button
 var pause_audio_back_button: Button
 var pause_audio_volume_index := 0
 var pause_audio_submenu_open := false
+var menu_texture_cache: Dictionary = {}
+var menu_optimizer = null
 
 const HUD_BAR_WIDTH := 150.0
 const HUD_BAR_HEIGHT := 19.0
 const HUD_VALUE_HEIGHT := 22.0
+const HUD_HEART_SIZE := Vector2(38.0, 38.0)
 const CHAT_MESSAGE_TEXT_HEIGHT := 16.0
 const CHAT_MESSAGE_FIRST_LINE_WIDTH := 244.0
 const CHAT_MESSAGE_NEXT_LINE_WIDTH := 266.0
+const MENU_TEXTURE_CACHE_META := "_silent_city_menu_texture_cache_v1"
+
+const HUD_HEART_FULL_PNG := "res://Resources/Deffence/heart_full.png"
+const HUD_HEART_BROKEN_PNG := "res://Resources/Deffence/heart_broken.png"
 
 # Pause-menu audio settings. Uses the SAME config file as Main Menu -> Settings -> Audio.
 const AUDIO_CONFIG_PATH := "user://audio_settings.cfg"
@@ -78,14 +87,18 @@ const PAUSE_VOLUME_50_PNG := "res://Resources/Buttons/50.png"
 const PAUSE_VOLUME_25_PNG := "res://Resources/Buttons/25.png"
 const PAUSE_VOLUME_0_PNG := "res://Resources/Buttons/0.png"
 const PAUSE_AUDIO_BACK_PNG := "res://Resources/Buttons/in_game_back.png"
+const RESULT_LOSE_PNG := "res://Resources/Buttons/Game_Final.png"
 
 const PAUSE_TITLE_SIZE := Vector2(330.0, 70.0)
 const PAUSE_BUTTON_SIZE := Vector2(330.0, 56.0)
 const PAUSE_AUDIO_SUB_BUTTON_SIZE := Vector2(330.0, 56.0)
+const RESULT_BUTTON_SIZE := Vector2(260.0, 48.0)
+const RESULT_SPRITE_POPUP_SIZE := Vector2(390.0, 220.0)
 
 
 func _ready() -> void:
 	add_to_group("PlayerHUD")
+	_setup_runtime_texture_optimizer()
 	_normalize_pause_menu_layout()
 	menu_button.pressed.connect(_open_pause_menu)
 	return_button.pressed.connect(_return_to_game)
@@ -287,9 +300,20 @@ func _refresh_pause_audio_submenu_sprites() -> void:
 		)
 
 
-func _load_clean_pause_texture(texture_path: String) -> Texture2D:
+func _load_clean_pause_texture(texture_path: String, crop_transparent_margins := true) -> Texture2D:
 	if not ResourceLoader.exists(texture_path):
 		return null
+
+	if menu_optimizer and menu_optimizer.has_method("load_clean_ui_texture"):
+		var optimized: Texture2D = menu_optimizer.load_clean_ui_texture(
+			texture_path,
+			crop_transparent_margins,
+			5,
+			0.40,
+			0.16
+		)
+		if optimized:
+			return optimized
 
 	var source := load(texture_path) as Texture2D
 	if not source:
@@ -311,6 +335,8 @@ func _load_clean_pause_texture(texture_path: String) -> Texture2D:
 
 	var used_rect := image.get_used_rect()
 	if (
+		crop_transparent_margins
+		and
 		used_rect.size.x > 0
 		and used_rect.size.y > 0
 		and (
@@ -681,8 +707,8 @@ func _layout_status_hud() -> void:
 			second_player_label.visible = false
 		_place_control(enemies_text, 16.0, 116.0, 110.0, 145.0)
 		_place_control(enemy_value_row, 116.0, 119.0, 190.0, 145.0)
-		_place_control(lives_text, 16.0, 148.0, 88.0, 178.0)
-		_place_control(lives_value_row, 94.0, 151.0, 180.0, 177.0)
+		_hide_texture_label(lives_text)
+		_place_control(lives_value_row, 16.0, 158.0, 275.0, 198.0)
 
 
 func _hide_texture_label(label: TextureRect) -> void:
@@ -815,11 +841,58 @@ func _update_try_count() -> void:
 		return
 	lives_label.visible = false
 	var settings := get_node_or_null("/root/GameSettings")
-	var tries_text := "0/5"
-	if settings and settings.has_method("offline_tries_text"):
-		tries_text = _number_text_after_colon(String(settings.call("offline_tries_text")))
-	lives_label.text = tries_text
-	_set_hud_value(lives_value_row, ":%s" % tries_text)
+	var tries_left := 5
+	var tries_max := 5
+	if settings:
+		tries_left = int(settings.get("offline_tries_left"))
+		tries_max = int(settings.get("offline_tries_max"))
+	lives_label.text = "%d/%d" % [tries_left, tries_max]
+	_set_lives_hearts(lives_value_row, tries_left, tries_max)
+
+
+func _set_lives_hearts(
+	row: HBoxContainer,
+	lives_left: int,
+	lives_max: int
+) -> void:
+
+	if not row:
+		return
+
+	var value := "%d/%d" % [lives_left, lives_max]
+
+	if String(row.get_meta("heart_value", "")) == value:
+		return
+
+	row.set_meta("heart_value", value)
+	row.set_meta("hud_value", "")
+
+	for child in row.get_children():
+
+		row.remove_child(child)
+		child.queue_free()
+
+	var full_texture := _load_runtime_sprite_texture(HUD_HEART_FULL_PNG)
+	var broken_texture := _load_runtime_sprite_texture(HUD_HEART_BROKEN_PNG)
+
+	if not full_texture or not broken_texture:
+
+		_set_hud_value(row, ":%s" % value)
+		return
+
+	for index in range(lives_max):
+
+		var heart_rect := TextureRect.new()
+		heart_rect.texture = (
+			full_texture
+			if index < lives_left
+			else broken_texture
+		)
+		heart_rect.custom_minimum_size = HUD_HEART_SIZE
+		heart_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		heart_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		heart_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		row.add_child(heart_rect)
 
 
 func _number_text_after_colon(value: String) -> String:
@@ -862,9 +935,16 @@ func _show_result_popup(result_text: String, button_text: String, pause_game := 
 	if game_result_shown:
 		return
 	game_result_shown = true
+	var use_lose_sprite := (
+		result_text == "You Lose"
+		and button_text == "Main Menu"
+		and show_restart
+	)
 	match_label.text = result_text
 	match_restart_button.visible = show_restart
 	match_exit_button.text = button_text
+	_apply_result_exit_button_style(button_text)
+	_set_result_popup_sprite_mode(use_lose_sprite)
 	match_popup.visible = true
 	if pause_game:
 		get_tree().paused = true
@@ -896,24 +976,37 @@ func _create_match_popup() -> void:
 	match_popup.anchor_right = 0.5
 	match_popup.anchor_bottom = 0.5
 	match_popup.offset_left = -220.0
-	match_popup.offset_top = -92.0
+	match_popup.offset_top = -112.0
 	match_popup.offset_right = 220.0
-	match_popup.offset_bottom = 92.0
+	match_popup.offset_bottom = 112.0
 	match_popup.add_theme_stylebox_override("panel", _modal_panel_style())
 	add_child(match_popup)
 
-	var box := VBoxContainer.new()
-	box.anchor_left = 0.0
-	box.anchor_top = 0.0
-	box.anchor_right = 1.0
-	box.anchor_bottom = 1.0
-	box.offset_left = 24.0
-	box.offset_top = 22.0
-	box.offset_right = -24.0
-	box.offset_bottom = -22.0
-	box.alignment = BoxContainer.ALIGNMENT_CENTER
-	box.add_theme_constant_override("separation", 18)
-	match_popup.add_child(box)
+	match_result_sprite = TextureRect.new()
+	match_result_sprite.name = "ResultSprite"
+	match_result_sprite.visible = false
+	match_result_sprite.anchor_left = 0.0
+	match_result_sprite.anchor_top = 0.0
+	match_result_sprite.anchor_right = 1.0
+	match_result_sprite.anchor_bottom = 1.0
+	match_result_sprite.texture = _load_clean_pause_texture(RESULT_LOSE_PNG, false)
+	match_result_sprite.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	match_result_sprite.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	match_result_sprite.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	match_popup.add_child(match_result_sprite)
+
+	match_box = VBoxContainer.new()
+	match_box.anchor_left = 0.0
+	match_box.anchor_top = 0.0
+	match_box.anchor_right = 1.0
+	match_box.anchor_bottom = 1.0
+	match_box.offset_left = 24.0
+	match_box.offset_top = 22.0
+	match_box.offset_right = -24.0
+	match_box.offset_bottom = -22.0
+	match_box.alignment = BoxContainer.ALIGNMENT_CENTER
+	match_box.add_theme_constant_override("separation", 18)
+	match_popup.add_child(match_box)
 
 	match_label = Label.new()
 	match_label.custom_minimum_size = Vector2(360.0, 62.0)
@@ -922,26 +1015,161 @@ func _create_match_popup() -> void:
 	match_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	match_label.add_theme_font_size_override("font_size", 24)
 	match_label.add_theme_color_override("font_color", Color(0.96, 0.99, 1.0, 1.0))
-	box.add_child(match_label)
+	match_box.add_child(match_label)
 
 	match_restart_button = Button.new()
 	match_restart_button.text = "Restart"
 	match_restart_button.visible = false
-	match_restart_button.custom_minimum_size = Vector2(180.0, 38.0)
+	_apply_result_text_button_style(match_restart_button)
 	match_restart_button.pressed.connect(_restart_current_level)
-	box.add_child(match_restart_button)
+	match_box.add_child(match_restart_button)
 
 	match_exit_button = Button.new()
 	match_exit_button.text = "Exit Online"
-	match_exit_button.custom_minimum_size = Vector2(180.0, 38.0)
-	match_exit_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	match_exit_button.add_theme_stylebox_override("normal", _modal_button_style(Color(0.11, 0.13, 0.15, 0.96)))
-	match_exit_button.add_theme_stylebox_override("hover", _modal_button_style(Color(0.18, 0.21, 0.24, 1.0)))
-	match_exit_button.add_theme_stylebox_override("pressed", _modal_button_style(Color(0.07, 0.08, 0.095, 1.0)))
-	match_exit_button.add_theme_font_size_override("font_size", 16)
-	match_exit_button.add_theme_color_override("font_color", Color(0.95, 0.98, 1.0, 1.0))
+	_apply_result_exit_button_style(match_exit_button.text)
 	match_exit_button.pressed.connect(_exit_online_match)
-	box.add_child(match_exit_button)
+	match_box.add_child(match_exit_button)
+
+
+func _apply_result_exit_button_style(button_text: String) -> void:
+	if button_text == "Main Menu":
+		_apply_pause_button_sprite(
+			match_exit_button,
+			PAUSE_MAIN_MENU_PNG,
+			RESULT_BUTTON_SIZE
+		)
+	else:
+		match_exit_button.text = button_text
+		_apply_result_text_button_style(match_exit_button)
+
+
+func _set_result_popup_sprite_mode(enabled: bool) -> void:
+	if enabled:
+		match_popup.offset_left = -RESULT_SPRITE_POPUP_SIZE.x * 0.5
+		match_popup.offset_top = -RESULT_SPRITE_POPUP_SIZE.y * 0.5
+		match_popup.offset_right = RESULT_SPRITE_POPUP_SIZE.x * 0.5
+		match_popup.offset_bottom = RESULT_SPRITE_POPUP_SIZE.y * 0.5
+		match_popup.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
+
+		if match_result_sprite:
+			match_result_sprite.visible = true
+
+		if match_box:
+			match_box.visible = false
+
+		_apply_result_sprite_hit_area(
+			match_restart_button,
+			-133.0,
+			-26.0,
+			133.0,
+			26.0
+		)
+		_apply_result_sprite_hit_area(
+			match_exit_button,
+			-133.0,
+			51.0,
+			133.0,
+			103.0
+		)
+		return
+
+	match_popup.offset_left = -220.0
+	match_popup.offset_top = -112.0
+	match_popup.offset_right = 220.0
+	match_popup.offset_bottom = 112.0
+	match_popup.add_theme_stylebox_override("panel", _modal_panel_style())
+
+	if match_result_sprite:
+		match_result_sprite.visible = false
+
+	if match_box:
+		match_box.visible = true
+
+		_restore_result_box_button(match_restart_button)
+		_restore_result_box_button(match_exit_button)
+
+
+func _restore_result_box_button(button: Button) -> void:
+	if not button or not match_box:
+		return
+
+	if button.get_parent() != match_box:
+		if button.get_parent():
+			button.get_parent().remove_child(button)
+		match_box.add_child(button)
+
+	button.anchor_left = 0.0
+	button.anchor_top = 0.0
+	button.anchor_right = 0.0
+	button.anchor_bottom = 0.0
+	button.offset_left = 0.0
+	button.offset_top = 0.0
+	button.offset_right = 0.0
+	button.offset_bottom = 0.0
+
+
+func _apply_result_sprite_hit_area(
+	button: Button,
+	left: float,
+	top: float,
+	right: float,
+	bottom: float
+) -> void:
+	if not button:
+		return
+
+	if button.get_parent() != match_popup:
+		if button.get_parent():
+			button.get_parent().remove_child(button)
+		match_popup.add_child(button)
+
+	button.visible = true
+	button.text = ""
+	button.anchor_left = 0.5
+	button.anchor_top = 0.5
+	button.anchor_right = 0.5
+	button.anchor_bottom = 0.5
+	button.offset_left = left
+	button.offset_top = top
+	button.offset_right = right
+	button.offset_bottom = bottom
+	button.custom_minimum_size = Vector2.ZERO
+	button.size_flags_horizontal = Control.SIZE_FILL
+	button.focus_mode = Control.FOCUS_NONE
+	button.add_theme_stylebox_override("normal", StyleBoxEmpty.new())
+	button.add_theme_stylebox_override("hover", StyleBoxEmpty.new())
+	button.add_theme_stylebox_override("pressed", StyleBoxEmpty.new())
+	button.add_theme_stylebox_override("disabled", StyleBoxEmpty.new())
+	button.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+
+
+func _apply_result_text_button_style(button: Button) -> void:
+	if not button:
+		return
+
+	var texture := _load_clean_pause_texture(PAUSE_RETURN_PNG)
+	if texture:
+		var style := _pause_texture_style(texture)
+		button.add_theme_stylebox_override("normal", style)
+		button.add_theme_stylebox_override("hover", style)
+		button.add_theme_stylebox_override("pressed", style)
+		button.add_theme_stylebox_override("disabled", style)
+		button.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	else:
+		button.add_theme_stylebox_override("normal", _modal_button_style(Color(0.11, 0.13, 0.15, 0.96)))
+		button.add_theme_stylebox_override("hover", _modal_button_style(Color(0.18, 0.21, 0.24, 1.0)))
+		button.add_theme_stylebox_override("pressed", _modal_button_style(Color(0.07, 0.08, 0.095, 1.0)))
+
+	button.custom_minimum_size = RESULT_BUTTON_SIZE
+	button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	button.focus_mode = Control.FOCUS_NONE
+	button.add_theme_font_size_override("font_size", 20)
+	button.add_theme_color_override("font_color", Color(0.95, 0.98, 1.0, 1.0))
+	button.add_theme_color_override("font_hover_color", Color(0.78, 1.0, 0.94, 1.0))
+	button.add_theme_color_override("font_pressed_color", Color(0.70, 0.92, 1.0, 1.0))
+	button.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.95))
+	button.add_theme_constant_override("shadow_offset_x", 2)
+	button.add_theme_constant_override("shadow_offset_y", 2)
 
 
 func _create_second_player_label() -> void:
@@ -966,7 +1194,7 @@ func _create_hud_value_rows() -> void:
 	lives_value_row = HBoxContainer.new()
 	lives_value_row.name = "LivesValueSprites"
 	lives_value_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	lives_value_row.add_theme_constant_override("separation", 0)
+	lives_value_row.add_theme_constant_override("separation", 2)
 	add_child(lives_value_row)
 
 
@@ -991,11 +1219,41 @@ func _new_hud_texture(node_name: String, texture_path: String) -> TextureRect:
 	var rect := TextureRect.new()
 	rect.name = node_name
 	rect.visible = false
-	rect.texture = load(texture_path) as Texture2D
+	rect.texture = _load_runtime_sprite_texture(texture_path)
 	rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return rect
+
+
+func _setup_runtime_texture_optimizer() -> void:
+	var settings := get_node_or_null("/root/GameSettings")
+	if settings:
+		if not settings.has_meta(MENU_TEXTURE_CACHE_META):
+			settings.set_meta(MENU_TEXTURE_CACHE_META, {})
+
+		var cached_value = settings.get_meta(MENU_TEXTURE_CACHE_META)
+		if cached_value is Dictionary:
+			menu_texture_cache = cached_value
+		else:
+			menu_texture_cache = {}
+			settings.set_meta(MENU_TEXTURE_CACHE_META, menu_texture_cache)
+
+	if ClassDB.class_exists("MenuOptimizer"):
+		menu_optimizer = MenuOptimizer.new()
+		menu_optimizer.set_texture_cache(menu_texture_cache)
+
+
+func _load_runtime_sprite_texture(texture_path: String) -> Texture2D:
+	if not ResourceLoader.exists(texture_path):
+		return null
+
+	if menu_optimizer and menu_optimizer.has_method("load_runtime_texture"):
+		var optimized: Texture2D = menu_optimizer.load_runtime_texture(texture_path)
+		if optimized:
+			return optimized
+
+	return load(texture_path) as Texture2D
 
 
 func _create_chat_ui() -> void:
