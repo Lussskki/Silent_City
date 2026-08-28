@@ -12,11 +12,11 @@ bg_color = Color(0.75, 0.07, 0.07, 1)
 [node name="Enemy" type="CharacterBody2D" unique_id=1518675701]
 z_index = 35
 script = ExtResource("1_enemy_script")
-sprite_ground_offset = 12.0
+sprite_ground_offset = 24.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=76783261]
-position = Vector2(-3, -48.8)
-scale = Vector2(0.95, 0.95)
+position = Vector2(-3, -48.0)
+scale = Vector2(1.05, 1.05)
 texture = ExtResource("2_default_character")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2070397355]

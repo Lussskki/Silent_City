@@ -17,7 +17,7 @@ extends CharacterBody2D
 @export var sight_vertical_tolerance := 120.0
 @export var random_character := true
 @export var character_name := ""
-@export var sprite_ground_offset := 18.0
+@export var sprite_ground_offset := 24.0
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var health_bar: ProgressBar = $HealthBar
@@ -46,8 +46,8 @@ const CHARACTER_PROFILES := {
 		"walk": ["walk0", "walk1", "walk2", "walk3"],
 		"attack": "attack1",
 		"hurt": "hurt",
-		"scale": Vector2(0.95, 0.95),
-		"ground_offset": 12.0,
+		"scale": Vector2(1.05, 1.05),
+		"ground_offset": 24.0,
 		"health_top_padding": 22.0
 	},
 	"Robot": {
@@ -57,8 +57,8 @@ const CHARACTER_PROFILES := {
 		"walk": ["walk0", "walk1", "walk2", "walk3"],
 		"attack": "attack2",
 		"hurt": "hurt",
-		"scale": Vector2(0.95, 0.95),
-		"ground_offset": 12.0,
+		"scale": Vector2(1.05, 1.05),
+		"ground_offset": 24.0,
 		"health_top_padding": 22.0
 	}
 }
