@@ -6,3 +6,4 @@
 /builds/
 addons/godotsteam/win64/~*.dll
 addons/godotsteam/win64/~*.TMP
+addons/menu_optimizer/bin/menu_optimizer.windows.template_debug.x86_64.lib
