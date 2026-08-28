@@ -121,6 +121,14 @@ void MenuOptimizer::_bind_methods()
 
 	ClassDB::bind_method(
 		D_METHOD(
+			"load_runtime_texture",
+			"texture_path"
+		),
+		&MenuOptimizer::load_runtime_texture
+	);
+
+	ClassDB::bind_method(
+		D_METHOD(
 			"remove_baked_checkerboard_background",
 			"image",
 			"brightness_threshold",
@@ -312,6 +320,35 @@ Ref<Texture2D> MenuOptimizer::load_clean_ui_texture(
 	Ref<Texture2D> result = cleaned_texture;
 	texture_cache[cache_key] = result;
 	return result;
+}
+
+Ref<Texture2D> MenuOptimizer::load_runtime_texture(String texture_path)
+{
+	if (texture_path.is_empty())
+	{
+		return Ref<Texture2D>();
+	}
+
+	const String cache_key = String("runtime::") + texture_path;
+
+	if (texture_cache.has(cache_key))
+	{
+		Ref<Texture2D> cached = texture_cache[cache_key];
+		if (cached.is_valid())
+		{
+			return cached;
+		}
+	}
+
+	Ref<Texture2D> texture =
+		ResourceLoader::get_singleton()->load(texture_path);
+
+	if (texture.is_valid())
+	{
+		texture_cache[cache_key] = texture;
+	}
+
+	return texture;
 }
 
 void MenuOptimizer::remove_baked_checkerboard_background(

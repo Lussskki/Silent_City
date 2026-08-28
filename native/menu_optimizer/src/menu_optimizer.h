@@ -46,6 +46,10 @@ public:
 		double neutral_tolerance = 0.16
 	);
 
+	// Lightweight runtime sprite path for already-transparent PNGs.
+	// Uses the shared cache without doing per-pixel cleanup.
+	Ref<Texture2D> load_runtime_texture(String texture_path);
+
 	void remove_baked_checkerboard_background(
 		Ref<Image> image,
 		double brightness_threshold = 0.72,
