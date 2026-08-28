@@ -8,6 +8,7 @@ signal level_selected(level: String)
 
 const DIFFICULTY_CARD_SIZE := Vector2(190.0, 190.0)
 const BACK_BUTTON_SIZE := Vector2(320.0, 46.0)
+const LEVEL_START_WAIT_SECONDS := 2.0
 
 const EASY_CARD_PNG := "res://Resources/Buttons/difficulty_card_easy.png"
 const MEDIUM_CARD_PNG := "res://Resources/Buttons/difficulty_card_medium.png"
@@ -159,10 +160,11 @@ func _select_level(level: String) -> void:
 		selection_pending = true
 		if map_gallery_hint:
 			map_gallery_hint.visible = true
-			map_gallery_hint.text = "Loading..."
+			map_gallery_hint.text = "Wait, game has cooldown xD"
 
-		# Let the Loading text render before MainMenu begins the scene switch.
+		# Give the menu/game cooldown time to settle before the level starts.
 		await get_tree().process_frame
+		await get_tree().create_timer(LEVEL_START_WAIT_SECONDS).timeout
 		level_selected.emit(level)
 		return
 
