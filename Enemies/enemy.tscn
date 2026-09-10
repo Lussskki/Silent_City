@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dl15tgg4t44xm"]
 
 [ext_resource type="Script" uid="uid://lrhxtoh7drg6" path="res://Enemies/enemy.gd" id="1_enemy_script"]
-[ext_resource type="Texture2D" uid="uid://jlshfnt65p7o" path="res://Characters/Zombie/PNG/Poses/character_zombie_idle.png" id="2_default_character"]
+[ext_resource type="Texture2D" path="res://Characters/Skeletons/Skeleton_Sword/Skeleton_White/Skeleton_Without_VFX/Skeleton_01_White_Idle.png" id="2_default_character"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_enemy_body"]
 size = Vector2(41.5, 60)
@@ -10,13 +10,13 @@ size = Vector2(41.5, 60)
 bg_color = Color(0.75, 0.07, 0.07, 1)
 
 [node name="Enemy" type="CharacterBody2D" unique_id=1518675701]
-z_index = 35
+z_index = 9
 script = ExtResource("1_enemy_script")
 sprite_ground_offset = 24.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=76783261]
-position = Vector2(-3, -48.0)
-scale = Vector2(1.05, 1.05)
+position = Vector2(-3, -50.0)
+scale = Vector2(1.7, 1.7)
 texture = ExtResource("2_default_character")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2070397355]
@@ -24,6 +24,7 @@ position = Vector2(-3, -30)
 shape = SubResource("RectangleShape2D_enemy_body")
 
 [node name="HealthBar" type="ProgressBar" parent="." unique_id=1184552873]
+z_index = 20
 offset_left = -34.0
 offset_top = -105.0
 offset_right = 34.0

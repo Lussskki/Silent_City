@@ -16,14 +16,14 @@ extends Node2D
 @export var minimum_spacing := 190.0
 @export var enemy_max_life := 140
 @export var enemy_attack_damage := 12
-@export var enemy_move_speed := 95.0
+@export var enemy_move_speed := 185.0
 @export var enemy_attack_cooldown := 1.0
-@export var enemy_character_name := "Zombie,Robot"
+@export var enemy_character_name := "SkeletonWhite,SkeletonYellow"
 @export var enemy_sprite_ground_offset := 12.0
 
 const CHARACTER_NAMES := [
-	"Zombie",
-	"Robot"
+	"SkeletonWhite",
+	"SkeletonYellow"
 ]
 
 func _ready() -> void:

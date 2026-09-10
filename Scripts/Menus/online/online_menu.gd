@@ -10,10 +10,11 @@ signal character_refresh_requested
 signal playable_level_requested
 
 const MAIN_SCENE := "res://Scenes/main.tscn"
+const SQUAD_SCENE := "res://Scenes/SquadArena.tscn"
 const MEDIUM_SCENE := "res://Scenes/MainMedium.tscn"
 const HARD_SCENE := "res://Scenes/MainHard.tscn"
 
-const MAX_ROOM_PLAYERS := 2
+const MAX_ROOM_PLAYERS := 4
 
 const STEAM_LOBBY_REFRESH_INTERVAL := 2.0
 
@@ -35,12 +36,12 @@ const ONLINE_TUTORIAL_STEPS := {
 	"eng": [
 		"Steam Friend uses Steam lobbies for online multiplayer.",
 		"Create a room or select an open room and press Join.",
-		"Both players choose different characters. The match starts by itself."
+		"Four players choose Crusader or Wraith, then fight in two teams."
 	],
 	"geo": [
 		"Steam Friend იყენებს Steam lobby-ს ონლაინ მულტიფლეერისთვის.",
 		"შექმენი ოთახი ან აირჩიე ღია ოთახი და დააჭირე Join-ს.",
-		"ორივე მოთამაშე ირჩევს განსხვავებულ პერსონაჟს. მატჩი თვითონ იწყება."
+		"ოთხი მოთამაშე ირჩევს Crusader-ს ან Wraith-ს და თამაშობს 2v2 გუნდებად."
 	]
 }
 
@@ -89,6 +90,7 @@ var tutorial_step := 0
 
 var remote_client_character := "golem"
 var remote_client_character_chosen := false
+var squad_character_choices: Dictionary = {}
 
 var other_player_character := ""
 var other_player_character_chosen := false
@@ -266,6 +268,7 @@ func leave_from_character_page() -> void:
 	joined_room_waiting_for_character = false
 	remote_client_character = "golem"
 	remote_client_character_chosen = false
+	squad_character_choices.clear()
 	other_player_character = ""
 	other_player_character_chosen = false
 	online_match_starting = false
@@ -662,7 +665,12 @@ func _host_online_game() -> void:
 	host_button.disabled = true
 	join_button.disabled = true
 
-	_steam_manager().create_lobby(_room_name())
+	var lobby_size := (
+		MAX_ROOM_PLAYERS
+		if settings and String(settings.get("game_mode")) == "squad"
+		else 2
+	)
+	_steam_manager().create_lobby(_room_name(), lobby_size)
 
 
 func _finish_steam_host_lobby(_lobby_id: int) -> void:
@@ -700,6 +708,7 @@ func _prepare_online_host(peer: MultiplayerPeer) -> void:
 
 	remote_client_character = "golem"
 	remote_client_character_chosen = false
+	squad_character_choices.clear()
 	other_player_character = ""
 	other_player_character_chosen = false
 	online_match_starting = false
@@ -733,16 +742,29 @@ func _try_auto_start_online_match() -> void:
 		_emit_character_refresh()
 		return
 
-	if multiplayer.get_peers().is_empty():
+	var squad_mode := settings != null and String(settings.get("game_mode")) == "squad"
+	var required_remote_players := 3 if squad_mode else 1
+	if multiplayer.get_peers().size() < required_remote_players:
 		_set_online_status_with_player_line(_online_room_waiting_text())
 		return
 
-	if not remote_client_character_chosen:
+	if squad_mode:
+		for peer_id in multiplayer.get_peers():
+			if not squad_character_choices.has(peer_id):
+				_request_character_status("Waiting for all 4 players to choose a character.")
+				if online_status:
+					online_status.text = "Waiting for all 4 players to choose a character."
+				return
+	elif not remote_client_character_chosen:
 		_request_character_status(_t("waiting_for_player_choice"))
 
 		if online_status:
 			online_status.text = _t("waiting_for_player_choice")
 		return
+
+	if squad_mode:
+		settings.set("online_scene_path", SQUAD_SCENE)
+		settings.set("level_chosen", true)
 
 	if bool(settings.get("level_chosen")) != true:
 		_request_character_status(_t("choose_map_to_start"))
@@ -847,7 +869,9 @@ func _prepare_join_selected_lobby(lobby_data: Dictionary) -> void:
 			if saved_client_character in [
 				"player",
 				"golem",
-				"ice_golem"
+				"ice_golem",
+				"crusader",
+				"wraith"
 			]:
 				settings.set(
 					"selected_character",
@@ -859,7 +883,9 @@ func _prepare_join_selected_lobby(lobby_data: Dictionary) -> void:
 			if saved_host_character in [
 				"player",
 				"golem",
-				"ice_golem"
+				"ice_golem",
+				"crusader",
+				"wraith"
 			]:
 				settings.set(
 					"online_remote_character",
@@ -1026,6 +1052,7 @@ func _on_peer_disconnected(_peer_id: int) -> void:
 			multiplayer.get_peers().size() + 1,
 			MAX_ROOM_PLAYERS
 		)
+		squad_character_choices.erase(_peer_id)
 
 		remote_client_character_chosen = false
 		other_player_character = ""
@@ -1154,6 +1181,12 @@ func _update_lobby_select() -> void:
 
 		if String(lobby.get("state", "waiting")) == "playing":
 			lobby_name = "%s - Playing" % lobby_name
+		else:
+			lobby_name = "%s - %d/%d" % [
+				lobby_name,
+				int(lobby.get("members", 1)),
+				MAX_ROOM_PLAYERS
+			]
 
 		lobby_select.add_item(lobby_name)
 
@@ -1313,6 +1346,7 @@ func _client_online_character_selected(character: String) -> void:
 
 	if (
 		settings
+		and String(settings.get("game_mode")) != "squad"
 		and bool(settings.get("character_chosen")) == true
 		and String(settings.get("selected_character")) == character
 	):
@@ -1321,6 +1355,8 @@ func _client_online_character_selected(character: String) -> void:
 
 	remote_client_character = character
 	remote_client_character_chosen = true
+	if settings and String(settings.get("game_mode")) == "squad":
+		squad_character_choices[sender_id] = character
 	other_player_character = character
 	other_player_character_chosen = true
 
@@ -1376,6 +1412,7 @@ func _online_character_state_updated(
 
 	if (
 		settings
+		and String(settings.get("game_mode")) != "squad"
 		and bool(settings.get("character_chosen")) == true
 		and host_character_chosen
 		and String(settings.get("selected_character"))
@@ -1405,7 +1442,7 @@ func _start_online_match(
 
 func _valid_online_scene_path(scene_path: String) -> String:
 	match scene_path:
-		MAIN_SCENE, MEDIUM_SCENE, HARD_SCENE:
+		MAIN_SCENE, MEDIUM_SCENE, HARD_SCENE, SQUAD_SCENE:
 			return scene_path
 
 	return MAIN_SCENE
@@ -1458,6 +1495,8 @@ func _pending_lobby_scene_path() -> String:
 
 
 func _selected_main_scene() -> String:
+	if settings and String(settings.get("game_mode")) == "squad":
+		return SQUAD_SCENE
 	if (
 		selected_main_scene_callback is Callable
 		and selected_main_scene_callback.is_valid()
@@ -1504,7 +1543,14 @@ func _set_online_status_with_player_line(
 	base_text: String
 ) -> void:
 	if online_status:
-		online_status.text = base_text
+		if settings and String(settings.get("game_mode")) == "squad":
+			online_status.text = "%s\nPlayers: %d/%d (2 vs 2)" % [
+				base_text,
+				hosted_player_count,
+				MAX_ROOM_PLAYERS
+			]
+		else:
+			online_status.text = base_text
 
 
 func _make_room_id() -> String:
@@ -1520,6 +1566,10 @@ func _character_display_name(character: String) -> String:
 			return "Stone Golem"
 		"ice_golem":
 			return "Ice Golem"
+		"crusader":
+			return "Skeleton Crusader"
+		"wraith":
+			return "Wraith"
 
 	return "Ash Golem"
 

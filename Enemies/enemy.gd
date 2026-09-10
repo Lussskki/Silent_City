@@ -1,9 +1,11 @@
 extends CharacterBody2D
 
 @export var max_life: int = 100
-@export var move_speed := 95.0
+@export var move_speed := 185.0
 @export var chase_distance := 520.0
-@export var attack_distance := 95.0
+# Keep melee enemies far enough away that the larger golem sprite does not
+# completely cover them while their lower z-index is doing its job.
+@export var attack_distance := 145.0
 @export var attack_vertical_tolerance := 95.0
 @export var robot_shock_distance := 260.0
 @export var attack_damage: int = 10
@@ -23,8 +25,8 @@ extends CharacterBody2D
 @onready var health_bar: ProgressBar = $HealthBar
 
 const CHARACTER_NAMES := [
-	"Zombie",
-	"Robot"
+	"SkeletonWhite",
+	"SkeletonYellow"
 ]
 
 const HEALTH_BAR_WIDTH := 68.0
@@ -39,29 +41,23 @@ const ROBOT_SHOCK_FRAME_PATHS := [
 	"res://Sprites/Powers/RobotShock/robot_shock_4.png"
 ]
 const CHARACTER_PROFILES := {
-	"Zombie": {
-		"pose_dir": "res://Characters/Zombie/PNG/Poses",
-		"prefix": "character_zombie",
-		"idle": "idle",
-		"walk": ["walk0", "walk1", "walk2", "walk3"],
-		"attack": "attack1",
-		"hurt": "hurt",
-		"scale": Vector2(1.05, 1.05),
-		"ground_offset": 24.0,
-		"health_top_padding": 22.0
+	"SkeletonWhite": {
+		"pose_dir": "res://Characters/Skeletons/Skeleton_Sword/Skeleton_White/Skeleton_Without_VFX",
+		"prefix": "Skeleton_01_White",
+		"scale": Vector2(1.7, 1.7),
+		"ground_offset": 4.0,
+		"health_top_padding": 5.0
 	},
-	"Robot": {
-		"pose_dir": "res://Characters/Robot/PNG/Poses",
-		"prefix": "character_robot",
-		"idle": "idle",
-		"walk": ["walk0", "walk1", "walk2", "walk3"],
-		"attack": "attack2",
-		"hurt": "hurt",
-		"scale": Vector2(1.05, 1.05),
-		"ground_offset": 24.0,
-		"health_top_padding": 22.0
+	"SkeletonYellow": {
+		"pose_dir": "res://Characters/Skeletons/Skeleton_Sword/Skeleton_Yellow/Skeleton_Without_VFX",
+		"prefix": "Skeleton_01_Yellow",
+		"scale": Vector2(1.7, 1.7),
+		"ground_offset": 4.0,
+		"health_top_padding": 5.0
 	}
 }
+
+const SKELETON_FRAME_SIZE := Vector2i(96, 64)
 
 var life: int = 100
 var player: Node2D
@@ -69,10 +65,13 @@ var attack_timer := 0.0
 var hurt_timer := 0.0
 var dead := false
 var character_key := ""
-var idle_texture: Texture2D
+var idle_textures: Array[Texture2D] = []
 var walk_textures: Array[Texture2D] = []
-var attack_texture: Texture2D
-var hurt_texture: Texture2D
+var attack_textures: Array[Texture2D] = []
+var hurt_textures: Array[Texture2D] = []
+var die_textures: Array[Texture2D] = []
+var attack_started_ms := 0
+var hurt_started_ms := 0
 var health_top_padding := SPRITE_VISIBLE_TOP_PADDING
 var flip_direction := false
 var network_sync_timer := 0.0
@@ -479,11 +478,16 @@ func _die() -> void:
 	velocity = Vector2.ZERO
 	set_physics_process(false)
 	current_pose = "dead"
-	modulate = Color(0.35, 0.35, 0.35, 0.75)
+	modulate = Color(0.65, 0.65, 0.65, 1.0)
 	_drop_coins()
 	if _is_network_server():
 		rpc("_network_enemy_died")
-	await get_tree().create_timer(0.35).timeout
+	for frame in die_textures:
+		if not is_instance_valid(self):
+			return
+		sprite.texture = frame
+		_align_sprite_to_ground()
+		await get_tree().create_timer(0.045).timeout
 	queue_free()
 
 
@@ -516,63 +520,76 @@ func _setup_random_character() -> void:
 	if random_character or character_key.is_empty():
 		character_key = names.pick_random()
 	if not CHARACTER_PROFILES.has(character_key):
-		character_key = "Zombie"
+		character_key = "SkeletonWhite"
 
 	var profile: Dictionary = CHARACTER_PROFILES[character_key]
 	var prefix: String = profile["prefix"]
 	var pose_dir: String = profile["pose_dir"]
-	var walk_names: Array = profile["walk"]
 	sprite.scale = profile["scale"]
 	sprite_ground_offset = float(profile["ground_offset"])
 	health_top_padding = float(profile["health_top_padding"])
 
-	idle_texture = _load_character_pose(pose_dir, prefix, profile["idle"])
-	walk_textures = []
-	for walk_name in walk_names:
-		var walk_texture := _load_character_pose(pose_dir, prefix, walk_name)
-		if walk_texture:
-			walk_textures.append(walk_texture)
-	attack_texture = _load_character_pose(pose_dir, prefix, profile["attack"])
-	hurt_texture = _load_character_pose(pose_dir, prefix, profile["hurt"])
+	idle_textures = _load_skeleton_animation(pose_dir, prefix, "Idle")
+	walk_textures = _load_skeleton_animation(pose_dir, prefix, "Walk")
+	attack_textures = _load_skeleton_animation(pose_dir, prefix, "Attack1")
+	hurt_textures = _load_skeleton_animation(pose_dir, prefix, "Hurt")
+	die_textures = _load_skeleton_animation(pose_dir, prefix, "Die")
 
-	if idle_texture:
-		sprite.texture = idle_texture
+	if not idle_textures.is_empty():
+		sprite.texture = idle_textures[0]
 		_align_sprite_to_ground()
 
 
 func _show_idle_pose() -> void:
 	if attack_timer > attack_cooldown - 0.18:
+		_set_animation_frame(attack_textures, attack_started_ms, 55, false)
+		return
+	if hurt_timer > 0.0:
+		_set_animation_frame(hurt_textures, hurt_started_ms, 65, false)
 		return
 	current_pose = "idle"
-	if idle_texture and sprite.texture != idle_texture:
-		sprite.texture = idle_texture
-		_align_sprite_to_ground()
+	_set_animation_frame(idle_textures, 0, 120)
 
 
 func _show_walk_pose() -> void:
 	if attack_timer > attack_cooldown - 0.18:
+		_set_animation_frame(attack_textures, attack_started_ms, 55, false)
+		return
+	if hurt_timer > 0.0:
+		_set_animation_frame(hurt_textures, hurt_started_ms, 65, false)
 		return
 	if walk_textures.is_empty():
 		return
 
 	current_pose = "walk"
-	var index := int(Time.get_ticks_msec() / 220) % walk_textures.size()
-	if walk_textures[index]:
-		sprite.texture = walk_textures[index]
-		_align_sprite_to_ground()
+	# Keep footsteps visually synchronized with the configured difficulty speed.
+	var frame_time_ms := maxi(int(round(26000.0 / move_speed)), 70)
+	_set_animation_frame(walk_textures, 0, frame_time_ms)
 
 
 func _show_attack_pose() -> void:
 	current_pose = "attack"
-	if attack_texture:
-		sprite.texture = attack_texture
-		_align_sprite_to_ground()
+	attack_started_ms = Time.get_ticks_msec()
+	_set_animation_frame(attack_textures, attack_started_ms, 55)
 
 
 func _show_hurt_pose() -> void:
 	current_pose = "hurt"
-	if hurt_texture:
-		sprite.texture = hurt_texture
+	hurt_started_ms = Time.get_ticks_msec()
+	_set_animation_frame(hurt_textures, hurt_started_ms, 65, false)
+
+
+func _set_animation_frame(textures: Array[Texture2D], started_ms: int, frame_time_ms: int, loop := true) -> void:
+	if textures.is_empty():
+		return
+	var elapsed := Time.get_ticks_msec() - started_ms if started_ms > 0 else Time.get_ticks_msec()
+	var frame_index := int(elapsed / maxi(frame_time_ms, 1))
+	if loop:
+		frame_index %= textures.size()
+	else:
+		frame_index = mini(frame_index, textures.size() - 1)
+	if sprite.texture != textures[frame_index]:
+		sprite.texture = textures[frame_index]
 		_align_sprite_to_ground()
 
 
@@ -596,8 +613,18 @@ func _align_health_bar() -> void:
 	health_bar.offset_top = health_bar.offset_bottom - HEALTH_BAR_HEIGHT
 
 
-func _load_character_pose(pose_dir: String, prefix: String, pose_name: String) -> Texture2D:
-	return load("%s/%s_%s.png" % [pose_dir, prefix, pose_name]) as Texture2D
+func _load_skeleton_animation(pose_dir: String, prefix: String, animation_name: String) -> Array[Texture2D]:
+	var frames: Array[Texture2D] = []
+	var sheet := load("%s/%s_%s.png" % [pose_dir, prefix, animation_name]) as Texture2D
+	if not sheet:
+		return frames
+	var frame_count: int = sheet.get_width() / SKELETON_FRAME_SIZE.x
+	for frame_index in frame_count:
+		var frame := AtlasTexture.new()
+		frame.atlas = sheet
+		frame.region = Rect2(frame_index * SKELETON_FRAME_SIZE.x, 0, SKELETON_FRAME_SIZE.x, SKELETON_FRAME_SIZE.y)
+		frames.append(frame)
+	return frames
 
 
 func _is_robot() -> bool:

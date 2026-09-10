@@ -2,10 +2,12 @@ extends Node
 
 const BACK_BUTTON_SIZE := Vector2(260.0, 40.0)
 const BACK_PNG := "res://Resources/Buttons/menu_button_start.png"
+const GAMEPAD_SCROLL_SPEED := 420.0
 
 var credits_page: VBoxContainer = null
 var settings_page: VBoxContainer = null
 var credits_header: Label = null
+var credits_scroll: ScrollContainer = null
 var credits_text: RichTextLabel = null
 var back_button: Button = null
 
@@ -37,6 +39,9 @@ func setup(
 		return
 
 	credits_header = credits_page.get_node_or_null("Header") as Label
+	credits_scroll = credits_page.get_node_or_null(
+		"CreditsScroll"
+	) as ScrollContainer
 	credits_text = credits_page.get_node_or_null(
 		"CreditsScroll/CreditsText"
 	) as RichTextLabel
@@ -54,6 +59,7 @@ func setup(
 		credits_text.meta_clicked.connect(_open_credits_link)
 
 	refresh_language()
+	set_process(true)
 	configured = true
 
 
@@ -62,11 +68,32 @@ func open() -> void:
 		return
 
 	refresh_language()
+	if credits_scroll:
+		credits_scroll.scroll_vertical = 0
 	_show_page(credits_page)
+
+
+func _process(delta: float) -> void:
+	if (
+		not configured
+		or not credits_page
+		or not credits_page.is_visible_in_tree()
+		or not credits_scroll
+	):
+		return
+
+	var scroll_direction := Input.get_axis("menu_up", "menu_down")
+	if is_zero_approx(scroll_direction):
+		return
+
+	credits_scroll.scroll_vertical += roundi(
+		scroll_direction * GAMEPAD_SCROLL_SPEED * delta
+	)
 
 
 func refresh_language() -> void:
 	if credits_header:
+		credits_header.visible = false
 		credits_header.text = _t("credits")
 	if credits_text:
 		credits_text.text = _t("credits_text")

@@ -61,6 +61,7 @@
 [ext_resource type="Texture2D" uid="uid://b1xonas0dxph2" path="res://Sprites/Hud/hud_power_label_small.png" id="63_power_text"]
 [ext_resource type="Texture2D" uid="uid://dmpdp3hr7t8o1" path="res://Sprites/Hud/hud_enemies_label_small.png" id="64_enemies_text"]
 [ext_resource type="Texture2D" uid="uid://dy14viarf88gg" path="res://Sprites/Hud/hud_lives_label_small.png" id="65_lives_text"]
+[ext_resource type="Script" path="res://Scripts/defence_drop_spawner.gd" id="66_defence_drop_spawner"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_54nrm"]
 size = Vector2(768, 256)
@@ -1088,10 +1089,20 @@ spawn_seed = 2201
 spawn_areas = Array[Rect2]([Rect2(780, 300, 320, 1), Rect2(1280, 395, 210, 1), Rect2(1705, 200, 420, 1), Rect2(2295, 560, 420, 1), Rect2(2875, 365, 210, 1), Rect2(3285, 275, 410, 1)])
 enemy_max_life = 120
 enemy_attack_damage = 8
+enemy_move_speed = 210.0
 enemy_attack_cooldown = 1.1
 
 [node name="HealthDropSpawner" type="CanvasLayer" parent="." unique_id=348391563]
 script = ExtResource("54_6576a")
+min_drop_interval = 50.0
+max_drop_interval = 50.0
+first_drop_delay = 25.0
+
+[node name="DefenceDropSpawner" type="CanvasLayer" parent="."]
+script = ExtResource("66_defence_drop_spawner")
+min_drop_interval = 40.0
+max_drop_interval = 40.0
+first_drop_delay = 25.0
 
 [node name="Tree" type="Sprite2D" parent="." unique_id=775603552]
 position = Vector2(-4302, 2954)

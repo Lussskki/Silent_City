@@ -7,6 +7,7 @@ const ONLINE_MENU_PATH := "res://Scripts/Menus/online/online_menu.gd"
 const SETTINGS_MENU_PATH := "res://Scripts/Menus/settings/settings_menu.gd"
 
 const MAIN_SCENE := "res://Scenes/main.tscn"
+const SQUAD_SCENE := "res://Scenes/SquadArena.tscn"
 const MEDIUM_SCENE := "res://Scenes/MainMedium.tscn"
 const HARD_SCENE := "res://Scenes/MainHard.tscn"
 const LANG_ENG := "eng"
@@ -15,6 +16,17 @@ const MAIN_MENU_BUTTON_SIZE := Vector2(320.0, 46.0)
 
 const DIFFICULTY_CARD_SIZE := Vector2(190.0, 190.0)
 const LANGUAGE_BUTTON_SIZE := Vector2(86.0, 36.0)
+
+# Bottom-right community links. Replace STEAM_STORE_URL with the final app page
+# once the Steam store listing has an app ID.
+const COMMUNITY_BUTTON_SHEET := "res://Resources/Buttons/join_no_white.png"
+const DISCORD_SERVER_URL := "https://discord.gg/DNUu88kwwd"
+const STEAM_STORE_URL := "https://store.steampowered.com/search/?term=Silent%20City"
+const COMMUNITY_ICON_SIZE := Vector2(104.0, 104.0)
+const COMMUNITY_HOVER_SIZE := Vector2(208.0, 104.0)
+const COMMUNITY_DOCK_MARGIN := 24.0
+const COMMUNITY_DOCK_GAP := 12
+const COMMUNITY_ICON_TINT := Color.WHITE
 
 # ONLINE BACK:
 # The previous online_back_button.png is the cropped asset.
@@ -25,11 +37,11 @@ const LANGUAGE_BUTTON_SIZE := Vector2(86.0, 36.0)
 # Change ONLY these paths to your PNG files.
 # The PNGs should have transparent backgrounds.
 # -----------------------------------------------------------------------------
-const MENU_TITLE_PNG := "res://Resources/Buttons/Silent_City.png"
+const MENU_TITLE_PNG := "res://Resources/Buttons/Silent_City_fixed.png"
 const MENU_SUBTITLE_ENG_PNG := "res://Resources/Buttons/Silent_City_Title.png"
 
-# Optional Georgian subtitle PNG. Leave empty to keep Georgian as normal text.
-const MENU_SUBTITLE_GEO_PNG := ""
+# Use the same subtitle sprite for Georgian instead of falling back to text.
+const MENU_SUBTITLE_GEO_PNG := MENU_SUBTITLE_ENG_PNG
 
 # Main title/subtitle display sizes.
 const MENU_TITLE_IMAGE_SIZE := Vector2(560.0, 105.0)
@@ -64,6 +76,9 @@ const TEXT := {
 		"language_button": "GEO",
 		"subtitle": "Choose your fight",
 		"start": "Start",
+		"story_mode": "Story Mode",
+		"squad": "Squad",
+		"choose_mode": "Choose Mode",
 		"map": "Difficulty",
 		"choose_your_map": "Choose Your Difficulty",
 		"easy": "Easy",
@@ -72,15 +87,17 @@ const TEXT := {
 		"map_gallery_hint": "Preview only. To play, go back and press Start from the main menu.",
 		"map_selected_wait": "Selected: %s. You have to wait 2 seconds because there’s a cooldown xD",
 		"choose_map_to_start": "Choose a map to start the match.",
-		"choose_character": "Choose your character",
+		"choose_character": "Characters",
 		"online_room": "Online",
 		"settings": "Settings",
 		"audio": "Audio",
 		"master_volume": "Master Volume",
 		"graphics": "Graphics",
+		"brightness": "Brightness",
 		"fullscreen": "Fullscreen",
 		"vsync": "VSync",
 		"resolution": "Resolution",
+		"apply": "Apply",
 		"fps_limit": "FPS Limit",
 		"renderer": "Renderer",
 		"on": "On",
@@ -89,13 +106,14 @@ const TEXT := {
 		"wifi_multiplayer": "WIFI",
 		"steam_friend": "Steam Friend",
 		"how_to_play": "How to Play",
-		"how_to_play_text": "Move with Left/Right arrows.\nJump with Up Arrow.\nUse hands with A and foot kick with S.\nDefeat enemies, avoid spikes, and collect hearts for health.\nFirst heart appears after 35 seconds, then every 90 seconds.",
+		"how_to_play_text": "Move with Left/Right arrows.\nJump with Up Arrow.\nUse hands with A and foot kick with S.\nDefeat enemies, avoid spikes, and collect falling bonuses.",
 		"how_attack": "Hands: A",
 		"how_kick": "Foot: S",
-		"how_heart": "First heart: 35s, then 90s",
 		"how_jump": "Jump: Up Arrow",
+		"how_defence_notice": "A shield will fall soon. Collect it for temporary defence.",
+		"how_health_notice": "A health heart will fall soon. Collect it to heal.",
 		"credits": "Credits",
-		"credits_text": "Silent City\nCreated by Luka Guledani / SonnyRenderer\n\nCharacter and asset credits:\nKenney - Animated Characters Retro 1.1\nLicense: Creative Commons Zero (CC0)\nwww.kenney.nl\n\nGraveyard platform tileset\nGameArt2D / CraftPix freebie license\nhttps://www.gameart2d.com/free-graveyard-platformer-tileset.html\n\nQA/Testers:\n1. Giorgi Gugunava\n2. Iakob Janiashvili\n3. Discord/Sonny'sGaming server community\n\n[url=https://discord.gg/DNUu88kwwd]Join Discord Server[/url]\n\nThank you for playing.",
+		"credits_text": "Silent City\nCreated by Luka Guledani / SonnyRenderer\n\nCharacter and asset credits:\nKenney - Animated Characters Retro 1.1\nLicense: Creative Commons Zero (CC0)\nwww.kenney.nl\n\nGraveyard platform tileset\nGameArt2D / CraftPix freebie license\nhttps://www.gameart2d.com/free-graveyard-platformer-tileset.html\n\nQA/Testers:\n1. Giorgi Gugunava\n2. Nikoloz Lekishvili\n3. Iakob Janiashvili\n4. Discord/Sonny'sGaming server community\n\n[url=https://discord.gg/DNUu88kwwd]Join Discord Server[/url]\n\nThank you for playing.",
 		"exit": "Exit",
 		"select": "Select",
 		"locked": "Locked %d/%d",
@@ -158,6 +176,9 @@ const TEXT := {
 		"language_button": "ENG",
 		"subtitle": "აირჩიე ბრძოლა",
 		"start": "დაწყება",
+		"story_mode": "სიუჟეტური რეჟიმი",
+		"squad": "რაზმი",
+		"choose_mode": "აირჩიე რეჟიმი",
 		"map": "სირთულე",
 		"choose_your_map": "აირჩიე სირთულე",
 		"easy": "მარტივი",
@@ -172,9 +193,11 @@ const TEXT := {
 		"audio": "ხმა",
 		"master_volume": "მთავარი ხმა",
 		"graphics": "გრაფიკა",
+		"brightness": "სიკაშკაშე",
 		"fullscreen": "სრული ეკრანი",
 		"vsync": "VSync",
 		"resolution": "რეზოლუცია",
+		"apply": "გამოყენება",
 		"fps_limit": "FPS ლიმიტი",
 		"renderer": "რენდერი",
 		"on": "ჩართული",
@@ -183,11 +206,12 @@ const TEXT := {
 		"wifi_multiplayer": "ვაიფაი",
 		"steam_friend": "სტიმ მეგობარი",
 		"how_to_play": "როგორ ვითამაშოთ",
-		"how_to_play_text": "იმოძრავე მარცხენა/მარჯვენა ისრებით.\nახტომა: Up Arrow.\nხელით დარტყმა: A, ფეხით დარტყმა: S.\nდაამარცხე მტრები, მოერიდე ეკლებს და აიღე გულები სიცოცხლისთვის.\nპირველი გული მოდის 35 წამში, შემდეგ ყოველ 90 წამში.",
+		"how_to_play_text": "მოძრაობა: მარცხენა/მარჯვენა ისრები.\nახტომა: Up Arrow.\nხელით დარტყმა: A, ფეხით: S.\nდაამარცხე მტრები, მოერიდე ეკლებს და აიღე ბონუსები.",
 		"how_attack": "ხელები: A",
 		"how_kick": "ფეხი: S",
-		"how_heart": "პირველი: 35წმ, მერე 90წმ",
 		"how_jump": "ახტომა: Up Arrow",
+		"how_defence_notice": "ფარი ჩამოვარდება. აიღე დაცვისთვის.",
+		"how_health_notice": "გული ჩამოვარდება. აიღე სიცოცხლისთვის.",
 		"credits": "კრედიტები",
 		"credits_text": "Silent City\nშექმნა: Luka Guledani / SonnyRenderer\n\nპერსონაჟებისა და ასეტების კრედიტები:\nKenney - Animated Characters Retro 1.1\nლიცენზია: Creative Commons Zero (CC0)\nwww.kenney.nl\n\nGraveyard platform tileset\nGameArt2D / CraftPix freebie license\nhttps://www.gameart2d.com/free-graveyard-platformer-tileset.html\n\nQA/ტესტერები:\n1. Giorgi Gugunava\n2. Iakob Janiashvili\n3. Discord/Sonny'sGaming server community\n\n[url=https://discord.gg/DNUu88kwwd]Discord სერვერზე შესვლა[/url]\n\nმადლობა თამაშისთვის.",
 		"exit": "გასვლა",
@@ -271,6 +295,10 @@ var menu_optimizer = null
 @onready var online_page: VBoxContainer = $Content/Root/Pages/Online
 
 @onready var home_start_button: Button = $Content/Root/Pages/Home/StartButton
+@onready var mode_page: VBoxContainer = $Content/Root/Pages/ModeSelect
+@onready var mode_story_button: Button = $Content/Root/Pages/ModeSelect/StoryModeButton
+@onready var mode_squad_button: Button = $Content/Root/Pages/ModeSelect/SquadButton
+@onready var mode_back_button: Button = $Content/Root/Pages/ModeSelect/BackButton
 @onready var home_map_button: Button = $Content/Root/Pages/Home/MapButton
 @onready var home_choose_button: Button = $Content/Root/Pages/Home/ChooseButton
 @onready var home_online_button: Button = $Content/Root/Pages/Home/OnlineButton
@@ -313,6 +341,7 @@ func _ready() -> void:
 
 	_setup_language()
 	_setup_menu_header_images()
+	_setup_community_buttons()
 
 	# Settings code is split out. Startup creates ONLY the visible Home
 	# Settings button and applies saved Audio/Graphics preferences.
@@ -335,6 +364,146 @@ func _ready() -> void:
 
 	_apply_language()
 	_show_page(home_page)
+
+
+func _setup_community_buttons() -> void:
+	# The generated sprite sheet contains a baked white/gray checkerboard.
+	# Convert that connected neutral background to alpha before atlas slicing.
+	var sheet: Texture2D = menu_optimizer.load_menu_texture(
+		COMMUNITY_BUTTON_SHEET,
+		0.68,
+		0.20
+	)
+	if not sheet:
+		push_warning("Community button sheet not found: " + COMMUNITY_BUTTON_SHEET)
+		return
+
+	# Build mipmaps for the cleaned runtime image so the thin frame details stay
+	# smooth when the 512 px source regions are displayed at 104 px.
+	var sheet_image := sheet.get_image()
+	if sheet_image and not sheet_image.is_empty():
+		sheet_image.generate_mipmaps()
+		sheet = ImageTexture.create_from_image(sheet_image)
+
+	var dock := HBoxContainer.new()
+	dock.name = "CommunityLinks"
+	dock.z_index = 20
+	add_child(dock)
+	dock.anchor_left = 1.0
+	dock.anchor_top = 1.0
+	dock.anchor_right = 1.0
+	dock.anchor_bottom = 1.0
+	dock.offset_left = -(
+		COMMUNITY_ICON_SIZE.x * 2.0
+		+ COMMUNITY_DOCK_GAP
+		+ COMMUNITY_DOCK_MARGIN
+	)
+	dock.offset_top = -(COMMUNITY_ICON_SIZE.y + COMMUNITY_DOCK_MARGIN)
+	dock.offset_right = -COMMUNITY_DOCK_MARGIN
+	dock.offset_bottom = -COMMUNITY_DOCK_MARGIN
+	dock.add_theme_constant_override("separation", COMMUNITY_DOCK_GAP)
+
+	_add_community_button(
+		dock,
+		"DiscordButton",
+		sheet,
+		Rect2(0.0, 0.0, 512.0, 512.0),
+		Rect2(512.0, 0.0, 1024.0, 512.0),
+		DISCORD_SERVER_URL,
+		"Join our Discord server"
+	)
+	_add_community_button(
+		dock,
+		"SteamStoreButton",
+		sheet,
+		Rect2(0.0, 512.0, 512.0, 512.0),
+		Rect2(512.0, 512.0, 1024.0, 512.0),
+		STEAM_STORE_URL,
+		"View Silent City on Steam"
+	)
+
+
+func _add_community_button(
+	parent: HBoxContainer,
+	button_name: String,
+		sheet: Texture2D,
+	normal_region: Rect2,
+	hover_region: Rect2,
+	url: String,
+	accessible_text: String
+) -> void:
+	var normal_texture := AtlasTexture.new()
+	normal_texture.atlas = sheet
+	normal_texture.region = normal_region
+
+	var hover_texture := AtlasTexture.new()
+	hover_texture.atlas = sheet
+	hover_texture.region = hover_region
+
+	var row := Control.new()
+	row.custom_minimum_size = COMMUNITY_ICON_SIZE
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	parent.add_child(row)
+
+	var artwork := TextureRect.new()
+	artwork.name = "Artwork"
+	artwork.texture = normal_texture
+	artwork.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	artwork.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	artwork.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	artwork.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# Preserve the source PNG's intended color and contrast.
+	artwork.self_modulate = COMMUNITY_ICON_TINT
+	row.add_child(artwork)
+	artwork.anchor_left = 1.0
+	artwork.anchor_top = 0.5
+	artwork.anchor_right = 1.0
+	artwork.anchor_bottom = 0.5
+	artwork.offset_left = -COMMUNITY_ICON_SIZE.x
+	artwork.offset_top = -COMMUNITY_ICON_SIZE.y * 0.5
+	artwork.offset_right = 0.0
+	artwork.offset_bottom = COMMUNITY_ICON_SIZE.y * 0.5
+
+	var button := Button.new()
+	button.name = button_name
+	button.flat = true
+	button.text = ""
+	button.tooltip_text = accessible_text
+	button.focus_mode = Control.FOCUS_ALL
+	button.add_theme_stylebox_override("normal", StyleBoxEmpty.new())
+	button.add_theme_stylebox_override("hover", StyleBoxEmpty.new())
+	button.add_theme_stylebox_override("pressed", StyleBoxEmpty.new())
+	button.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	row.add_child(button)
+	button.anchor_left = 1.0
+	button.anchor_top = 0.5
+	button.anchor_right = 1.0
+	button.anchor_bottom = 0.5
+	button.offset_left = -COMMUNITY_ICON_SIZE.x
+	button.offset_top = -COMMUNITY_ICON_SIZE.y * 0.5
+	button.offset_right = 0.0
+	button.offset_bottom = COMMUNITY_ICON_SIZE.y * 0.5
+
+	var show_hover := func() -> void:
+		row.z_index = 1
+		artwork.texture = hover_texture
+		artwork.offset_left = -COMMUNITY_HOVER_SIZE.x
+		artwork.offset_top = -COMMUNITY_HOVER_SIZE.y * 0.5
+		artwork.offset_right = 0.0
+		artwork.offset_bottom = COMMUNITY_HOVER_SIZE.y * 0.5
+	var show_normal := func() -> void:
+		row.z_index = 0
+		artwork.texture = normal_texture
+		artwork.offset_left = -COMMUNITY_ICON_SIZE.x
+		artwork.offset_top = -COMMUNITY_ICON_SIZE.y * 0.5
+		artwork.offset_right = 0.0
+		artwork.offset_bottom = COMMUNITY_ICON_SIZE.y * 0.5
+
+	button.mouse_entered.connect(show_hover)
+	button.mouse_exited.connect(show_normal)
+	button.focus_entered.connect(show_hover)
+	button.focus_exited.connect(show_normal)
+	button.pressed.connect(func() -> void: OS.shell_open(url))
 
 
 
@@ -460,6 +629,21 @@ func _apply_main_menu_button_sprites() -> void:
 	_apply_button_sprite(
 		home_start_button,
 		"res://Resources/Buttons/menu_button_start.png",
+		MAIN_MENU_BUTTON_SIZE
+	)
+	_apply_button_sprite(
+		mode_story_button,
+		"res://Resources/Buttons/menu_button_start.png",
+		MAIN_MENU_BUTTON_SIZE
+	)
+	_apply_button_sprite(
+		mode_squad_button,
+		"res://Resources/Buttons/menu_button_online.png",
+		MAIN_MENU_BUTTON_SIZE
+	)
+	_apply_button_sprite(
+		mode_back_button,
+		"res://Resources/Buttons/menu_button_exit.png",
 		MAIN_MENU_BUTTON_SIZE
 	)
 	_apply_button_sprite(
@@ -612,6 +796,10 @@ func _apply_language() -> void:
 	subtitle_label.text = _t("subtitle")
 
 	home_start_button.text = _t("start")
+	mode_page.get_node("Header").text = _t("choose_mode")
+	mode_story_button.text = _t("story_mode")
+	mode_squad_button.text = _t("squad")
+	mode_back_button.text = _t("back")
 	home_map_button.text = _t("map")
 	home_choose_button.text = _t("choose_character")
 	home_online_button.text = _t("online_room")
@@ -662,6 +850,7 @@ func _setup_settings_runtime() -> void:
 		{
 			"show_page": Callable(self, "_show_page"),
 			"translate": Callable(self, "_t"),
+			"menu_optimizer": menu_optimizer,
 			"apply_button_sprite": Callable(
 				self,
 				"_apply_button_sprite"
@@ -710,14 +899,20 @@ func _setup_main_menu_controller() -> void:
 		"pages": pages,
 		"home_page": home_page,
 		"home_start_button": home_start_button,
+		"mode_story_button": mode_story_button,
+		"mode_squad_button": mode_squad_button,
+		"mode_back_button": mode_back_button,
 		"home_map_button": home_map_button,
 		"home_choose_button": home_choose_button,
 		"home_online_button": home_online_button,
 		"settings_button": settings_button,
-		"exit_button": home_exit_button
+		"exit_button": home_exit_button,
+		"language_button": language_button
 	})
 
-	main_menu_controller.start_requested.connect(_open_start_flow)
+	main_menu_controller.start_requested.connect(_open_mode_select)
+	main_menu_controller.story_mode_requested.connect(_open_start_flow)
+	main_menu_controller.squad_requested.connect(_open_squad_mode)
 	main_menu_controller.character_requested.connect(
 		_open_character_page_from_home
 	)
@@ -727,6 +922,22 @@ func _setup_main_menu_controller() -> void:
 	main_menu_controller.online_requested.connect(_open_online_page)
 	main_menu_controller.settings_requested.connect(_open_settings_page)
 	main_menu_controller.exit_requested.connect(_exit_game)
+
+
+func _open_mode_select() -> void:
+	_show_page(mode_page)
+
+
+func _open_squad_mode() -> void:
+	var settings := _settings()
+	if settings:
+		settings.set("game_mode", "squad")
+		settings.set("character_chosen", false)
+		settings.set("selected_character", "crusader")
+		settings.set("online_scene_path", SQUAD_SCENE)
+		settings.set("level_chosen", true)
+	# Squad uses the existing two-player room flow with its own roster.
+	_open_online_page()
 
 func _show_page(page: Control) -> void:
 	if main_menu_controller:
@@ -858,6 +1069,7 @@ func _open_start_flow() -> void:
 
 	var settings := _settings()
 	if settings:
+		settings.set("game_mode", "story")
 		settings.set("character_chosen", false)
 		settings.set("level_chosen", false)
 	level_start_pending = false
@@ -1217,6 +1429,8 @@ func _change_to_preloaded_game_scene(scene_path: String) -> void:
 func _selected_main_scene() -> String:
 	var settings := _settings()
 	if settings:
+		if String(settings.get("game_mode")) == "squad":
+			return SQUAD_SCENE
 		var selected_level := String(settings.get("selected_level"))
 		if selected_level == "hard":
 			return HARD_SCENE

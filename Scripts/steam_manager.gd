@@ -10,7 +10,7 @@ const DEV_APP_ID := "480"
 const LOBBY_TYPE_PUBLIC := 2
 const LOBBY_COMPARISON_EQUAL := 0
 const LOBBY_DISTANCE_FILTER_WORLDWIDE := 3
-const MAX_LOBBY_MEMBERS := 2
+const MAX_LOBBY_MEMBERS := 4
 const STEAM_VIRTUAL_PORT := 0
 const GAME_LOBBY_KEY := "silent_city"
 
@@ -53,7 +53,10 @@ func _process(_delta: float) -> void:
 		steam.call("run_callbacks")
 
 
-func create_lobby(lobby_name: String = "Silent City") -> void:
+func create_lobby(
+	lobby_name: String = "Silent City",
+	max_members: int = 2
+) -> void:
 	if not initialized:
 		steam_failed.emit("Steam is not ready.")
 		return
@@ -62,7 +65,11 @@ func create_lobby(lobby_name: String = "Silent City") -> void:
 	pending_lobby_name = lobby_name.strip_edges()
 	if pending_lobby_name.is_empty():
 		pending_lobby_name = "Silent City"
-	steam.call("createLobby", LOBBY_TYPE_PUBLIC, MAX_LOBBY_MEMBERS)
+	steam.call(
+		"createLobby",
+		LOBBY_TYPE_PUBLIC,
+		clampi(max_members, 2, MAX_LOBBY_MEMBERS)
+	)
 
 
 func request_lobbies(wide_search: bool = false) -> void:
@@ -238,6 +245,7 @@ func _add_lobby(lobby_id: int) -> void:
 	var host_character := ""
 	var client_character := ""
 	var scene_path := "res://Scenes/main.tscn"
+	var member_count := 1
 	var game_key := ""
 	if steam:
 		var name = steam.call("getLobbyData", lobby_id, "name")
@@ -247,6 +255,8 @@ func _add_lobby(lobby_id: int) -> void:
 		lobby_state = String(steam.call("getLobbyData", lobby_id, "state"))
 		host_character = String(steam.call("getLobbyData", lobby_id, "host_character"))
 		client_character = String(steam.call("getLobbyData", lobby_id, "client_character"))
+		if steam.has_method("getNumLobbyMembers"):
+			member_count = int(steam.call("getNumLobbyMembers", lobby_id))
 		var lobby_scene_path := String(steam.call("getLobbyData", lobby_id, "scene_path"))
 		if not lobby_scene_path.strip_edges().is_empty():
 			scene_path = lobby_scene_path
@@ -262,6 +272,7 @@ func _add_lobby(lobby_id: int) -> void:
 		"state": lobby_state,
 		"host_character": host_character,
 		"client_character": client_character,
+		"members": member_count,
 		"scene_path": scene_path,
 	})
 

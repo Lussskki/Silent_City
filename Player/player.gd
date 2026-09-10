@@ -6,29 +6,18 @@ const JUMP_VELOCITY = -600.0
 const MAX_JUMPS = 2
 const SLIDE_SPEED = 400.0
 const SLIDE_ANGLE = 15.0
-const DEFENCE_TINT := Color(0.58, 0.68, 0.72, 1.0)
-const DEFENCE_BLOCK_TINT := Color(0.90, 0.98, 1.0, 1.0)
-const DEFENCE_SPRITE_SCALE := Vector2(0.92, 1.05)
-const DEFENCE_AURA_COLOR := Color(0.82, 0.96, 1.0, 1.0)
-const DEFENCE_AURA_BLOCK_COLOR := Color(1.0, 1.0, 1.0, 1.0)
-const DEFENCE_AURA_SHEET := "res://Resources/Deffence/deffence_clean.png"
-const DEFENCE_AURA_COLUMNS := 4
-const DEFENCE_AURA_ROWS := 2
-const DEFENCE_AURA_ANIMATION := "flow"
-const DEFENCE_AURA_SCALE := Vector2(0.50, 0.50)
-const DEFENCE_AURA_OFFSET := Vector2(0, -50)
-const DEFENCE_AURA_FRONT_COLOR := Color(0.75, 0.94, 1.0, 0.30)
-const DEFENCE_AURA_FRAME_ORDER := [0, 1, 2, 3, 2, 1, 0, 4, 5, 6, 7, 6, 5, 4]
 
 const NETWORK_SYNC_INTERVAL = 0.033
 const REMOTE_POSITION_SMOOTHING = 20.0
 
 const MENU_TEXTURE_CACHE_META := "_silent_city_menu_texture_cache_v1"
-const DEFAULT_SPRITE_OFFSET := Vector2(0, -16)
-const GOLEM_SPRITE_OFFSET := Vector2(0, -16)
-const ICE_GOLEM_SPRITE_OFFSET := Vector2(0, -16)
+const DEFAULT_SPRITE_OFFSET := Vector2(0, -24)
+const GOLEM_SPRITE_OFFSET := Vector2(0, -24)
+const ICE_GOLEM_SPRITE_OFFSET := Vector2(0, -24)
 
 const ICE_GOLEM_FRAMES_ROOT := "res://Characters/Golem_1/PNG/PNG Sequences"
+const CRUSADER_FRAMES_ROOT := "res://Characters/Skeleton_crusider/Skeleton_Crusader_1/PNG/PNG Sequences"
+const WRAITH_FRAMES_ROOT := "res://Characters/Wraithes/PNG/Wraith_01/PNG Sequences"
 
 const GOLEM_ANIMATION_DIRS := {
 	"Idle": "Idle",
@@ -44,10 +33,24 @@ const GOLEM_ANIMATION_DIRS := {
 	"Throwing": "Throwing",
 	"Throwing In Air": "Throwing in The Air",
 	"Dying": "Dying",
-	"Sliding": "Sliding",
+	"Sliding": "Sliding"
+}
 
-	# DEFENCE
-	"Defending": "Defending"
+const WRAITH_ANIMATION_DIRS := {
+	"Idle": "Idle",
+	"Walking": "Walking",
+	"Running": "Walking",
+	"Jump Looping": "Idle",
+	"Falling Down": "Idle",
+	"Slashing": "Attacking",
+	"Slashing In Air": "Attacking",
+	"Run Slashing": "Attacking",
+	"Kicking": "Attacking",
+	"Hurt": "Hurt",
+	"Throwing": "Casting Spells",
+	"Throwing In Air": "Casting Spells",
+	"Dying": "Dying",
+	"Sliding": "Walking"
 }
 
 const HURT_ANIMATION_TIME := 0.28
@@ -104,6 +107,7 @@ var run_sound_interval := 0.35
 
 @export var local_player := true
 @export var network_player_id := 1
+@export var team_id := 0
 @export var dynamic_frames_root := ""
 
 
@@ -112,11 +116,6 @@ var run_sound_interval := 0.35
 
 
 var attacking := false
-
-# =========================================================
-# DEFENCE
-# =========================================================
-var is_defending := false
 
 var is_sliding := false
 var dead := false
@@ -134,7 +133,8 @@ var landing_audio: AudioStreamPlayer2D
 var run_sound_timer := 0.0
 var attack_hit_timer := 0.0
 var hurt_animation_timer := 0.0
-var defence_block_feedback_timer := 0.0
+var defence_power_timer := 0.0
+var defence_block_flash_timer := 0.0
 var network_sync_timer := 0.0
 
 var spawn_position := Vector2.ZERO
@@ -151,8 +151,6 @@ var was_on_floor := false
 
 var sprite_flip_inverted := false
 var default_sprite_scale := Vector2.ONE
-var defence_aura: AnimatedSprite2D
-var defence_aura_front: AnimatedSprite2D
 var runtime_texture_cache: Dictionary = {}
 var menu_optimizer = null
 
@@ -178,7 +176,6 @@ func _ready():
 		sprite.position = DEFAULT_SPRITE_OFFSET
 
 	default_sprite_scale = sprite.scale
-	_create_defence_visuals()
 
 	_remember_default_player_frames()
 
@@ -238,7 +235,9 @@ func _physics_process(delta):
 
 	if dead:
 
-		is_defending = false
+		defence_power_timer = 0.0
+		defence_block_flash_timer = 0.0
+		sprite.self_modulate = Color.WHITE
 
 		if not is_on_floor():
 			velocity += get_gravity() * delta
@@ -248,6 +247,9 @@ func _physics_process(delta):
 			_update_landing_sound()
 
 		return
+
+
+	_update_defence_power(delta)
 
 
 	# =====================================================
@@ -266,34 +268,10 @@ func _physics_process(delta):
 	if gameplay_input_blocked:
 
 		attacking = false
-		is_defending = false
 
 		attack_hit_timer = 0.0
 
 		hit_targets.clear()
-
-
-	# =====================================================
-	# DEFENCE
-	# =====================================================
-
-	if (
-		not gameplay_input_blocked
-		and Input.is_action_pressed("defend")
-		and hurt_animation_timer <= 0.0
-		and not dead
-	):
-		is_defending = true
-
-	else:
-		is_defending = false
-
-	defence_block_feedback_timer = max(
-		defence_block_feedback_timer - delta,
-		0.0
-	)
-
-	_refresh_defence_style()
 
 
 	# =====================================================
@@ -302,7 +280,7 @@ func _physics_process(delta):
 
 	if (
 		not gameplay_input_blocked
-		and Input.is_action_just_pressed("ui_up")
+		and Input.is_action_just_pressed("jump")
 		and jumps_left > 0
 		and not is_sliding
 	):
@@ -544,15 +522,7 @@ func _physics_process(delta):
 	# ANIMATIONS
 	# =====================================================
 
-	if (
-		is_defending
-		and _has_animation("Defending")
-	):
-
-		_play_defence_animation()
-
-
-	elif not is_on_floor():
+	if not is_on_floor():
 
 		if velocity.y < 0:
 
@@ -845,35 +815,21 @@ func _facing_direction() -> float:
 	)
 
 
-# =========================================================
-# DEFENCE DAMAGE SYSTEM
-# =========================================================
-
 func take_damage(amount: int) -> void:
 
 	if dead:
 		return
 
 
-	# =====================================================
-	# BLOCK DAMAGE
-	# =====================================================
-
-	if is_defending:
-
-		_on_attack_blocked()
-
+	if defence_power_timer > 0.0:
+		defence_block_flash_timer = 0.16
+		_update_defence_power_visual()
 		_send_network_state(
 			0.0,
 			true
 		)
-
 		return
 
-
-	# =====================================================
-	# NORMAL DAMAGE
-	# =====================================================
 
 	life = max(
 		life - amount,
@@ -908,190 +864,45 @@ func take_damage(amount: int) -> void:
 	)
 
 
-func _on_attack_blocked() -> void:
+func activate_defence(duration: float = 7.0) -> void:
 
-	# Defence currently takes ZERO damage.
-	#
-	# Later you can add:
-	# block sound
-	# sparks
-	# stamina
-	# knockback
-	# guard break
+	if dead:
+		return
 
-
-	_play_defence_animation()
-
-	_show_defence_block_feedback()
+	defence_power_timer = max(
+		defence_power_timer,
+		duration
+	)
+	defence_block_flash_timer = 0.18
+	_update_defence_power_visual()
 
 
-func _play_defence_animation() -> void:
+func _update_defence_power(delta: float) -> void:
 
-	if _has_animation("Defending"):
+	defence_power_timer = max(
+		defence_power_timer - delta,
+		0.0
+	)
+	defence_block_flash_timer = max(
+		defence_block_flash_timer - delta,
+		0.0
+	)
+	_update_defence_power_visual()
 
-		_safe_play("Defending")
 
-	else:
+func _update_defence_power_visual() -> void:
 
-		_safe_play("Idle")
-
-
-func _refresh_defence_style() -> void:
-
-	if (
-		is_defending
-		and not dead
-		and hurt_animation_timer <= 0.0
-	):
-
-		sprite.self_modulate = (
-			DEFENCE_BLOCK_TINT
-			if defence_block_feedback_timer > 0.0
-			else DEFENCE_TINT
-		)
-		sprite.scale = default_sprite_scale * DEFENCE_SPRITE_SCALE
-		_set_defence_visuals_visible(true)
-
-	else:
+	if defence_power_timer <= 0.0:
 
 		sprite.self_modulate = Color.WHITE
-		sprite.scale = default_sprite_scale
-		_set_defence_visuals_visible(false)
 
+		return
 
-func _show_defence_block_feedback() -> void:
-
-	defence_block_feedback_timer = 0.16
-
-	_refresh_defence_style()
-
-
-func _create_defence_visuals() -> void:
-
-	defence_aura = AnimatedSprite2D.new()
-	defence_aura.name = "DefenceAura"
-	defence_aura.z_index = sprite.z_index - 1
-	defence_aura.sprite_frames = _build_defence_aura_frames()
-	defence_aura.animation = DEFENCE_AURA_ANIMATION
-	defence_aura.scale = DEFENCE_AURA_SCALE
-	defence_aura.position = DEFENCE_AURA_OFFSET
-	defence_aura.self_modulate = DEFENCE_AURA_COLOR
-	defence_aura.visible = false
-	add_child(defence_aura)
-
-	defence_aura_front = AnimatedSprite2D.new()
-	defence_aura_front.name = "DefenceAuraFront"
-	defence_aura_front.z_index = sprite.z_index + 1
-	defence_aura_front.sprite_frames = defence_aura.sprite_frames
-	defence_aura_front.animation = DEFENCE_AURA_ANIMATION
-	defence_aura_front.scale = DEFENCE_AURA_SCALE
-	defence_aura_front.position = DEFENCE_AURA_OFFSET
-	defence_aura_front.self_modulate = DEFENCE_AURA_FRONT_COLOR
-	defence_aura_front.visible = false
-	add_child(defence_aura_front)
-
-
-func _set_defence_visuals_visible(
-	visible: bool
-) -> void:
-
-	if defence_aura:
-
-		defence_aura.visible = visible
-		var block_flash := (
-			defence_block_feedback_timer > 0.0
-		)
-		var flash_scale := (
-			1.10
-			if block_flash
-			else 1.0
-		)
-		defence_aura.self_modulate = (
-			DEFENCE_AURA_BLOCK_COLOR
-			if block_flash
-			else DEFENCE_AURA_COLOR
-		)
-		defence_aura.scale = DEFENCE_AURA_SCALE * Vector2(
-			flash_scale,
-			flash_scale
-		)
-
-		if visible and not defence_aura.is_playing():
-
-			defence_aura.play(
-				DEFENCE_AURA_ANIMATION
-			)
-
-		elif not visible:
-
-			defence_aura.stop()
-
-	if defence_aura_front:
-
-		defence_aura_front.visible = visible
-		defence_aura_front.self_modulate = (
-			DEFENCE_AURA_BLOCK_COLOR
-			if defence_block_feedback_timer > 0.0
-			else DEFENCE_AURA_FRONT_COLOR
-		)
-		defence_aura_front.scale = defence_aura.scale if defence_aura else DEFENCE_AURA_SCALE
-
-		if visible and not defence_aura_front.is_playing():
-
-			defence_aura_front.play(
-				DEFENCE_AURA_ANIMATION
-			)
-
-		elif not visible:
-
-			defence_aura_front.stop()
-
-
-func _build_defence_aura_frames() -> SpriteFrames:
-
-	var frames := SpriteFrames.new()
-	frames.add_animation(DEFENCE_AURA_ANIMATION)
-	frames.set_animation_loop(DEFENCE_AURA_ANIMATION, true)
-	frames.set_animation_speed(DEFENCE_AURA_ANIMATION, 4.5)
-
-	var texture := _load_runtime_sprite_texture(DEFENCE_AURA_SHEET)
-
-	if not texture:
-
-		return frames
-
-	var frame_width := (
-		float(texture.get_width())
-		/ float(DEFENCE_AURA_COLUMNS)
+	sprite.self_modulate = (
+		Color(1.0, 1.0, 1.0, 1.0)
+		if defence_block_flash_timer > 0.0
+		else Color(0.70, 0.94, 1.0, 1.0)
 	)
-	var frame_height := (
-		float(texture.get_height())
-		/ float(DEFENCE_AURA_ROWS)
-	)
-
-	for frame_index in DEFENCE_AURA_FRAME_ORDER:
-
-		var column := int(frame_index) % DEFENCE_AURA_COLUMNS
-		var row := int(frame_index) / DEFENCE_AURA_COLUMNS
-		var atlas := AtlasTexture.new()
-		atlas.atlas = texture
-		atlas.region = Rect2(
-			Vector2(
-				frame_width * float(column),
-				frame_height * float(row)
-			),
-			Vector2(
-				frame_width,
-				frame_height
-			)
-		)
-
-		frames.add_frame(
-			DEFENCE_AURA_ANIMATION,
-			atlas
-		)
-
-	return frames
 
 
 func _setup_runtime_texture_optimizer() -> void:
@@ -1307,7 +1118,7 @@ func _play_shockwave_visual() -> void:
 			0.65,
 			0.96,
 			1.0,
-			1.0
+			0.28
 		)
 
 
@@ -1524,12 +1335,15 @@ func get_hit_position() -> Vector2:
 
 func configure_online_player(
 	player_id: int,
-	controlled_locally: bool
+	controlled_locally: bool,
+	assigned_team_id: int = 0
 ) -> void:
 
 	network_player_id = player_id
 
 	local_player = controlled_locally
+	team_id = assigned_team_id
+	_update_team_marker()
 
 	spawn_position = global_position
 
@@ -1570,6 +1384,33 @@ func configure_online_player(
 			if _has_network_peer()
 			else Vector2.ONE
 		)
+
+
+func _update_team_marker() -> void:
+	var marker := get_node_or_null("TeamMarker") as Label
+	if team_id <= 0:
+		if marker:
+			marker.visible = false
+		return
+	if not marker:
+		marker = Label.new()
+		marker.name = "TeamMarker"
+		marker.position = Vector2(-42, -112)
+		marker.size = Vector2(84, 24)
+		marker.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		marker.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		marker.add_theme_font_size_override("font_size", 14)
+		marker.add_theme_color_override("font_shadow_color", Color.BLACK)
+		marker.add_theme_constant_override("shadow_offset_x", 1)
+		marker.add_theme_constant_override("shadow_offset_y", 1)
+		marker.z_index = 20
+		add_child(marker)
+	marker.text = "TEAM %d" % team_id
+	marker.add_theme_color_override(
+		"font_color",
+		Color(0.30, 0.80, 1.0) if team_id == 1 else Color(1.0, 0.32, 0.28)
+	)
+	marker.visible = true
 
 
 func set_online_player_active(
@@ -1692,8 +1533,7 @@ func _send_network_state(
 			sprite.flip_h,
 			String(sprite.animation),
 			life,
-			dead,
-			is_defending
+			dead
 		)
 
 
@@ -1706,8 +1546,7 @@ func _send_network_state(
 				sprite.flip_h,
 				String(sprite.animation),
 				life,
-				dead,
-				is_defending
+				dead
 			)
 
 		return
@@ -1720,8 +1559,7 @@ func _send_network_state(
 		sprite.flip_h,
 		String(sprite.animation),
 		life,
-		dead,
-		is_defending
+		dead
 	)
 
 
@@ -1734,8 +1572,7 @@ func _send_network_state(
 			sprite.flip_h,
 			String(sprite.animation),
 			life,
-			dead,
-			is_defending
+			dead
 		)
 
 
@@ -1746,8 +1583,7 @@ func _receive_network_state(
 	remote_flip_h: bool,
 	remote_animation: String,
 	remote_life: int,
-	remote_dead: bool = false,
-	remote_defending: bool = false
+	remote_dead: bool = false
 ) -> void:
 
 	if local_player:
@@ -1775,8 +1611,7 @@ func _receive_network_state(
 		remote_flip_h,
 		remote_animation,
 		remote_life,
-		remote_dead,
-		remote_defending
+		remote_dead
 	)
 
 
@@ -1787,8 +1622,7 @@ func _receive_forced_network_state(
 	remote_flip_h: bool,
 	remote_animation: String,
 	remote_life: int,
-	remote_dead: bool = false,
-	remote_defending: bool = false
+	remote_dead: bool = false
 ) -> void:
 
 	if local_player:
@@ -1816,8 +1650,7 @@ func _receive_forced_network_state(
 		remote_flip_h,
 		remote_animation,
 		remote_life,
-		remote_dead,
-		remote_defending
+		remote_dead
 	)
 
 
@@ -1827,8 +1660,7 @@ func _apply_remote_network_state(
 	remote_flip_h: bool,
 	remote_animation: String,
 	remote_life: int,
-	remote_dead: bool,
-	remote_defending: bool = false
+	remote_dead: bool
 ) -> void:
 
 	if (
@@ -1858,20 +1690,6 @@ func _apply_remote_network_state(
 	dead = remote_dead
 
 
-	# Remote defence state is represented by
-	# an explicit network flag because some characters
-	# reuse Idle when no defence sprite exists.
-	is_defending = (
-		(
-			remote_defending
-			or remote_animation == "Defending"
-		)
-		and not remote_dead
-	)
-
-	_refresh_defence_style()
-
-
 	if (
 		dead
 		and not was_dead
@@ -1887,8 +1705,6 @@ func _apply_remote_network_state(
 
 
 	if dead:
-
-		is_defending = false
 
 		velocity = Vector2.ZERO
 
@@ -1925,15 +1741,9 @@ func _apply_remote_network_state(
 
 			modulate = Color.WHITE
 
-			if is_defending:
-
-				_play_defence_animation()
-
-			else:
-
-				_safe_play(
-					remote_animation
-				)
+			_safe_play(
+				remote_animation
+			)
 
 
 func _update_remote_network_motion(
@@ -2018,6 +1828,34 @@ func _apply_selected_character() -> bool:
 		)
 	)
 
+	if selected_character in ["crusader", "wraith"]:
+		var frames_root := (
+			CRUSADER_FRAMES_ROOT
+			if selected_character == "crusader"
+			else WRAITH_FRAMES_ROOT
+		)
+		var animation_dirs: Dictionary = (
+			GOLEM_ANIMATION_DIRS
+			if selected_character == "crusader"
+			else WRAITH_ANIMATION_DIRS
+		)
+		var squad_frames := _build_sprite_frames_from_root(
+			frames_root,
+			animation_dirs
+		)
+		if squad_frames.has_animation("Idle"):
+			sprite.sprite_frames = squad_frames
+			sprite.position = DEFAULT_SPRITE_OFFSET
+			sprite.scale = (
+				Vector2(0.22, 0.22)
+				if selected_character == "crusader"
+				else Vector2(0.34, 0.34)
+			)
+			set_sprite_flip_inverted(true)
+			sprite.play("Idle")
+			return true
+		return false
+
 
 	if selected_character == "ice_golem":
 
@@ -2073,19 +1911,6 @@ func _apply_selected_character() -> bool:
 		)
 
 
-		# =================================================
-		# DEFENCE ANIMATION
-		# =================================================
-
-		_add_animation_from_folder(
-			sprite.sprite_frames,
-			"Defending",
-			"res://Characters/Golem/PNG/PNG Sequences/Defending",
-			12.0,
-			true
-		)
-
-
 		sprite.position = GOLEM_SPRITE_OFFSET
 
 		set_sprite_flip_inverted(
@@ -2105,16 +1930,17 @@ func _apply_selected_character() -> bool:
 
 
 func _build_sprite_frames_from_root(
-	frames_root: String
+	frames_root: String,
+	animation_dirs: Dictionary = GOLEM_ANIMATION_DIRS
 ) -> SpriteFrames:
 
 	var frames := SpriteFrames.new()
 
 
-	for animation_name in GOLEM_ANIMATION_DIRS:
+	for animation_name in animation_dirs:
 
 		var folder_name: String = (
-			GOLEM_ANIMATION_DIRS[
+			animation_dirs[
 				animation_name
 			]
 		)
@@ -2146,7 +1972,6 @@ func _build_sprite_frames_from_root(
 		)
 
 
-		# Defending is looping while button is held.
 		frames.set_animation_loop(
 			animation_name,
 			animation_name in [
@@ -2154,8 +1979,7 @@ func _build_sprite_frames_from_root(
 				"Walking",
 				"Running",
 				"Jump Looping",
-				"Falling Down",
-				"Defending"
+				"Falling Down"
 			]
 		)
 
@@ -2302,15 +2126,11 @@ func _play_hurt_feedback() -> void:
 
 	attacking = false
 
-	is_defending = false
-
 	is_sliding = false
-	defence_block_feedback_timer = 0.0
 
 	attack_hit_timer = 0.0
 
 	hit_targets.clear()
-	_refresh_defence_style()
 
 
 	hurt_animation_timer = (
@@ -2539,6 +2359,12 @@ func _damage_nearby_players() -> void:
 
 
 		if other_player.get("dead") == true:
+			continue
+
+		if (
+			team_id > 0
+			and int(other_player.get("team_id")) == team_id
+		):
 			continue
 
 
@@ -2788,16 +2614,15 @@ func _die() -> void:
 
 	attacking = false
 
-	# DEFENCE RESET
-	is_defending = false
-	defence_block_feedback_timer = 0.0
+	defence_power_timer = 0.0
+	defence_block_flash_timer = 0.0
 
 	is_sliding = false
 
 	velocity.x = 0.0
 
 	modulate = Color.WHITE
-	_refresh_defence_style()
+	sprite.self_modulate = Color.WHITE
 
 
 	if _has_animation(
@@ -2887,9 +2712,8 @@ func _respawn_for_online_match() -> void:
 
 	attacking = false
 
-	# DEFENCE RESET
-	is_defending = false
-	defence_block_feedback_timer = 0.0
+	defence_power_timer = 0.0
+	defence_block_flash_timer = 0.0
 
 	is_sliding = false
 
@@ -2900,7 +2724,7 @@ func _respawn_for_online_match() -> void:
 	life = max_life
 
 	modulate = Color.WHITE
-	_refresh_defence_style()
+	sprite.self_modulate = Color.WHITE
 
 	global_position = spawn_position
 
@@ -2949,6 +2773,14 @@ func _record_online_round() -> void:
 	var settings := get_node_or_null(
 		"/root/GameSettings"
 	)
+
+	if settings and String(settings.get("game_mode")) == "squad":
+		if not local_player:
+			return
+		var online_manager := get_tree().get_first_node_in_group("OnlineManager")
+		if online_manager and online_manager.has_method("report_squad_defeat"):
+			online_manager.call("report_squad_defeat", network_player_id, team_id)
+		return
 
 
 	if (

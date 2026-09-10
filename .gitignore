@@ -1,9 +1,16 @@
 # Godot 4+ specific ignores
 .godot/
+/.godot-*-appdata/
+/.godot-user-*/
 /android/
 .codex/
 /build/
 /builds/
+/output/
+/tmp/
+Characters/craftpix-net-484869-free-minotaur-tiny-style-2d-sprites.zip
 addons/godotsteam/win64/~*.dll
 addons/godotsteam/win64/~*.TMP
+addons/menu_optimizer/bin/windows/~*.dll
+addons/menu_optimizer/bin/windows/~*.TMP
 addons/menu_optimizer/bin/menu_optimizer.windows.template_debug.x86_64.lib

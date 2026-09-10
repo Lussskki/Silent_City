@@ -92,6 +92,7 @@ func open_preview() -> void:
 	if map_gallery_hint:
 		map_gallery_hint.visible = true
 
+	_apply_visuals()
 	_update_cards()
 	_show_page(level_page)
 
@@ -106,6 +107,7 @@ func open_playable() -> void:
 	if map_gallery_hint:
 		map_gallery_hint.visible = false
 
+	_apply_visuals()
 	_update_cards()
 	_show_page(level_page)
 
@@ -345,14 +347,11 @@ func _apply_difficulty_card_sprite(
 
 	var preview := button.get_node_or_null("Preview") as TextureRect
 	if preview:
-		preview.offset_left = 22.0
-		preview.offset_top = 38.0
-		preview.offset_right = -22.0
-		preview.offset_bottom = -62.0
-		preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		preview.visible = false
 
 	var title := button.get_node_or_null("Title") as Label
 	if title:
+		title.z_index = 2
 		title.offset_top = -50.0
 		title.offset_bottom = -15.0
 		title.add_theme_font_size_override("font_size", 20)

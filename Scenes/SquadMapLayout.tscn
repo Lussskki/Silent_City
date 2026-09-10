@@ -1,0 +1,112 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Texture2D" path="res://Sprites/Tiles/Tile (14).png" id="1_left"]
+[ext_resource type="Texture2D" path="res://Sprites/Tiles/Tile (15).png" id="2_middle"]
+[ext_resource type="Texture2D" path="res://Sprites/Tiles/Tile (16).png" id="3_right"]
+[ext_resource type="Texture2D" path="res://Sprites/Objects/Tree.png" id="4_tree"]
+[ext_resource type="Texture2D" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Lantern.png" id="5_lantern"]
+[ext_resource type="Texture2D" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Crypt.png" id="6_crypt"]
+[ext_resource type="Texture2D" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Skull.png" id="7_skull"]
+
+[sub_resource type="RectangleShape2D" id="Team1UpperShape"]
+size = Vector2(384, 128)
+[sub_resource type="RectangleShape2D" id="Team1LowerShape"]
+size = Vector2(384, 128)
+[sub_resource type="RectangleShape2D" id="CenterFightShape"]
+size = Vector2(384, 128)
+[sub_resource type="RectangleShape2D" id="Team2UpperShape"]
+size = Vector2(384, 128)
+[sub_resource type="RectangleShape2D" id="Team2LowerShape"]
+size = Vector2(384, 128)
+
+[node name="SquadMapLayout" type="Node2D"]
+
+[node name="Team1Upper" type="StaticBody2D" parent="."]
+position = Vector2(1092, 284)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Team1Upper"]
+shape = SubResource("Team1UpperShape")
+[node name="Left" type="Sprite2D" parent="Team1Upper"]
+position = Vector2(-128, 0)
+texture = ExtResource("1_left")
+[node name="Middle" type="Sprite2D" parent="Team1Upper"]
+texture = ExtResource("2_middle")
+[node name="Right" type="Sprite2D" parent="Team1Upper"]
+position = Vector2(128, 0)
+texture = ExtResource("3_right")
+
+[node name="Team1Lower" type="StaticBody2D" parent="."]
+position = Vector2(1092, 684)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Team1Lower"]
+shape = SubResource("Team1LowerShape")
+[node name="Left" type="Sprite2D" parent="Team1Lower"]
+position = Vector2(-128, 0)
+texture = ExtResource("1_left")
+[node name="Middle" type="Sprite2D" parent="Team1Lower"]
+texture = ExtResource("2_middle")
+[node name="Right" type="Sprite2D" parent="Team1Lower"]
+position = Vector2(128, 0)
+texture = ExtResource("3_right")
+
+[node name="CenterFight" type="StaticBody2D" parent="."]
+position = Vector2(1800, 484)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CenterFight"]
+shape = SubResource("CenterFightShape")
+[node name="Left" type="Sprite2D" parent="CenterFight"]
+position = Vector2(-128, 0)
+texture = ExtResource("1_left")
+[node name="Middle" type="Sprite2D" parent="CenterFight"]
+texture = ExtResource("2_middle")
+[node name="Right" type="Sprite2D" parent="CenterFight"]
+position = Vector2(128, 0)
+texture = ExtResource("3_right")
+
+[node name="Team2Upper" type="StaticBody2D" parent="."]
+position = Vector2(2508, 284)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Team2Upper"]
+shape = SubResource("Team2UpperShape")
+[node name="Left" type="Sprite2D" parent="Team2Upper"]
+position = Vector2(-128, 0)
+texture = ExtResource("1_left")
+[node name="Middle" type="Sprite2D" parent="Team2Upper"]
+texture = ExtResource("2_middle")
+[node name="Right" type="Sprite2D" parent="Team2Upper"]
+position = Vector2(128, 0)
+texture = ExtResource("3_right")
+
+[node name="Team2Lower" type="StaticBody2D" parent="."]
+position = Vector2(2508, 684)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Team2Lower"]
+shape = SubResource("Team2LowerShape")
+[node name="Left" type="Sprite2D" parent="Team2Lower"]
+position = Vector2(-128, 0)
+texture = ExtResource("1_left")
+[node name="Middle" type="Sprite2D" parent="Team2Lower"]
+texture = ExtResource("2_middle")
+[node name="Right" type="Sprite2D" parent="Team2Lower"]
+position = Vector2(128, 0)
+texture = ExtResource("3_right")
+
+[node name="LeftTree" type="Sprite2D" parent="."]
+position = Vector2(940, 155)
+scale = Vector2(0.55, 0.55)
+texture = ExtResource("4_tree")
+[node name="LeftLantern" type="Sprite2D" parent="."]
+position = Vector2(1215, 205)
+scale = Vector2(0.72, 0.72)
+texture = ExtResource("5_lantern")
+[node name="CenterCrypt" type="Sprite2D" parent="."]
+position = Vector2(1700, 344)
+scale = Vector2(0.55, 0.55)
+texture = ExtResource("6_crypt")
+[node name="CenterSkull" type="Sprite2D" parent="."]
+position = Vector2(1900, 421)
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("7_skull")
+[node name="RightLantern" type="Sprite2D" parent="."]
+position = Vector2(2385, 205)
+scale = Vector2(0.72, 0.72)
+texture = ExtResource("5_lantern")
+[node name="RightTree" type="Sprite2D" parent="."]
+position = Vector2(2660, 155)
+scale = Vector2(-0.55, 0.55)
+texture = ExtResource("4_tree")

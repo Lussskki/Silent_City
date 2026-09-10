@@ -6,13 +6,16 @@ const MAIN_MENU_BUTTON_SIZE := Vector2(320.0, 46.0)
 const GRAPHICS_OPTION_BUTTON_SIZE := Vector2(320.0, 46.0)
 const GRAPHICS_HEADER_FONT_SIZE := 30
 const GRAPHICS_INFO_FONT_SIZE := 18
-const GRAPHICS_PAGE_Y_OFFSET := -10.0
+const GRAPHICS_PAGE_Y_OFFSET := -65.0
+const GRAPHICS_COMPACT_PAGE_Y_OFFSET := -30.0
+const GRAPHICS_COMPACT_HEIGHT := 720
 const NATIVE_WINDOWED_FIT_SCALE := 0.90
 
 const BUTTON_PNG := "res://Resources/Buttons/menu_button_how_to_play.png"
 const BACK_PNG := "res://Resources/Buttons/menu_button_exit.png"
 
 const GRAPHICS_RESOLUTION_CANDIDATES := [
+	Vector2i(1200, 675),
 	Vector2i(1280, 720),
 	Vector2i(1366, 768),
 	Vector2i(1600, 900),
@@ -35,6 +38,7 @@ var fullscreen_button: Button = null
 var vsync_button: Button = null
 var resolution_button: Button = null
 var fps_button: Button = null
+var apply_button: Button = null
 var renderer_label: Label = null
 var back_button: Button = null
 
@@ -79,6 +83,8 @@ func refresh_language() -> void:
 	if not page_ready:
 		return
 
+	_update_graphics_page_offset()
+
 	if graphics_header:
 		graphics_header.text = _t("graphics")
 
@@ -110,15 +116,10 @@ func refresh_language() -> void:
 			graphics_resolution_index
 		]
 
-		var native_suffix := ""
-		if resolution == _current_screen_size():
-			native_suffix = " (Native)"
-
-		resolution_button.text = "%s: %d x %d%s" % [
+		resolution_button.text = "%s: %d x %d" % [
 			_t("resolution"),
 			resolution.x,
-			resolution.y,
-			native_suffix
+			resolution.y
 		]
 
 	if fps_button:
@@ -135,6 +136,9 @@ func refresh_language() -> void:
 			_t("fps_limit"),
 			fps_text
 		]
+
+	if apply_button:
+		apply_button.text = _t("apply")
 
 	if renderer_label:
 		renderer_label.text = "%s: %s" % [
@@ -159,8 +163,8 @@ func _ensure_page(pages: Control) -> void:
 		graphics_page.add_theme_constant_override("separation", 9)
 		graphics_page.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
-		graphics_page.offset_top += GRAPHICS_PAGE_Y_OFFSET
-		graphics_page.offset_bottom += GRAPHICS_PAGE_Y_OFFSET
+		graphics_page.offset_top = GRAPHICS_PAGE_Y_OFFSET
+		graphics_page.offset_bottom = GRAPHICS_PAGE_Y_OFFSET
 
 		graphics_page.visible = false
 		pages.add_child(graphics_page)
@@ -206,6 +210,10 @@ func _ensure_page(pages: Control) -> void:
 		graphics_page,
 		"FPSButton"
 	)
+	apply_button = _create_option_button(
+		graphics_page,
+		"ApplyButton"
+	)
 
 	renderer_label = graphics_page.get_node_or_null(
 		"RendererLabel"
@@ -247,7 +255,8 @@ func _ensure_page(pages: Control) -> void:
 		fullscreen_button,
 		vsync_button,
 		resolution_button,
-		fps_button
+		fps_button,
+		apply_button
 	]:
 		_apply_button_sprite(
 			button,
@@ -265,9 +274,32 @@ func _ensure_page(pages: Control) -> void:
 	vsync_button.pressed.connect(_toggle_graphics_vsync)
 	resolution_button.pressed.connect(_cycle_graphics_resolution)
 	fps_button.pressed.connect(_cycle_graphics_fps)
+	apply_button.pressed.connect(_apply_graphics_changes)
 	back_button.pressed.connect(_back_to_settings)
 
 	page_ready = true
+	_update_graphics_page_offset()
+
+
+func _update_graphics_page_offset() -> void:
+	if not graphics_page:
+		return
+
+	var viewport_height := int(get_viewport().get_visible_rect().size.y)
+	if not graphics_resolutions.is_empty():
+		var selected_index := clampi(
+			graphics_resolution_index,
+			0,
+			graphics_resolutions.size() - 1
+		)
+		viewport_height = graphics_resolutions[selected_index].y
+	var page_offset := (
+		GRAPHICS_COMPACT_PAGE_Y_OFFSET
+		if viewport_height <= GRAPHICS_COMPACT_HEIGHT
+		else GRAPHICS_PAGE_Y_OFFSET
+	)
+	graphics_page.offset_top = page_offset
+	graphics_page.offset_bottom = page_offset
 
 
 func _create_option_button(
@@ -293,10 +325,10 @@ func _rebuild_supported_graphics_resolutions() -> void:
 	var screen_size := DisplayServer.screen_get_size(screen)
 
 	for candidate in GRAPHICS_RESOLUTION_CANDIDATES:
-		if (
-			candidate.x <= screen_size.x
-			and candidate.y <= screen_size.y
-		):
+		# Only offer resolutions whose width and height fit the current monitor.
+		# Resolutions such as 1366 x 768 are valid native panel sizes even though
+		# their ratio is only approximately 16:9.
+		if candidate.x <= screen_size.x and candidate.y <= screen_size.y:
 			graphics_resolutions.append(candidate)
 
 	if graphics_resolutions.is_empty():
@@ -407,6 +439,7 @@ func _set_graphics_fullscreen(enable: bool) -> void:
 		window.mode == Window.MODE_FULLSCREEN
 		or window.mode == Window.MODE_EXCLUSIVE_FULLSCREEN
 	):
+		_apply_selected_fullscreen_resolution()
 		return
 
 	var screen := DisplayServer.window_get_current_screen()
@@ -419,6 +452,7 @@ func _set_graphics_fullscreen(enable: bool) -> void:
 	window.size = screen_size
 
 	graphics_borderless_fullscreen = true
+	_apply_selected_fullscreen_resolution()
 
 	await get_tree().process_frame
 
@@ -465,11 +499,53 @@ func _cycle_graphics_resolution() -> void:
 	if graphics_resolution_index >= graphics_resolutions.size():
 		graphics_resolution_index = 0
 
-	if not _is_graphics_fullscreen():
+	refresh_language()
+
+
+func _apply_graphics_changes() -> void:
+	if graphics_fullscreen_transitioning:
+		return
+
+	var window := _main_window()
+	if window == null:
+		return
+
+	if window.is_embedded():
+		print("Resolution cannot change while Godot Game Embedding is enabled.")
+		return
+
+	graphics_fullscreen_transitioning = true
+
+	if _is_graphics_fullscreen():
+		_apply_selected_fullscreen_resolution()
+	else:
 		_apply_selected_windowed_resolution()
 
 	_save_graphics_settings()
 	refresh_language()
+	graphics_fullscreen_transitioning = false
+
+
+func _apply_selected_fullscreen_resolution() -> void:
+	if graphics_resolutions.is_empty():
+		_rebuild_supported_graphics_resolutions()
+
+	graphics_resolution_index = clampi(
+		graphics_resolution_index,
+		0,
+		graphics_resolutions.size() - 1
+	)
+
+	var window := _main_window()
+	if window == null:
+		return
+
+	# Render 2D canvas items at the monitor's output resolution. Using viewport
+	# scaling here rasterized the community icons at the selected logical
+	# resolution and then enlarged them, which made their quality vary.
+	window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
+	window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
+	window.content_scale_size = graphics_resolutions[graphics_resolution_index]
 
 
 func _apply_selected_windowed_resolution() -> void:
@@ -494,6 +570,11 @@ func _apply_selected_windowed_resolution() -> void:
 	var selected_resolution: Vector2i = graphics_resolutions[
 		graphics_resolution_index
 	]
+	# Keep UI textures sharp when the physical window differs from the selected
+	# logical resolution.
+	window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
+	window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
+	window.content_scale_size = selected_resolution
 
 	selected_resolution.x = mini(
 		selected_resolution.x,
@@ -633,7 +714,6 @@ func _load_graphics_settings() -> void:
 				!= DisplayServer.VSYNC_DISABLED
 		)
 	)
-
 	var native_size := _current_screen_size()
 
 	var saved_width := int(

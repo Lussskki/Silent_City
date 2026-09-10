@@ -9,11 +9,15 @@ const SECOND_PLAYER_SPAWNS_BY_SCENE := {
 }
 const ASH_GOLEM_FRAMES_ROOT := "res://Player/player_assets/PNG Sequences"
 const ONLINE_CHARACTER_SPRITE_OFFSETS := {
-	"player": Vector2(0, -16),
-	"golem": Vector2(0, -16),
-	"ice_golem": Vector2(0, -16),
+	"player": Vector2(0, -24),
+	"golem": Vector2(0, -24),
+	"ice_golem": Vector2(0, -24),
+	"crusader": Vector2(0, -24),
+	"wraith": Vector2(0, -24),
 }
 const ICE_GOLEM_FRAMES_ROOT := "res://Characters/Golem_1/PNG/PNG Sequences"
+const CRUSADER_FRAMES_ROOT := "res://Characters/Skeleton_crusider/Skeleton_Crusader_1/PNG/PNG Sequences"
+const WRAITH_FRAMES_ROOT := "res://Characters/Wraithes/PNG/Wraith_01/PNG Sequences"
 const ASH_GOLEM_ANIMATION_DIRS := {
 	"Idle": "Idle",
 	"Walking": "Walking",
@@ -28,6 +32,15 @@ const ASH_GOLEM_ANIMATION_DIRS := {
 	"Throwing In Air": "Throwing in The Air",
 	"Dying": "Dying",
 	"Sliding": "Sliding"
+}
+const WRAITH_ANIMATION_DIRS := {
+	"Idle": "Idle", "Walking": "Walking", "Running": "Walking",
+	"Jump Looping": "Idle", "Falling Down": "Idle",
+	"Slashing": "Attacking", "Slashing In Air": "Attacking",
+	"Run Slashing": "Attacking", "Kicking": "Attacking",
+	"Hurt": "Hurt", "Throwing": "Casting Spells",
+	"Throwing In Air": "Casting Spells", "Dying": "Dying",
+	"Sliding": "Walking"
 }
 
 @export var golem_player_scene: PackedScene
@@ -243,35 +256,35 @@ func is_second_player_connected() -> bool:
 
 
 @rpc("any_peer", "unreliable_ordered")
-func _receive_player_network_state(remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool = false, remote_defending: bool = false) -> void:
+func _receive_player_network_state(remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool = false) -> void:
 	var api := get_multiplayer()
 	if api == null or not api.has_multiplayer_peer():
 		return
 	var peer_id := api.get_remote_sender_id()
 	if peer_id == 0:
 		return
-	_apply_player_network_state(peer_id, remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead, remote_defending)
+	_apply_player_network_state(peer_id, remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead)
 
 
 @rpc("any_peer", "reliable")
-func _receive_forced_player_network_state(remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool = false, remote_defending: bool = false) -> void:
+func _receive_forced_player_network_state(remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool = false) -> void:
 	var api := get_multiplayer()
 	if api == null or not api.has_multiplayer_peer():
 		return
 	var peer_id := api.get_remote_sender_id()
 	if peer_id == 0:
 		return
-	_apply_player_network_state(peer_id, remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead, remote_defending)
+	_apply_player_network_state(peer_id, remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead)
 
 
-func _apply_player_network_state(peer_id: int, remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool, remote_defending: bool = false) -> void:
+func _apply_player_network_state(peer_id: int, remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool) -> void:
 	var player := _remote_player_for_peer(peer_id)
 	if not player:
 		return
 	if peer_id != 1 and is_zero_approx(remote_velocity.x):
 		remote_flip_h = true
 	if player.has_method("_apply_remote_network_state"):
-		player.call("_apply_remote_network_state", remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead, remote_defending)
+		player.call("_apply_remote_network_state", remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead)
 
 
 @rpc("any_peer", "reliable")
@@ -378,7 +391,18 @@ func _apply_character_to_player(player: Node2D, character: String) -> void:
 	if not sprite:
 		return
 	if player.has_method("set_sprite_flip_inverted"):
-		player.call("set_sprite_flip_inverted", character in ["golem", "ice_golem"])
+		player.call("set_sprite_flip_inverted", character in ["golem", "ice_golem", "crusader", "wraith"])
+
+	if character in ["crusader", "wraith"]:
+		var frames_root := CRUSADER_FRAMES_ROOT if character == "crusader" else WRAITH_FRAMES_ROOT
+		var animation_dirs: Dictionary = ASH_GOLEM_ANIMATION_DIRS if character == "crusader" else WRAITH_ANIMATION_DIRS
+		var squad_frames := _build_sprite_frames_from_root(frames_root, animation_dirs)
+		if squad_frames.has_animation("Idle"):
+			sprite.sprite_frames = squad_frames
+			sprite.position = _online_character_sprite_offset(character)
+			sprite.scale = Vector2(0.22, 0.22) if character == "crusader" else Vector2(0.34, 0.34)
+			sprite.play("Idle")
+		return
 
 	if character == "ice_golem":
 		var ice_frames := _build_sprite_frames_from_root(ICE_GOLEM_FRAMES_ROOT)
@@ -570,10 +594,10 @@ func _get_ash_golem_frames(settings: Node) -> SpriteFrames:
 	return null
 
 
-func _build_sprite_frames_from_root(frames_root: String) -> SpriteFrames:
+func _build_sprite_frames_from_root(frames_root: String, animation_dirs: Dictionary = ASH_GOLEM_ANIMATION_DIRS) -> SpriteFrames:
 	var frames := SpriteFrames.new()
-	for animation_name in ASH_GOLEM_ANIMATION_DIRS:
-		var folder_name: String = ASH_GOLEM_ANIMATION_DIRS[animation_name]
+	for animation_name in animation_dirs:
+		var folder_name: String = animation_dirs[animation_name]
 		var folder_path := "%s/%s" % [frames_root, folder_name]
 		var image_files := _get_png_files(folder_path)
 		if image_files.is_empty():

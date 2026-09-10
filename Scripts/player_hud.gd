@@ -43,10 +43,13 @@ var second_player_text: TextureRect
 var second_player_status_text: TextureRect
 var enemies_seen_once := false
 var game_result_shown := false
+var result_focus_index := 0
+var result_stick_direction := 0
 var result_check_delay := 0.35
 var death_recorded := false
 var force_close_online_on_exit := false
 var chat_caret_time := 0.0
+var normalizing_chat_input := false
 
 var pause_title_sprite: TextureRect
 var pause_audio_button: Button
@@ -54,6 +57,7 @@ var pause_master_volume_button: Button
 var pause_audio_back_button: Button
 var pause_audio_volume_index := 0
 var pause_audio_submenu_open := false
+var pause_gamepad_focus_active := false
 var menu_texture_cache: Dictionary = {}
 var menu_optimizer = null
 
@@ -77,6 +81,8 @@ const AUDIO_VOLUME_STEPS := [100, 75, 50, 25, 0]
 # Change only these paths if your PNG names/locations are different.
 const PAUSE_TITLE_PNG := "res://Resources/Buttons/Paused.png"
 const PAUSE_AUDIO_PNG := "res://Resources/Buttons/Audio.png"
+const PAUSE_CONTROLLER_FOCUS_TINT := Color(0.72, 0.72, 0.72, 1.0)
+const RESULT_CONTROLLER_FOCUS_COLOR := Color(0.0, 0.0, 0.0, 0.42)
 const PAUSE_RETURN_PNG := "res://Resources/Buttons/return_to_game.png"
 const PAUSE_MAIN_MENU_PNG := "res://Resources/Buttons/main_menu.png"
 
@@ -87,6 +93,7 @@ const PAUSE_VOLUME_50_PNG := "res://Resources/Buttons/50.png"
 const PAUSE_VOLUME_25_PNG := "res://Resources/Buttons/25.png"
 const PAUSE_VOLUME_0_PNG := "res://Resources/Buttons/0.png"
 const PAUSE_AUDIO_BACK_PNG := "res://Resources/Buttons/in_game_back.png"
+const RESULT_WIN_PNG := "res://Resources/Buttons/restart.png"
 const RESULT_LOSE_PNG := "res://Resources/Buttons/Game_Final.png"
 
 const PAUSE_TITLE_SIZE := Vector2(330.0, 70.0)
@@ -94,6 +101,42 @@ const PAUSE_BUTTON_SIZE := Vector2(330.0, 56.0)
 const PAUSE_AUDIO_SUB_BUTTON_SIZE := Vector2(330.0, 56.0)
 const RESULT_BUTTON_SIZE := Vector2(260.0, 48.0)
 const RESULT_SPRITE_POPUP_SIZE := Vector2(390.0, 220.0)
+
+const GEORGIAN_QWERTY_TO_LATIN := {
+	"ა": "a",
+	"ბ": "b",
+	"ც": "c",
+	"დ": "d",
+	"ე": "e",
+	"ფ": "f",
+	"გ": "g",
+	"ჰ": "h",
+	"ი": "i",
+	"ჯ": "j",
+	"კ": "k",
+	"ლ": "l",
+	"მ": "m",
+	"ნ": "n",
+	"ო": "o",
+	"პ": "p",
+	"ქ": "q",
+	"რ": "r",
+	"ს": "s",
+	"ტ": "t",
+	"უ": "u",
+	"ვ": "v",
+	"წ": "w",
+	"ხ": "x",
+	"ყ": "y",
+	"ზ": "z",
+	"თ": "t",
+	"შ": "s",
+	"ჩ": "c",
+	"ძ": "z",
+	"ჟ": "j",
+	"ღ": "r",
+	"ჭ": "w",
+}
 
 
 func _ready() -> void:
@@ -105,6 +148,7 @@ func _ready() -> void:
 	main_menu_button.pressed.connect(_go_to_main_menu)
 	_setup_pause_audio_menu()
 	_setup_pause_sprite_ui()
+	_setup_pause_controller_focus()
 	_load_pause_audio_settings()
 	pause_menu.visible = false
 	_create_chat_ui()
@@ -118,12 +162,83 @@ func _ready() -> void:
 	_update_enemy_count()
 	_update_try_count()
 	_update_second_player_status()
+	pause_gamepad_focus_active = not Input.get_connected_joypads().is_empty()
+
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventJoypadButton or event is InputEventJoypadMotion:
+		pause_gamepad_focus_active = true
+		if match_popup and match_popup.visible:
+			var result_buttons := _visible_result_buttons()
+			if not result_buttons.is_empty() and result_focus_index >= result_buttons.size():
+				_set_result_focus(_visible_result_buttons()[0])
+		if pause_menu.visible:
+			var focused := get_viewport().gui_get_focus_owner()
+			if focused is Button and pause_menu.is_ancestor_of(focused):
+				focused.self_modulate = PAUSE_CONTROLLER_FOCUS_TINT
+			else:
+				if pause_audio_submenu_open and pause_master_volume_button:
+					_set_pause_focus(pause_master_volume_button)
+				elif pause_audio_button:
+					_set_pause_focus(pause_audio_button)
+
+	if _is_gamepad_back_event(event):
+		if match_popup and match_popup.visible and match_exit_button:
+			get_viewport().set_input_as_handled()
+			match_exit_button.emit_signal(&"pressed")
+			return
+		if pause_menu.visible:
+			get_viewport().set_input_as_handled()
+			if pause_audio_submenu_open:
+				_show_pause_root()
+			else:
+				_return_to_game()
+			return
+
+	if match_popup and match_popup.visible:
+		var navigation_direction := _result_navigation_direction(event)
+		if navigation_direction != 0:
+			_cycle_result_focus(navigation_direction)
+			get_viewport().set_input_as_handled()
+		elif event.is_action_pressed("menu_confirm"):
+			var result_buttons := _visible_result_buttons()
+			if not result_buttons.is_empty():
+				result_focus_index = clampi(
+					result_focus_index,
+					0,
+					result_buttons.size() - 1
+				)
+				get_viewport().set_input_as_handled()
+				result_buttons[result_focus_index].emit_signal(&"pressed")
+		return
+
+	if not pause_menu.visible:
+		return
+	if event.is_action_pressed("menu_confirm"):
+		var focused_button := get_viewport().gui_get_focus_owner() as Button
+		if focused_button and pause_menu.is_ancestor_of(focused_button):
+			get_viewport().set_input_as_handled()
+			focused_button.emit_signal(&"pressed")
+
+
+func _is_gamepad_back_event(event: InputEvent) -> bool:
+	return (
+		event is InputEventJoypadButton
+		and event.pressed
+		and event.button_index == JOY_BUTTON_B
+	)
 
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("ui_cancel"):
+	if (
+		Input.is_action_just_pressed("ui_cancel")
+		or Input.is_action_just_pressed("menu_back")
+	):
 		if pause_menu.visible:
-			_return_to_game()
+			if pause_audio_submenu_open:
+				_show_pause_root()
+			else:
+				_return_to_game()
 		else:
 			_open_pause_menu()
 
@@ -251,7 +366,7 @@ func _apply_pause_button_sprite(
 	button.text = ""
 	button.custom_minimum_size = minimum_size
 	button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	button.focus_mode = Control.FOCUS_NONE
+	button.focus_mode = Control.FOCUS_ALL
 
 	button.add_theme_stylebox_override("normal", _pause_texture_style(texture))
 	button.add_theme_stylebox_override("hover", _pause_texture_style(texture))
@@ -516,6 +631,110 @@ func _setup_pause_audio_menu() -> void:
 	_refresh_pause_audio_text()
 
 
+func _setup_pause_controller_focus() -> void:
+	if not Input.joy_connection_changed.is_connected(_on_pause_joy_connection_changed):
+		Input.joy_connection_changed.connect(_on_pause_joy_connection_changed)
+	for button: Button in [
+		pause_audio_button,
+		return_button,
+		main_menu_button,
+		pause_master_volume_button,
+		pause_audio_back_button
+	]:
+		if not button:
+			continue
+		var entered := _on_pause_button_focus_entered.bind(button)
+		var exited := _on_pause_button_focus_exited.bind(button)
+		if not button.focus_entered.is_connected(entered):
+			button.focus_entered.connect(entered)
+		if not button.focus_exited.is_connected(exited):
+			button.focus_exited.connect(exited)
+
+
+func _on_pause_button_focus_entered(button: Button) -> void:
+	button.self_modulate = (
+		PAUSE_CONTROLLER_FOCUS_TINT
+		if pause_gamepad_focus_active
+		else Color.WHITE
+	)
+
+
+func _on_pause_button_focus_exited(button: Button) -> void:
+	button.self_modulate = Color.WHITE
+
+
+func _visible_pause_buttons() -> Array[Button]:
+	var buttons: Array[Button] = []
+	for button: Button in [
+		pause_audio_button,
+		return_button,
+		main_menu_button,
+		pause_master_volume_button,
+		pause_audio_back_button
+	]:
+		if button and button.is_visible_in_tree() and not button.disabled:
+			buttons.append(button)
+	return buttons
+
+
+func _set_pause_focus(button: Button) -> void:
+	if not button or not button.is_visible_in_tree():
+		return
+	for candidate: Button in _visible_pause_buttons():
+		candidate.self_modulate = Color.WHITE
+	button.grab_focus()
+	if pause_gamepad_focus_active:
+		button.self_modulate = PAUSE_CONTROLLER_FOCUS_TINT
+
+
+func _cycle_pause_focus(direction: int) -> void:
+	var buttons := _visible_pause_buttons()
+	if buttons.is_empty():
+		return
+	var focused := get_viewport().gui_get_focus_owner() as Button
+	var index := buttons.find(focused)
+	if index < 0:
+		index = 0 if direction > 0 else buttons.size() - 1
+	else:
+		index = wrapi(index + direction, 0, buttons.size())
+	_set_pause_focus(buttons[index])
+
+
+func _on_pause_joy_connection_changed(_device: int, connected: bool) -> void:
+	var gamepad_connected := connected or not Input.get_connected_joypads().is_empty()
+	pause_gamepad_focus_active = gamepad_connected
+	if gamepad_connected:
+		if match_popup and match_popup.visible:
+			var result_buttons := _visible_result_buttons()
+			if not result_buttons.is_empty():
+				result_focus_index = clampi(
+					result_focus_index,
+					0,
+					result_buttons.size() - 1
+				)
+				_set_result_focus.call_deferred(
+					result_buttons[result_focus_index]
+				)
+		if pause_menu.visible:
+			if pause_audio_submenu_open and pause_master_volume_button:
+				_set_pause_focus.call_deferred(pause_master_volume_button)
+			elif pause_audio_button:
+				_set_pause_focus.call_deferred(pause_audio_button)
+		return
+	for button: Button in [
+		pause_audio_button,
+		return_button,
+		main_menu_button,
+		pause_master_volume_button,
+		pause_audio_back_button
+	]:
+		if button:
+			button.self_modulate = Color.WHITE
+	for button: Button in _visible_result_buttons():
+		button.add_theme_stylebox_override("normal", StyleBoxEmpty.new())
+		button.add_theme_stylebox_override("hover", StyleBoxEmpty.new())
+
+
 func _show_pause_root() -> void:
 	pause_audio_submenu_open = false
 	if pause_title_sprite:
@@ -531,6 +750,11 @@ func _show_pause_root() -> void:
 	if pause_audio_back_button:
 		pause_audio_back_button.visible = false
 	_refresh_pause_audio_text()
+	if (
+		pause_menu.visible
+		and pause_audio_button
+	):
+		_set_pause_focus.call_deferred(pause_audio_button)
 
 
 func _open_pause_audio() -> void:
@@ -548,6 +772,8 @@ func _open_pause_audio() -> void:
 	if pause_audio_back_button:
 		pause_audio_back_button.visible = true
 	_refresh_pause_audio_text()
+	if pause_master_volume_button:
+		_set_pause_focus.call_deferred(pause_master_volume_button)
 
 
 func _refresh_pause_audio_text() -> void:
@@ -935,17 +1161,24 @@ func _show_result_popup(result_text: String, button_text: String, pause_game := 
 	if game_result_shown:
 		return
 	game_result_shown = true
-	var use_lose_sprite := (
-		result_text == "You Lose"
-		and button_text == "Main Menu"
-		and show_restart
-	)
+	var use_win_sprite := result_text == "You Win" and button_text == "Main Menu" and show_restart
+	var use_lose_sprite := result_text == "You Lose" and button_text == "Main Menu" and show_restart
 	match_label.text = result_text
 	match_restart_button.visible = show_restart
 	match_exit_button.text = button_text
 	_apply_result_exit_button_style(button_text)
-	_set_result_popup_sprite_mode(use_lose_sprite)
+	if match_result_sprite:
+		if use_win_sprite:
+			match_result_sprite.texture = _load_clean_pause_texture(RESULT_WIN_PNG, false)
+		elif use_lose_sprite:
+			match_result_sprite.texture = _load_clean_pause_texture(RESULT_LOSE_PNG, false)
+	_set_result_popup_sprite_mode(use_win_sprite or use_lose_sprite)
 	match_popup.visible = true
+	result_focus_index = 0
+	result_stick_direction = 0
+	_set_result_focus.call_deferred(
+		match_restart_button if show_restart else match_exit_button
+	)
 	if pause_game:
 		get_tree().paused = true
 	else:
@@ -979,7 +1212,7 @@ func _create_match_popup() -> void:
 	match_popup.offset_top = -112.0
 	match_popup.offset_right = 220.0
 	match_popup.offset_bottom = 112.0
-	match_popup.add_theme_stylebox_override("panel", _modal_panel_style())
+	match_popup.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
 	add_child(match_popup)
 
 	match_result_sprite = TextureRect.new()
@@ -1077,7 +1310,7 @@ func _set_result_popup_sprite_mode(enabled: bool) -> void:
 	match_popup.offset_top = -112.0
 	match_popup.offset_right = 220.0
 	match_popup.offset_bottom = 112.0
-	match_popup.add_theme_stylebox_override("panel", _modal_panel_style())
+	match_popup.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
 
 	if match_result_sprite:
 		match_result_sprite.visible = false
@@ -1135,12 +1368,98 @@ func _apply_result_sprite_hit_area(
 	button.offset_bottom = bottom
 	button.custom_minimum_size = Vector2.ZERO
 	button.size_flags_horizontal = Control.SIZE_FILL
+	# Result navigation is handled explicitly in _input. Native UI focus also
+	# reacts to the same stick/D-pad event and can immediately move selection
+	# back, which makes the black highlight flicker.
 	button.focus_mode = Control.FOCUS_NONE
 	button.add_theme_stylebox_override("normal", StyleBoxEmpty.new())
 	button.add_theme_stylebox_override("hover", StyleBoxEmpty.new())
 	button.add_theme_stylebox_override("pressed", StyleBoxEmpty.new())
 	button.add_theme_stylebox_override("disabled", StyleBoxEmpty.new())
 	button.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+
+
+func _visible_result_buttons() -> Array[Button]:
+	var buttons: Array[Button] = []
+	for button: Button in [match_restart_button, match_exit_button]:
+		if button and button.is_visible_in_tree() and not button.disabled:
+			buttons.append(button)
+	return buttons
+
+
+func _set_result_focus(button: Button) -> void:
+	if not button or not button.is_visible_in_tree():
+		return
+	var buttons := _visible_result_buttons()
+	for candidate: Button in buttons:
+		candidate.self_modulate = Color.WHITE
+		candidate.add_theme_stylebox_override("normal", StyleBoxEmpty.new())
+		candidate.add_theme_stylebox_override("hover", StyleBoxEmpty.new())
+	var button_index := buttons.find(button)
+	if button_index >= 0:
+		result_focus_index = button_index
+	if Input.get_connected_joypads().is_empty():
+		return
+	button.add_theme_stylebox_override(
+		"normal",
+		_result_controller_focus_style()
+	)
+	button.add_theme_stylebox_override(
+		"hover",
+		_result_controller_focus_style()
+	)
+
+
+func _result_controller_focus_style() -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = RESULT_CONTROLLER_FOCUS_COLOR
+	style.corner_radius_top_left = 8
+	style.corner_radius_top_right = 8
+	style.corner_radius_bottom_left = 8
+	style.corner_radius_bottom_right = 8
+	return style
+
+
+func _cycle_result_focus(direction: int) -> void:
+	var buttons := _visible_result_buttons()
+	if buttons.is_empty():
+		return
+	result_focus_index = wrapi(
+		result_focus_index + direction,
+		0,
+		buttons.size()
+	)
+	_set_result_focus(buttons[result_focus_index])
+
+
+func _result_navigation_direction(event: InputEvent) -> int:
+	if event is InputEventJoypadMotion:
+		var motion := event as InputEventJoypadMotion
+		if motion.axis != JOY_AXIS_LEFT_Y:
+			return 0
+
+		var direction := 0
+		if motion.axis_value <= -0.6:
+			direction = -1
+		elif motion.axis_value >= 0.6:
+			direction = 1
+
+		if direction == 0:
+			result_stick_direction = 0
+			return 0
+		if direction == result_stick_direction:
+			return 0
+
+		result_stick_direction = direction
+		return direction
+
+	if event is InputEventKey and (event as InputEventKey).echo:
+		return 0
+	if event.is_action_pressed("menu_up"):
+		return -1
+	if event.is_action_pressed("menu_down"):
+		return 1
+	return 0
 
 
 func _apply_result_text_button_style(button: Button) -> void:
@@ -1419,7 +1738,7 @@ func _create_chat_ui() -> void:
 	chat_input.add_theme_color_override("font_color", Color(1.0, 1.0, 1.0, 0.0))
 	chat_input.add_theme_color_override("font_placeholder_color", Color(1.0, 1.0, 1.0, 0.0))
 	chat_input.add_theme_color_override("caret_color", Color(1.0, 1.0, 1.0, 0.0))
-	chat_input.text_changed.connect(_update_chat_input_sprites)
+	chat_input.text_changed.connect(_on_chat_input_text_changed)
 	chat_input.focus_entered.connect(_on_chat_input_focus_changed)
 	chat_input.focus_exited.connect(_on_chat_input_focus_changed)
 	chat_input.text_submitted.connect(func(_text: String): _send_chat_message())
@@ -1528,7 +1847,7 @@ func _toggle_chat_panel() -> void:
 func _send_chat_message() -> void:
 	if not chat_input:
 		return
-	var message := chat_input.text.strip_edges()
+	var message := _normalize_qwerty_chat_text(chat_input.text).strip_edges()
 	if message.is_empty():
 		return
 	var online_manager := get_tree().get_first_node_in_group("OnlineManager")
@@ -1542,9 +1861,34 @@ func add_chat_message(author: String, message: String, notify := false) -> void:
 	if not chat_sprite_messages:
 		return
 	var player_tag := "P2" if notify else "P1"
-	_add_sprite_chat_line("%s: %s" % [player_tag, message], notify)
+	_add_sprite_chat_line("%s: %s" % [player_tag, _normalize_qwerty_chat_text(message)], notify)
 	if notify and chat_panel and not chat_panel.visible:
 		_set_chat_notification(true)
+
+
+func _on_chat_input_text_changed(value: String) -> void:
+	if not chat_input or normalizing_chat_input:
+		_update_chat_input_sprites(value)
+		return
+
+	var normalized := _normalize_qwerty_chat_text(value)
+	if normalized != value:
+		var caret_before := chat_input.caret_column
+		var normalized_before_caret := _normalize_qwerty_chat_text(value.substr(0, caret_before))
+		normalizing_chat_input = true
+		chat_input.text = normalized
+		chat_input.caret_column = normalized_before_caret.length()
+		normalizing_chat_input = false
+
+	_update_chat_input_sprites(chat_input.text)
+
+
+func _normalize_qwerty_chat_text(value: String) -> String:
+	var result := ""
+	for index in range(value.length()):
+		var character := value.substr(index, 1)
+		result += String(GEORGIAN_QWERTY_TO_LATIN.get(character, character))
+	return result
 
 
 func _update_chat_input_sprites(value: String) -> void:
@@ -1750,6 +2094,11 @@ func _set_sprite_text(row: HBoxContainer, text: String, height: float) -> void:
 func _alphabet_texture(code: int) -> Texture2D:
 	var path := "res://Sprites/Hud/Alphabet/u%04X.png" % code
 	if not ResourceLoader.exists(path):
+		if code >= 65 and code <= 90:
+			path = "res://Sprites/Hud/Alphabet/u%04X.png" % (code + 32)
+		elif code >= 97 and code <= 122:
+			path = "res://Sprites/Hud/Alphabet/u%04X.png" % (code - 32)
+	if not ResourceLoader.exists(path):
 		return null
 	return load(path) as Texture2D
 
@@ -1798,6 +2147,8 @@ func _open_pause_menu() -> void:
 	_show_pause_root()
 	pause_menu.visible = true
 	get_tree().paused = true
+	if pause_audio_button:
+		_set_pause_focus.call_deferred(pause_audio_button)
 
 
 func _online_status_text() -> String:
@@ -1816,6 +2167,9 @@ func _online_status_text() -> String:
 
 func _return_to_game() -> void:
 	_show_pause_root()
+	var focused := get_viewport().gui_get_focus_owner()
+	if focused and pause_menu.is_ancestor_of(focused):
+		focused.release_focus()
 	pause_menu.visible = false
 	get_tree().paused = false
 

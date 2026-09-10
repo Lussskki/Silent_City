@@ -39,6 +39,7 @@
 [ext_resource type="PackedScene" uid="uid://dl15tgg4t44xm" path="res://Enemies/enemy.tscn" id="43_enemy_scene"]
 [ext_resource type="Script" uid="uid://dqflgmk88ohqg" path="res://Enemies/enemy_spawner.gd" id="44_enemy_spawner"]
 [ext_resource type="Script" uid="uid://c3yfa45lm07da" path="res://Scripts/health_drop_spawner.gd" id="45_health_drop_spawner"]
+[ext_resource type="Script" path="res://Scripts/defence_drop_spawner.gd" id="46_defence_drop_spawner"]
 [ext_resource type="Texture2D" uid="uid://bgnq7npmjdtwu" path="res://Sprites/Hud/drawn_health_bar_empty_small.png" id="47_health_empty"]
 [ext_resource type="Texture2D" uid="uid://c2ev38mwbo8nv" path="res://Sprites/Hud/drawn_power_bar_empty_small.png" id="49_power_empty"]
 [ext_resource type="Texture2D" uid="uid://c7gq7cft7nemx" path="res://Sprites/Hud/drawn_health_bar_fill_small.png" id="51_health_fill"]
@@ -627,6 +628,10 @@ spawn_seed = 1201
 spawn_areas = Array[Rect2]([Rect2(700, 420, 160, 1), Rect2(980, 350, 360, 1), Rect2(1610, 290, 340, 1), Rect2(2230, 410, 260, 1), Rect2(2820, 360, 500, 1)])
 enemy_max_life = 90
 enemy_attack_damage = 6
+enemy_move_speed = 185.0
 
 [node name="HealthDropSpawner" type="CanvasLayer" parent="." unique_id=348391563]
 script = ExtResource("45_health_drop_spawner")
+
+[node name="DefenceDropSpawner" type="CanvasLayer" parent="."]
+script = ExtResource("46_defence_drop_spawner")

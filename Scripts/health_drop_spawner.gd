@@ -4,20 +4,19 @@ extends CanvasLayer
 @export var min_drop_interval := 90.0
 @export var max_drop_interval := 90.0
 @export var first_drop_delay := 35.0
-@export var warning_duration := 2.5
-@export var warning_text := "Health heart is coming!"
+@export var warning_duration := 1.5
 @export var drop_horizontal_range := 340.0
 @export var drop_height := 460.0
 @export var edge_padding := 40.0
 
 const DEFAULT_PICKUP_SCENE := preload("res://Scenes/HealthPickup.tscn")
+const WARNING_TEXTURE := preload("res://Resources/Deffence/health_is_coming_clean.png")
 
 var rng := RandomNumberGenerator.new()
 var drop_timer := 0.0
 var warning_timer := 0.0
 var warning_active := false
-var warning_panel: Panel
-var warning_label: Label
+var warning_sprite: TextureRect
 var next_drop_id := 1
 var active_pickups := {}
 var pending_drop_id := 0
@@ -27,13 +26,13 @@ var pending_drop_position := Vector2.INF
 func _ready() -> void:
 	rng.randomize()
 	drop_timer = first_drop_delay
-	_create_warning_label()
+	_create_warning_sprite()
 	_restore_pending_drop()
 
 
 func _process(delta: float) -> void:
 	if not _health_drops_enabled():
-		warning_panel.visible = false
+		warning_sprite.visible = false
 		return
 	if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
 		return
@@ -42,7 +41,7 @@ func _process(delta: float) -> void:
 		warning_timer -= delta
 		if warning_timer <= 0.0:
 			warning_active = false
-			warning_panel.visible = false
+			warning_sprite.visible = false
 			_spawn_pending_health_box()
 			_schedule_next_drop()
 		return
@@ -51,37 +50,21 @@ func _process(delta: float) -> void:
 		_prepare_new_drop_warning()
 
 
-func _create_warning_label() -> void:
-	warning_panel = Panel.new()
-	warning_panel.visible = false
-	warning_panel.anchor_left = 0.5
-	warning_panel.anchor_right = 0.5
-	warning_panel.offset_left = -190.0
-	warning_panel.offset_top = 86.0
-	warning_panel.offset_right = 190.0
-	warning_panel.offset_bottom = 132.0
-	var panel_style := StyleBoxFlat.new()
-	panel_style.bg_color = Color(0.02, 0.02, 0.02, 0.78)
-	panel_style.border_color = Color(1.0, 0.82, 0.18, 0.95)
-	panel_style.border_width_left = 2
-	panel_style.border_width_top = 2
-	panel_style.border_width_right = 2
-	panel_style.border_width_bottom = 2
-	panel_style.corner_radius_top_left = 4
-	panel_style.corner_radius_top_right = 4
-	panel_style.corner_radius_bottom_left = 4
-	panel_style.corner_radius_bottom_right = 4
-	warning_panel.add_theme_stylebox_override("panel", panel_style)
-	add_child(warning_panel)
-
-	warning_label = Label.new()
-	warning_label.anchor_right = 1.0
-	warning_label.anchor_bottom = 1.0
-	warning_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	warning_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	warning_label.add_theme_font_size_override("font_size", 24)
-	warning_label.add_theme_color_override("font_color", Color(1.0, 0.92, 0.18))
-	warning_panel.add_child(warning_label)
+func _create_warning_sprite() -> void:
+	warning_sprite = TextureRect.new()
+	warning_sprite.name = "HealthWarning"
+	warning_sprite.texture = WARNING_TEXTURE
+	warning_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	warning_sprite.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	warning_sprite.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	warning_sprite.anchor_left = 0.5
+	warning_sprite.anchor_right = 0.5
+	warning_sprite.offset_left = -80.0
+	warning_sprite.offset_top = 78.0
+	warning_sprite.offset_right = 80.0
+	warning_sprite.offset_bottom = 143.0
+	warning_sprite.visible = false
+	add_child(warning_sprite)
 
 
 func _schedule_next_drop() -> void:
@@ -116,10 +99,9 @@ func _prepare_new_drop_warning() -> void:
 func _start_warning(duration: float) -> void:
 	warning_active = true
 	warning_timer = duration
-	warning_label.text = warning_text
-	warning_panel.visible = true
+	warning_sprite.visible = true
 	if multiplayer.has_multiplayer_peer():
-		rpc("_show_remote_warning", warning_text)
+		rpc("_show_remote_warning")
 
 
 func _spawn_pending_health_box() -> void:
@@ -182,14 +164,13 @@ func request_health_pickup(drop_id: int, body: Node) -> void:
 
 
 @rpc("authority", "reliable")
-func _show_remote_warning(text: String) -> void:
-	warning_label.text = text
-	warning_panel.visible = true
+func _show_remote_warning() -> void:
+	warning_sprite.visible = true
 
 
 @rpc("authority", "reliable")
 func _spawn_remote_health_box(drop_id: int, drop_position: Vector2) -> void:
-	warning_panel.visible = false
+	warning_sprite.visible = false
 	_spawn_health_box_at(drop_id, drop_position)
 
 

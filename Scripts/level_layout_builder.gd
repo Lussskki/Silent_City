@@ -54,6 +54,24 @@ static func rebuild(target: Node2D, difficulty: String, hazard_script: Script) -
 			_build_easy(target, hazard_script)
 
 
+static func rebuild_squad(target: Node2D) -> void:
+	_clear(target)
+	# Formation: |  —  |
+	# Two stacked platforms per team with one neutral fight platform centered.
+	_add_platform(target, "Team1Upper", Rect2(900, 220, 384, 128))
+	_add_platform(target, "Team1Lower", Rect2(900, 620, 384, 128))
+	_add_platform(target, "CenterFight", Rect2(1608, 420, 384, 128))
+	_add_platform(target, "Team2Upper", Rect2(2316, 220, 384, 128))
+	_add_platform(target, "Team2Lower", Rect2(2316, 620, 384, 128))
+
+	_add_sprite(target, "LeftUpperTree", TREE_ALT, Vector2(940, 65), Vector2(0.62, 0.62))
+	_add_sprite(target, "LeftLantern", LANTERN, Vector2(1215, 155), Vector2(0.72, 0.72))
+	_add_sprite(target, "CenterCrypt", CRYPT, Vector2(1680, 250), Vector2(0.62, 0.62))
+	_add_sprite(target, "CenterSkull", SKULL, Vector2(1900, 378), Vector2(0.85, 0.85))
+	_add_sprite(target, "RightLantern", LANTERN, Vector2(2385, 155), Vector2(0.72, 0.72))
+	_add_sprite(target, "RightUpperTree", TREE_ALT, Vector2(2660, 65), Vector2(-0.62, 0.62))
+
+
 static func _clear(target: Node2D) -> void:
 	for child in target.get_children():
 		target.remove_child(child)
@@ -132,7 +150,6 @@ static func _build_hard(root: Node2D, hazard_script: Script) -> void:
 	_add_sprite(root, "NeedleBBox", BOX, Vector2(1184, 206), Vector2(0.9, 0.9))
 	_add_sprite(root, "NeedleCSkull", SKULL, Vector2(1565, 384), Vector2(0.9, 0.9))
 	_add_sprite(root, "WallCrypt", CRYPT, Vector2(1985, 68), Vector2(0.82, 0.82))
-	_add_sprite(root, "WallCoffin", COFFIN, Vector2(2185, 176), Vector2(0.72, 0.72))
 	_add_sprite(root, "LowBarrel", BARREL, Vector2(2480, 552), Vector2(0.9, 0.9))
 	_add_bridge_trim(root, Vector2(2835, 405), 2)
 	_add_sprite(root, "BridgeSign", SIGN, Vector2(3195, 260), Vector2(0.9, 0.9))
@@ -212,6 +229,35 @@ static func _add_bridge_trim(root: Node2D, start_position: Vector2, pairs: int) 
 	for index in pairs:
 		_add_sprite(root, "BridgeLeft_%d" % index, BRIDGE_LEFT, start_position + Vector2(index * 128, 0), Vector2(1.0, 1.0), -2)
 		_add_sprite(root, "BridgeRight_%d" % index, BRIDGE_RIGHT, start_position + Vector2(index * 128 + 64, 0), Vector2(1.0, 1.0), -2)
+
+
+static func _add_squad_bridge(root: Node2D, bridge_name: String, from: Vector2, to: Vector2) -> void:
+	var direction := to - from
+	var length := direction.length()
+	var angle := direction.angle()
+	var body := StaticBody2D.new()
+	body.name = bridge_name
+	body.position = (from + to) * 0.5
+	body.rotation = angle
+	root.add_child(body)
+
+	var collision := CollisionShape2D.new()
+	var shape := RectangleShape2D.new()
+	shape.size = Vector2(length, 58)
+	collision.shape = shape
+	body.add_child(collision)
+
+	var segment_count: int = max(1, int(ceil(length / TILE_SIZE)))
+	for index in segment_count:
+		var amount := (float(index) + 0.5) / float(segment_count)
+		var sprite := Sprite2D.new()
+		sprite.name = "%s_Part_%d" % [bridge_name, index]
+		sprite.texture = TILE_FLOAT_MIDDLE
+		sprite.position = from.lerp(to, amount)
+		sprite.rotation = angle
+		sprite.scale = Vector2(length / float(segment_count) / TILE_SIZE, 0.62)
+		sprite.z_index = -1
+		root.add_child(sprite)
 
 
 static func _add_sprite(root: Node2D, sprite_name: String, texture: Texture2D, position: Vector2, scale: Vector2 = Vector2.ONE, z_index: int = 0) -> void:

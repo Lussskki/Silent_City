@@ -30,8 +30,18 @@ const CHARACTER_COINS_TEXT_X_OFFSET := 0.0
 const CHARACTER_DISPLAY_NAMES := {
 	"player": "Ash Golem",
 	"golem": "Stone Golem",
-	"ice_golem": "Ice Golem"
+	"ice_golem": "Ice Golem",
+	"crusader": "Skeleton Crusader",
+	"wraith": "Wraith"
 }
+
+const STORY_CHARACTERS := ["player", "golem", "ice_golem"]
+const SQUAD_CHARACTERS := ["crusader", "wraith"]
+const ASH_PREVIEW_PNG := "res://Resources/ash_golem_preview.png"
+const STONE_PREVIEW_PNG := "res://Characters/Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_000.png"
+const ICE_PREVIEW_PNG := "res://Characters/Golem_1/PNG/PNG Sequences/Idle/0_Golem_Idle_000.png"
+const CRUSADER_PREVIEW_PNG := "res://Characters/Skeleton_crusider/Skeleton_Crusader_1/PNG/PNG Sequences/Idle/0_Skeleton_Crusader_Idle_000.png"
+const WRAITH_PREVIEW_PNG := "res://Characters/Wraithes/PNG/Wraith_01/PNG Sequences/Idle/Wraith_01_Idle_000.png"
 
 const ASH_CARD_PNG := "res://Resources/Buttons/character_card_ash.png"
 const STONE_CARD_PNG := "res://Resources/Buttons/character_card_stone.png"
@@ -125,6 +135,7 @@ func setup(page: VBoxContainer, services: Dictionary) -> void:
 	# Build the complete Character page BEFORE it is shown.
 	_layout_character_page()
 	_apply_character_visuals()
+	_configure_mode_cards()
 	_connect_character_inputs()
 
 	if player_select_button:
@@ -141,6 +152,7 @@ func setup(page: VBoxContainer, services: Dictionary) -> void:
 
 
 func open(status_override: String = "") -> void:
+	_configure_mode_cards()
 	refresh()
 	if not status_override.is_empty():
 		set_status(status_override)
@@ -173,7 +185,7 @@ func set_status(text: String) -> void:
 
 
 func set_buttons_enabled(enabled: bool) -> void:
-	for character in ["player", "golem", "ice_golem"]:
+	for character in _selectable_characters():
 		var card := _character_card(character)
 		var select_button := _character_select_button(character)
 		var available := enabled and _is_character_unlocked(character)
@@ -222,9 +234,10 @@ func refresh_language() -> void:
 
 
 func refresh() -> void:
+	_configure_mode_cards()
 	_update_wallet_label()
 
-	for character in ["player", "golem", "ice_golem"]:
+	for character in _selectable_characters():
 		var card := _character_card(character)
 		if not card:
 			continue
@@ -263,20 +276,20 @@ func refresh() -> void:
 func _connect_character_inputs() -> void:
 	if player_select_button:
 		player_select_button.pressed.connect(
-			func(): _select_character("player")
+			func(): _select_character(_character_for_slot(0))
 		)
 	if golem_select_button:
 		golem_select_button.pressed.connect(
-			func(): _select_character("golem")
+			func(): _select_character(_character_for_slot(1))
 		)
 	if ice_golem_select_button:
 		ice_golem_select_button.pressed.connect(
-			func(): _select_character("ice_golem")
+			func(): _select_character(_character_for_slot(2))
 		)
 
-	_make_character_card_tappable(player_card, "player")
-	_make_character_card_tappable(golem_card, "golem")
-	_make_character_card_tappable(ice_golem_card, "ice_golem")
+	_make_character_card_tappable(player_card, 0)
+	_make_character_card_tappable(golem_card, 1)
+	_make_character_card_tappable(ice_golem_card, 2)
 
 	if choose_start_button:
 		choose_start_button.pressed.connect(
@@ -295,6 +308,8 @@ func _connect_character_inputs() -> void:
 
 
 func _select_character(character: String) -> void:
+	if character.is_empty():
+		return
 	if online_character_locked:
 		return
 
@@ -332,7 +347,7 @@ func _select_character(character: String) -> void:
 
 func _make_character_card_tappable(
 	card: Control,
-	character: String
+	character_slot: int
 ) -> void:
 	if not card:
 		return
@@ -342,7 +357,11 @@ func _make_character_card_tappable(
 
 	card.gui_input.connect(
 		func(event: InputEvent):
-			_select_character_from_card_input(event, character, card)
+			_select_character_from_card_input(
+				event,
+				_character_for_slot(character_slot),
+				card
+			)
 	)
 
 	for child in card.find_children("*", "Control"):
@@ -757,7 +776,7 @@ func _update_character_header_image() -> void:
 	choose_header.visible = false
 	choose_header.text = ""
 
-	wallet_label.visible = true
+	wallet_label.visible = not _is_squad_mode()
 	wallet_label.text = _t("coins") % _saved_coins()
 
 	if character_divider_image:
@@ -807,9 +826,57 @@ func _apply_taken_character_input_state() -> void:
 		_set_character_card_available(card, false)
 
 
+func _is_squad_mode() -> bool:
+	return settings != null and String(settings.get("game_mode")) == "squad"
+
+
+func _selectable_characters() -> Array:
+	return SQUAD_CHARACTERS if _is_squad_mode() else STORY_CHARACTERS
+
+
+func _character_for_slot(slot: int) -> String:
+	var characters := _selectable_characters()
+	if slot < 0 or slot >= characters.size():
+		return ""
+	return String(characters[slot])
+
+
+func _configure_mode_cards() -> void:
+	if not player_card or not golem_card or not ice_golem_card:
+		return
+
+	var squad_mode := _is_squad_mode()
+	ice_golem_card.visible = not squad_mode
+	if wallet_label:
+		wallet_label.visible = not squad_mode
+
+	if squad_mode:
+		_set_card_identity(player_card, "Skeleton Crusader", CRUSADER_PREVIEW_PNG)
+		_set_card_identity(golem_card, "Wraith", WRAITH_PREVIEW_PNG)
+	else:
+		_set_card_identity(player_card, "Ash Golem", ASH_PREVIEW_PNG)
+		_set_card_identity(golem_card, "Stone Golem", STONE_PREVIEW_PNG)
+		_set_card_identity(ice_golem_card, "Ice Golem", ICE_PREVIEW_PNG)
+
+
+func _set_card_identity(
+	card: PanelContainer,
+	display_text: String,
+	preview_path: String
+) -> void:
+	if not card:
+		return
+	var name_label := card.get_node_or_null("Box/Name") as Label
+	if name_label:
+		name_label.text = display_text
+	var preview := card.get_node_or_null("Box/Preview") as TextureRect
+	if preview and ResourceLoader.exists(preview_path):
+		preview.texture = load(preview_path) as Texture2D
+
+
 func _character_card(character: String) -> PanelContainer:
 	match character:
-		"golem":
+		"golem", "wraith":
 			return golem_card
 		"ice_golem":
 			return ice_golem_card
@@ -819,7 +886,7 @@ func _character_card(character: String) -> PanelContainer:
 
 func _character_select_button(character: String) -> Button:
 	match character:
-		"golem":
+		"golem", "wraith":
 			return golem_select_button
 		"ice_golem":
 			return ice_golem_select_button
@@ -912,6 +979,8 @@ func _set_card_crossed(card: Control, crossed: bool) -> void:
 func _is_character_taken_by_other_player(
 	character: String
 ) -> bool:
+	if _is_squad_mode():
+		return false
 	return (
 		joined_room_waiting_for_character
 		and other_player_character_chosen
