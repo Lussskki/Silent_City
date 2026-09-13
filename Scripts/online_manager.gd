@@ -418,33 +418,101 @@ func is_second_player_connected() -> bool:
 
 
 @rpc("any_peer", "unreliable_ordered")
-func _receive_player_network_state(remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool = false) -> void:
+func _receive_player_network_state(owner_peer_id: int, remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool = false) -> void:
 	var api := get_multiplayer()
 	if api == null or not api.has_multiplayer_peer():
 		return
-	var peer_id := api.get_remote_sender_id()
-	if peer_id == 0:
+	var sender_id := api.get_remote_sender_id()
+	if sender_id == 0 or owner_peer_id != sender_id:
 		return
-	_apply_player_network_state(peer_id, remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead)
+	_apply_player_network_state(owner_peer_id, remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead)
+	if api.is_server():
+		_relay_player_network_state(
+			"_receive_relayed_player_network_state",
+			sender_id,
+			owner_peer_id,
+			remote_position,
+			remote_velocity,
+			remote_flip_h,
+			remote_animation,
+			remote_life,
+			remote_dead
+		)
 
 
 @rpc("any_peer", "reliable")
-func _receive_forced_player_network_state(remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool = false) -> void:
+func _receive_forced_player_network_state(owner_peer_id: int, remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool = false) -> void:
 	var api := get_multiplayer()
 	if api == null or not api.has_multiplayer_peer():
 		return
-	var peer_id := api.get_remote_sender_id()
-	if peer_id == 0:
+	var sender_id := api.get_remote_sender_id()
+	if sender_id == 0 or owner_peer_id != sender_id:
 		return
-	_apply_player_network_state(peer_id, remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead)
+	_apply_player_network_state(owner_peer_id, remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead)
+	if api.is_server():
+		_relay_player_network_state(
+			"_receive_relayed_forced_player_network_state",
+			sender_id,
+			owner_peer_id,
+			remote_position,
+			remote_velocity,
+			remote_flip_h,
+			remote_animation,
+			remote_life,
+			remote_dead
+		)
+
+
+func _relay_player_network_state(
+	rpc_name: String,
+	sender_id: int,
+	owner_peer_id: int,
+	remote_position: Vector2,
+	remote_velocity: Vector2,
+	remote_flip_h: bool,
+	remote_animation: String,
+	remote_life: int,
+	remote_dead: bool
+) -> void:
+	if not multiplayer.is_server():
+		return
+
+	for target_peer_id in multiplayer.get_peers():
+		if target_peer_id == sender_id:
+			continue
+		rpc_id(
+			target_peer_id,
+			rpc_name,
+			owner_peer_id,
+			remote_position,
+			remote_velocity,
+			remote_flip_h,
+			remote_animation,
+			remote_life,
+			remote_dead
+		)
+
+
+@rpc("authority", "unreliable_ordered")
+func _receive_relayed_player_network_state(owner_peer_id: int, remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool = false) -> void:
+	_apply_player_network_state(owner_peer_id, remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead)
+
+
+@rpc("authority", "reliable")
+func _receive_relayed_forced_player_network_state(owner_peer_id: int, remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool = false) -> void:
+	_apply_player_network_state(owner_peer_id, remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead)
 
 
 func _apply_player_network_state(peer_id: int, remote_position: Vector2, remote_velocity: Vector2, remote_flip_h: bool, remote_animation: String, remote_life: int, remote_dead: bool) -> void:
 	var player := _remote_player_for_peer(peer_id)
 	if not player:
 		return
-	if peer_id != 1 and is_zero_approx(remote_velocity.x):
-		remote_flip_h = true
+	# While moving, derive facing from the authoritative movement direction.
+	# This avoids mirroring the second player's sprite when a stale/raw flip
+	# value arrives through the relay. When standing still, preserve the last
+	# explicitly transmitted facing direction.
+	if not is_zero_approx(remote_velocity.x):
+		remote_flip_h = remote_velocity.x < 0.0
 	if player.has_method("_apply_remote_network_state"):
 		player.call("_apply_remote_network_state", remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead)
 

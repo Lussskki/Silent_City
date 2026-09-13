@@ -1528,6 +1528,7 @@ func _send_network_state(
 
 		online_manager.rpc(
 			"_receive_player_network_state",
+			network_player_id,
 			global_position,
 			velocity,
 			sprite.flip_h,
@@ -1541,6 +1542,7 @@ func _send_network_state(
 
 			online_manager.rpc(
 				"_receive_forced_player_network_state",
+				network_player_id,
 				global_position,
 				velocity,
 				sprite.flip_h,
