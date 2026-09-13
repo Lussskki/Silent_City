@@ -7,7 +7,7 @@
 /build/
 /builds/
 /output/
-/tmp/
+tmp/
 Characters/craftpix-net-484869-free-minotaur-tiny-style-2d-sprites.zip
 addons/godotsteam/win64/~*.dll
 addons/godotsteam/win64/~*.TMP
