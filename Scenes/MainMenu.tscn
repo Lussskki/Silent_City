@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_menu_script"]
 [ext_resource type="Texture2D" path="res://Sprites/Background/BG.png" id="2_bg"]
@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" path="res://Resources/MapPreviews/hard_map.png" id="12_hard_map_preview"]
 [ext_resource type="Texture2D" path="res://Resources/Deffence/defence_is_coming_fixed.png" id="13_defence_notice"]
 [ext_resource type="Texture2D" path="res://Resources/Deffence/health_is_coming_clean.png" id="14_health_notice"]
+[ext_resource type="Texture2D" path="res://Resources/Buttons/character_card_stone.png" id="15_squad_card"]
+[ext_resource type="Texture2D" path="res://Sprites/Objects/TombStone (2).png" id="16_squad_tombstone"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -318,6 +320,42 @@ theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
 theme_override_font_sizes/font_size = 18
 text = "Hard Map"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SquadButton" type="Button" parent="Content/Root/Pages/ChooseLevel/MapCards"]
+clip_contents = true
+custom_minimum_size = Vector2(178, 120)
+layout_mode = 2
+tooltip_text = "Squad Map"
+
+[node name="Tombstone" type="TextureRect" parent="Content/Root/Pages/ChooseLevel/MapCards/SquadButton"]
+layout_mode = 0
+offset_left = 62.0
+offset_top = 52.0
+offset_right = 128.0
+offset_bottom = 145.0
+mouse_filter = 2
+texture = ExtResource("16_squad_tombstone")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Content/Root/Pages/ChooseLevel/MapCards/SquadButton"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.82, 1, 0.88, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 18
+text = "Squad Map"
 horizontal_alignment = 1
 vertical_alignment = 1
 

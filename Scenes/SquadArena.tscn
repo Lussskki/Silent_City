@@ -1,18 +1,23 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://dbhqu2k4av3v1"]
 
-[ext_resource type="PackedScene" path="res://Scenes/main.tscn" id="1_main"]
+[ext_resource type="PackedScene" uid="uid://cmlvqcwrts1x6" path="res://Scenes/main.tscn" id="1_main"]
 [ext_resource type="PackedScene" path="res://Scenes/SquadMapLayout.tscn" id="2_layout"]
 
-[node name="SquadArena" instance=ExtResource("1_main")]
+[node name="SquadArena" unique_id=1527978783 instance=ExtResource("1_main")]
 
-[node name="Level" parent="." index="3"]
+[node name="Level" parent="." index="3" unique_id=1045485232]
 visible = false
 collisions_enabled = false
 
-[node name="SquadMapLayout" parent="." instance=ExtResource("2_layout")]
-
-[node name="Player" parent="." index="5"]
+[node name="Player" parent="." index="5" unique_id=2090043745]
 position = Vector2(1090, 178)
 
+[node name="SquadMapLayout" parent="." index="11" unique_id=1699699537 instance=ExtResource("2_layout")]
+
+[node name="CenterCrypt" parent="SquadMapLayout" index="7"]
+position = Vector2(1712, 319)
+
+[node name="CenterSkull" parent="SquadMapLayout" index="8"]
+position = Vector2(1956.9999, 406.99997)
+
 [editable path="SquadMapLayout"]
-[editable path="Player"]

@@ -743,7 +743,10 @@ func _try_auto_start_online_match() -> void:
 		return
 
 	var squad_mode := settings != null and String(settings.get("game_mode")) == "squad"
-	var required_remote_players := 3 if squad_mode else 1
+	# Squad supports both the full 2v2 room and a two-player 1v1 match.
+	# Waiting for three remote peers made the normal two-Steam-player test
+	# impossible to start.
+	var required_remote_players := 1
 	if multiplayer.get_peers().size() < required_remote_players:
 		_set_online_status_with_player_line(_online_room_waiting_text())
 		return

@@ -306,6 +306,7 @@ var menu_optimizer = null
 @onready var easy_button: Button = $Content/Root/Pages/ChooseLevel/MapCards/EasyButton
 @onready var medium_button: Button = $Content/Root/Pages/ChooseLevel/MapCards/MediumButton
 @onready var hard_button: Button = $Content/Root/Pages/ChooseLevel/MapCards/HardButton
+@onready var squad_button: Button = $Content/Root/Pages/ChooseLevel/MapCards/SquadButton
 @onready var easy_map_label: Label = $Content/Root/Pages/ChooseLevel/MapCards/EasyButton/Title
 @onready var medium_map_label: Label = $Content/Root/Pages/ChooseLevel/MapCards/MediumButton/Title
 @onready var hard_map_label: Label = $Content/Root/Pages/ChooseLevel/MapCards/HardButton/Title
@@ -1228,6 +1229,7 @@ func _ensure_difficulty_menu():
 			"easy_button": easy_button,
 			"medium_button": medium_button,
 			"hard_button": hard_button,
+			"squad_button": squad_button,
 			"map_title_label": map_title_label,
 			"map_gallery_hint": map_gallery_hint,
 			"level_back_button": level_back_button
@@ -1255,6 +1257,7 @@ func _ensure_difficulty_menu():
 func _on_difficulty_level_selected(level: String) -> void:
 	var settings := _settings()
 	if settings:
+		settings.set("game_mode", "squad" if level == "squad" else "story")
 		settings.set("selected_level", level)
 		settings.set("level_chosen", true)
 
