@@ -2,7 +2,7 @@ extends Node
 
 # Character Select is isolated from main_menu.gd.
 # The module is loaded only when Character Select is actually opened.
-# All three character cards are prepared synchronously BEFORE the page is shown,
+# All character cards are prepared synchronously BEFORE the page is shown,
 # so sprites do not appear one-by-one.
 
 signal character_selected(character: String)
@@ -32,16 +32,20 @@ const CHARACTER_DISPLAY_NAMES := {
 	"golem": "Stone Golem",
 	"ice_golem": "Ice Golem",
 	"crusader": "Skeleton Crusader",
-	"wraith": "Wraith"
+	"wraith": "Wraith",
+	"minotaur": "Minotaur",
+	"ranger": "Forest Ranger"
 }
 
 const STORY_CHARACTERS := ["player", "golem", "ice_golem"]
-const SQUAD_CHARACTERS := ["crusader", "wraith"]
+const SQUAD_CHARACTERS := ["crusader", "wraith", "minotaur", "ranger"]
 const ASH_PREVIEW_PNG := "res://Resources/ash_golem_preview.png"
 const STONE_PREVIEW_PNG := "res://Characters/Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_000.png"
 const ICE_PREVIEW_PNG := "res://Characters/Golem_1/PNG/PNG Sequences/Idle/0_Golem_Idle_000.png"
 const CRUSADER_PREVIEW_PNG := "res://Characters/Skeleton_crusider/Skeleton_Crusader_1/PNG/PNG Sequences/Idle/0_Skeleton_Crusader_Idle_000.png"
 const WRAITH_PREVIEW_PNG := "res://Characters/Wraithes/PNG/Wraith_01/PNG Sequences/Idle/Wraith_01_Idle_000.png"
+const MINOTAUR_PREVIEW_PNG := "res://Characters/Minotaurs/Minotaur_3/PNG/PNG Sequences/Idle/0_Minotaur_Idle_000.png"
+const RANGER_PREVIEW_PNG := "res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_000.png"
 
 const ASH_CARD_PNG := "res://Resources/Buttons/character_card_ash.png"
 const STONE_CARD_PNG := "res://Resources/Buttons/character_card_stone.png"
@@ -60,6 +64,10 @@ var ice_golem_card: PanelContainer = null
 var player_select_button: Button = null
 var golem_select_button: Button = null
 var ice_golem_select_button: Button = null
+var minotaur_card: PanelContainer = null
+var ranger_card: PanelContainer = null
+var minotaur_select_button: Button = null
+var ranger_select_button: Button = null
 var character_status: Label = null
 var choose_start_button: Button = null
 var choose_online_button: Button = null
@@ -100,6 +108,8 @@ func setup(page: VBoxContainer, services: Dictionary) -> void:
 	player_card = choose_page.get_node_or_null("Cards/PlayerCard") as PanelContainer
 	golem_card = choose_page.get_node_or_null("Cards/GolemCard") as PanelContainer
 	ice_golem_card = choose_page.get_node_or_null("Cards/IceGolemCard") as PanelContainer
+	minotaur_card = choose_page.get_node_or_null("Cards/MinotaurCard") as PanelContainer
+	ranger_card = choose_page.get_node_or_null("Cards/RangerCard") as PanelContainer
 
 	if player_card:
 		player_select_button = player_card.get_node_or_null("Box/SelectButton") as Button
@@ -107,6 +117,10 @@ func setup(page: VBoxContainer, services: Dictionary) -> void:
 		golem_select_button = golem_card.get_node_or_null("Box/SelectButton") as Button
 	if ice_golem_card:
 		ice_golem_select_button = ice_golem_card.get_node_or_null("Box/SelectButton") as Button
+	if minotaur_card:
+		minotaur_select_button = minotaur_card.get_node_or_null("Box/SelectButton") as Button
+	if ranger_card:
+		ranger_select_button = ranger_card.get_node_or_null("Box/SelectButton") as Button
 
 	character_status = choose_page.get_node_or_null("StatusLabel") as Label
 	choose_start_button = choose_page.get_node_or_null("StartButton") as Button
@@ -144,6 +158,10 @@ func setup(page: VBoxContainer, services: Dictionary) -> void:
 		golem_select_button.visible = true
 	if ice_golem_select_button:
 		ice_golem_select_button.visible = true
+	if minotaur_select_button:
+		minotaur_select_button.visible = true
+	if ranger_select_button:
+		ranger_select_button.visible = true
 
 	refresh_language()
 	refresh()
@@ -286,10 +304,20 @@ func _connect_character_inputs() -> void:
 		ice_golem_select_button.pressed.connect(
 			func(): _select_character(_character_for_slot(2))
 		)
+	if minotaur_select_button:
+		minotaur_select_button.pressed.connect(
+			func(): _select_character(_character_for_slot(2))
+		)
+	if ranger_select_button:
+		ranger_select_button.pressed.connect(
+			func(): _select_character(_character_for_slot(3))
+		)
 
 	_make_character_card_tappable(player_card, 0)
 	_make_character_card_tappable(golem_card, 1)
 	_make_character_card_tappable(ice_golem_card, 2)
+	_make_character_card_tappable(minotaur_card, 2)
+	_make_character_card_tappable(ranger_card, 3)
 
 	if choose_start_button:
 		choose_start_button.pressed.connect(
@@ -405,10 +433,14 @@ func _apply_character_visuals() -> void:
 	_apply_character_card_sprite(player_card, ASH_CARD_PNG)
 	_apply_character_card_sprite(golem_card, STONE_CARD_PNG)
 	_apply_character_card_sprite(ice_golem_card, ICE_CARD_PNG)
+	_apply_character_card_sprite(minotaur_card, STONE_CARD_PNG)
+	_apply_character_card_sprite(ranger_card, ASH_CARD_PNG)
 
 	_apply_flat_text_button(player_select_button)
 	_apply_flat_text_button(golem_select_button)
 	_apply_flat_text_button(ice_golem_select_button)
+	_apply_flat_text_button(minotaur_select_button)
+	_apply_flat_text_button(ranger_select_button)
 
 	if (
 		apply_button_sprite_callback is Callable
@@ -842,21 +874,33 @@ func _character_for_slot(slot: int) -> String:
 
 
 func _configure_mode_cards() -> void:
-	if not player_card or not golem_card or not ice_golem_card:
+	if not player_card or not golem_card or not ice_golem_card or not minotaur_card or not ranger_card:
 		return
 
 	var squad_mode := _is_squad_mode()
 	ice_golem_card.visible = not squad_mode
+	minotaur_card.visible = squad_mode
+	ranger_card.visible = squad_mode
+	var card_size := Vector2(220.0, 190.0) if not squad_mode else Vector2(160.0, 190.0)
+	for card in [player_card, golem_card, ice_golem_card, minotaur_card, ranger_card]:
+		card.custom_minimum_size = card_size
+		var preview := card.get_node_or_null("Box/Preview") as TextureRect
+		if preview:
+			preview.custom_minimum_size = Vector2(card_size.x - 20.0, 115.0)
 	if wallet_label:
 		wallet_label.visible = not squad_mode
 
 	if squad_mode:
 		_set_card_identity(player_card, "Skeleton Crusader", CRUSADER_PREVIEW_PNG)
 		_set_card_identity(golem_card, "Wraith", WRAITH_PREVIEW_PNG)
+		_set_card_identity(minotaur_card, "Minotaur", MINOTAUR_PREVIEW_PNG)
+		_set_card_identity(ranger_card, "Forest Ranger", RANGER_PREVIEW_PNG)
 	else:
 		_set_card_identity(player_card, "Ash Golem", ASH_PREVIEW_PNG)
 		_set_card_identity(golem_card, "Stone Golem", STONE_PREVIEW_PNG)
 		_set_card_identity(ice_golem_card, "Ice Golem", ICE_PREVIEW_PNG)
+		_set_card_identity(minotaur_card, "Minotaur", MINOTAUR_PREVIEW_PNG)
+		_set_card_identity(ranger_card, "Forest Ranger", RANGER_PREVIEW_PNG)
 
 
 func _set_card_identity(
@@ -880,6 +924,10 @@ func _character_card(character: String) -> PanelContainer:
 			return golem_card
 		"ice_golem":
 			return ice_golem_card
+		"minotaur":
+			return minotaur_card
+		"ranger":
+			return ranger_card
 		_:
 			return player_card
 
@@ -890,6 +938,10 @@ func _character_select_button(character: String) -> Button:
 			return golem_select_button
 		"ice_golem":
 			return ice_golem_select_button
+		"minotaur":
+			return minotaur_select_button
+		"ranger":
+			return ranger_select_button
 		_:
 			return player_select_button
 

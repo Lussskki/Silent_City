@@ -14,10 +14,26 @@ const MENU_TEXTURE_CACHE_META := "_silent_city_menu_texture_cache_v1"
 const DEFAULT_SPRITE_OFFSET := Vector2(0, -24)
 const GOLEM_SPRITE_OFFSET := Vector2(0, -24)
 const ICE_GOLEM_SPRITE_OFFSET := Vector2(0, -24)
+const MINOTAUR_SPRITE_OFFSET := Vector2(0, -32)
+const SQUAD_ARENA_SCENE := "res://Scenes/SquadArena.tscn"
 
 const ICE_GOLEM_FRAMES_ROOT := "res://Characters/Golem_1/PNG/PNG Sequences"
 const CRUSADER_FRAMES_ROOT := "res://Characters/Skeleton_crusider/Skeleton_Crusader_1/PNG/PNG Sequences"
 const WRAITH_FRAMES_ROOT := "res://Characters/Wraithes/PNG/Wraith_01/PNG Sequences"
+const MINOTAUR_FRAMES_ROOT := "res://Characters/Minotaurs/Minotaur_3/PNG/PNG Sequences"
+const RANGER_FRAMES_ROOT := "res://Characters/Forest_Ranger_2/PNG/PNG Sequences"
+const SQUAD_IDLE_TEXTURES := {
+	"crusader": preload("res://Characters/Skeleton_crusider/Skeleton_Crusader_1/PNG/PNG Sequences/Idle/0_Skeleton_Crusader_Idle_000.png"),
+	"wraith": preload("res://Characters/Wraithes/PNG/Wraith_01/PNG Sequences/Idle/Wraith_01_Idle_000.png"),
+	"minotaur": preload("res://Characters/Minotaurs/Minotaur_3/PNG/PNG Sequences/Idle/0_Minotaur_Idle_000.png"),
+	"ranger": preload("res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_000.png")
+}
+const SQUAD_CHARACTER_FRAMES := {
+	"crusader": preload("res://Resources/squad_crusader_sprite_frames.tres"),
+	"wraith": preload("res://Resources/squad_wraith_sprite_frames.tres"),
+	"minotaur": preload("res://Resources/squad_minotaur_sprite_frames.tres"),
+	"ranger": preload("res://Resources/squad_ranger_sprite_frames.tres")
+}
 
 const GOLEM_ANIMATION_DIRS := {
 	"Idle": "Idle",
@@ -51,6 +67,24 @@ const WRAITH_ANIMATION_DIRS := {
 	"Throwing In Air": "Casting Spells",
 	"Dying": "Dying",
 	"Sliding": "Walking"
+}
+const MINOTAUR_ANIMATION_DIRS := {
+	"Idle": "Idle", "Walking": "Walking", "Running": "Running",
+	"Jump Looping": "Jump Loop", "Falling Down": "Falling Down",
+	"Slashing": "Slashing", "Slashing In Air": "Slashing in The Air",
+	"Run Slashing": "Run Slashing", "Kicking": "Kicking",
+	"Hurt": "Hurt", "Throwing": "Throwing",
+	"Throwing In Air": "Throwing In The Air", "Dying": "Dying",
+	"Sliding": "Sliding"
+}
+const RANGER_ANIMATION_DIRS := {
+	"Idle": "Idle", "Walking": "Walking", "Running": "Running",
+	"Jump Looping": "Jump Loop", "Falling Down": "Falling Down",
+	"Slashing": "Shooting", "Slashing In Air": "Shooting in The Air",
+	"Run Slashing": "Run Shooting", "Kicking": "Kicking",
+	"Hurt": "Hurt", "Throwing": "Throwing",
+	"Throwing In Air": "Throwing in The Air", "Dying": "Dying",
+	"Sliding": "Sliding"
 }
 
 const HURT_ANIMATION_TIME := 0.28
@@ -1829,8 +1863,27 @@ func _apply_selected_character() -> bool:
 			"selected_character"
 		)
 	)
+	var squad_mode := (
+		String(settings.get("game_mode")) == "squad"
+		or (
+			get_tree().current_scene != null
+			and get_tree().current_scene.scene_file_path == SQUAD_ARENA_SCENE
+		)
+	)
+	if squad_mode:
+		if selected_character == "player" or selected_character.is_empty():
+			selected_character = "crusader"
+		elif selected_character == "golem":
+			selected_character = "wraith"
+		elif selected_character not in [
+			"crusader",
+			"wraith",
+			"minotaur",
+			"ranger"
+		]:
+			selected_character = "crusader"
 
-	if selected_character in ["crusader", "wraith"]:
+	if selected_character in ["crusader", "wraith", "minotaur", "ranger"]:
 		var frames_root := (
 			CRUSADER_FRAMES_ROOT
 			if selected_character == "crusader"
@@ -1841,16 +1894,35 @@ func _apply_selected_character() -> bool:
 			if selected_character == "crusader"
 			else WRAITH_ANIMATION_DIRS
 		)
-		var squad_frames := _build_sprite_frames_from_root(
-			frames_root,
-			animation_dirs
-		)
+		if selected_character == "minotaur":
+			frames_root = MINOTAUR_FRAMES_ROOT
+			animation_dirs = MINOTAUR_ANIMATION_DIRS
+		elif selected_character == "ranger":
+			frames_root = RANGER_FRAMES_ROOT
+			animation_dirs = RANGER_ANIMATION_DIRS
+		var squad_frames := SQUAD_CHARACTER_FRAMES.get(
+			selected_character
+		) as SpriteFrames
+		if not squad_frames:
+			squad_frames = _build_sprite_frames_from_root(
+				frames_root,
+				animation_dirs
+			)
+		if not squad_frames.has_animation("Idle"):
+			var idle_texture := SQUAD_IDLE_TEXTURES.get(selected_character) as Texture2D
+			if idle_texture:
+				squad_frames.add_animation("Idle")
+				squad_frames.add_frame("Idle", idle_texture)
 		if squad_frames.has_animation("Idle"):
 			sprite.sprite_frames = squad_frames
-			sprite.position = DEFAULT_SPRITE_OFFSET
+			sprite.position = (
+				MINOTAUR_SPRITE_OFFSET
+				if selected_character == "minotaur"
+				else DEFAULT_SPRITE_OFFSET
+			)
 			sprite.scale = (
 				Vector2(0.22, 0.22)
-				if selected_character == "crusader"
+				if selected_character in ["crusader", "ranger"]
 				else Vector2(0.34, 0.34)
 			)
 			set_sprite_flip_inverted(true)

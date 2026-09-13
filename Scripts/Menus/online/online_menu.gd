@@ -806,7 +806,12 @@ func _try_auto_start_online_match() -> void:
 	_update_room_buttons()
 	_sync_online_character_state()
 
-	rpc("_start_online_match", scene_path)
+	rpc(
+		"_start_online_match",
+		scene_path,
+		host_character,
+		remote_client_character
+	)
 	get_tree().change_scene_to_file(scene_path)
 
 
@@ -874,7 +879,9 @@ func _prepare_join_selected_lobby(lobby_data: Dictionary) -> void:
 				"golem",
 				"ice_golem",
 				"crusader",
-				"wraith"
+				"wraith",
+				"minotaur",
+				"ranger"
 			]:
 				settings.set(
 					"selected_character",
@@ -888,7 +895,9 @@ func _prepare_join_selected_lobby(lobby_data: Dictionary) -> void:
 				"golem",
 				"ice_golem",
 				"crusader",
-				"wraith"
+				"wraith",
+				"minotaur",
+				"ranger"
 			]:
 				settings.set(
 					"online_remote_character",
@@ -1430,8 +1439,16 @@ func _online_character_state_updated(
 
 @rpc("authority", "reliable")
 func _start_online_match(
-	scene_path: String = MAIN_SCENE
+	scene_path: String = MAIN_SCENE,
+	host_character: String = "crusader",
+	client_character: String = "crusader"
 ) -> void:
+	# Preserve the authoritative host skin before the gameplay scene creates
+	# remote proxies. The proxy scene otherwise starts with Skeleton frames.
+	if settings and not is_hosting_room():
+		settings.set("online_remote_character", host_character)
+		if String(settings.get("selected_character")).is_empty():
+			settings.set("selected_character", client_character)
 	if settings:
 		settings.set("character_chosen", true)
 
@@ -1573,6 +1590,10 @@ func _character_display_name(character: String) -> String:
 			return "Skeleton Crusader"
 		"wraith":
 			return "Wraith"
+		"minotaur":
+			return "Minotaur"
+		"ranger":
+			return "Forest Ranger"
 
 	return "Ash Golem"
 

@@ -1,0 +1,735 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Dying/0_Forest_Ranger_Dying_000.png" id="1_1ohyv"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Dying/0_Forest_Ranger_Dying_001.png" id="2_dccgy"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Dying/0_Forest_Ranger_Dying_002.png" id="3_w0nyi"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Dying/0_Forest_Ranger_Dying_003.png" id="4_hnm6v"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Dying/0_Forest_Ranger_Dying_004.png" id="5_00q7y"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Dying/0_Forest_Ranger_Dying_005.png" id="6_lhg5p"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Dying/0_Forest_Ranger_Dying_006.png" id="7_vxqmp"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Dying/0_Forest_Ranger_Dying_007.png" id="8_ojy1d"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Dying/0_Forest_Ranger_Dying_008.png" id="9_6tf2h"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Dying/0_Forest_Ranger_Dying_009.png" id="10_qsvbu"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Dying/0_Forest_Ranger_Dying_010.png" id="11_ajh2l"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Dying/0_Forest_Ranger_Dying_011.png" id="12_4w2id"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Dying/0_Forest_Ranger_Dying_012.png" id="13_pe1r7"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Dying/0_Forest_Ranger_Dying_013.png" id="14_kry8n"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Dying/0_Forest_Ranger_Dying_014.png" id="15_v1x5o"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Falling Down/0_Forest_Ranger_Falling Down_000.png" id="16_08xnd"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Falling Down/0_Forest_Ranger_Falling Down_001.png" id="17_bgdej"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Falling Down/0_Forest_Ranger_Falling Down_002.png" id="18_w401d"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Falling Down/0_Forest_Ranger_Falling Down_003.png" id="19_51tod"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Falling Down/0_Forest_Ranger_Falling Down_004.png" id="20_ouqyw"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Falling Down/0_Forest_Ranger_Falling Down_005.png" id="21_shup4"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Hurt/0_Forest_Ranger_Hurt_000.png" id="22_6nj14"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Hurt/0_Forest_Ranger_Hurt_001.png" id="23_kvo8f"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Hurt/0_Forest_Ranger_Hurt_002.png" id="24_efcxr"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Hurt/0_Forest_Ranger_Hurt_003.png" id="25_wr72q"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Hurt/0_Forest_Ranger_Hurt_004.png" id="26_par0i"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Hurt/0_Forest_Ranger_Hurt_005.png" id="27_7l8jm"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Hurt/0_Forest_Ranger_Hurt_006.png" id="28_xp4h5"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Hurt/0_Forest_Ranger_Hurt_007.png" id="29_nn5i7"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Hurt/0_Forest_Ranger_Hurt_008.png" id="30_ddwcn"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Hurt/0_Forest_Ranger_Hurt_009.png" id="31_k7gjt"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Hurt/0_Forest_Ranger_Hurt_010.png" id="32_nek53"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Hurt/0_Forest_Ranger_Hurt_011.png" id="33_j2fbv"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_000.png" id="34_0q02v"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_001.png" id="35_7ph5v"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_002.png" id="36_kfrfr"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_003.png" id="37_yu6t1"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_004.png" id="38_64u5t"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_005.png" id="39_ldobe"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_006.png" id="40_owqro"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_007.png" id="41_nfl0i"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_008.png" id="42_b73mx"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_009.png" id="43_lrau7"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_010.png" id="44_nytgu"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_011.png" id="45_x6r7j"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_012.png" id="46_y5aog"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_013.png" id="47_qq2ub"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_014.png" id="48_14sla"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_015.png" id="49_ypdle"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_016.png" id="50_j7a34"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_017.png" id="51_sb7dd"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Jump Loop/0_Forest_Ranger_Jump Loop_000.png" id="52_nvxtj"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Jump Loop/0_Forest_Ranger_Jump Loop_001.png" id="53_7t6tx"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Jump Loop/0_Forest_Ranger_Jump Loop_002.png" id="54_n553w"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Jump Loop/0_Forest_Ranger_Jump Loop_003.png" id="55_ctc55"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Jump Loop/0_Forest_Ranger_Jump Loop_004.png" id="56_jklli"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Jump Loop/0_Forest_Ranger_Jump Loop_005.png" id="57_x8dlk"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Kicking/0_Forest_Ranger_Kicking_000.png" id="58_nigx3"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Kicking/0_Forest_Ranger_Kicking_001.png" id="59_3ut4w"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Kicking/0_Forest_Ranger_Kicking_002.png" id="60_xdods"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Kicking/0_Forest_Ranger_Kicking_003.png" id="61_ysyx7"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Kicking/0_Forest_Ranger_Kicking_004.png" id="62_47x05"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Kicking/0_Forest_Ranger_Kicking_005.png" id="63_3cgvy"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Kicking/0_Forest_Ranger_Kicking_006.png" id="64_yjy5g"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Kicking/0_Forest_Ranger_Kicking_007.png" id="65_ojh26"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Kicking/0_Forest_Ranger_Kicking_008.png" id="66_82ttc"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Kicking/0_Forest_Ranger_Kicking_009.png" id="67_oyogm"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Kicking/0_Forest_Ranger_Kicking_010.png" id="68_sqfrd"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Kicking/0_Forest_Ranger_Kicking_011.png" id="69_bvh04"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Run Shooting/0_Forest_Ranger_Run Shooting_000.png" id="70_5141m"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Run Shooting/0_Forest_Ranger_Run Shooting_001.png" id="71_2wkn0"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Run Shooting/0_Forest_Ranger_Run Shooting_002.png" id="72_wcrms"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Run Shooting/0_Forest_Ranger_Run Shooting_003.png" id="73_xpaoy"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Run Shooting/0_Forest_Ranger_Run Shooting_004.png" id="74_j8nup"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Run Shooting/0_Forest_Ranger_Run Shooting_005.png" id="75_vq5nj"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Run Shooting/0_Forest_Ranger_Run Shooting_006.png" id="76_qmnxc"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Run Shooting/0_Forest_Ranger_Run Shooting_007.png" id="77_j8451"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Run Shooting/0_Forest_Ranger_Run Shooting_008.png" id="78_n6yue"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Run Shooting/0_Forest_Ranger_Run Shooting_009.png" id="79_xpptp"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Run Shooting/0_Forest_Ranger_Run Shooting_010.png" id="80_o2xhi"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Run Shooting/0_Forest_Ranger_Run Shooting_011.png" id="81_jcwei"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Running/0_Forest_Ranger_Running_000.png" id="82_u2mld"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Running/0_Forest_Ranger_Running_001.png" id="83_jl5qo"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Running/0_Forest_Ranger_Running_002.png" id="84_610rv"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Running/0_Forest_Ranger_Running_003.png" id="85_ekrdl"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Running/0_Forest_Ranger_Running_004.png" id="86_myxfv"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Running/0_Forest_Ranger_Running_005.png" id="87_tqo8i"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Running/0_Forest_Ranger_Running_006.png" id="88_q54oc"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Running/0_Forest_Ranger_Running_007.png" id="89_r674d"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Running/0_Forest_Ranger_Running_008.png" id="90_0go2x"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Running/0_Forest_Ranger_Running_009.png" id="91_n2lfq"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Running/0_Forest_Ranger_Running_010.png" id="92_kw1op"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Running/0_Forest_Ranger_Running_011.png" id="93_mpsp2"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Shooting/0_Forest_Ranger_Shooting_000.png" id="94_wkssx"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Shooting/0_Forest_Ranger_Shooting_001.png" id="95_ocypy"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Shooting/0_Forest_Ranger_Shooting_002.png" id="96_4kwt1"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Shooting/0_Forest_Ranger_Shooting_003.png" id="97_pbu7e"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Shooting/0_Forest_Ranger_Shooting_004.png" id="98_b1da4"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Shooting/0_Forest_Ranger_Shooting_005.png" id="99_huq0u"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Shooting/0_Forest_Ranger_Shooting_006.png" id="100_7x5fb"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Shooting/0_Forest_Ranger_Shooting_007.png" id="101_68gdt"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Shooting/0_Forest_Ranger_Shooting_008.png" id="102_wcu7v"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Shooting in The Air/0_Forest_Ranger_Shooting in The Air_000.png" id="103_s7wvk"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Shooting in The Air/0_Forest_Ranger_Shooting in The Air_001.png" id="104_ii42e"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Shooting in The Air/0_Forest_Ranger_Shooting in The Air_002.png" id="105_vx442"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Shooting in The Air/0_Forest_Ranger_Shooting in The Air_003.png" id="106_4wkkt"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Shooting in The Air/0_Forest_Ranger_Shooting in The Air_004.png" id="107_2qwnm"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Shooting in The Air/0_Forest_Ranger_Shooting in The Air_005.png" id="108_in3gj"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Shooting in The Air/0_Forest_Ranger_Shooting in The Air_006.png" id="109_cc68h"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Shooting in The Air/0_Forest_Ranger_Shooting in The Air_007.png" id="110_lj4d7"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Shooting in The Air/0_Forest_Ranger_Shooting in The Air_008.png" id="111_3lsqq"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Sliding/0_Forest_Ranger_Sliding_000.png" id="112_yorc2"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Sliding/0_Forest_Ranger_Sliding_001.png" id="113_i4k1k"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Sliding/0_Forest_Ranger_Sliding_002.png" id="114_hafu4"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Sliding/0_Forest_Ranger_Sliding_003.png" id="115_128cm"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Sliding/0_Forest_Ranger_Sliding_004.png" id="116_5io7x"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Sliding/0_Forest_Ranger_Sliding_005.png" id="117_c2him"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing/0_Forest_Ranger_Throwing_000.png" id="118_jjjo3"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing/0_Forest_Ranger_Throwing_001.png" id="119_nus6k"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing/0_Forest_Ranger_Throwing_002.png" id="120_hq78i"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing/0_Forest_Ranger_Throwing_003.png" id="121_h4bw0"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing/0_Forest_Ranger_Throwing_004.png" id="122_omkg8"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing/0_Forest_Ranger_Throwing_005.png" id="123_kq7cm"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing/0_Forest_Ranger_Throwing_006.png" id="124_wm3s0"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing/0_Forest_Ranger_Throwing_007.png" id="125_a21y4"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing/0_Forest_Ranger_Throwing_008.png" id="126_oafln"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing/0_Forest_Ranger_Throwing_009.png" id="127_6tkht"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing/0_Forest_Ranger_Throwing_010.png" id="128_62a5w"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing/0_Forest_Ranger_Throwing_011.png" id="129_328do"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing in The Air/0_Forest_Ranger_Throwing in The Air_000.png" id="130_rlbju"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing in The Air/0_Forest_Ranger_Throwing in The Air_001.png" id="131_n5844"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing in The Air/0_Forest_Ranger_Throwing in The Air_002.png" id="132_37wql"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing in The Air/0_Forest_Ranger_Throwing in The Air_003.png" id="133_1dhhp"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing in The Air/0_Forest_Ranger_Throwing in The Air_004.png" id="134_tvtkj"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing in The Air/0_Forest_Ranger_Throwing in The Air_005.png" id="135_mhbxy"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing in The Air/0_Forest_Ranger_Throwing in The Air_006.png" id="136_um3oh"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing in The Air/0_Forest_Ranger_Throwing in The Air_007.png" id="137_gxkod"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing in The Air/0_Forest_Ranger_Throwing in The Air_008.png" id="138_r31wn"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing in The Air/0_Forest_Ranger_Throwing in The Air_009.png" id="139_qg46g"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing in The Air/0_Forest_Ranger_Throwing in The Air_010.png" id="140_fxs6k"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Throwing in The Air/0_Forest_Ranger_Throwing in The Air_011.png" id="141_l7ijf"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_000.png" id="142_i667s"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_001.png" id="143_ytxfn"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_002.png" id="144_cednn"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_003.png" id="145_3gcv5"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_004.png" id="146_hxq3j"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_005.png" id="147_lanng"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_006.png" id="148_553mq"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_007.png" id="149_5e3ih"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_008.png" id="150_oli7l"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_009.png" id="151_i6iyr"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_010.png" id="152_2uo6j"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_011.png" id="153_n4m0i"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_012.png" id="154_w8tbr"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_013.png" id="155_jh4k2"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_014.png" id="156_1ap0m"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_015.png" id="157_00bj1"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_016.png" id="158_cbjef"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_017.png" id="159_ddtyu"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_018.png" id="160_b2van"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_019.png" id="161_cetne"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_020.png" id="162_f30df"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_021.png" id="163_gk4i5"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_022.png" id="164_tihvf"]
+[ext_resource type="Texture2D" path="res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Walking/0_Forest_Ranger_Walking_023.png" id="165_wtcoa"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_1ohyv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_dccgy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_w0nyi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_hnm6v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_00q7y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_lhg5p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_vxqmp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_ojy1d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_6tf2h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_qsvbu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_ajh2l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_4w2id")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_pe1r7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_kry8n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_v1x5o")
+}],
+"loop": 0,
+"name": &"Dying",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("16_08xnd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_bgdej")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_w401d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_51tod")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_ouqyw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_shup4")
+}],
+"loop": 1,
+"name": &"Falling Down",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_6nj14")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_kvo8f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_efcxr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_wr72q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_par0i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_7l8jm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_xp4h5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_nn5i7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_ddwcn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_k7gjt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_nek53")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_j2fbv")
+}],
+"loop": 0,
+"name": &"Hurt",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("34_0q02v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_7ph5v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_kfrfr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_yu6t1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_64u5t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_ldobe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_owqro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_nfl0i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_b73mx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_lrau7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_nytgu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_x6r7j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_y5aog")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_qq2ub")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_14sla")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_ypdle")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_j7a34")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_sb7dd")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("52_nvxtj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_7t6tx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_n553w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_ctc55")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_jklli")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_x8dlk")
+}],
+"loop": 1,
+"name": &"Jump Looping",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("58_nigx3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_3ut4w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_xdods")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_ysyx7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_47x05")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_3cgvy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_yjy5g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65_ojh26")
+}, {
+"duration": 1.0,
+"texture": ExtResource("66_82ttc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("67_oyogm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_sqfrd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("69_bvh04")
+}],
+"loop": 0,
+"name": &"Kicking",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("70_5141m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("71_2wkn0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72_wcrms")
+}, {
+"duration": 1.0,
+"texture": ExtResource("73_xpaoy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("74_j8nup")
+}, {
+"duration": 1.0,
+"texture": ExtResource("75_vq5nj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("76_qmnxc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("77_j8451")
+}, {
+"duration": 1.0,
+"texture": ExtResource("78_n6yue")
+}, {
+"duration": 1.0,
+"texture": ExtResource("79_xpptp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("80_o2xhi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("81_jcwei")
+}],
+"loop": 0,
+"name": &"Run Slashing",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("82_u2mld")
+}, {
+"duration": 1.0,
+"texture": ExtResource("83_jl5qo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("84_610rv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("85_ekrdl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("86_myxfv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("87_tqo8i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("88_q54oc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("89_r674d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("90_0go2x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("91_n2lfq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("92_kw1op")
+}, {
+"duration": 1.0,
+"texture": ExtResource("93_mpsp2")
+}],
+"loop": 1,
+"name": &"Running",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("94_wkssx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("95_ocypy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("96_4kwt1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("97_pbu7e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("98_b1da4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("99_huq0u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("100_7x5fb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("101_68gdt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("102_wcu7v")
+}],
+"loop": 0,
+"name": &"Slashing",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("103_s7wvk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("104_ii42e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("105_vx442")
+}, {
+"duration": 1.0,
+"texture": ExtResource("106_4wkkt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("107_2qwnm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("108_in3gj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("109_cc68h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("110_lj4d7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("111_3lsqq")
+}],
+"loop": 0,
+"name": &"Slashing In Air",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("112_yorc2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("113_i4k1k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("114_hafu4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("115_128cm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("116_5io7x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("117_c2him")
+}],
+"loop": 0,
+"name": &"Sliding",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("118_jjjo3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("119_nus6k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("120_hq78i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("121_h4bw0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("122_omkg8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("123_kq7cm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("124_wm3s0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("125_a21y4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("126_oafln")
+}, {
+"duration": 1.0,
+"texture": ExtResource("127_6tkht")
+}, {
+"duration": 1.0,
+"texture": ExtResource("128_62a5w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("129_328do")
+}],
+"loop": 0,
+"name": &"Throwing",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("130_rlbju")
+}, {
+"duration": 1.0,
+"texture": ExtResource("131_n5844")
+}, {
+"duration": 1.0,
+"texture": ExtResource("132_37wql")
+}, {
+"duration": 1.0,
+"texture": ExtResource("133_1dhhp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("134_tvtkj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("135_mhbxy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("136_um3oh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("137_gxkod")
+}, {
+"duration": 1.0,
+"texture": ExtResource("138_r31wn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("139_qg46g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("140_fxs6k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("141_l7ijf")
+}],
+"loop": 0,
+"name": &"Throwing In Air",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("142_i667s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("143_ytxfn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("144_cednn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("145_3gcv5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("146_hxq3j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("147_lanng")
+}, {
+"duration": 1.0,
+"texture": ExtResource("148_553mq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("149_5e3ih")
+}, {
+"duration": 1.0,
+"texture": ExtResource("150_oli7l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("151_i6iyr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("152_2uo6j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("153_n4m0i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("154_w8tbr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("155_jh4k2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("156_1ap0m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("157_00bj1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("158_cbjef")
+}, {
+"duration": 1.0,
+"texture": ExtResource("159_ddtyu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("160_b2van")
+}, {
+"duration": 1.0,
+"texture": ExtResource("161_cetne")
+}, {
+"duration": 1.0,
+"texture": ExtResource("162_f30df")
+}, {
+"duration": 1.0,
+"texture": ExtResource("163_gk4i5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("164_tihvf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("165_wtcoa")
+}],
+"loop": 1,
+"name": &"Walking",
+"speed": 12.0
+}]

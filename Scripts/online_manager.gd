@@ -23,6 +23,8 @@ const ONLINE_CHARACTER_SPRITE_OFFSETS := {
 	"ice_golem": Vector2(0, -24),
 	"crusader": Vector2(0, -24),
 	"wraith": Vector2(0, -24),
+	"minotaur": Vector2(0, -32),
+	"ranger": Vector2(0, -24),
 }
 const GEORGIAN_QWERTY_TO_LATIN := {
 	"ა": "a",
@@ -62,6 +64,20 @@ const GEORGIAN_QWERTY_TO_LATIN := {
 const ICE_GOLEM_FRAMES_ROOT := "res://Characters/Golem_1/PNG/PNG Sequences"
 const CRUSADER_FRAMES_ROOT := "res://Characters/Skeleton_crusider/Skeleton_Crusader_1/PNG/PNG Sequences"
 const WRAITH_FRAMES_ROOT := "res://Characters/Wraithes/PNG/Wraith_01/PNG Sequences"
+const MINOTAUR_FRAMES_ROOT := "res://Characters/Minotaurs/Minotaur_3/PNG/PNG Sequences"
+const RANGER_FRAMES_ROOT := "res://Characters/Forest_Ranger_2/PNG/PNG Sequences"
+const SQUAD_IDLE_TEXTURES := {
+	"crusader": preload("res://Characters/Skeleton_crusider/Skeleton_Crusader_1/PNG/PNG Sequences/Idle/0_Skeleton_Crusader_Idle_000.png"),
+	"wraith": preload("res://Characters/Wraithes/PNG/Wraith_01/PNG Sequences/Idle/Wraith_01_Idle_000.png"),
+	"minotaur": preload("res://Characters/Minotaurs/Minotaur_3/PNG/PNG Sequences/Idle/0_Minotaur_Idle_000.png"),
+	"ranger": preload("res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_000.png")
+}
+const SQUAD_CHARACTER_FRAMES := {
+	"crusader": preload("res://Resources/squad_crusader_sprite_frames.tres"),
+	"wraith": preload("res://Resources/squad_wraith_sprite_frames.tres"),
+	"minotaur": preload("res://Resources/squad_minotaur_sprite_frames.tres"),
+	"ranger": preload("res://Resources/squad_ranger_sprite_frames.tres")
+}
 const ASH_GOLEM_ANIMATION_DIRS := {
 	"Idle": "Idle",
 	"Walking": "Walking",
@@ -85,6 +101,24 @@ const WRAITH_ANIMATION_DIRS := {
 	"Hurt": "Hurt", "Throwing": "Casting Spells",
 	"Throwing In Air": "Casting Spells", "Dying": "Dying",
 	"Sliding": "Walking"
+}
+const MINOTAUR_ANIMATION_DIRS := {
+	"Idle": "Idle", "Walking": "Walking", "Running": "Running",
+	"Jump Looping": "Jump Loop", "Falling Down": "Falling Down",
+	"Slashing": "Slashing", "Slashing In Air": "Slashing in The Air",
+	"Run Slashing": "Run Slashing", "Kicking": "Kicking",
+	"Hurt": "Hurt", "Throwing": "Throwing",
+	"Throwing In Air": "Throwing In The Air", "Dying": "Dying",
+	"Sliding": "Sliding"
+}
+const RANGER_ANIMATION_DIRS := {
+	"Idle": "Idle", "Walking": "Walking", "Running": "Running",
+	"Jump Looping": "Jump Loop", "Falling Down": "Falling Down",
+	"Slashing": "Shooting", "Slashing In Air": "Shooting in The Air",
+	"Run Slashing": "Run Shooting", "Kicking": "Kicking",
+	"Hurt": "Hurt", "Throwing": "Throwing",
+	"Throwing In Air": "Throwing in The Air", "Dying": "Dying",
+	"Sliding": "Sliding"
 }
 
 @export var golem_player_scene: PackedScene
@@ -406,6 +440,10 @@ func _spawn_golem_player(
 	if player.has_method("configure_online_player"):
 		player.configure_online_player(peer_id, controlled_locally, team_id)
 	_apply_character_to_player(player, character)
+	# The player scene initializes its default Skeleton frames in _ready().
+	# Reapply the network-authoritative skin after that initialization frame so
+	# a remote proxy cannot remain on the scene's default skin.
+	call_deferred("_apply_character_to_player", player, character)
 	_face_player_for_team(player, team_id)
 
 
@@ -596,6 +634,10 @@ func _local_chat_name() -> String:
 		return "Skeleton Crusader"
 	if character == "wraith":
 		return "Wraith"
+	if character == "minotaur":
+		return "Minotaur"
+	if character == "ranger":
+		return "Forest Ranger"
 	if character == "ice_golem":
 		return "Ice Golem"
 	if character == "golem":
@@ -679,20 +721,43 @@ func _set_player_active(player: Node2D, active: bool) -> void:
 
 
 func _apply_character_to_player(player: Node2D, character: String) -> void:
+	if _is_squad_mode() and character not in [
+		"crusader",
+		"wraith",
+		"minotaur",
+		"ranger"
+	]:
+		character = "crusader"
 	var sprite := player.get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
 	if not sprite:
 		return
 	if player.has_method("set_sprite_flip_inverted"):
-		player.call("set_sprite_flip_inverted", character in ["golem", "ice_golem", "crusader", "wraith"])
+		player.call("set_sprite_flip_inverted", character in ["golem", "ice_golem", "crusader", "wraith", "minotaur", "ranger"])
 
-	if character in ["crusader", "wraith"]:
-		var frames_root := CRUSADER_FRAMES_ROOT if character == "crusader" else WRAITH_FRAMES_ROOT
-		var animation_dirs: Dictionary = ASH_GOLEM_ANIMATION_DIRS if character == "crusader" else WRAITH_ANIMATION_DIRS
-		var squad_frames := _build_sprite_frames_from_root(frames_root, animation_dirs)
+	if character in ["crusader", "wraith", "minotaur", "ranger"]:
+		var frames_root := CRUSADER_FRAMES_ROOT
+		var animation_dirs: Dictionary = ASH_GOLEM_ANIMATION_DIRS
+		if character == "wraith":
+			frames_root = WRAITH_FRAMES_ROOT
+			animation_dirs = WRAITH_ANIMATION_DIRS
+		elif character == "minotaur":
+			frames_root = MINOTAUR_FRAMES_ROOT
+			animation_dirs = MINOTAUR_ANIMATION_DIRS
+		elif character == "ranger":
+			frames_root = RANGER_FRAMES_ROOT
+			animation_dirs = RANGER_ANIMATION_DIRS
+		var squad_frames := SQUAD_CHARACTER_FRAMES.get(character) as SpriteFrames
+		if not squad_frames:
+			squad_frames = _build_sprite_frames_from_root(frames_root, animation_dirs)
+		if not squad_frames.has_animation("Idle"):
+			var idle_texture := SQUAD_IDLE_TEXTURES.get(character) as Texture2D
+			if idle_texture:
+				squad_frames.add_animation("Idle")
+				squad_frames.add_frame("Idle", idle_texture)
 		if squad_frames.has_animation("Idle"):
 			sprite.sprite_frames = squad_frames
 			sprite.position = _online_character_sprite_offset(character)
-			sprite.scale = Vector2(0.22, 0.22) if character == "crusader" else Vector2(0.34, 0.34)
+			sprite.scale = Vector2(0.22, 0.22) if character in ["crusader", "ranger"] else Vector2(0.34, 0.34)
 			sprite.play("Idle")
 		return
 
@@ -767,7 +832,13 @@ func _player_node_name(peer_id: int) -> String:
 
 func _is_squad_mode() -> bool:
 	var settings := get_node_or_null("/root/GameSettings")
-	return settings != null and String(settings.get("game_mode")) == "squad"
+	return (
+		(settings != null and String(settings.get("game_mode")) == "squad")
+		or (
+			get_tree().current_scene != null
+			and get_tree().current_scene.scene_file_path == SQUAD_ARENA_SCENE
+		)
+	)
 
 
 func _face_player_east(player: Node2D) -> void:
@@ -819,7 +890,15 @@ func _apply_stone_golem_sounds(player: Node2D) -> void:
 func _selected_character() -> String:
 	var settings := get_node_or_null("/root/GameSettings")
 	if settings:
-		return String(settings.get("selected_character"))
+		var character := String(settings.get("selected_character"))
+		if _is_squad_mode():
+			if character == "player" or character.is_empty():
+				return "crusader"
+			if character == "golem":
+				return "wraith"
+			if character not in ["crusader", "wraith", "minotaur", "ranger"]:
+				return "crusader"
+		return character
 	return "golem"
 
 

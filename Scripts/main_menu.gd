@@ -88,7 +88,7 @@ const TEXT := {
 		"map_selected_wait": "Selected: %s. You have to wait 2 seconds because there’s a cooldown xD",
 		"choose_map_to_start": "Choose a map to start the match.",
 		"choose_character": "Characters",
-		"online_room": "Online",
+		"online_room": "Squad",
 		"settings": "Settings",
 		"audio": "Audio",
 		"master_volume": "Master Volume",
@@ -934,7 +934,13 @@ func _open_squad_mode() -> void:
 	if settings:
 		settings.set("game_mode", "squad")
 		settings.set("character_chosen", false)
-		settings.set("selected_character", "crusader")
+		if String(settings.get("selected_character")) not in [
+			"crusader",
+			"wraith",
+			"minotaur",
+			"ranger"
+		]:
+			settings.set("selected_character", "crusader")
 		settings.set("online_scene_path", SQUAD_SCENE)
 		settings.set("level_chosen", true)
 	# Squad uses the existing two-player room flow with its own roster.
@@ -1260,6 +1266,13 @@ func _on_difficulty_level_selected(level: String) -> void:
 		settings.set("game_mode", "squad" if level == "squad" else "story")
 		settings.set("selected_level", level)
 		settings.set("level_chosen", true)
+		if level == "squad" and String(settings.get("selected_character")) not in [
+			"crusader",
+			"wraith",
+			"minotaur",
+			"ranger"
+		]:
+			settings.set("selected_character", "crusader")
 
 	level_start_pending = true
 	_start_game()
