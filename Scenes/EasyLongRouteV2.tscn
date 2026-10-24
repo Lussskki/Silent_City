@@ -1,0 +1,306 @@
+[gd_scene format=3 uid="uid://dolqxrbdplsj6"]
+
+[ext_resource type="Script" uid="uid://kyg1cp8nlyss" path="res://Scripts/easy_long_route.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://jq6aduasebml" path="res://Sprites/Tiles/Tile (1).png" id="2_top_left"]
+[ext_resource type="Texture2D" uid="uid://bln460hvddh30" path="res://Sprites/Tiles/Tile (2).png" id="3_top"]
+[ext_resource type="Texture2D" uid="uid://d1uyf17d1wb0h" path="res://Sprites/Tiles/Tile (3).png" id="4_top_right"]
+[ext_resource type="Texture2D" uid="uid://dm5e2ppds6pqv" path="res://Sprites/Tiles/Tile (4).png" id="5_left"]
+[ext_resource type="Texture2D" uid="uid://d4mcu6qxk2ejp" path="res://Sprites/Tiles/Tile (5).png" id="6_fill"]
+[ext_resource type="Texture2D" uid="uid://g6vhjk887opq" path="res://Sprites/Tiles/Tile (6).png" id="7_right"]
+[ext_resource type="Texture2D" uid="uid://dtm7o6uu8pjg5" path="res://Sprites/Tiles/Tile (12).png" id="8_bottom_left"]
+[ext_resource type="Texture2D" uid="uid://bwkfl4n0lrqx0" path="res://Sprites/Tiles/Tile (9).png" id="9_bottom"]
+[ext_resource type="Texture2D" uid="uid://c5n8l34yto1p2" path="res://Sprites/Tiles/Tile (13).png" id="10_bottom_right"]
+[ext_resource type="Texture2D" uid="uid://bdb2bsoxwa7vo" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Spike.png" id="14_spike"]
+[ext_resource type="Texture2D" uid="uid://cdfoo51dnprul" path="res://Sprites/Objects/ArrowSign.png" id="15_arrow"]
+[ext_resource type="Texture2D" uid="uid://bp7ptdkue4fue" path="res://Sprites/Objects/Skeleton.png" id="17_skeleton"]
+[ext_resource type="Texture2D" uid="uid://c0p0dylmeum30" path="res://Sprites/Objects/DeadBush.png" id="18_bush"]
+[ext_resource type="Texture2D" uid="uid://cblybggfrgw7e" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Lantern.png" id="20_lantern"]
+[ext_resource type="Texture2D" uid="uid://c15rhra2krp52" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Coffin.png" id="21_coffin"]
+[ext_resource type="Texture2D" uid="uid://db57dtpx7yklx" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Tree 02.png" id="24_tree"]
+
+[sub_resource type="RectangleShape2D" id="ShapeRun"]
+size = Vector2(640, 256)
+
+[sub_resource type="RectangleShape2D" id="ShapeLanding"]
+size = Vector2(512, 256)
+
+[sub_resource type="RectangleShape2D" id="ShapeFinal"]
+size = Vector2(640, 384)
+
+[sub_resource type="RectangleShape2D" id="ShapeGate"]
+size = Vector2(150, 420)
+
+[node name="EasyLongRouteV2" type="Node2D" unique_id=1922905985]
+script = ExtResource("1_script")
+
+[node name="RunGround" type="StaticBody2D" parent="." unique_id=1030840173]
+position = Vector2(3820, 598)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RunGround" unique_id=1831133018]
+shape = SubResource("ShapeRun")
+
+[node name="Run_0_0" type="Sprite2D" parent="." unique_id=1901114869]
+z_index = -1
+position = Vector2(3564, 534)
+texture = ExtResource("2_top_left")
+
+[node name="Run_1_0" type="Sprite2D" parent="." unique_id=397707298]
+z_index = -1
+position = Vector2(3692, 534)
+texture = ExtResource("3_top")
+
+[node name="Run_2_0" type="Sprite2D" parent="." unique_id=1049973451]
+z_index = -1
+position = Vector2(3820, 534)
+texture = ExtResource("3_top")
+
+[node name="Run_3_0" type="Sprite2D" parent="." unique_id=236648182]
+z_index = -1
+position = Vector2(3948, 534)
+texture = ExtResource("3_top")
+
+[node name="Run_4_0" type="Sprite2D" parent="." unique_id=1260615247]
+z_index = -1
+position = Vector2(4076, 534)
+texture = ExtResource("4_top_right")
+
+[node name="Run_0_1" type="Sprite2D" parent="." unique_id=1569956699]
+z_index = -1
+position = Vector2(3564, 662)
+texture = ExtResource("8_bottom_left")
+
+[node name="Run_1_1" type="Sprite2D" parent="." unique_id=1553116539]
+z_index = -1
+position = Vector2(3692, 662)
+texture = ExtResource("9_bottom")
+
+[node name="Run_2_1" type="Sprite2D" parent="." unique_id=1135594872]
+z_index = -1
+position = Vector2(3820, 662)
+texture = ExtResource("9_bottom")
+
+[node name="Run_3_1" type="Sprite2D" parent="." unique_id=1806251501]
+z_index = -1
+position = Vector2(3948, 662)
+texture = ExtResource("9_bottom")
+
+[node name="Run_4_1" type="Sprite2D" parent="." unique_id=432416517]
+z_index = -1
+position = Vector2(4076, 662)
+texture = ExtResource("10_bottom_right")
+
+[node name="ScareLanding" type="StaticBody2D" parent="." unique_id=879538579]
+position = Vector2(4976, 628)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScareLanding" unique_id=934906167]
+shape = SubResource("ShapeLanding")
+
+[node name="Landing_0_0" type="Sprite2D" parent="." unique_id=22722306]
+z_index = -1
+position = Vector2(4784, 564)
+texture = ExtResource("2_top_left")
+
+[node name="Landing_1_0" type="Sprite2D" parent="." unique_id=1426562609]
+z_index = -1
+position = Vector2(4912, 564)
+texture = ExtResource("3_top")
+
+[node name="Landing_2_0" type="Sprite2D" parent="." unique_id=1104791065]
+z_index = -1
+position = Vector2(5040, 564)
+texture = ExtResource("3_top")
+
+[node name="Landing_3_0" type="Sprite2D" parent="." unique_id=950450247]
+z_index = -1
+position = Vector2(5168, 564)
+texture = ExtResource("4_top_right")
+
+[node name="Landing_0_1" type="Sprite2D" parent="." unique_id=662691996]
+z_index = -1
+position = Vector2(4784, 692)
+texture = ExtResource("8_bottom_left")
+
+[node name="Landing_1_1" type="Sprite2D" parent="." unique_id=1817459257]
+z_index = -1
+position = Vector2(4912, 692)
+texture = ExtResource("9_bottom")
+
+[node name="Landing_2_1" type="Sprite2D" parent="." unique_id=583690436]
+z_index = -1
+position = Vector2(5040, 692)
+texture = ExtResource("9_bottom")
+
+[node name="Landing_3_1" type="Sprite2D" parent="." unique_id=1707789141]
+z_index = -1
+position = Vector2(5168, 692)
+texture = ExtResource("10_bottom_right")
+
+[node name="CryptTower" type="StaticBody2D" parent="." unique_id=1255138278]
+position = Vector2(5680, 542)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CryptTower" unique_id=172359271]
+shape = SubResource("ShapeFinal")
+
+[node name="Tower_0_0" type="Sprite2D" parent="." unique_id=1188309525]
+z_index = -1
+position = Vector2(5424, 414)
+texture = ExtResource("2_top_left")
+
+[node name="Tower_1_0" type="Sprite2D" parent="." unique_id=111208881]
+z_index = -1
+position = Vector2(5552, 414)
+texture = ExtResource("3_top")
+
+[node name="Tower_2_0" type="Sprite2D" parent="." unique_id=576249986]
+z_index = -1
+position = Vector2(5680, 414)
+texture = ExtResource("3_top")
+
+[node name="Tower_3_0" type="Sprite2D" parent="." unique_id=1474320379]
+z_index = -1
+position = Vector2(5808, 414)
+texture = ExtResource("3_top")
+
+[node name="Tower_4_0" type="Sprite2D" parent="." unique_id=1629559846]
+z_index = -1
+position = Vector2(5936, 414)
+texture = ExtResource("4_top_right")
+
+[node name="Tower_0_1" type="Sprite2D" parent="." unique_id=278147496]
+z_index = -1
+position = Vector2(5424, 542)
+texture = ExtResource("5_left")
+
+[node name="Tower_1_1" type="Sprite2D" parent="." unique_id=1999326026]
+z_index = -1
+position = Vector2(5552, 542)
+texture = ExtResource("6_fill")
+
+[node name="Tower_2_1" type="Sprite2D" parent="." unique_id=360500934]
+z_index = -1
+position = Vector2(5680, 542)
+texture = ExtResource("6_fill")
+
+[node name="Tower_3_1" type="Sprite2D" parent="." unique_id=714706389]
+z_index = -1
+position = Vector2(5808, 542)
+texture = ExtResource("6_fill")
+
+[node name="Tower_4_1" type="Sprite2D" parent="." unique_id=347651671]
+z_index = -1
+position = Vector2(5936, 542)
+texture = ExtResource("7_right")
+
+[node name="Tower_0_2" type="Sprite2D" parent="." unique_id=349057004]
+z_index = -1
+position = Vector2(5424, 670)
+texture = ExtResource("8_bottom_left")
+
+[node name="Tower_1_2" type="Sprite2D" parent="." unique_id=957496287]
+z_index = -1
+position = Vector2(5552, 670)
+texture = ExtResource("9_bottom")
+
+[node name="Tower_2_2" type="Sprite2D" parent="." unique_id=441833992]
+z_index = -1
+position = Vector2(5680, 670)
+texture = ExtResource("9_bottom")
+
+[node name="Tower_3_2" type="Sprite2D" parent="." unique_id=563809428]
+z_index = -1
+position = Vector2(5808, 670)
+texture = ExtResource("9_bottom")
+
+[node name="Tower_4_2" type="Sprite2D" parent="." unique_id=598751647]
+z_index = -1
+position = Vector2(5936, 670)
+texture = ExtResource("10_bottom_right")
+
+[node name="DirectionSign" type="Sprite2D" parent="." unique_id=1093965044]
+position = Vector2(3650, 422)
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("15_arrow")
+
+[node name="RunTree" type="Sprite2D" parent="." unique_id=119612021]
+position = Vector2(3959.9998, 384)
+scale = Vector2(-0.72, 0.72)
+texture = ExtResource("24_tree")
+
+[node name="BridgeLantern" type="Sprite2D" parent="." unique_id=225175019]
+position = Vector2(5418.9995, 270)
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("20_lantern")
+
+[node name="ScareSkeleton" type="Sprite2D" parent="." unique_id=1944641350]
+modulate = Color(0.9, 0.65, 0.65, 1)
+z_index = 5
+position = Vector2(4920, 493)
+scale = Vector2(1.6, 1.6)
+texture = ExtResource("17_skeleton")
+
+[node name="LandingCoffin" type="Sprite2D" parent="." unique_id=1517548901]
+position = Vector2(5100, 428)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("21_coffin")
+
+[node name="LandingBush" type="Sprite2D" parent="." unique_id=291294467]
+position = Vector2(5180, 510)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("18_bush")
+
+[node name="EndTree" type="Sprite2D" parent="." unique_id=1139968060]
+position = Vector2(5960, 280)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("24_tree")
+
+[node name="GapSpikeA" type="Sprite2D" parent="." unique_id=211882821]
+position = Vector2(4185, 736)
+texture = ExtResource("14_spike")
+
+[node name="GapSpikeB" type="Sprite2D" parent="." unique_id=145032482]
+position = Vector2(4667, 736)
+texture = ExtResource("14_spike")
+
+[node name="GapSpikeC" type="Sprite2D" parent="." unique_id=339794328]
+position = Vector2(5296, 736)
+texture = ExtResource("14_spike")
+
+[node name="JumpscareGate" type="Area2D" parent="." unique_id=346840617]
+position = Vector2(4920, 430)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpscareGate" unique_id=869143764]
+shape = SubResource("ShapeGate")
+
+[node name="JumpscareOverlay" type="CanvasLayer" parent="." unique_id=1735457368]
+layer = 50
+
+[node name="ScarePanel" type="ColorRect" parent="JumpscareOverlay" unique_id=2060567598]
+visible = false
+offset_right = 2000.0
+offset_bottom = 1200.0
+mouse_filter = 2
+color = Color(0.18, 0.01, 0.015, 0.82)
+
+[node name="ScareFace" type="TextureRect" parent="JumpscareOverlay" unique_id=1500081976]
+visible = false
+modulate = Color(1, 0.25, 0.22, 1)
+offset_left = 650.0
+offset_top = 80.0
+offset_right = 1350.0
+offset_bottom = 680.0
+mouse_filter = 2
+texture = ExtResource("17_skeleton")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ScareTitle" type="Label" parent="JumpscareOverlay" unique_id=245098118]
+visible = false
+offset_top = 700.0
+offset_right = 2000.0
+offset_bottom = 800.0
+theme_override_colors/font_color = Color(1, 0.85, 0.75, 1)
+theme_override_font_sizes/font_size = 64
+text = "RUN!"
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="JumpscareGate" to="." method="_on_jumpscare_gate_body_entered"]

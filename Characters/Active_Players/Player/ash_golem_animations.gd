@@ -1,0 +1,28 @@
+class_name AshGolemAnimations
+extends RefCounted
+
+# Ash Golem animation FPS. Change numbers here.
+const FRAMES_PATH := "res://Resources/ash_golem_sprite_frames.tres"
+const ANIMATIONS := {
+	"Climbing": [8.0, true], "Dying": [12.0, false], "Falling Down": [12.0, true],
+	"Hurt": [12.0, false], "Idle": [12.0, true], "Jump Looping": [12.0, true],
+	"Kicking": [12.0, false], "Run Slashing": [12.0, false], "Running": [20.0, true],
+	"Slashing": [12.0, false], "Slashing In Air": [12.0, false], "Sliding": [12.0, false],
+	"Throwing": [12.0, false], "Throwing In Air": [12.0, false], "Walking": [30.0, true]
+}
+
+static func apply(player) -> bool:
+	# Copy the animation list, but keep the loaded textures shared.
+	# Deep-copying every PNG can stall the game when players spawn.
+	var source_frames := ResourceLoader.load(FRAMES_PATH, "SpriteFrames") as SpriteFrames
+	if source_frames == null:
+		return false
+	var frames: SpriteFrames = source_frames.duplicate(false)
+	for animation_name in ANIMATIONS:
+		if frames.has_animation(animation_name):
+			var settings: Array = ANIMATIONS[animation_name]
+			frames.set_animation_speed(animation_name, settings[0])
+			frames.set_animation_loop(animation_name, settings[1])
+	player.sprite.sprite_frames = frames
+	player.sprite.play("Idle")
+	return true

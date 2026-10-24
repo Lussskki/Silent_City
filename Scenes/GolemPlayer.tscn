@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://ktuf83rha8ye"]
 
-[ext_resource type="Script" path="res://Player/player.gd" id="1_player_script"]
+[ext_resource type="Script" path="res://Characters/Active_Players/Player/player.gd" id="1_player_script"]
 [ext_resource type="SpriteFrames" path="res://Resources/golem_sprite_frames.tres" id="2_golem_frames"]
 [ext_resource type="AudioStream" path="res://Resources/character_voices/30_Jump_03.wav" id="3_jump_sound"]
 [ext_resource type="AudioStream" path="res://Resources/character_voices/03_Step_grass_03.wav" id="4_run_sound"]

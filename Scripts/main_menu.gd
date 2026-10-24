@@ -5,11 +5,18 @@ const DIFFICULTY_MENU_PATH := "res://Scripts/Menus/difficulty/difficulty_menu.gd
 const CHARACTER_MENU_PATH := "res://Scripts/Menus/choose_character/character_menu.gd"
 const ONLINE_MENU_PATH := "res://Scripts/Menus/online/online_menu.gd"
 const SETTINGS_MENU_PATH := "res://Scripts/Menus/settings/settings_menu.gd"
+const SAVE_MENU_PATH := "res://Scripts/Menus/save_menu.gd"
 
-const MAIN_SCENE := "res://Scenes/main.tscn"
+const MAIN_SCENE := "res://Scenes/Online.tscn"
+const STORY_SCENE := "res://Scenes/OuterGraveyardMoonlit.tscn"
 const SQUAD_SCENE := "res://Scenes/SquadArena.tscn"
 const MEDIUM_SCENE := "res://Scenes/MainMedium.tscn"
 const HARD_SCENE := "res://Scenes/MainHard.tscn"
+const STORY_CHARACTER_FRAMES := {
+	"player": "res://Resources/ash_golem_sprite_frames.tres",
+	"golem": "res://Resources/golem_sprite_frames.tres",
+	"ice_golem": "res://Resources/ice_golem_sprite_frames.tres",
+}
 const LANG_ENG := "eng"
 const LANG_GEO := "geo"
 const MAIN_MENU_BUTTON_SIZE := Vector2(320.0, 46.0)
@@ -62,14 +69,9 @@ const MENU_TEXTURE_CACHE_META := "_silent_city_menu_texture_cache_v1"
 # -----------------------------------------------------------------------------
 # FAST SINGLE-PLAYER START
 # -----------------------------------------------------------------------------
-# Load the three gameplay scenes in the background while the player is using
-# the menu. This prevents synchronous scene loading from blocking the main
-# thread for several seconds after selecting a difficulty.
-const BACKGROUND_GAME_SCENES := [
-	MAIN_SCENE,
-	MEDIUM_SCENE,
-	HARD_SCENE
-]
+# Story Mode is warmed in the background while the player uses the menu.
+# Loading unrelated gameplay scenes at the same time caused disk/memory
+# contention and made the Story loader appear frozen near completion.
 
 const TEXT := {
 	LANG_ENG: {
@@ -77,6 +79,9 @@ const TEXT := {
 		"subtitle": "Choose your fight",
 		"start": "Start",
 		"story_mode": "Story Mode",
+		"load_game": "Load Game",
+		"slot": "Slot %d",
+		"empty": "Empty",
 		"squad": "Squad",
 		"choose_mode": "Choose Mode",
 		"map": "Difficulty",
@@ -177,6 +182,9 @@ const TEXT := {
 		"subtitle": "აირჩიე ბრძოლა",
 		"start": "დაწყება",
 		"story_mode": "სიუჟეტური რეჟიმი",
+		"load_game": "თამაშის ჩატვირთვა",
+		"slot": "სლოტი %d",
+		"empty": "ცარიელი",
 		"squad": "რაზმი",
 		"choose_mode": "აირჩიე რეჟიმი",
 		"map": "სირთულე",
@@ -297,16 +305,11 @@ var menu_optimizer = null
 @onready var home_start_button: Button = $Content/Root/Pages/Home/StartButton
 @onready var mode_page: VBoxContainer = $Content/Root/Pages/ModeSelect
 @onready var mode_story_button: Button = $Content/Root/Pages/ModeSelect/StoryModeButton
-@onready var mode_squad_button: Button = $Content/Root/Pages/ModeSelect/SquadButton
 @onready var mode_back_button: Button = $Content/Root/Pages/ModeSelect/BackButton
-@onready var home_map_button: Button = $Content/Root/Pages/Home/MapButton
-@onready var home_choose_button: Button = $Content/Root/Pages/Home/ChooseButton
-@onready var home_online_button: Button = $Content/Root/Pages/Home/OnlineButton
 @onready var home_exit_button: Button = $Content/Root/Pages/Home/ExitButton
 @onready var easy_button: Button = $Content/Root/Pages/ChooseLevel/MapCards/EasyButton
 @onready var medium_button: Button = $Content/Root/Pages/ChooseLevel/MapCards/MediumButton
 @onready var hard_button: Button = $Content/Root/Pages/ChooseLevel/MapCards/HardButton
-@onready var squad_button: Button = $Content/Root/Pages/ChooseLevel/MapCards/SquadButton
 @onready var easy_map_label: Label = $Content/Root/Pages/ChooseLevel/MapCards/EasyButton/Title
 @onready var medium_map_label: Label = $Content/Root/Pages/ChooseLevel/MapCards/MediumButton/Title
 @onready var hard_map_label: Label = $Content/Root/Pages/ChooseLevel/MapCards/HardButton/Title
@@ -326,8 +329,13 @@ var online_menu = null
 # Settings coordinator owns Settings/Audio/Graphics/Credits.
 var settings_menu = null
 
+# Main-menu load slots are owned by the existing save-menu module.
+var save_menu = null
+var save_header_active := false
+
 # Kept only because the threaded gameplay scene loader clears this flag.
 var level_start_pending := false
+var scene_change_in_progress := false
 
 # Top-level Home / Settings navigation now lives in:
 # res://Scripts/Menus/main_menu/main_menu_controller.gd
@@ -355,6 +363,7 @@ func _ready() -> void:
 	language_button.pressed.connect(_toggle_language)
 
 	_setup_main_menu_controller()
+	_setup_save_menu_runtime()
 
 	var settings := _settings()
 	if settings and settings.has_signal("saved_coins_changed"):
@@ -638,28 +647,8 @@ func _apply_main_menu_button_sprites() -> void:
 		MAIN_MENU_BUTTON_SIZE
 	)
 	_apply_button_sprite(
-		mode_squad_button,
-		"res://Resources/Buttons/menu_button_online.png",
-		MAIN_MENU_BUTTON_SIZE
-	)
-	_apply_button_sprite(
 		mode_back_button,
 		"res://Resources/Buttons/menu_button_exit.png",
-		MAIN_MENU_BUTTON_SIZE
-	)
-	_apply_button_sprite(
-		home_map_button,
-		"res://Resources/Buttons/menu_button_difficulty.png",
-		MAIN_MENU_BUTTON_SIZE
-	)
-	_apply_button_sprite(
-		home_choose_button,
-		"res://Resources/Buttons/menu_button_choose_character.png",
-		MAIN_MENU_BUTTON_SIZE
-	)
-	_apply_button_sprite(
-		home_online_button,
-		"res://Resources/Buttons/menu_button_online.png",
 		MAIN_MENU_BUTTON_SIZE
 	)
 	_apply_button_sprite(
@@ -799,11 +788,7 @@ func _apply_language() -> void:
 	home_start_button.text = _t("start")
 	mode_page.get_node("Header").text = _t("choose_mode")
 	mode_story_button.text = _t("story_mode")
-	mode_squad_button.text = _t("squad")
 	mode_back_button.text = _t("back")
-	home_map_button.text = _t("map")
-	home_choose_button.text = _t("choose_character")
-	home_online_button.text = _t("online_room")
 	home_exit_button.text = _t("exit")
 
 	if settings_menu:
@@ -825,7 +810,12 @@ func _apply_language() -> void:
 	if online_menu:
 		online_menu.refresh_language()
 
+	if save_menu:
+		save_menu.refresh()
+
 	_update_menu_header_images()
+	if save_header_active:
+		_set_save_header(true)
 
 
 func _setup_settings_runtime() -> void:
@@ -868,6 +858,54 @@ func _open_settings_page() -> void:
 		settings_menu.open()
 
 
+func _setup_save_menu_runtime() -> void:
+	if save_menu:
+		return
+
+	if not ResourceLoader.exists(SAVE_MENU_PATH):
+		push_error("Save menu file not found: " + SAVE_MENU_PATH)
+		return
+
+	var script = load(SAVE_MENU_PATH)
+	if script == null:
+		push_error("Save menu could not be loaded: " + SAVE_MENU_PATH)
+		return
+
+	save_menu = script.new()
+	save_menu.name = "SaveMenuModule"
+	add_child(save_menu)
+	save_menu.setup(
+		pages,
+		mode_page,
+		{
+			"settings": _settings(),
+			"show_page": Callable(self, "_show_page"),
+			"translate": Callable(self, "_t"),
+			"language": Callable(self, "_language"),
+			"set_save_header": Callable(self, "_set_save_header"),
+			"apply_button_sprite": Callable(self, "_apply_button_sprite")
+		}
+	)
+	save_menu.load_requested.connect(_load_saved_game)
+
+
+func _set_save_header(enabled: bool) -> void:
+	save_header_active = enabled
+	if enabled:
+		if menu_subtitle_image:
+			menu_subtitle_image.visible = false
+		subtitle_label.text = _t("load_game")
+		return
+	_update_menu_header_images()
+
+
+func _load_saved_game(scene_path: String) -> void:
+	if scene_path.is_empty():
+		return
+	_preload_game_scene_in_background(scene_path)
+	_change_to_preloaded_game_scene(scene_path)
+
+
 
 func _setup_main_menu_controller() -> void:
 	if main_menu_controller:
@@ -901,11 +939,7 @@ func _setup_main_menu_controller() -> void:
 		"home_page": home_page,
 		"home_start_button": home_start_button,
 		"mode_story_button": mode_story_button,
-		"mode_squad_button": mode_squad_button,
 		"mode_back_button": mode_back_button,
-		"home_map_button": home_map_button,
-		"home_choose_button": home_choose_button,
-		"home_online_button": home_online_button,
 		"settings_button": settings_button,
 		"exit_button": home_exit_button,
 		"language_button": language_button
@@ -913,10 +947,6 @@ func _setup_main_menu_controller() -> void:
 
 	main_menu_controller.start_requested.connect(_open_mode_select)
 	main_menu_controller.story_mode_requested.connect(_open_start_flow)
-	main_menu_controller.squad_requested.connect(_open_squad_mode)
-	main_menu_controller.character_requested.connect(
-		_open_character_page_from_home
-	)
 	main_menu_controller.difficulty_preview_requested.connect(
 		_open_map_select_from_home
 	)
@@ -1071,11 +1101,12 @@ func _clear_peer() -> void:
 
 func _open_start_flow() -> void:
 	# The player has committed to Single Player now.
-	# Use the time spent choosing character/difficulty to load levels quietly.
-	_preload_game_scenes_in_background()
+	# Use the time spent choosing a character to load Story Mode quietly.
+	_preload_game_scene_in_background(STORY_SCENE)
 
 	var settings := _settings()
 	if settings:
+		settings.call("reset_online")
 		settings.set("game_mode", "story")
 		settings.set("character_chosen", false)
 		settings.set("level_chosen", false)
@@ -1135,7 +1166,6 @@ func _ensure_character_menu():
 
 	character_menu.character_selected.connect(_on_character_selected)
 	character_menu.start_requested.connect(_open_level_select_from_character)
-	character_menu.online_requested.connect(_open_online_page)
 	character_menu.back_requested.connect(_back_from_character_page)
 
 	_sync_character_menu_state()
@@ -1194,6 +1224,7 @@ func _set_character_status(text: String) -> void:
 
 
 func _on_character_selected(character: String) -> void:
+	_preload_selected_character_in_background()
 	var menu = _ensure_character_menu()
 	if not menu:
 		return
@@ -1235,7 +1266,6 @@ func _ensure_difficulty_menu():
 			"easy_button": easy_button,
 			"medium_button": medium_button,
 			"hard_button": hard_button,
-			"squad_button": squad_button,
 			"map_title_label": map_title_label,
 			"map_gallery_hint": map_gallery_hint,
 			"level_back_button": level_back_button
@@ -1290,7 +1320,7 @@ func _back_from_character_page() -> void:
 		_show_page(home_page)
 		return
 
-	_show_page(home_page)
+	_show_page(mode_page)
 
 
 
@@ -1305,7 +1335,10 @@ func _open_level_select_from_character() -> void:
 			return
 		_start_game()
 		return
-	_open_playable_level_select()
+	settings.set("game_mode", "story")
+	settings.set("selected_level", "story")
+	settings.set("level_chosen", true)
+	_start_game()
 
 
 
@@ -1374,28 +1407,83 @@ func _start_game() -> void:
 	settings.call("start_offline_level", String(settings.get("selected_level")))
 	_clear_peer()
 
+	_show_story_loading_screen()
+	# Give the autoload one rendered frame before polling large resources.
+	await get_tree().process_frame
+
 	# Avoid a blocking synchronous scene load on the main thread.
 	_change_to_preloaded_game_scene(_selected_main_scene())
 
 
-func _preload_game_scenes_in_background() -> void:
-	for scene_path: String in BACKGROUND_GAME_SCENES:
-		var status := ResourceLoader.load_threaded_get_status(scene_path)
+func _show_story_loading_screen() -> void:
+	var loading_screen := get_node_or_null("/root/LoadingScreen")
+	if loading_screen == null or not loading_screen.has_method("show_loading"):
+		return
+	# Reuse the original animated transition and its rotating character pool.
+	loading_screen.show_loading()
 
-		if status != ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
-			continue
 
-		var error := ResourceLoader.load_threaded_request(
-			scene_path,
-			"PackedScene",
-			true
+func _preload_game_scene_in_background(scene_path: String) -> void:
+	if scene_path.is_empty() or not ResourceLoader.exists(scene_path, "PackedScene"):
+		return
+	var status := ResourceLoader.load_threaded_get_status(scene_path)
+	if status != ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
+		return
+	var error := ResourceLoader.load_threaded_request(scene_path, "PackedScene", true)
+	if error != OK:
+		print("Background scene preload failed to start: ", scene_path, " error=", error)
+
+
+func _selected_character_frames_path() -> String:
+	var settings := _settings()
+	if settings == null:
+		return ""
+	return String(
+		STORY_CHARACTER_FRAMES.get(
+			String(settings.get("selected_character")),
+			""
 		)
+	)
 
-		if error != OK:
-			print("Background scene preload failed to start: ", scene_path, " error=", error)
+
+func _preload_selected_character_in_background() -> void:
+	# Loading two large texture graphs concurrently can make Godot initialize
+	# the same texture RID twice. Let the Story request finish first, then warm
+	# only the selected character while the player continues through the menu.
+	if (
+		ResourceLoader.load_threaded_get_status(STORY_SCENE)
+		== ResourceLoader.THREAD_LOAD_IN_PROGRESS
+	):
+		return
+	var frames_path := _selected_character_frames_path()
+	if frames_path.is_empty():
+		return
+	var status := ResourceLoader.load_threaded_get_status(frames_path)
+	if status != ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
+		return
+	var error := ResourceLoader.load_threaded_request(
+		frames_path,
+		"SpriteFrames",
+		false
+	)
+	if error != OK:
+		print("Character animation preload failed to start: ", frames_path, " error=", error)
 
 
 func _change_to_preloaded_game_scene(scene_path: String) -> void:
+	# A fast double-click can otherwise start multiple async loaders. The first
+	# scene change detaches this menu, then a later loader resumes with no tree.
+	if scene_change_in_progress:
+		return
+	var scene_tree := get_tree()
+	if scene_tree == null:
+		return
+	scene_change_in_progress = true
+	var settings := _settings()
+	var character_frames_path := _selected_character_frames_path()
+	var character_frames_ready := character_frames_path.is_empty()
+	var packed_scene: PackedScene = null
+
 	var status := ResourceLoader.load_threaded_get_status(scene_path)
 
 	if status == ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
@@ -1407,7 +1495,7 @@ func _change_to_preloaded_game_scene(scene_path: String) -> void:
 
 		if request_error != OK:
 			level_start_pending = false
-			get_tree().change_scene_to_file(scene_path)
+			scene_tree.change_scene_to_file(scene_path)
 			return
 
 	# Poll once per frame. The window remains responsive while resources load.
@@ -1415,31 +1503,54 @@ func _change_to_preloaded_game_scene(scene_path: String) -> void:
 		var progress: Array = []
 		status = ResourceLoader.load_threaded_get_status(scene_path, progress)
 
+		# Finalize the scene request before starting any remaining Ice request.
+		# This keeps the two large texture graphs from racing in Godot's renderer.
+		if status == ResourceLoader.THREAD_LOAD_LOADED and packed_scene == null:
+			packed_scene = ResourceLoader.load_threaded_get(scene_path) as PackedScene
+
+		if packed_scene != null and not character_frames_ready:
+			var frames_status := ResourceLoader.load_threaded_get_status(character_frames_path)
+			if frames_status == ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
+				var frames_error := ResourceLoader.load_threaded_request(
+					character_frames_path,
+					"SpriteFrames",
+					false
+				)
+				if frames_error != OK:
+					# Character animation helpers retain a synchronous fallback.
+					character_frames_ready = true
+			elif frames_status == ResourceLoader.THREAD_LOAD_LOADED:
+				character_frames_ready = (
+					ResourceLoader.load_threaded_get(character_frames_path) != null
+				)
+			elif frames_status == ResourceLoader.THREAD_LOAD_FAILED:
+				# Character animation helpers retain a safe synchronous fallback.
+				character_frames_ready = true
+
 		if not progress.is_empty() and map_gallery_hint:
 			var percent := int(round(float(progress[0]) * 100.0))
 			map_gallery_hint.text = "Loading... %d%%" % clampi(percent, 0, 100)
 
-		if status == ResourceLoader.THREAD_LOAD_LOADED:
-			var packed_scene := ResourceLoader.load_threaded_get(scene_path) as PackedScene
+		if packed_scene != null and character_frames_ready:
 			level_start_pending = false
 
 			if packed_scene:
-				get_tree().change_scene_to_packed(packed_scene)
+				scene_tree.change_scene_to_packed(packed_scene)
 			else:
-				get_tree().change_scene_to_file(scene_path)
+				scene_tree.change_scene_to_file(scene_path)
 			return
 
 		if status == ResourceLoader.THREAD_LOAD_FAILED:
 			level_start_pending = false
-			get_tree().change_scene_to_file(scene_path)
+			scene_tree.change_scene_to_file(scene_path)
 			return
 
 		if status == ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
 			level_start_pending = false
-			get_tree().change_scene_to_file(scene_path)
+			scene_tree.change_scene_to_file(scene_path)
 			return
 
-		await get_tree().process_frame
+		await scene_tree.process_frame
 
 
 func _selected_main_scene() -> String:
@@ -1448,6 +1559,8 @@ func _selected_main_scene() -> String:
 		if String(settings.get("game_mode")) == "squad":
 			return SQUAD_SCENE
 		var selected_level := String(settings.get("selected_level"))
+		if selected_level == "story":
+			return STORY_SCENE
 		if selected_level == "hard":
 			return HARD_SCENE
 		if selected_level == "medium":

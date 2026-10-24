@@ -1,179 +1,314 @@
-[gd_resource type="SpriteFrames" load_steps=172 format=3]
+[gd_resource type="SpriteFrames" format=3 uid="uid://ce5yvli8lda6y"]
 
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Idle/0_Golem_Idle_000.png" id="1"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Idle/0_Golem_Idle_001.png" id="2"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Idle/0_Golem_Idle_002.png" id="3"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Idle/0_Golem_Idle_003.png" id="4"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Idle/0_Golem_Idle_004.png" id="5"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Idle/0_Golem_Idle_005.png" id="6"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Idle/0_Golem_Idle_006.png" id="7"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Idle/0_Golem_Idle_007.png" id="8"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Idle/0_Golem_Idle_008.png" id="9"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Idle/0_Golem_Idle_009.png" id="10"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Idle/0_Golem_Idle_010.png" id="11"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Idle/0_Golem_Idle_011.png" id="12"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Idle/0_Golem_Idle_012.png" id="13"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Idle/0_Golem_Idle_013.png" id="14"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Idle/0_Golem_Idle_014.png" id="15"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Idle/0_Golem_Idle_015.png" id="16"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Idle/0_Golem_Idle_016.png" id="17"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Idle/0_Golem_Idle_017.png" id="18"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_000.png" id="19"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_001.png" id="20"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_002.png" id="21"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_003.png" id="22"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_004.png" id="23"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_005.png" id="24"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_006.png" id="25"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_007.png" id="26"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_008.png" id="27"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_009.png" id="28"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_010.png" id="29"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_011.png" id="30"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_012.png" id="31"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_013.png" id="32"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_014.png" id="33"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_015.png" id="34"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_016.png" id="35"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_017.png" id="36"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_018.png" id="37"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_019.png" id="38"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_020.png" id="39"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_021.png" id="40"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_022.png" id="41"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Walking/0_Golem_Walking_023.png" id="42"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Running/0_Golem_Running_000.png" id="43"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Running/0_Golem_Running_001.png" id="44"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Running/0_Golem_Running_002.png" id="45"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Running/0_Golem_Running_003.png" id="46"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Running/0_Golem_Running_004.png" id="47"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Running/0_Golem_Running_005.png" id="48"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Running/0_Golem_Running_006.png" id="49"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Running/0_Golem_Running_007.png" id="50"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Running/0_Golem_Running_008.png" id="51"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Running/0_Golem_Running_009.png" id="52"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Running/0_Golem_Running_010.png" id="53"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Running/0_Golem_Running_011.png" id="54"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Jump Loop/0_Golem_Jump Loop_000.png" id="55"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Jump Loop/0_Golem_Jump Loop_001.png" id="56"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Jump Loop/0_Golem_Jump Loop_002.png" id="57"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Jump Loop/0_Golem_Jump Loop_003.png" id="58"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Jump Loop/0_Golem_Jump Loop_004.png" id="59"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Jump Loop/0_Golem_Jump Loop_005.png" id="60"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Falling Down/0_Golem_Falling Down_000.png" id="61"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Falling Down/0_Golem_Falling Down_001.png" id="62"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Falling Down/0_Golem_Falling Down_002.png" id="63"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Falling Down/0_Golem_Falling Down_003.png" id="64"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Falling Down/0_Golem_Falling Down_004.png" id="65"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Falling Down/0_Golem_Falling Down_005.png" id="66"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing/0_Golem_Slashing_000.png" id="67"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing/0_Golem_Slashing_001.png" id="68"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing/0_Golem_Slashing_002.png" id="69"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing/0_Golem_Slashing_003.png" id="70"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing/0_Golem_Slashing_004.png" id="71"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing/0_Golem_Slashing_005.png" id="72"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing/0_Golem_Slashing_006.png" id="73"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing/0_Golem_Slashing_007.png" id="74"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing/0_Golem_Slashing_008.png" id="75"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing/0_Golem_Slashing_009.png" id="76"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing/0_Golem_Slashing_010.png" id="77"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing/0_Golem_Slashing_011.png" id="78"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_000.png" id="79"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_001.png" id="80"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_002.png" id="81"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_003.png" id="82"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_004.png" id="83"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_005.png" id="84"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_006.png" id="85"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_007.png" id="86"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_008.png" id="87"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_009.png" id="88"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_010.png" id="89"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_011.png" id="90"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Run Slashing/0_Golem_Run Slashing_000.png" id="91"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Run Slashing/0_Golem_Run Slashing_001.png" id="92"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Run Slashing/0_Golem_Run Slashing_002.png" id="93"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Run Slashing/0_Golem_Run Slashing_003.png" id="94"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Run Slashing/0_Golem_Run Slashing_004.png" id="95"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Run Slashing/0_Golem_Run Slashing_005.png" id="96"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Run Slashing/0_Golem_Run Slashing_006.png" id="97"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Run Slashing/0_Golem_Run Slashing_007.png" id="98"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Run Slashing/0_Golem_Run Slashing_008.png" id="99"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Run Slashing/0_Golem_Run Slashing_009.png" id="100"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Run Slashing/0_Golem_Run Slashing_010.png" id="101"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Run Slashing/0_Golem_Run Slashing_011.png" id="102"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Kicking/0_Golem_Kicking_000.png" id="103"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Kicking/0_Golem_Kicking_001.png" id="104"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Kicking/0_Golem_Kicking_002.png" id="105"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Kicking/0_Golem_Kicking_003.png" id="106"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Kicking/0_Golem_Kicking_004.png" id="107"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Kicking/0_Golem_Kicking_005.png" id="108"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Kicking/0_Golem_Kicking_006.png" id="109"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Kicking/0_Golem_Kicking_007.png" id="110"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Kicking/0_Golem_Kicking_008.png" id="111"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Kicking/0_Golem_Kicking_009.png" id="112"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Kicking/0_Golem_Kicking_010.png" id="113"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Kicking/0_Golem_Kicking_011.png" id="114"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Hurt/0_Golem_Hurt_000.png" id="115"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Hurt/0_Golem_Hurt_001.png" id="116"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Hurt/0_Golem_Hurt_002.png" id="117"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Hurt/0_Golem_Hurt_003.png" id="118"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Hurt/0_Golem_Hurt_004.png" id="119"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Hurt/0_Golem_Hurt_005.png" id="120"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Hurt/0_Golem_Hurt_006.png" id="121"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Hurt/0_Golem_Hurt_007.png" id="122"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Hurt/0_Golem_Hurt_008.png" id="123"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Hurt/0_Golem_Hurt_009.png" id="124"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Hurt/0_Golem_Hurt_010.png" id="125"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Hurt/0_Golem_Hurt_011.png" id="126"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing/0_Golem_Throwing_000.png" id="127"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing/0_Golem_Throwing_001.png" id="128"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing/0_Golem_Throwing_002.png" id="129"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing/0_Golem_Throwing_003.png" id="130"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing/0_Golem_Throwing_004.png" id="131"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing/0_Golem_Throwing_005.png" id="132"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing/0_Golem_Throwing_006.png" id="133"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing/0_Golem_Throwing_007.png" id="134"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing/0_Golem_Throwing_008.png" id="135"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing/0_Golem_Throwing_009.png" id="136"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing/0_Golem_Throwing_010.png" id="137"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing/0_Golem_Throwing_011.png" id="138"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_000.png" id="139"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_001.png" id="140"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_002.png" id="141"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_003.png" id="142"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_004.png" id="143"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_005.png" id="144"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_006.png" id="145"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_007.png" id="146"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_008.png" id="147"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_009.png" id="148"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_010.png" id="149"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_011.png" id="150"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Dying/0_Golem_Dying_000.png" id="151"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Dying/0_Golem_Dying_001.png" id="152"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Dying/0_Golem_Dying_002.png" id="153"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Dying/0_Golem_Dying_003.png" id="154"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Dying/0_Golem_Dying_004.png" id="155"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Dying/0_Golem_Dying_005.png" id="156"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Dying/0_Golem_Dying_006.png" id="157"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Dying/0_Golem_Dying_007.png" id="158"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Dying/0_Golem_Dying_008.png" id="159"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Dying/0_Golem_Dying_009.png" id="160"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Dying/0_Golem_Dying_010.png" id="161"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Dying/0_Golem_Dying_011.png" id="162"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Dying/0_Golem_Dying_012.png" id="163"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Dying/0_Golem_Dying_013.png" id="164"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Dying/0_Golem_Dying_014.png" id="165"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Sliding/0_Golem_Sliding_000.png" id="166"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Sliding/0_Golem_Sliding_001.png" id="167"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Sliding/0_Golem_Sliding_002.png" id="168"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Sliding/0_Golem_Sliding_003.png" id="169"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Sliding/0_Golem_Sliding_004.png" id="170"]
-[ext_resource type="Texture2D" path="res://Player/player_assets/PNG Sequences/Sliding/0_Golem_Sliding_005.png" id="171"]
+[ext_resource type="Texture2D" uid="uid://pylxiacwgk0p" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_000.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://dvbl4hp13eejy" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Climbing/0_Golem_Climbing_000.png" id="1_tjxm7"]
+[ext_resource type="Texture2D" uid="uid://74htrq302h1o" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_001.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://cdyh5dle8owpy" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Climbing/0_Golem_Climbing_001.png" id="2_8mjf4"]
+[ext_resource type="Texture2D" uid="uid://cfjuj4nna0mdf" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_002.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://duex1qyvh0sm" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Climbing/0_Golem_Climbing_002.png" id="3_7g4ce"]
+[ext_resource type="Texture2D" uid="uid://etds6ak4e06g" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_003.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://gyxwtl2dgluc" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Climbing/0_Golem_Climbing_003.png" id="4_wp5nf"]
+[ext_resource type="Texture2D" uid="uid://bendkh0wa6wjr" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_004.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://v124mmdupko4" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_005.png" id="6"]
+[ext_resource type="Texture2D" uid="uid://cym6cqwqbcssx" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_006.png" id="7"]
+[ext_resource type="Texture2D" uid="uid://d3fgy03246q6w" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_007.png" id="8"]
+[ext_resource type="Texture2D" uid="uid://biev1fof6is06" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_008.png" id="9"]
+[ext_resource type="Texture2D" uid="uid://c4gqvkkaxs881" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_009.png" id="10"]
+[ext_resource type="Texture2D" uid="uid://b37qg1xd2wa7c" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_010.png" id="11"]
+[ext_resource type="Texture2D" uid="uid://5xeepkg8fa6j" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_011.png" id="12"]
+[ext_resource type="Texture2D" uid="uid://clgisihf8w1me" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_012.png" id="13"]
+[ext_resource type="Texture2D" uid="uid://bvt1irelvl0v7" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_013.png" id="14"]
+[ext_resource type="Texture2D" uid="uid://dh8u64emsu04o" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_014.png" id="15"]
+[ext_resource type="Texture2D" uid="uid://dwpwno4rd8t0f" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_015.png" id="16"]
+[ext_resource type="Texture2D" uid="uid://ct37rpr4t1eja" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_016.png" id="17"]
+[ext_resource type="Texture2D" uid="uid://cbvu5a6uduknb" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_017.png" id="18"]
+[ext_resource type="Texture2D" uid="uid://14h448nmayud" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_000.png" id="19"]
+[ext_resource type="Texture2D" uid="uid://bqc6e7m1uarht" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_001.png" id="20"]
+[ext_resource type="Texture2D" uid="uid://ba13xfaomhv01" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_002.png" id="21"]
+[ext_resource type="Texture2D" uid="uid://q0nau5tv1xue" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_003.png" id="22"]
+[ext_resource type="Texture2D" uid="uid://bvnmixtlysxau" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_004.png" id="23"]
+[ext_resource type="Texture2D" uid="uid://wl3ax78s2qtd" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_005.png" id="24"]
+[ext_resource type="Texture2D" uid="uid://cpa5qhit7lkyk" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_006.png" id="25"]
+[ext_resource type="Texture2D" uid="uid://bgroubg6yilyg" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_007.png" id="26"]
+[ext_resource type="Texture2D" uid="uid://c7y1c1l6r6pif" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_008.png" id="27"]
+[ext_resource type="Texture2D" uid="uid://csfgetctelt5d" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_009.png" id="28"]
+[ext_resource type="Texture2D" uid="uid://dtfwvuog48yme" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_010.png" id="29"]
+[ext_resource type="Texture2D" uid="uid://jamjluy8wan6" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_011.png" id="30"]
+[ext_resource type="Texture2D" uid="uid://cwqhvuvuch30k" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_012.png" id="31"]
+[ext_resource type="Texture2D" uid="uid://dj0j4nuw4lmlm" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_013.png" id="32"]
+[ext_resource type="Texture2D" uid="uid://essfkllb302l" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_014.png" id="33"]
+[ext_resource type="Texture2D" uid="uid://ypijp3xt84hc" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_015.png" id="34"]
+[ext_resource type="Texture2D" uid="uid://bui5vftmi0n0e" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_016.png" id="35"]
+[ext_resource type="Texture2D" uid="uid://p6r7wuu00hvb" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_017.png" id="36"]
+[ext_resource type="Texture2D" uid="uid://b7dcas2v3mpbs" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_018.png" id="37"]
+[ext_resource type="Texture2D" uid="uid://cvj1y44w2s6gv" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_019.png" id="38"]
+[ext_resource type="Texture2D" uid="uid://c3ksqsco40eux" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_020.png" id="39"]
+[ext_resource type="Texture2D" uid="uid://dbwi0rph6milc" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_021.png" id="40"]
+[ext_resource type="Texture2D" uid="uid://dwf2i7n4qo6up" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_022.png" id="41"]
+[ext_resource type="Texture2D" uid="uid://btph8h845wpjm" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Walking/0_Golem_Walking_023.png" id="42"]
+[ext_resource type="Texture2D" uid="uid://bfxw5kn5g6xw3" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Running/0_Golem_Running_000.png" id="43"]
+[ext_resource type="Texture2D" uid="uid://cqv4fadnheans" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Running/0_Golem_Running_001.png" id="44"]
+[ext_resource type="Texture2D" uid="uid://chwj6ntptfbpy" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Running/0_Golem_Running_002.png" id="45"]
+[ext_resource type="Texture2D" uid="uid://8pis13sktle1" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Running/0_Golem_Running_003.png" id="46"]
+[ext_resource type="Texture2D" uid="uid://jir2ou4xgqoy" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Running/0_Golem_Running_004.png" id="47"]
+[ext_resource type="Texture2D" uid="uid://b624uect31225" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Running/0_Golem_Running_005.png" id="48"]
+[ext_resource type="Texture2D" uid="uid://dihr1r2f5cn72" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Running/0_Golem_Running_006.png" id="49"]
+[ext_resource type="Texture2D" uid="uid://b4vhkakvfk14v" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Running/0_Golem_Running_007.png" id="50"]
+[ext_resource type="Texture2D" uid="uid://cr6l1uf6osb6c" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Running/0_Golem_Running_008.png" id="51"]
+[ext_resource type="Texture2D" uid="uid://ma12xoio5xr1" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Running/0_Golem_Running_009.png" id="52"]
+[ext_resource type="Texture2D" uid="uid://cognm4jejcexe" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Running/0_Golem_Running_010.png" id="53"]
+[ext_resource type="Texture2D" uid="uid://cvwyvfuth17xm" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Running/0_Golem_Running_011.png" id="54"]
+[ext_resource type="Texture2D" uid="uid://b0rip4703cpnv" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Jump Loop/0_Golem_Jump Loop_000.png" id="55"]
+[ext_resource type="Texture2D" uid="uid://dhncay7nc4kmi" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Jump Loop/0_Golem_Jump Loop_001.png" id="56"]
+[ext_resource type="Texture2D" uid="uid://bywxsywhju0cx" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Jump Loop/0_Golem_Jump Loop_002.png" id="57"]
+[ext_resource type="Texture2D" uid="uid://6o3qn76rqxlm" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Jump Loop/0_Golem_Jump Loop_003.png" id="58"]
+[ext_resource type="Texture2D" uid="uid://cy3bn8sp6fwck" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Jump Loop/0_Golem_Jump Loop_004.png" id="59"]
+[ext_resource type="Texture2D" uid="uid://drjlsfhxlsrsr" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Jump Loop/0_Golem_Jump Loop_005.png" id="60"]
+[ext_resource type="Texture2D" uid="uid://daqk7du6i80rw" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Falling Down/0_Golem_Falling Down_000.png" id="61"]
+[ext_resource type="Texture2D" uid="uid://dsgeamf7n6w67" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Falling Down/0_Golem_Falling Down_001.png" id="62"]
+[ext_resource type="Texture2D" uid="uid://br3ecy0upef3f" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Falling Down/0_Golem_Falling Down_002.png" id="63"]
+[ext_resource type="Texture2D" uid="uid://8pam8autggl5" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Falling Down/0_Golem_Falling Down_003.png" id="64"]
+[ext_resource type="Texture2D" uid="uid://c2vwg0v1e4drj" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Falling Down/0_Golem_Falling Down_004.png" id="65"]
+[ext_resource type="Texture2D" uid="uid://dj5thrd87eybg" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Falling Down/0_Golem_Falling Down_005.png" id="66"]
+[ext_resource type="Texture2D" uid="uid://dufbv8f8wkivr" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing/0_Golem_Slashing_000.png" id="67"]
+[ext_resource type="Texture2D" uid="uid://dosswqjlvh3n6" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing/0_Golem_Slashing_001.png" id="68"]
+[ext_resource type="Texture2D" uid="uid://bxd6vogmfbgsd" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing/0_Golem_Slashing_002.png" id="69"]
+[ext_resource type="Texture2D" uid="uid://csscpp3wiross" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing/0_Golem_Slashing_003.png" id="70"]
+[ext_resource type="Texture2D" uid="uid://c65tqkmb6qicl" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing/0_Golem_Slashing_004.png" id="71"]
+[ext_resource type="Texture2D" uid="uid://b1pxs47n6byt0" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing/0_Golem_Slashing_005.png" id="72"]
+[ext_resource type="Texture2D" uid="uid://7tnclvfixqg0" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing/0_Golem_Slashing_006.png" id="73"]
+[ext_resource type="Texture2D" uid="uid://71howb3lkech" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing/0_Golem_Slashing_007.png" id="74"]
+[ext_resource type="Texture2D" uid="uid://cpra1efjf3k2d" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing/0_Golem_Slashing_008.png" id="75"]
+[ext_resource type="Texture2D" uid="uid://0psqmymxmbmk" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing/0_Golem_Slashing_009.png" id="76"]
+[ext_resource type="Texture2D" uid="uid://cglkl808kad5w" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing/0_Golem_Slashing_010.png" id="77"]
+[ext_resource type="Texture2D" uid="uid://dhorefctwkur" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing/0_Golem_Slashing_011.png" id="78"]
+[ext_resource type="Texture2D" uid="uid://dnmk4jwef0bye" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_000.png" id="79"]
+[ext_resource type="Texture2D" uid="uid://ib1fdmes6p22" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_001.png" id="80"]
+[ext_resource type="Texture2D" uid="uid://crbcqqf2ikecs" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_002.png" id="81"]
+[ext_resource type="Texture2D" uid="uid://cphouieqgk5vc" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_003.png" id="82"]
+[ext_resource type="Texture2D" uid="uid://blud0ubpoch8s" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_004.png" id="83"]
+[ext_resource type="Texture2D" uid="uid://b4kha21ya040b" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_005.png" id="84"]
+[ext_resource type="Texture2D" uid="uid://ggcypcp5hgkh" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_006.png" id="85"]
+[ext_resource type="Texture2D" uid="uid://bymxxbtyf3pwl" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_007.png" id="86"]
+[ext_resource type="Texture2D" uid="uid://jnojveopmp1e" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_008.png" id="87"]
+[ext_resource type="Texture2D" uid="uid://cm53fxk0ulfai" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_009.png" id="88"]
+[ext_resource type="Texture2D" uid="uid://bvtu3n1nsmsud" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_010.png" id="89"]
+[ext_resource type="Texture2D" uid="uid://3e1ohmqyt8uk" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_011.png" id="90"]
+[ext_resource type="Texture2D" uid="uid://diku8tu7vtvgk" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Run Slashing/0_Golem_Run Slashing_000.png" id="91"]
+[ext_resource type="Texture2D" uid="uid://bjieley3x6dld" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Run Slashing/0_Golem_Run Slashing_001.png" id="92"]
+[ext_resource type="Texture2D" uid="uid://boc5yrb6uwbsa" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Run Slashing/0_Golem_Run Slashing_002.png" id="93"]
+[ext_resource type="Texture2D" uid="uid://butko8bfrjwig" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Run Slashing/0_Golem_Run Slashing_003.png" id="94"]
+[ext_resource type="Texture2D" uid="uid://dkk8a1yjqw2bm" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Run Slashing/0_Golem_Run Slashing_004.png" id="95"]
+[ext_resource type="Texture2D" uid="uid://ujc7dwin0ta7" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Run Slashing/0_Golem_Run Slashing_005.png" id="96"]
+[ext_resource type="Texture2D" uid="uid://bco4a7vrpe33a" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Run Slashing/0_Golem_Run Slashing_006.png" id="97"]
+[ext_resource type="Texture2D" uid="uid://dt64t4uepj8p" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Run Slashing/0_Golem_Run Slashing_007.png" id="98"]
+[ext_resource type="Texture2D" uid="uid://b4s8bwluqcwvy" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Run Slashing/0_Golem_Run Slashing_008.png" id="99"]
+[ext_resource type="Texture2D" uid="uid://cpu76lawc2gtk" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Run Slashing/0_Golem_Run Slashing_009.png" id="100"]
+[ext_resource type="Texture2D" uid="uid://crpyvw0038k1j" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Run Slashing/0_Golem_Run Slashing_010.png" id="101"]
+[ext_resource type="Texture2D" uid="uid://brjg7ftrpgakx" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Run Slashing/0_Golem_Run Slashing_011.png" id="102"]
+[ext_resource type="Texture2D" uid="uid://bj6eeds354yej" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Kicking/0_Golem_Kicking_000.png" id="103"]
+[ext_resource type="Texture2D" uid="uid://ct30piyxwl4hp" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Kicking/0_Golem_Kicking_001.png" id="104"]
+[ext_resource type="Texture2D" uid="uid://rxolx5nxqslb" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Kicking/0_Golem_Kicking_002.png" id="105"]
+[ext_resource type="Texture2D" uid="uid://5p7cvx06gsum" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Kicking/0_Golem_Kicking_003.png" id="106"]
+[ext_resource type="Texture2D" uid="uid://kp0yxm1m3khs" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Kicking/0_Golem_Kicking_004.png" id="107"]
+[ext_resource type="Texture2D" uid="uid://dsxli1ybk0b8" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Kicking/0_Golem_Kicking_005.png" id="108"]
+[ext_resource type="Texture2D" uid="uid://vqjq1cyco5be" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Kicking/0_Golem_Kicking_006.png" id="109"]
+[ext_resource type="Texture2D" uid="uid://dsqs0mekf1n6l" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Kicking/0_Golem_Kicking_007.png" id="110"]
+[ext_resource type="Texture2D" uid="uid://cvi4so72cfp51" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Kicking/0_Golem_Kicking_008.png" id="111"]
+[ext_resource type="Texture2D" uid="uid://16u1r3g2e5" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Kicking/0_Golem_Kicking_009.png" id="112"]
+[ext_resource type="Texture2D" uid="uid://cp8dpei8hlq63" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Kicking/0_Golem_Kicking_010.png" id="113"]
+[ext_resource type="Texture2D" uid="uid://y73q3oo1mo6c" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Kicking/0_Golem_Kicking_011.png" id="114"]
+[ext_resource type="Texture2D" uid="uid://btbxqsvflnox0" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Hurt/0_Golem_Hurt_000.png" id="115"]
+[ext_resource type="Texture2D" uid="uid://iq5s33x71u1j" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Hurt/0_Golem_Hurt_001.png" id="116"]
+[ext_resource type="Texture2D" uid="uid://eldn8sf1inct" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Hurt/0_Golem_Hurt_002.png" id="117"]
+[ext_resource type="Texture2D" uid="uid://dp5h8m160if2f" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Hurt/0_Golem_Hurt_003.png" id="118"]
+[ext_resource type="Texture2D" uid="uid://cl2p3h8q0i6ft" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Hurt/0_Golem_Hurt_004.png" id="119"]
+[ext_resource type="Texture2D" uid="uid://j8yk1r4gqo5w" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Hurt/0_Golem_Hurt_005.png" id="120"]
+[ext_resource type="Texture2D" uid="uid://dhbpthacuhls1" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Hurt/0_Golem_Hurt_006.png" id="121"]
+[ext_resource type="Texture2D" uid="uid://t458yfxpsjg8" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Hurt/0_Golem_Hurt_007.png" id="122"]
+[ext_resource type="Texture2D" uid="uid://d0u8lebm4vq3r" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Hurt/0_Golem_Hurt_008.png" id="123"]
+[ext_resource type="Texture2D" uid="uid://dfmmon8qa7fnm" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Hurt/0_Golem_Hurt_009.png" id="124"]
+[ext_resource type="Texture2D" uid="uid://fckfc544k30k" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Hurt/0_Golem_Hurt_010.png" id="125"]
+[ext_resource type="Texture2D" uid="uid://c5nc5bobv3ibl" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Hurt/0_Golem_Hurt_011.png" id="126"]
+[ext_resource type="Texture2D" uid="uid://kh6wk7deyt17" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing/0_Golem_Throwing_000.png" id="127"]
+[ext_resource type="Texture2D" uid="uid://di3ymgw5c6536" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing/0_Golem_Throwing_001.png" id="128"]
+[ext_resource type="Texture2D" uid="uid://b716gwl1spii4" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing/0_Golem_Throwing_002.png" id="129"]
+[ext_resource type="Texture2D" uid="uid://8to3g7fgs54e" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing/0_Golem_Throwing_003.png" id="130"]
+[ext_resource type="Texture2D" uid="uid://b7rh5wditojjc" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing/0_Golem_Throwing_004.png" id="131"]
+[ext_resource type="Texture2D" uid="uid://c1jjj6qh3s1wt" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing/0_Golem_Throwing_005.png" id="132"]
+[ext_resource type="Texture2D" uid="uid://bsby1w525u2eb" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing/0_Golem_Throwing_006.png" id="133"]
+[ext_resource type="Texture2D" uid="uid://cd4mj0tl2rjea" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing/0_Golem_Throwing_007.png" id="134"]
+[ext_resource type="Texture2D" uid="uid://b7ykhfex7pqpx" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing/0_Golem_Throwing_008.png" id="135"]
+[ext_resource type="Texture2D" uid="uid://t0ehmdwjracu" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing/0_Golem_Throwing_009.png" id="136"]
+[ext_resource type="Texture2D" uid="uid://cdrudluibu4mm" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing/0_Golem_Throwing_010.png" id="137"]
+[ext_resource type="Texture2D" uid="uid://d5lrxtmsf6kl" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing/0_Golem_Throwing_011.png" id="138"]
+[ext_resource type="Texture2D" uid="uid://dryop2c0t05yl" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_000.png" id="139"]
+[ext_resource type="Texture2D" uid="uid://ch0klj035x6nc" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_001.png" id="140"]
+[ext_resource type="Texture2D" uid="uid://caaxfk4q1c3xx" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_002.png" id="141"]
+[ext_resource type="Texture2D" uid="uid://dir1041s7tiad" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_003.png" id="142"]
+[ext_resource type="Texture2D" uid="uid://biv47uhckyl5m" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_004.png" id="143"]
+[ext_resource type="Texture2D" uid="uid://c26xfs3wgxrmg" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_005.png" id="144"]
+[ext_resource type="Texture2D" uid="uid://dhpx3rbxwap51" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_006.png" id="145"]
+[ext_resource type="Texture2D" uid="uid://bw4x45lwwwppu" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_007.png" id="146"]
+[ext_resource type="Texture2D" uid="uid://u4me7pebg3ko" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_008.png" id="147"]
+[ext_resource type="Texture2D" uid="uid://b5ilq3f6jl2u7" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_009.png" id="148"]
+[ext_resource type="Texture2D" uid="uid://c78w3taqqdhl7" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_010.png" id="149"]
+[ext_resource type="Texture2D" uid="uid://d2oa3ycfyoh0s" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_011.png" id="150"]
+[ext_resource type="Texture2D" uid="uid://bcbkxo4nso3e" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Dying/0_Golem_Dying_000.png" id="151"]
+[ext_resource type="Texture2D" uid="uid://c8b77drykjri5" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Dying/0_Golem_Dying_001.png" id="152"]
+[ext_resource type="Texture2D" uid="uid://08o0y42d0jfc" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Dying/0_Golem_Dying_002.png" id="153"]
+[ext_resource type="Texture2D" uid="uid://ccdpu00ygejkg" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Dying/0_Golem_Dying_003.png" id="154"]
+[ext_resource type="Texture2D" uid="uid://mqsfwvvko7yl" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Dying/0_Golem_Dying_004.png" id="155"]
+[ext_resource type="Texture2D" uid="uid://pxwtrb30t0rt" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Dying/0_Golem_Dying_005.png" id="156"]
+[ext_resource type="Texture2D" uid="uid://duugi4l8q42qp" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Dying/0_Golem_Dying_006.png" id="157"]
+[ext_resource type="Texture2D" uid="uid://c6rcopm24bqq4" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Dying/0_Golem_Dying_007.png" id="158"]
+[ext_resource type="Texture2D" uid="uid://dwhiu028nes8e" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Dying/0_Golem_Dying_008.png" id="159"]
+[ext_resource type="Texture2D" uid="uid://bhhiq16iulc06" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Dying/0_Golem_Dying_009.png" id="160"]
+[ext_resource type="Texture2D" uid="uid://2sxgjv4do74g" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Dying/0_Golem_Dying_010.png" id="161"]
+[ext_resource type="Texture2D" uid="uid://6qq2al34hvis" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Dying/0_Golem_Dying_011.png" id="162"]
+[ext_resource type="Texture2D" uid="uid://i3eqfn0pd0xk" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Dying/0_Golem_Dying_012.png" id="163"]
+[ext_resource type="Texture2D" uid="uid://bt777xhn3sb86" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Dying/0_Golem_Dying_013.png" id="164"]
+[ext_resource type="Texture2D" uid="uid://d2ui4j75elxr3" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Dying/0_Golem_Dying_014.png" id="165"]
+[ext_resource type="Texture2D" uid="uid://dq6parha6yr21" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Sliding/0_Golem_Sliding_000.png" id="166"]
+[ext_resource type="Texture2D" uid="uid://pf4redo44vkq" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Sliding/0_Golem_Sliding_001.png" id="167"]
+[ext_resource type="Texture2D" uid="uid://divjjm7kn623d" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Sliding/0_Golem_Sliding_002.png" id="168"]
+[ext_resource type="Texture2D" uid="uid://bux36lft5l8w8" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Sliding/0_Golem_Sliding_003.png" id="169"]
+[ext_resource type="Texture2D" uid="uid://50blnifre1p7" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Sliding/0_Golem_Sliding_004.png" id="170"]
+[ext_resource type="Texture2D" uid="uid://cqcoshv8bft0h" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Sliding/0_Golem_Sliding_005.png" id="171"]
 
 [resource]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_tjxm7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_8mjf4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_7g4ce")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_wp5nf")
+}],
+"loop": 0,
+"name": &"Climbing",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("151")
+}, {
+"duration": 1.0,
+"texture": ExtResource("152")
+}, {
+"duration": 1.0,
+"texture": ExtResource("153")
+}, {
+"duration": 1.0,
+"texture": ExtResource("154")
+}, {
+"duration": 1.0,
+"texture": ExtResource("155")
+}, {
+"duration": 1.0,
+"texture": ExtResource("156")
+}, {
+"duration": 1.0,
+"texture": ExtResource("157")
+}, {
+"duration": 1.0,
+"texture": ExtResource("158")
+}, {
+"duration": 1.0,
+"texture": ExtResource("159")
+}, {
+"duration": 1.0,
+"texture": ExtResource("160")
+}, {
+"duration": 1.0,
+"texture": ExtResource("161")
+}, {
+"duration": 1.0,
+"texture": ExtResource("162")
+}, {
+"duration": 1.0,
+"texture": ExtResource("163")
+}, {
+"duration": 1.0,
+"texture": ExtResource("164")
+}, {
+"duration": 1.0,
+"texture": ExtResource("165")
+}],
+"loop": 0,
+"name": &"Dying",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("61")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65")
+}, {
+"duration": 1.0,
+"texture": ExtResource("66")
+}],
+"loop": 1,
+"name": &"Falling Down",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("115")
+}, {
+"duration": 1.0,
+"texture": ExtResource("116")
+}, {
+"duration": 1.0,
+"texture": ExtResource("117")
+}, {
+"duration": 1.0,
+"texture": ExtResource("118")
+}, {
+"duration": 1.0,
+"texture": ExtResource("119")
+}, {
+"duration": 1.0,
+"texture": ExtResource("120")
+}, {
+"duration": 1.0,
+"texture": ExtResource("121")
+}, {
+"duration": 1.0,
+"texture": ExtResource("122")
+}, {
+"duration": 1.0,
+"texture": ExtResource("123")
+}, {
+"duration": 1.0,
+"texture": ExtResource("124")
+}, {
+"duration": 1.0,
+"texture": ExtResource("125")
+}, {
+"duration": 1.0,
+"texture": ExtResource("126")
+}],
+"loop": 0,
+"name": &"Hurt",
+"speed": 12.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1")
@@ -229,8 +364,341 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("18")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Idle",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("55")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60")
+}],
+"loop": 1,
+"name": &"Jump Looping",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("103")
+}, {
+"duration": 1.0,
+"texture": ExtResource("104")
+}, {
+"duration": 1.0,
+"texture": ExtResource("105")
+}, {
+"duration": 1.0,
+"texture": ExtResource("106")
+}, {
+"duration": 1.0,
+"texture": ExtResource("107")
+}, {
+"duration": 1.0,
+"texture": ExtResource("108")
+}, {
+"duration": 1.0,
+"texture": ExtResource("109")
+}, {
+"duration": 1.0,
+"texture": ExtResource("110")
+}, {
+"duration": 1.0,
+"texture": ExtResource("111")
+}, {
+"duration": 1.0,
+"texture": ExtResource("112")
+}, {
+"duration": 1.0,
+"texture": ExtResource("113")
+}, {
+"duration": 1.0,
+"texture": ExtResource("114")
+}],
+"loop": 0,
+"name": &"Kicking",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("91")
+}, {
+"duration": 1.0,
+"texture": ExtResource("92")
+}, {
+"duration": 1.0,
+"texture": ExtResource("93")
+}, {
+"duration": 1.0,
+"texture": ExtResource("94")
+}, {
+"duration": 1.0,
+"texture": ExtResource("95")
+}, {
+"duration": 1.0,
+"texture": ExtResource("96")
+}, {
+"duration": 1.0,
+"texture": ExtResource("97")
+}, {
+"duration": 1.0,
+"texture": ExtResource("98")
+}, {
+"duration": 1.0,
+"texture": ExtResource("99")
+}, {
+"duration": 1.0,
+"texture": ExtResource("100")
+}, {
+"duration": 1.0,
+"texture": ExtResource("101")
+}, {
+"duration": 1.0,
+"texture": ExtResource("102")
+}],
+"loop": 0,
+"name": &"Run Slashing",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("43")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54")
+}],
+"loop": 1,
+"name": &"Running",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("67")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68")
+}, {
+"duration": 1.0,
+"texture": ExtResource("69")
+}, {
+"duration": 1.0,
+"texture": ExtResource("70")
+}, {
+"duration": 1.0,
+"texture": ExtResource("71")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72")
+}, {
+"duration": 1.0,
+"texture": ExtResource("73")
+}, {
+"duration": 1.0,
+"texture": ExtResource("74")
+}, {
+"duration": 1.0,
+"texture": ExtResource("75")
+}, {
+"duration": 1.0,
+"texture": ExtResource("76")
+}, {
+"duration": 1.0,
+"texture": ExtResource("77")
+}, {
+"duration": 1.0,
+"texture": ExtResource("78")
+}],
+"loop": 0,
+"name": &"Slashing",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("79")
+}, {
+"duration": 1.0,
+"texture": ExtResource("80")
+}, {
+"duration": 1.0,
+"texture": ExtResource("81")
+}, {
+"duration": 1.0,
+"texture": ExtResource("82")
+}, {
+"duration": 1.0,
+"texture": ExtResource("83")
+}, {
+"duration": 1.0,
+"texture": ExtResource("84")
+}, {
+"duration": 1.0,
+"texture": ExtResource("85")
+}, {
+"duration": 1.0,
+"texture": ExtResource("86")
+}, {
+"duration": 1.0,
+"texture": ExtResource("87")
+}, {
+"duration": 1.0,
+"texture": ExtResource("88")
+}, {
+"duration": 1.0,
+"texture": ExtResource("89")
+}, {
+"duration": 1.0,
+"texture": ExtResource("90")
+}],
+"loop": 0,
+"name": &"Slashing In Air",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("166")
+}, {
+"duration": 1.0,
+"texture": ExtResource("167")
+}, {
+"duration": 1.0,
+"texture": ExtResource("168")
+}, {
+"duration": 1.0,
+"texture": ExtResource("169")
+}, {
+"duration": 1.0,
+"texture": ExtResource("170")
+}, {
+"duration": 1.0,
+"texture": ExtResource("171")
+}],
+"loop": 1,
+"name": &"Sliding",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("127")
+}, {
+"duration": 1.0,
+"texture": ExtResource("128")
+}, {
+"duration": 1.0,
+"texture": ExtResource("129")
+}, {
+"duration": 1.0,
+"texture": ExtResource("130")
+}, {
+"duration": 1.0,
+"texture": ExtResource("131")
+}, {
+"duration": 1.0,
+"texture": ExtResource("132")
+}, {
+"duration": 1.0,
+"texture": ExtResource("133")
+}, {
+"duration": 1.0,
+"texture": ExtResource("134")
+}, {
+"duration": 1.0,
+"texture": ExtResource("135")
+}, {
+"duration": 1.0,
+"texture": ExtResource("136")
+}, {
+"duration": 1.0,
+"texture": ExtResource("137")
+}, {
+"duration": 1.0,
+"texture": ExtResource("138")
+}],
+"loop": 0,
+"name": &"Throwing",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("139")
+}, {
+"duration": 1.0,
+"texture": ExtResource("140")
+}, {
+"duration": 1.0,
+"texture": ExtResource("141")
+}, {
+"duration": 1.0,
+"texture": ExtResource("142")
+}, {
+"duration": 1.0,
+"texture": ExtResource("143")
+}, {
+"duration": 1.0,
+"texture": ExtResource("144")
+}, {
+"duration": 1.0,
+"texture": ExtResource("145")
+}, {
+"duration": 1.0,
+"texture": ExtResource("146")
+}, {
+"duration": 1.0,
+"texture": ExtResource("147")
+}, {
+"duration": 1.0,
+"texture": ExtResource("148")
+}, {
+"duration": 1.0,
+"texture": ExtResource("149")
+}, {
+"duration": 1.0,
+"texture": ExtResource("150")
+}],
+"loop": 0,
+"name": &"Throwing In Air",
 "speed": 12.0
 }, {
 "frames": [{
@@ -306,454 +774,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("42")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Walking",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("43")
-}, {
-"duration": 1.0,
-"texture": ExtResource("44")
-}, {
-"duration": 1.0,
-"texture": ExtResource("45")
-}, {
-"duration": 1.0,
-"texture": ExtResource("46")
-}, {
-"duration": 1.0,
-"texture": ExtResource("47")
-}, {
-"duration": 1.0,
-"texture": ExtResource("48")
-}, {
-"duration": 1.0,
-"texture": ExtResource("49")
-}, {
-"duration": 1.0,
-"texture": ExtResource("50")
-}, {
-"duration": 1.0,
-"texture": ExtResource("51")
-}, {
-"duration": 1.0,
-"texture": ExtResource("52")
-}, {
-"duration": 1.0,
-"texture": ExtResource("53")
-}, {
-"duration": 1.0,
-"texture": ExtResource("54")
-}],
-"loop": true,
-"name": &"Running",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("55")
-}, {
-"duration": 1.0,
-"texture": ExtResource("56")
-}, {
-"duration": 1.0,
-"texture": ExtResource("57")
-}, {
-"duration": 1.0,
-"texture": ExtResource("58")
-}, {
-"duration": 1.0,
-"texture": ExtResource("59")
-}, {
-"duration": 1.0,
-"texture": ExtResource("60")
-}],
-"loop": true,
-"name": &"Jump Looping",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("61")
-}, {
-"duration": 1.0,
-"texture": ExtResource("62")
-}, {
-"duration": 1.0,
-"texture": ExtResource("63")
-}, {
-"duration": 1.0,
-"texture": ExtResource("64")
-}, {
-"duration": 1.0,
-"texture": ExtResource("65")
-}, {
-"duration": 1.0,
-"texture": ExtResource("66")
-}],
-"loop": true,
-"name": &"Falling Down",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("67")
-}, {
-"duration": 1.0,
-"texture": ExtResource("68")
-}, {
-"duration": 1.0,
-"texture": ExtResource("69")
-}, {
-"duration": 1.0,
-"texture": ExtResource("70")
-}, {
-"duration": 1.0,
-"texture": ExtResource("71")
-}, {
-"duration": 1.0,
-"texture": ExtResource("72")
-}, {
-"duration": 1.0,
-"texture": ExtResource("73")
-}, {
-"duration": 1.0,
-"texture": ExtResource("74")
-}, {
-"duration": 1.0,
-"texture": ExtResource("75")
-}, {
-"duration": 1.0,
-"texture": ExtResource("76")
-}, {
-"duration": 1.0,
-"texture": ExtResource("77")
-}, {
-"duration": 1.0,
-"texture": ExtResource("78")
-}],
-"loop": false,
-"name": &"Slashing",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("79")
-}, {
-"duration": 1.0,
-"texture": ExtResource("80")
-}, {
-"duration": 1.0,
-"texture": ExtResource("81")
-}, {
-"duration": 1.0,
-"texture": ExtResource("82")
-}, {
-"duration": 1.0,
-"texture": ExtResource("83")
-}, {
-"duration": 1.0,
-"texture": ExtResource("84")
-}, {
-"duration": 1.0,
-"texture": ExtResource("85")
-}, {
-"duration": 1.0,
-"texture": ExtResource("86")
-}, {
-"duration": 1.0,
-"texture": ExtResource("87")
-}, {
-"duration": 1.0,
-"texture": ExtResource("88")
-}, {
-"duration": 1.0,
-"texture": ExtResource("89")
-}, {
-"duration": 1.0,
-"texture": ExtResource("90")
-}],
-"loop": false,
-"name": &"Slashing In Air",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("91")
-}, {
-"duration": 1.0,
-"texture": ExtResource("92")
-}, {
-"duration": 1.0,
-"texture": ExtResource("93")
-}, {
-"duration": 1.0,
-"texture": ExtResource("94")
-}, {
-"duration": 1.0,
-"texture": ExtResource("95")
-}, {
-"duration": 1.0,
-"texture": ExtResource("96")
-}, {
-"duration": 1.0,
-"texture": ExtResource("97")
-}, {
-"duration": 1.0,
-"texture": ExtResource("98")
-}, {
-"duration": 1.0,
-"texture": ExtResource("99")
-}, {
-"duration": 1.0,
-"texture": ExtResource("100")
-}, {
-"duration": 1.0,
-"texture": ExtResource("101")
-}, {
-"duration": 1.0,
-"texture": ExtResource("102")
-}],
-"loop": false,
-"name": &"Run Slashing",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("103")
-}, {
-"duration": 1.0,
-"texture": ExtResource("104")
-}, {
-"duration": 1.0,
-"texture": ExtResource("105")
-}, {
-"duration": 1.0,
-"texture": ExtResource("106")
-}, {
-"duration": 1.0,
-"texture": ExtResource("107")
-}, {
-"duration": 1.0,
-"texture": ExtResource("108")
-}, {
-"duration": 1.0,
-"texture": ExtResource("109")
-}, {
-"duration": 1.0,
-"texture": ExtResource("110")
-}, {
-"duration": 1.0,
-"texture": ExtResource("111")
-}, {
-"duration": 1.0,
-"texture": ExtResource("112")
-}, {
-"duration": 1.0,
-"texture": ExtResource("113")
-}, {
-"duration": 1.0,
-"texture": ExtResource("114")
-}],
-"loop": false,
-"name": &"Kicking",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("115")
-}, {
-"duration": 1.0,
-"texture": ExtResource("116")
-}, {
-"duration": 1.0,
-"texture": ExtResource("117")
-}, {
-"duration": 1.0,
-"texture": ExtResource("118")
-}, {
-"duration": 1.0,
-"texture": ExtResource("119")
-}, {
-"duration": 1.0,
-"texture": ExtResource("120")
-}, {
-"duration": 1.0,
-"texture": ExtResource("121")
-}, {
-"duration": 1.0,
-"texture": ExtResource("122")
-}, {
-"duration": 1.0,
-"texture": ExtResource("123")
-}, {
-"duration": 1.0,
-"texture": ExtResource("124")
-}, {
-"duration": 1.0,
-"texture": ExtResource("125")
-}, {
-"duration": 1.0,
-"texture": ExtResource("126")
-}],
-"loop": false,
-"name": &"Hurt",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("127")
-}, {
-"duration": 1.0,
-"texture": ExtResource("128")
-}, {
-"duration": 1.0,
-"texture": ExtResource("129")
-}, {
-"duration": 1.0,
-"texture": ExtResource("130")
-}, {
-"duration": 1.0,
-"texture": ExtResource("131")
-}, {
-"duration": 1.0,
-"texture": ExtResource("132")
-}, {
-"duration": 1.0,
-"texture": ExtResource("133")
-}, {
-"duration": 1.0,
-"texture": ExtResource("134")
-}, {
-"duration": 1.0,
-"texture": ExtResource("135")
-}, {
-"duration": 1.0,
-"texture": ExtResource("136")
-}, {
-"duration": 1.0,
-"texture": ExtResource("137")
-}, {
-"duration": 1.0,
-"texture": ExtResource("138")
-}],
-"loop": false,
-"name": &"Throwing",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("139")
-}, {
-"duration": 1.0,
-"texture": ExtResource("140")
-}, {
-"duration": 1.0,
-"texture": ExtResource("141")
-}, {
-"duration": 1.0,
-"texture": ExtResource("142")
-}, {
-"duration": 1.0,
-"texture": ExtResource("143")
-}, {
-"duration": 1.0,
-"texture": ExtResource("144")
-}, {
-"duration": 1.0,
-"texture": ExtResource("145")
-}, {
-"duration": 1.0,
-"texture": ExtResource("146")
-}, {
-"duration": 1.0,
-"texture": ExtResource("147")
-}, {
-"duration": 1.0,
-"texture": ExtResource("148")
-}, {
-"duration": 1.0,
-"texture": ExtResource("149")
-}, {
-"duration": 1.0,
-"texture": ExtResource("150")
-}],
-"loop": false,
-"name": &"Throwing In Air",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("151")
-}, {
-"duration": 1.0,
-"texture": ExtResource("152")
-}, {
-"duration": 1.0,
-"texture": ExtResource("153")
-}, {
-"duration": 1.0,
-"texture": ExtResource("154")
-}, {
-"duration": 1.0,
-"texture": ExtResource("155")
-}, {
-"duration": 1.0,
-"texture": ExtResource("156")
-}, {
-"duration": 1.0,
-"texture": ExtResource("157")
-}, {
-"duration": 1.0,
-"texture": ExtResource("158")
-}, {
-"duration": 1.0,
-"texture": ExtResource("159")
-}, {
-"duration": 1.0,
-"texture": ExtResource("160")
-}, {
-"duration": 1.0,
-"texture": ExtResource("161")
-}, {
-"duration": 1.0,
-"texture": ExtResource("162")
-}, {
-"duration": 1.0,
-"texture": ExtResource("163")
-}, {
-"duration": 1.0,
-"texture": ExtResource("164")
-}, {
-"duration": 1.0,
-"texture": ExtResource("165")
-}],
-"loop": false,
-"name": &"Dying",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("166")
-}, {
-"duration": 1.0,
-"texture": ExtResource("167")
-}, {
-"duration": 1.0,
-"texture": ExtResource("168")
-}, {
-"duration": 1.0,
-"texture": ExtResource("169")
-}, {
-"duration": 1.0,
-"texture": ExtResource("170")
-}, {
-"duration": 1.0,
-"texture": ExtResource("171")
-}],
-"loop": true,
-"name": &"Sliding",
-"speed": 12.0
+"speed": 30.0
 }]

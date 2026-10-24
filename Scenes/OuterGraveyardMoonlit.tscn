@@ -1,0 +1,3949 @@
+[gd_scene format=3 uid="uid://c742a7p8yjb"]
+
+[ext_resource type="PackedScene" path="res://Scenes/Environment/CemeteryBackground.tscn" id="1_v51sb"]
+[ext_resource type="Script" uid="uid://jtqdy2cnjhr4" path="res://Scripts/Environment/responsive_ground.gd" id="3_c0xi8"]
+[ext_resource type="Texture2D" uid="uid://ugd1obogjjtb" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 04.png" id="4_j8wab"]
+[ext_resource type="Texture2D" uid="uid://ckh4ied50qpwq" path="res://Sprites/Graveyard/GraveyardTileset/png/Tiles/Tile (2).png" id="5_0mpmd"]
+[ext_resource type="Texture2D" uid="uid://cu4dqjrmoue5k" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 08.png" id="6_i67bi"]
+[ext_resource type="Texture2D" uid="uid://c32ps7807pbwo" path="res://Sprites/Graveyard/GraveyardTileset/png/Tiles/Tile (4).png" id="7_88k8y"]
+[ext_resource type="Texture2D" uid="uid://b0xkduxe2n0s7" path="res://Sprites/Graveyard/GraveyardTileset/png/Tiles/Tile (5).png" id="8_2020x"]
+[ext_resource type="Texture2D" uid="uid://bg86xxyb0smic" path="res://Sprites/Graveyard/GraveyardTileset/png/Tiles/Tile (6).png" id="9_c5j5y"]
+[ext_resource type="Texture2D" uid="uid://dk7jotvo7w6qf" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 02.png" id="10_7gx6j"]
+[ext_resource type="PackedScene" path="res://Scenes/Environment/BridgeWaterfall.tscn" id="10_aonbx"]
+[ext_resource type="Script" uid="uid://qa4psfabpwiq" path="res://Scripts/sagging_bridge.gd" id="12_hk8g7"]
+[ext_resource type="Texture2D" uid="uid://8yrcwyvfb56w" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Bush 01.png" id="12_wenad"]
+[ext_resource type="Texture2D" uid="uid://b8ags3khxygdf" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Bridge Part 01.png" id="13_1su6u"]
+[ext_resource type="Texture2D" uid="uid://u8hd8a0qbwi8" path="res://Resources/Levels/Stones_redraw.png" id="13_aonbx"]
+[ext_resource type="Texture2D" uid="uid://73va7sklld5n" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Bridge Part 02.png" id="14_4ko12"]
+[ext_resource type="Texture2D" uid="uid://b6gunm12fhhtj" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Tree 01.png" id="15_ip4fc"]
+[ext_resource type="Texture2D" uid="uid://dacpwdhe0e4xm" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Lantern.png" id="16_6e1lm"]
+[ext_resource type="Texture2D" uid="uid://dm5e2ppds6pqv" path="res://Sprites/Tiles/Tile (4).png" id="16_k5fei"]
+[ext_resource type="Texture2D" uid="uid://cgfskn0r7ju1" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Fence 01.png" id="17_qil01"]
+[ext_resource type="Texture2D" uid="uid://dou7nb66xjg6d" path="res://Sprites/Tiles/Tile (10).png" id="17_wlg5c"]
+[ext_resource type="Texture2D" uid="uid://b72j7k1ufylki" path="res://Sprites/Tiles/Tile (8).png" id="18_amn2u"]
+[ext_resource type="Texture2D" uid="uid://cng13rabpcchy" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Fence 02.png" id="18_k753e"]
+[ext_resource type="Texture2D" uid="uid://h74kenl6mt1n" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Tree 02.png" id="19_1w3in"]
+[ext_resource type="Texture2D" uid="uid://d4mcu6qxk2ejp" path="res://Sprites/Tiles/Tile (5).png" id="19_gj544"]
+[ext_resource type="Texture2D" uid="uid://b8agm8yfofok0" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Rock 02.png" id="19_whhd7"]
+[ext_resource type="Texture2D" uid="uid://dmjwdeo0hm1s5" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Bone.png" id="20_1gjcc"]
+[ext_resource type="Texture2D" uid="uid://dnfva1eie0arg" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground Additional 02.png" id="20_8e665"]
+[ext_resource type="Texture2D" uid="uid://bstcrvsl4jsgl" path="res://Resources/Second_prompt/background_assets/house_01_2d_clean.png" id="20_ibml5"]
+[ext_resource type="Texture2D" uid="uid://csa0jqjx3e76x" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Crypt.png" id="20_pfu5p"]
+[ext_resource type="Texture2D" uid="uid://cbnfs511urn73" path="res://Sprites/Graveyard/GraveyardTileset/png/Objects/TombStone (1).png" id="21_7gx6j"]
+[ext_resource type="Texture2D" uid="uid://cv4w5w2a3p11c" path="res://Resources/Second_prompt/background_assets/house_02_tall_balcony.png" id="21_hk8g7"]
+[ext_resource type="Texture2D" uid="uid://g6vhjk887opq" path="res://Sprites/Tiles/Tile (6).png" id="21_stvwn"]
+[ext_resource type="Texture2D" uid="uid://dmk1oo154jqne" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Bush 02.png" id="21_uraxg"]
+[ext_resource type="Texture2D" uid="uid://brcbmto3fj114" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 09.png" id="22_tvjuj"]
+[ext_resource type="Texture2D" uid="uid://c2cthtq8schsv" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 06.png" id="23_5mcap"]
+[ext_resource type="Texture2D" uid="uid://bu83xtnwercr6" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Signpost 02.png" id="23_ub0fu"]
+[ext_resource type="Texture2D" uid="uid://tg56f5g173hu" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Rock 04.png" id="24_738wq"]
+[ext_resource type="Texture2D" uid="uid://dk14imhi0fne4" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 13.png" id="24_fukak"]
+[ext_resource type="Texture2D" uid="uid://chw526e0wyb6g" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Stone fence 02.png" id="25_lftyp"]
+[ext_resource type="Texture2D" uid="uid://dsth4vvqb3u57" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground Additional 03.png" id="25_u0vqy"]
+[ext_resource type="Texture2D" uid="uid://byhf26e5psi4q" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ladder.png" id="26_amn2u"]
+[ext_resource type="Texture2D" uid="uid://b648nv7tl4je1" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Signpost 03.png" id="26_ga476"]
+[ext_resource type="Texture2D" uid="uid://bmqml1qb2ste6" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Rock 05.png" id="27_vf3go"]
+[ext_resource type="Texture2D" uid="uid://dmvag26f4riy0" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Rock 06.png" id="28_1k0py"]
+[ext_resource type="Texture2D" uid="uid://b5v2lypec8huw" path="res://Resources/Lifts/wooden_lift/wooden_lift_pixel.png" id="28_1w3in"]
+[ext_resource type="Texture2D" uid="uid://bkwtfdjwobqkd" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Headstone 01.png" id="28_tvjuj"]
+[ext_resource type="Texture2D" uid="uid://n32j5t8ayqs8" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Wooden Barrel.png" id="29_5mcap"]
+[ext_resource type="Texture2D" uid="uid://ccxksfacw0f1a" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Signpost 04.png" id="29_coe7x"]
+[ext_resource type="Texture2D" uid="uid://dgxfp6v186cas" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Headstone 02.png" id="30_fukak"]
+[ext_resource type="Texture2D" uid="uid://b7l5e2bivhoeg" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Fire.png" id="30_m3ixb"]
+[ext_resource type="Texture2D" uid="uid://dyoqem8vd204d" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Signpost 05.png" id="31_53h3j"]
+[ext_resource type="Texture2D" uid="uid://i4hx75wwgh4q" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Skull.png" id="31_u0vqy"]
+[ext_resource type="Texture2D" uid="uid://bfxj7lpk38ae5" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Coffin.png" id="32_0e5vl"]
+[ext_resource type="Texture2D" uid="uid://b0leelmpxlv8n" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Headstone 03.png" id="34_nx30a"]
+[ext_resource type="Texture2D" uid="uid://dmigl7grgypo" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Signpost 06.png" id="36_iprd0"]
+[ext_resource type="Texture2D" uid="uid://bh710g0wvj04h" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Signpost 01.png" id="36_tthmt"]
+[ext_resource type="Texture2D" uid="uid://dlryk6235kja8" path="res://Sprites/Graveyard/GraveyardTileset/png/Tiles/Tile (1).png" id="37_6muqy"]
+[ext_resource type="Script" uid="uid://c8or26v0ouen6" path="res://Scripts/kill_zone.gd" id="38_g1qam"]
+[ext_resource type="Script" uid="uid://bv4mg2gyiqjdd" path="res://Characters/Active_Players/Player/player.gd" id="39_djj6u"]
+[ext_resource type="Texture2D" uid="uid://djunsxsjbsne6" path="res://Sprites/Graveyard/GraveyardTileset/png/Tiles/Tile (3).png" id="39_hxk04"]
+[ext_resource type="AudioStream" uid="uid://cc4bk6fml4q3f" path="res://Resources/character_voices/30_Jump_03.wav" id="40_h1b5i"]
+[ext_resource type="AudioStream" uid="uid://c08ej7uefog0c" path="res://Resources/character_voices/03_Step_grass_03.wav" id="41_tuktd"]
+[ext_resource type="AudioStream" uid="uid://mwsvtdp6gbby" path="res://Resources/character_voices/56_Attack_03.wav" id="42_2a70d"]
+[ext_resource type="AudioStream" uid="uid://6qw52k8gxjdf" path="res://Resources/character_voices/61_Hit_03.wav" id="43_5b677"]
+[ext_resource type="Texture2D" uid="uid://bln460hvddh30" path="res://Sprites/Tiles/Tile (2).png" id="43_8qluk"]
+[ext_resource type="AudioStream" uid="uid://jc86kj4mpjrm" path="res://Resources/character_voices/45_Landing_01.wav" id="44_srpt6"]
+[ext_resource type="Script" uid="uid://f3kytvyw6lfm" path="res://Scripts/runtime_hud.gd" id="46_ibsnp"]
+[ext_resource type="Texture2D" uid="uid://bgnq7npmjdtwu" path="res://Sprites/Hud/drawn_health_bar_empty_small.png" id="47_n2pes"]
+[ext_resource type="Texture2D" uid="uid://c7gq7cft7nemx" path="res://Sprites/Hud/drawn_health_bar_fill_small.png" id="48_l8tr1"]
+[ext_resource type="Texture2D" uid="uid://c2ev38mwbo8nv" path="res://Sprites/Hud/drawn_power_bar_empty_small.png" id="49_wenad"]
+[ext_resource type="Texture2D" uid="uid://on57v5ad1axp" path="res://Sprites/Hud/drawn_power_bar_fill_small.png" id="50_55jme"]
+[ext_resource type="Texture2D" uid="uid://ch6ldaxcb0h4t" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 11.png" id="51_gj544"]
+[ext_resource type="Texture2D" uid="uid://dy14viarf88gg" path="res://Sprites/Hud/hud_lives_label_small.png" id="51_whhd7"]
+[ext_resource type="Texture2D" uid="uid://dcfetlxg3uk8w" path="res://Sprites/Objects/moonlit_cottage.png" id="52_house_cottage"]
+[ext_resource type="Texture2D" uid="uid://3cujk74hrmm5" path="res://Sprites/Objects/moonlit_longhouse.png" id="53_house_long"]
+[ext_resource type="Texture2D" uid="uid://ba6d587pjoeaw" path="res://Sprites/Objects/moonlit_manor.png" id="54_house_manor"]
+[ext_resource type="Shader" uid="uid://8ws2oml3qic2" path="res://Scenes/fog_shader.gdshader" id="57_c5j5y"]
+[ext_resource type="Texture2D" uid="uid://btj8r31tx7wsq" path="res://Resources/Levels/Stairs_redraw.png" id="58_aonbx"]
+[ext_resource type="Script" uid="uid://xj3dem0vt4nf" path="res://Scripts/Environment/window_light.gd" id="58_window_light"]
+[ext_resource type="Texture2D" uid="uid://b5mlg8q0ne7vo" path="res://Resources/Levels/Terrain_redraw.png" id="59_ibml5"]
+[ext_resource type="Texture2D" uid="uid://ceqdknnaq7kou" path="res://Resources/Levels/Tree_redraw.png" id="60_hk8g7"]
+[ext_resource type="Script" uid="uid://cqxsvhn66hqkq" path="res://Scripts/Environment/proximity_lantern.gd" id="60_proximity_lantern"]
+[ext_resource type="Texture2D" uid="uid://cs5x5ftv86ddy" path="res://Resources/Levels/Grass2_redraw.png" id="61_ibml5"]
+[ext_resource type="Texture2D" uid="uid://dtm7o6uu8pjg5" path="res://Sprites/Tiles/Tile (12).png" id="61_vkw4u"]
+[ext_resource type="Texture2D" uid="uid://c5n8l34yto1p2" path="res://Sprites/Tiles/Tile (13).png" id="62_cxsg2"]
+[ext_resource type="Texture2D" uid="uid://bwkfl4n0lrqx0" path="res://Sprites/Tiles/Tile (9).png" id="64_yp222"]
+[ext_resource type="Texture2D" uid="uid://jwys6crdurld" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Stone.png" id="70_pfu5p"]
+[ext_resource type="Texture2D" uid="uid://ikkqp22egn8m" path="res://Sprites/Objects/RoadToHellSign.png" id="72_k5fei"]
+[ext_resource type="Texture2D" uid="uid://ckbpqoqbv0aoq" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 10.png" id="73_8e665"]
+[ext_resource type="Texture2D" uid="uid://bblr16xg6wjxb" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 12.png" id="74_stvwn"]
+[ext_resource type="Script" uid="uid://b4nqiwahcw0f7" path="res://Scripts/Environment/existing_asset_showcase.gd" id="75_asset_showcase"]
+[ext_resource type="Texture2D" uid="uid://bm5wbbhvyfrdy" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 06.png" id="rock_wall_fill"]
+[ext_resource type="Texture2D" uid="uid://km1leb24dtu1" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 09.png" id="rock_wall_left"]
+[ext_resource type="Texture2D" uid="uid://knsfke26defc" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 02.png" id="rock_wall_top"]
+[ext_resource type="Texture2D" uid="uid://ciohjpdn4l80u" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 04.png" id="rock_wall_top_left"]
+[ext_resource type="Script" uid="uid://bg5e6oho4xfvc" path="res://Scripts/Environment/sea_water.gd" id="Script_sea_water"]
+[ext_resource type="Texture2D" uid="uid://c8elsh2imcekw" path="res://Resources/Levels/Grass_redraw.png" id="Texture_bank_edge_grass"]
+[ext_resource type="Texture2D" uid="uid://v0j0poxw372" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Rock 01.png" id="Texture_bank_edge_rock"]
+[ext_resource type="Texture2D" uid="uid://li1xi3tm2g" path="res://Resources/Second_prompt/background_assets/Aseprite_Redraws/broken_chimney_redraw.png" id="Texture_bank_stones"]
+[ext_resource type="Texture2D" uid="uid://cesxe45qg4vqb" path="res://Resources/Second_prompt/background_assets/Aseprite_Redraws/river_embankment_v1.png" id="Texture_river_embankment"]
+[ext_resource type="Texture2D" uid="uid://clxrxadbge26e" path="res://Resources/Second_prompt/background_assets/river_upstream_left_v2.png" id="Texture_river_upstream"]
+[ext_resource type="Texture2D" uid="uid://jfrcev6lfqbu" path="res://Resources/Second_prompt/background_assets/Aseprite_Redraws/waterfall_cliff_redraw.png" id="Texture_waterfall_banks"]
+
+[sub_resource type="Shader" id="Shader_sea_water"]
+code = "shader_type canvas_item;
+render_mode unshaded;
+uniform float water_opacity = 1.0;
+
+void fragment() {
+    vec2 p = floor(UV * vec2(2364.0, 860.0) / 4.0) * 4.0;
+    float wave = 8.0 + floor((sin(p.x * 0.018 + TIME * 1.2) + sin(p.x * 0.041 - TIME * 0.8)) * 0.5) * 4.0;
+    float depth = p.y - wave;
+    vec3 water = mix(vec3(0.055, 0.22, 0.26), vec3(0.025, 0.075, 0.12), clamp(depth / 480.0, 0.0, 1.0));
+    float ripple = step(0.94, sin(p.x * 0.027 + TIME * 0.65 + floor(p.y / 20.0) * 2.3));
+    ripple *= step(0.75, cos(p.y * 0.31)) * (1.0 - clamp(depth / 300.0, 0.0, 1.0));
+    water += vec3(0.06, 0.12, 0.12) * ripple;
+    if (depth < 4.0) {
+        water = vec3(0.28, 0.49, 0.48);
+    } else if (depth < 12.0) {
+        water = vec3(0.12, 0.34, 0.37);
+    }
+    COLOR = vec4(water, step(0.0, depth) * water_opacity);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sea_water"]
+shader = SubResource("Shader_sea_water")
+shader_parameter/water_opacity = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sea_overlay"]
+shader = SubResource("Shader_sea_water")
+shader_parameter/water_opacity = 0.55
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kh1dd"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_rgfsm"]
+colors = PackedColorArray(1, 0.72, 0.34, 0.04, 1, 0.45, 0.12, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bb5oq"]
+gradient = SubResource("Gradient_rgfsm")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7blmt"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_8orkr"]
+colors = PackedColorArray(1, 0.72, 0.34, 0.04, 1, 0.45, 0.12, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_e7x4x"]
+gradient = SubResource("Gradient_8orkr")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_21pn0"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_wd8x4"]
+colors = PackedColorArray(1, 0.72, 0.34, 0.04, 1, 0.45, 0.12, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tqe2w"]
+gradient = SubResource("Gradient_wd8x4")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6nfru"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_01nag"]
+colors = PackedColorArray(1, 0.72, 0.34, 0.04, 1, 0.45, 0.12, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yvq83"]
+gradient = SubResource("Gradient_01nag")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_s541k"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_rdh7s"]
+colors = PackedColorArray(1, 0.72, 0.34, 0.04, 1, 0.45, 0.12, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_t1s3b"]
+gradient = SubResource("Gradient_rdh7s")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_v0fc6"]
+offsets = PackedFloat32Array(0, 0.42, 1)
+colors = PackedColorArray(0.63, 0.76, 0.79, 0.085, 0.58, 0.72, 0.76, 0.04, 0.58, 0.72, 0.76, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wh1vr"]
+gradient = SubResource("Gradient_v0fc6")
+width = 512
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_i7gyh"]
+offsets = PackedFloat32Array(0, 0.42, 1)
+colors = PackedColorArray(0.63, 0.76, 0.79, 0.085, 0.58, 0.72, 0.76, 0.04, 0.58, 0.72, 0.76, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_edxbf"]
+gradient = SubResource("Gradient_i7gyh")
+width = 512
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_dw5gp"]
+offsets = PackedFloat32Array(0, 0.42, 1)
+colors = PackedColorArray(0.63, 0.76, 0.79, 0.085, 0.58, 0.72, 0.76, 0.04, 0.58, 0.72, 0.76, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_847sm"]
+gradient = SubResource("Gradient_dw5gp")
+width = 512
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_ho3qq"]
+offsets = PackedFloat32Array(0, 0.42, 1)
+colors = PackedColorArray(0.63, 0.76, 0.79, 0.085, 0.58, 0.72, 0.76, 0.04, 0.58, 0.72, 0.76, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_s2tut"]
+gradient = SubResource("Gradient_ho3qq")
+width = 512
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_4qvpy"]
+offsets = PackedFloat32Array(0, 0.42, 1)
+colors = PackedColorArray(0.63, 0.76, 0.79, 0.085, 0.58, 0.72, 0.76, 0.04, 0.58, 0.72, 0.76, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_e6gix"]
+gradient = SubResource("Gradient_4qvpy")
+width = 512
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_ituld"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6g4xq"]
+gradient = SubResource("Gradient_ituld")
+width = 8
+height = 8
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sb2c8"]
+emission_shape = 3
+emission_box_extents = Vector3(260, 50, 1)
+direction = Vector3(0.8, -0.2, 0)
+spread = 35.0
+initial_velocity_min = 4.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, -1.5, 0)
+scale_min = 0.8
+scale_max = 1.8
+color = Color(0.58, 0.78, 0.82, 0.34)
+
+[sub_resource type="Gradient" id="Gradient_giqrp"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_t7r6g"]
+gradient = SubResource("Gradient_giqrp")
+width = 8
+height = 8
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2jrsi"]
+emission_shape = 3
+emission_box_extents = Vector3(230, 60, 1)
+direction = Vector3(0.8, -0.2, 0)
+spread = 35.0
+initial_velocity_min = 4.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, -1.5, 0)
+scale_min = 0.8
+scale_max = 1.8
+color = Color(0.72, 0.82, 0.82, 0.3)
+
+[sub_resource type="Gradient" id="Gradient_83lvu"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_l5b7j"]
+gradient = SubResource("Gradient_83lvu")
+width = 8
+height = 8
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7e6ow"]
+emission_shape = 3
+emission_box_extents = Vector3(250, 62.5, 1)
+direction = Vector3(0.8, -0.2, 0)
+spread = 35.0
+initial_velocity_min = 4.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, -1.5, 0)
+scale_min = 0.8
+scale_max = 1.8
+color = Color(0.68, 0.76, 0.78, 0.28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1gjcc"]
+size = Vector2(4099, 633)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vertical_drop_landing"]
+size = Vector2(256, 256)
+
+[sub_resource type="Shader" id="Shader_bank_stone_repeat"]
+code = "shader_type canvas_item;
+varying vec4 bank_tint;
+void vertex() {
+    bank_tint = COLOR;
+}
+void fragment() {
+    vec2 size = vec2(textureSize(TEXTURE, 0));
+    vec2 mirrored_uv = 1.0 - abs(mod(UV * size / vec2(154.0, 98.0), 2.0) - 1.0);
+    vec2 stone_uv = (vec2(18.0, 45.0) + mirrored_uv * vec2(154.0, 98.0)) / size;
+    COLOR = texture(TEXTURE, stone_uv) * bank_tint;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bank_stone_repeat"]
+shader = SubResource("Shader_bank_stone_repeat")
+
+[sub_resource type="Shader" id="Shader_river_join"]
+code = "shader_type canvas_item;
+void fragment() {
+    COLOR.a *= 1.0 - smoothstep(0.895, 0.935, UV.y);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_river_join"]
+shader = SubResource("Shader_river_join")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uraxg"]
+size = Vector2(66, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ub0fu"]
+size = Vector2(66, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_738wq"]
+size = Vector2(66, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lftyp"]
+size = Vector2(66, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ga476"]
+size = Vector2(66, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vf3go"]
+size = Vector2(66, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1k0py"]
+size = Vector2(66, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_coe7x"]
+size = Vector2(66, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m3ixb"]
+size = Vector2(488, 220)
+
+[sub_resource type="Animation" id="Animation_53h3j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BridgeDeck:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BridgeDeck/Plank_00:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(32, -14)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BridgeDeck/Plank_00:rotation")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.035]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BridgeDeck/Plank_01:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(96, -11)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BridgeDeck/Plank_01:rotation")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.028]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("BridgeDeck/Plank_02:position")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(160, -7)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("BridgeDeck/Plank_02:rotation")
+tracks/6/interp = 2
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.018]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("BridgeDeck/Plank_03:position")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(224, -4)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("BridgeDeck/Plank_03:rotation")
+tracks/8/interp = 2
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.006]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("BridgeDeck/Plank_04:position")
+tracks/9/interp = 2
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(288, -4)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("BridgeDeck/Plank_04:rotation")
+tracks/10/interp = 2
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.006]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("BridgeDeck/Plank_05:position")
+tracks/11/interp = 2
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(352, -7)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("BridgeDeck/Plank_05:rotation")
+tracks/12/interp = 2
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.018]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("BridgeDeck/Plank_06:position")
+tracks/13/interp = 2
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(416, -11)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("BridgeDeck/Plank_06:rotation")
+tracks/14/interp = 2
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.028]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("BridgeDeck/Plank_07:position")
+tracks/15/interp = 2
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(480, -14)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("BridgeDeck/Plank_07:rotation")
+tracks/16/interp = 2
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.035]
+}
+
+[sub_resource type="Animation" id="Animation_nx30a"]
+length = 0.42
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BridgeDeck:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BridgeDeck/Plank_00:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.42),
+"transitions": PackedFloat32Array(1, 0.55),
+"update": 0,
+"values": [Vector2(32, -14), Vector2(32, -14)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BridgeDeck/Plank_00:rotation")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.42),
+"transitions": PackedFloat32Array(1, 0.55),
+"update": 0,
+"values": [0.035, 0.08]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BridgeDeck/Plank_01:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.42),
+"transitions": PackedFloat32Array(1, 0.55),
+"update": 0,
+"values": [Vector2(96, -11), Vector2(96, -4)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BridgeDeck/Plank_01:rotation")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.42),
+"transitions": PackedFloat32Array(1, 0.55),
+"update": 0,
+"values": [0.028, 0.065]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("BridgeDeck/Plank_02:position")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.42),
+"transitions": PackedFloat32Array(1, 0.55),
+"update": 0,
+"values": [Vector2(160, -7), Vector2(160, 11)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("BridgeDeck/Plank_02:rotation")
+tracks/6/interp = 2
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.42),
+"transitions": PackedFloat32Array(1, 0.55),
+"update": 0,
+"values": [0.018, 0.045]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("BridgeDeck/Plank_03:position")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.42),
+"transitions": PackedFloat32Array(1, 0.55),
+"update": 0,
+"values": [Vector2(224, -4), Vector2(224, 22)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("BridgeDeck/Plank_03:rotation")
+tracks/8/interp = 2
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.42),
+"transitions": PackedFloat32Array(1, 0.55),
+"update": 0,
+"values": [0.006, 0.018]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("BridgeDeck/Plank_04:position")
+tracks/9/interp = 2
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.42),
+"transitions": PackedFloat32Array(1, 0.55),
+"update": 0,
+"values": [Vector2(288, -4), Vector2(288, 22)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("BridgeDeck/Plank_04:rotation")
+tracks/10/interp = 2
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.42),
+"transitions": PackedFloat32Array(1, 0.55),
+"update": 0,
+"values": [-0.006, -0.018]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("BridgeDeck/Plank_05:position")
+tracks/11/interp = 2
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.42),
+"transitions": PackedFloat32Array(1, 0.55),
+"update": 0,
+"values": [Vector2(352, -7), Vector2(352, 11)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("BridgeDeck/Plank_05:rotation")
+tracks/12/interp = 2
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.42),
+"transitions": PackedFloat32Array(1, 0.55),
+"update": 0,
+"values": [-0.018, -0.045]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("BridgeDeck/Plank_06:position")
+tracks/13/interp = 2
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 0.42),
+"transitions": PackedFloat32Array(1, 0.55),
+"update": 0,
+"values": [Vector2(416, -11), Vector2(416, -4)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("BridgeDeck/Plank_06:rotation")
+tracks/14/interp = 2
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 0.42),
+"transitions": PackedFloat32Array(1, 0.55),
+"update": 0,
+"values": [-0.028, -0.065]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("BridgeDeck/Plank_07:position")
+tracks/15/interp = 2
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 0.42),
+"transitions": PackedFloat32Array(1, 0.55),
+"update": 0,
+"values": [Vector2(480, -14), Vector2(480, -14)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("BridgeDeck/Plank_07:rotation")
+tracks/16/interp = 2
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 0.42),
+"transitions": PackedFloat32Array(1, 0.55),
+"update": 0,
+"values": [-0.035, -0.08]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iprd0"]
+_data = {
+&"RESET": SubResource("Animation_53h3j"),
+&"sag": SubResource("Animation_nx30a")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6muqy"]
+size = Vector2(388, 256)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1u6mt"]
+size = Vector2(900, 258)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3nkxo"]
+size = Vector2(648.921, 125.522675)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ladder_climb"]
+size = Vector2(46.758545, 143.87077)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cottage_01"]
+atlas = ExtResource("52_house_cottage")
+region = Rect2(750, 440, 140, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cottage_02"]
+atlas = ExtResource("52_house_cottage")
+region = Rect2(400, 765, 120, 155)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_longhouse_01"]
+atlas = ExtResource("53_house_long")
+region = Rect2(1125, 435, 125, 130)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_longhouse_02"]
+atlas = ExtResource("53_house_long")
+region = Rect2(395, 725, 120, 135)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_longhouse_03"]
+atlas = ExtResource("53_house_long")
+region = Rect2(700, 725, 120, 140)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_manor_01"]
+atlas = ExtResource("54_house_manor")
+region = Rect2(390, 140, 80, 105)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_manor_02"]
+atlas = ExtResource("54_house_manor")
+region = Rect2(375, 295, 95, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_manor_03"]
+atlas = ExtResource("54_house_manor")
+region = Rect2(655, 405, 120, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_manor_04"]
+atlas = ExtResource("54_house_manor")
+region = Rect2(605, 835, 105, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_manor_05"]
+atlas = ExtResource("54_house_manor")
+region = Rect2(865, 835, 120, 160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hxk04"]
+size = Vector2(290, 240)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8qluk"]
+size = Vector2(180, 240)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vkw4u"]
+size = Vector2(180, 280)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cxsg2"]
+size = Vector2(10327, 180)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yp222"]
+radius = 6.0
+height = 18.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ladder_detector"]
+radius = 42.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pause_panel"]
+bg_color = Color(0.02, 0.025, 0.03, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.25, 0.29, 0.32, 0.95)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1u6mt"]
+shader = ExtResource("57_c5j5y")
+shader_parameter/fog_color = Color(0.53602695, 0.7440277, 0.8538129, 0.21960784)
+shader_parameter/speed = 0.03
+shader_parameter/scale = 6.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bdoqp"]
+size = Vector2(123.9043, 124.2074)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t0hve"]
+size = Vector2(117.760376, 116.62225)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1aaaq"]
+size = Vector2(613.5, 127.058784)
+
+[node name="OuterGraveyardMoonlit" type="Node2D" unique_id=1144784253]
+metadata/level_name = "Outer Graveyard"
+metadata/layout_version = "Version 1 - Moonlit Procession"
+metadata/campaign_next = "Forgotten Path"
+metadata/_edit_vertical_guides_ = [-84.0]
+
+[node name="CemeteryBackground" parent="." unique_id=249818500 instance=ExtResource("1_v51sb")]
+
+[node name="NeutralCharcoalNight" type="CanvasModulate" parent="." unique_id=283101697]
+color = Color(0.58, 0.6, 0.63, 1)
+
+[node name="Level" type="Node2D" parent="." unique_id=1900744520]
+script = ExtResource("3_c0xi8")
+
+[node name="SeaWater" type="ColorRect" parent="Level" unique_id=444116471]
+z_index = -2
+material = SubResource("ShaderMaterial_sea_water")
+offset_left = 6592.0
+offset_top = 940.0
+offset_right = 8956.0
+offset_bottom = 1800.0
+mouse_filter = 2
+script = ExtResource("Script_sea_water")
+
+[node name="SubmergedTint" type="ColorRect" parent="Level/SeaWater" unique_id=967367291]
+z_index = 1325
+material = SubResource("ShaderMaterial_sea_overlay")
+layout_mode = 0
+offset_left = 64.0
+offset_top = 13.0
+offset_right = 2364.0
+offset_bottom = 860.0
+mouse_filter = 2
+
+[node name="RightRockWall" type="StaticBody2D" parent="Level" unique_id=1067639411]
+position = Vector2(8316, -119)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level/RightRockWall" unique_id=769328427]
+polygon = PackedVector2Array(56, 8, 640, 8, 640, 1408, 56, 1408)
+
+[node name="Rock_0_0" type="Sprite2D" parent="Level/RightRockWall" unique_id=666629288]
+z_index = -1
+position = Vector2(64, 64)
+texture = ExtResource("rock_wall_top_left")
+
+[node name="Rock_0_1" type="Sprite2D" parent="Level/RightRockWall" unique_id=1491506347]
+z_index = -1
+position = Vector2(192, 64)
+texture = ExtResource("rock_wall_top")
+
+[node name="Rock_0_2" type="Sprite2D" parent="Level/RightRockWall" unique_id=68316120]
+z_index = -1
+position = Vector2(320, 64)
+texture = ExtResource("rock_wall_top")
+
+[node name="Rock_1_0" type="Sprite2D" parent="Level/RightRockWall" unique_id=1060648817]
+z_index = -1
+position = Vector2(64, 192)
+texture = ExtResource("rock_wall_left")
+
+[node name="Rock_1_1" type="Sprite2D" parent="Level/RightRockWall" unique_id=1351522842]
+z_index = -1
+position = Vector2(192, 192)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_1_2" type="Sprite2D" parent="Level/RightRockWall" unique_id=1416504993]
+z_index = -1
+position = Vector2(320, 192)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_2_0" type="Sprite2D" parent="Level/RightRockWall" unique_id=846597697]
+z_index = -1
+position = Vector2(64, 320)
+texture = ExtResource("rock_wall_left")
+
+[node name="Rock_2_1" type="Sprite2D" parent="Level/RightRockWall" unique_id=1408186340]
+z_index = -1
+position = Vector2(192, 320)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_2_2" type="Sprite2D" parent="Level/RightRockWall" unique_id=517159398]
+z_index = -1
+position = Vector2(320, 320)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_3_0" type="Sprite2D" parent="Level/RightRockWall" unique_id=2103286659]
+z_index = -1
+position = Vector2(64, 448)
+texture = ExtResource("rock_wall_left")
+
+[node name="Rock_3_1" type="Sprite2D" parent="Level/RightRockWall" unique_id=1174618751]
+z_index = -1
+position = Vector2(192, 448)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_3_2" type="Sprite2D" parent="Level/RightRockWall" unique_id=2079302073]
+z_index = -1
+position = Vector2(320, 448)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_4_0" type="Sprite2D" parent="Level/RightRockWall" unique_id=1315625478]
+z_index = -1
+position = Vector2(64, 576)
+texture = ExtResource("rock_wall_left")
+
+[node name="Rock_4_1" type="Sprite2D" parent="Level/RightRockWall" unique_id=656583172]
+z_index = -1
+position = Vector2(192, 576)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_4_2" type="Sprite2D" parent="Level/RightRockWall" unique_id=986414313]
+z_index = -1
+position = Vector2(320, 576)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_5_0" type="Sprite2D" parent="Level/RightRockWall" unique_id=1726712024]
+z_index = -1
+position = Vector2(64, 704)
+texture = ExtResource("rock_wall_left")
+
+[node name="Rock_5_1" type="Sprite2D" parent="Level/RightRockWall" unique_id=158587985]
+z_index = -1
+position = Vector2(192, 704)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_5_2" type="Sprite2D" parent="Level/RightRockWall" unique_id=1253293864]
+z_index = -1
+position = Vector2(320, 704)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_6_0" type="Sprite2D" parent="Level/RightRockWall" unique_id=251789420]
+z_index = -1
+position = Vector2(64, 832)
+texture = ExtResource("rock_wall_left")
+
+[node name="Rock_6_1" type="Sprite2D" parent="Level/RightRockWall" unique_id=1432122129]
+z_index = -1
+position = Vector2(192, 832)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_6_2" type="Sprite2D" parent="Level/RightRockWall" unique_id=707850055]
+z_index = -1
+position = Vector2(320, 832)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_7_0" type="Sprite2D" parent="Level/RightRockWall" unique_id=620611933]
+z_index = -1
+position = Vector2(64, 960)
+texture = ExtResource("rock_wall_left")
+
+[node name="Rock_7_1" type="Sprite2D" parent="Level/RightRockWall" unique_id=143838992]
+z_index = -1
+position = Vector2(192, 960)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_7_2" type="Sprite2D" parent="Level/RightRockWall" unique_id=1814705990]
+z_index = -1
+position = Vector2(320, 960)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_8_0" type="Sprite2D" parent="Level/RightRockWall" unique_id=816510641]
+z_index = -1
+position = Vector2(64, 1088)
+texture = ExtResource("rock_wall_left")
+
+[node name="Rock_8_1" type="Sprite2D" parent="Level/RightRockWall" unique_id=1152470328]
+z_index = -1
+position = Vector2(192, 1088)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_8_2" type="Sprite2D" parent="Level/RightRockWall" unique_id=29932385]
+z_index = -1
+position = Vector2(320, 1088)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_9_0" type="Sprite2D" parent="Level/RightRockWall" unique_id=863060456]
+z_index = -1
+position = Vector2(64, 1216)
+texture = ExtResource("rock_wall_left")
+
+[node name="Rock_9_1" type="Sprite2D" parent="Level/RightRockWall" unique_id=1021777329]
+z_index = -1
+position = Vector2(192, 1216)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_9_2" type="Sprite2D" parent="Level/RightRockWall" unique_id=1967558304]
+z_index = -1
+position = Vector2(320, 1216)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_10_0" type="Sprite2D" parent="Level/RightRockWall" unique_id=2005416918]
+z_index = -1
+position = Vector2(64, 1344)
+texture = ExtResource("rock_wall_left")
+
+[node name="Rock_10_1" type="Sprite2D" parent="Level/RightRockWall" unique_id=470355279]
+z_index = -1
+position = Vector2(192, 1344)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_10_2" type="Sprite2D" parent="Level/RightRockWall" unique_id=1350390317]
+z_index = -1
+position = Vector2(320, 1344)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_0_3" type="Sprite2D" parent="Level/RightRockWall" unique_id=1590033754]
+z_index = -1
+position = Vector2(448, 64)
+texture = ExtResource("rock_wall_top")
+
+[node name="Rock_0_4" type="Sprite2D" parent="Level/RightRockWall" unique_id=1997022495]
+z_index = -1
+position = Vector2(576, 64)
+texture = ExtResource("rock_wall_top")
+
+[node name="Rock_1_3" type="Sprite2D" parent="Level/RightRockWall" unique_id=341388254]
+z_index = -1
+position = Vector2(448, 192)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_1_4" type="Sprite2D" parent="Level/RightRockWall" unique_id=1707264800]
+z_index = -1
+position = Vector2(576, 192)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_2_3" type="Sprite2D" parent="Level/RightRockWall" unique_id=1239191435]
+z_index = -1
+position = Vector2(448, 320)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_2_4" type="Sprite2D" parent="Level/RightRockWall" unique_id=1911179347]
+z_index = -1
+position = Vector2(576, 320)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_3_3" type="Sprite2D" parent="Level/RightRockWall" unique_id=687173828]
+z_index = -1
+position = Vector2(448, 448)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_3_4" type="Sprite2D" parent="Level/RightRockWall" unique_id=1066091471]
+z_index = -1
+position = Vector2(576, 448)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_4_3" type="Sprite2D" parent="Level/RightRockWall" unique_id=52397238]
+z_index = -1
+position = Vector2(448, 576)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_4_4" type="Sprite2D" parent="Level/RightRockWall" unique_id=191767858]
+z_index = -1
+position = Vector2(576, 576)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_5_3" type="Sprite2D" parent="Level/RightRockWall" unique_id=907432558]
+z_index = -1
+position = Vector2(448, 704)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_5_4" type="Sprite2D" parent="Level/RightRockWall" unique_id=1187524595]
+z_index = -1
+position = Vector2(576, 704)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_6_3" type="Sprite2D" parent="Level/RightRockWall" unique_id=1435960437]
+z_index = -1
+position = Vector2(448, 832)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_6_4" type="Sprite2D" parent="Level/RightRockWall" unique_id=2037065244]
+z_index = -1
+position = Vector2(576, 832)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_7_3" type="Sprite2D" parent="Level/RightRockWall" unique_id=1388257145]
+z_index = -1
+position = Vector2(448, 960)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_7_4" type="Sprite2D" parent="Level/RightRockWall" unique_id=1683665864]
+z_index = -1
+position = Vector2(576, 960)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_8_3" type="Sprite2D" parent="Level/RightRockWall" unique_id=772030586]
+z_index = -1
+position = Vector2(448, 1088)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_8_4" type="Sprite2D" parent="Level/RightRockWall" unique_id=1296332278]
+z_index = -1
+position = Vector2(576, 1088)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_9_3" type="Sprite2D" parent="Level/RightRockWall" unique_id=1232188261]
+z_index = -1
+position = Vector2(448, 1216)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_9_4" type="Sprite2D" parent="Level/RightRockWall" unique_id=229149816]
+z_index = -1
+position = Vector2(576, 1216)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_10_3" type="Sprite2D" parent="Level/RightRockWall" unique_id=1491291258]
+z_index = -1
+position = Vector2(448, 1344)
+texture = ExtResource("rock_wall_fill")
+
+[node name="Rock_10_4" type="Sprite2D" parent="Level/RightRockWall" unique_id=677391696]
+z_index = -1
+position = Vector2(576, 1344)
+texture = ExtResource("rock_wall_fill")
+
+[node name="ExistingAssetShowcase" type="Node2D" parent="Level" unique_id=1994110914]
+script = ExtResource("75_asset_showcase")
+
+[node name="RouteSection_VillageEdge" type="Marker2D" parent="Level/ExistingAssetShowcase" unique_id=322586217]
+position = Vector2(650, 620)
+metadata/section_name = "VillageEdge"
+metadata/editable_background_asset = true
+
+[node name="RouteSection_FloodedRuins" type="Marker2D" parent="Level/ExistingAssetShowcase" unique_id=1364373012]
+position = Vector2(1900, 620)
+metadata/section_name = "FloodedRuins"
+metadata/editable_background_asset = true
+
+[node name="RouteSection_WaterfallBridge" type="Marker2D" parent="Level/ExistingAssetShowcase" unique_id=933560061]
+position = Vector2(3650, 620)
+metadata/section_name = "WaterfallBridge"
+metadata/editable_background_asset = true
+
+[node name="RouteSection_LiftApproach" type="Marker2D" parent="Level/ExistingAssetShowcase" unique_id=1988550444]
+position = Vector2(5000, 620)
+metadata/section_name = "LiftApproach"
+metadata/editable_background_asset = true
+
+[node name="RouteSection_CemeteryEntrance" type="Marker2D" parent="Level/ExistingAssetShowcase" unique_id=1309569964]
+position = Vector2(6091, 621)
+metadata/section_name = "CemeteryEntrance"
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_LiftApproach_00_00" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1370801687]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
+texture_filter = 1
+position = Vector2(4928, 684)
+texture = ExtResource("4_j8wab")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_LiftApproach_00_01" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=841102879]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
+texture_filter = 1
+position = Vector2(5056, 684)
+texture = ExtResource("10_7gx6j")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_LiftApproach_00_02" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=2135379208]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
+texture_filter = 1
+position = Vector2(5184, 684)
+texture = ExtResource("6_i67bi")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_LiftApproach_01_00" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1467358674]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
+texture_filter = 1
+position = Vector2(4928, 812)
+texture = ExtResource("22_tvjuj")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_LiftApproach_01_01" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1003012411]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
+texture_filter = 1
+position = Vector2(5056, 812)
+texture = ExtResource("23_5mcap")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_LiftApproach_01_02" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=502977097]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
+texture_filter = 1
+position = Vector2(5184, 812)
+texture = ExtResource("24_fukak")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_Cemetery_00_00" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=174079065]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
+texture_filter = 1
+position = Vector2(5824, 684)
+texture = ExtResource("4_j8wab")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_Cemetery_01_00" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=2136172434]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
+texture_filter = 1
+position = Vector2(5824, 812)
+texture = ExtResource("22_tvjuj")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_Cemetery_00_01" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1246286088]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
+texture_filter = 1
+position = Vector2(5943, 685)
+texture = ExtResource("10_7gx6j")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_Cemetery_01_01" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=601663082]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
+texture_filter = 1
+position = Vector2(5952, 812)
+texture = ExtResource("23_5mcap")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_Cemetery_00_02" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1110430376]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
+texture_filter = 1
+position = Vector2(6071, 685)
+texture = ExtResource("10_7gx6j")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_Cemetery_01_02" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=372558630]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
+texture_filter = 1
+position = Vector2(6080, 812)
+texture = ExtResource("23_5mcap")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_Cemetery_00_03" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1314940288]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
+texture_filter = 1
+position = Vector2(6199, 685)
+texture = ExtResource("10_7gx6j")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_Cemetery_01_03" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=149415526]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
+texture_filter = 1
+position = Vector2(6208, 812)
+texture = ExtResource("23_5mcap")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_Cemetery_00_04" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1779494032]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
+texture_filter = 1
+position = Vector2(6327, 685)
+texture = ExtResource("10_7gx6j")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_Cemetery_01_04" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1785091355]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
+texture_filter = 1
+position = Vector2(6336, 812)
+texture = ExtResource("23_5mcap")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_Cemetery_00_05" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=794459136]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
+texture_filter = 1
+position = Vector2(6455, 685)
+texture = ExtResource("10_7gx6j")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_Cemetery_01_05" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=539871569]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
+texture_filter = 1
+position = Vector2(6464, 812)
+texture = ExtResource("23_5mcap")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_Cemetery_00_06" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1079095815]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
+texture_filter = 1
+position = Vector2(6583, 685)
+texture = ExtResource("6_i67bi")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_Cemetery_01_06" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=797061746]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
+texture_filter = 1
+position = Vector2(6583, 812)
+texture = ExtResource("24_fukak")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Tree01_250" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1319780535]
+modulate = Color(0.42, 0.49, 0.52, 0.48)
+z_index = -4
+texture_filter = 1
+position = Vector2(250, 536)
+scale = Vector2(0.57931036, 0.57931036)
+texture = ExtResource("15_ip4fc")
+flip_h = true
+metadata/source_asset = "Tree 01.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Fence01_430" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=202071418]
+modulate = Color(0.63, 0.69, 0.71, 0.82)
+z_index = -2
+texture_filter = 1
+position = Vector2(430, 584)
+scale = Vector2(0.5625, 0.5625)
+texture = ExtResource("17_qil01")
+metadata/source_asset = "Fence 01.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Signpost01_1010" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1906453562]
+texture_filter = 1
+position = Vector2(1010, 585)
+scale = Vector2(0.546875, 0.546875)
+texture = ExtResource("36_tthmt")
+metadata/source_asset = "Signpost 01.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Rock01_1130" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1702060533]
+z_index = -1
+texture_filter = 1
+position = Vector2(1127, 614.00006)
+scale = Vector2(0.5625, 0.5625)
+texture = ExtResource("Texture_bank_edge_rock")
+metadata/source_asset = "Rock 01.png"
+metadata/editable_background_asset = true
+
+[node name="AtmosphereGlow_715" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1106379269]
+z_index = -1
+material = SubResource("CanvasItemMaterial_kh1dd")
+position = Vector2(715, 562)
+scale = Vector2(0.1016, 0.1016)
+texture = SubResource("GradientTexture2D_bb5oq")
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Tree02_1320" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1751486992]
+modulate = Color(0.38, 0.46, 0.5, 0.44)
+z_index = -4
+texture_filter = 1
+position = Vector2(1320, 539)
+scale = Vector2(0.5586207, 0.5586207)
+texture = ExtResource("19_1w3in")
+metadata/source_asset = "Tree 02.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Rock02_1580" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1545578427]
+z_index = -1
+texture_filter = 1
+position = Vector2(1777, 610)
+scale = Vector2(0.65625, 0.65625)
+texture = ExtResource("19_whhd7")
+metadata/source_asset = "Rock 02.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Bone_1690" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1244576973]
+texture_filter = 1
+position = Vector2(1767.0001, 606)
+scale = Vector2(0.1875, 0.1875)
+texture = ExtResource("20_1gjcc")
+metadata/source_asset = "Bone.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Bush02_1810" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=179939601]
+z_index = -1
+texture_filter = 1
+position = Vector2(1810, 592.5)
+scale = Vector2(0.4296875, 0.4296875)
+texture = ExtResource("21_uraxg")
+metadata/source_asset = "Bush 02.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Skull_2180" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=983424296]
+texture_filter = 1
+position = Vector2(2180, 606)
+scale = Vector2(0.21875, 0.21875)
+texture = ExtResource("31_u0vqy")
+metadata/source_asset = "Skull.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Signpost02_2310" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1921052974]
+texture_filter = 1
+position = Vector2(6242.5, 836)
+scale = Vector2(0.7578192, 0.65624934)
+texture = ExtResource("23_ub0fu")
+metadata/source_asset = "Signpost 02.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Rock04_2425" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=447289747]
+z_index = -1
+texture_filter = 1
+position = Vector2(2221, 611)
+scale = Vector2(0.703125, 0.703125)
+texture = ExtResource("24_738wq")
+metadata/source_asset = "Rock 04.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Stonefence02_2580" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1235126252]
+z_index = -2
+texture_filter = 1
+position = Vector2(2580, 582)
+scale = Vector2(0.59375, 0.59375)
+texture = ExtResource("25_lftyp")
+metadata/source_asset = "Stone fence 02.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Signpost03_2730" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1613149639]
+texture_filter = 1
+position = Vector2(2730, 587)
+scale = Vector2(0.515625, 0.515625)
+texture = ExtResource("26_ga476")
+metadata/source_asset = "Signpost 03.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Rock05_2850" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=846827077]
+z_index = -1
+texture_filter = 1
+position = Vector2(3435, 594)
+scale = Vector2(0.59375, 0.59375)
+texture = ExtResource("27_vf3go")
+metadata/source_asset = "Rock 05.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Rock06_2960" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1225343778]
+z_index = -22
+texture_filter = 1
+position = Vector2(3450, 610.00006)
+scale = Vector2(0.6875, 0.6875)
+texture = ExtResource("28_1k0py")
+metadata/source_asset = "Rock 06.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Tree01_3180" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1245985574]
+modulate = Color(0.4, 0.48, 0.51, 0.46)
+z_index = -4
+texture_filter = 1
+position = Vector2(3180, 543)
+scale = Vector2(0.53103447, 0.53103447)
+texture = ExtResource("15_ip4fc")
+metadata/source_asset = "Tree 01.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Bush01_3330" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=671081561]
+z_index = -22
+texture_filter = 1
+position = Vector2(3330, 595)
+scale = Vector2(0.390625, 0.390625)
+texture = ExtResource("12_wenad")
+metadata/source_asset = "Bush 01.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Rock04_3440" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1794025530]
+z_index = -1
+texture_filter = 1
+position = Vector2(3427, 605)
+scale = Vector2(0.65625, 0.65625)
+texture = ExtResource("24_738wq")
+metadata/source_asset = "Rock 04.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Signpost04_3790" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=975353090]
+texture_filter = 1
+position = Vector2(3790, 586)
+scale = Vector2(0.53125, 0.53125)
+texture = ExtResource("29_coe7x")
+metadata/source_asset = "Signpost 04.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Rock05_3920" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1641174628]
+z_index = -1
+texture_filter = 1
+position = Vector2(3476.0002, 613.00006)
+scale = Vector2(0.703125, 0.703125)
+texture = ExtResource("27_vf3go")
+metadata/source_asset = "Rock 05.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Fire_4070" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=2039083756]
+texture_filter = 1
+position = Vector2(4070, 587)
+scale = Vector2(0.515625, 0.515625)
+texture = ExtResource("30_m3ixb")
+metadata/source_asset = "Fire.png"
+metadata/editable_background_asset = true
+
+[node name="AtmosphereGlow_3570" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=346103313]
+z_index = -1
+material = SubResource("CanvasItemMaterial_7blmt")
+position = Vector2(3570, 564)
+scale = Vector2(0.1004, 0.1004)
+texture = SubResource("GradientTexture2D_e7x4x")
+metadata/editable_background_asset = true
+
+[node name="AtmosphereGlow_4070" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1358125769]
+z_index = -1
+material = SubResource("CanvasItemMaterial_21pn0")
+position = Vector2(4070, 575)
+scale = Vector2(0.1085, 0.1085)
+texture = SubResource("GradientTexture2D_tqe2w")
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Tree02_4600" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1001450352]
+modulate = Color(0.39, 0.47, 0.5, 0.45)
+z_index = -4
+texture_filter = 1
+position = Vector2(4907.9995, 545)
+scale = Vector2(0.5448276, 0.5448276)
+texture = ExtResource("19_1w3in")
+flip_h = true
+metadata/source_asset = "Tree 02.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Signpost05_4880" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1729406497]
+texture_filter = 1
+position = Vector2(5129, 589)
+scale = Vector2(0.5625, 0.5625)
+texture = ExtResource("31_53h3j")
+metadata/source_asset = "Signpost 05.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Lantern_5050" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1580820987]
+texture_filter = 1
+position = Vector2(5050, 575)
+scale = Vector2(0.3515625, 0.3515625)
+texture = ExtResource("16_6e1lm")
+metadata/source_asset = "Lantern.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Fence02_5340" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1785325395]
+z_index = -2
+texture_filter = 1
+position = Vector2(5340, 582)
+scale = Vector2(0.59375, 0.59375)
+texture = ExtResource("18_k753e")
+metadata/source_asset = "Fence 02.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Rock02_5470" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1288606019]
+z_index = -1
+texture_filter = 1
+position = Vector2(5470, 600)
+scale = Vector2(0.625, 0.625)
+texture = ExtResource("19_whhd7")
+metadata/source_asset = "Rock 02.png"
+metadata/editable_background_asset = true
+
+[node name="AtmosphereGlow_5050" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1229582774]
+z_index = -1
+material = SubResource("CanvasItemMaterial_6nfru")
+position = Vector2(5050, 560)
+scale = Vector2(0.1028, 0.1028)
+texture = SubResource("GradientTexture2D_yvq83")
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Tree01_5600" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=275507699]
+modulate = Color(0.4, 0.47, 0.5, 0.48)
+z_index = -4
+texture_filter = 1
+position = Vector2(5263.0005, 536)
+scale = Vector2(0.6068966, 0.6068966)
+texture = ExtResource("15_ip4fc")
+metadata/source_asset = "Tree 01.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Stonefence02_5700" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=931217063]
+z_index = -2
+texture_filter = 1
+position = Vector2(5700, 581)
+scale = Vector2(0.609375, 0.609375)
+texture = ExtResource("25_lftyp")
+metadata/source_asset = "Stone fence 02.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Headstone01_5800" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=183195399]
+z_index = -1
+texture_filter = 1
+position = Vector2(5822, 587)
+scale = Vector2(0.578125, 0.578125)
+texture = ExtResource("28_tvjuj")
+metadata/source_asset = "Headstone 01.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Headstone02_5900" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1632702662]
+z_index = -1
+texture_filter = 1
+position = Vector2(5900, 581)
+scale = Vector2(0.609375, 0.609375)
+texture = ExtResource("30_fukak")
+metadata/source_asset = "Headstone 02.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Headstone03_6250" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1908838706]
+z_index = -1
+texture_filter = 1
+position = Vector2(5970.0005, 580.00006)
+scale = Vector2(0.640625, 0.640625)
+texture = ExtResource("34_nx30a")
+metadata/source_asset = "Headstone 03.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Coffin_6360" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=603710884]
+z_index = -2
+texture_filter = 1
+position = Vector2(6360, 577)
+scale = Vector2(0.32330826, 0.32330826)
+texture = ExtResource("32_0e5vl")
+metadata/source_asset = "Coffin.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Signpost06_6460" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=914634065]
+texture_filter = 1
+position = Vector2(6460, 584)
+scale = Vector2(0.5625, 0.5625)
+texture = ExtResource("36_iprd0")
+metadata/source_asset = "Signpost 06.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Fire_6540" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=322329535]
+texture_filter = 1
+position = Vector2(6164, 591)
+scale = Vector2(0.53125, 0.53125)
+texture = ExtResource("30_m3ixb")
+metadata/source_asset = "Fire.png"
+metadata/editable_background_asset = true
+
+[node name="EnvironmentPreview_Tree02_6630" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1836417245]
+modulate = Color(0.4, 0.47, 0.5, 0.48)
+z_index = -4
+texture_filter = 1
+position = Vector2(6313, 528)
+scale = Vector2(0.62068963, 0.62068963)
+texture = ExtResource("19_1w3in")
+flip_h = true
+metadata/source_asset = "Tree 02.png"
+metadata/editable_background_asset = true
+
+[node name="AtmosphereGlow_6540" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=862965139]
+z_index = -1
+material = SubResource("CanvasItemMaterial_s541k")
+position = Vector2(6540, 574)
+scale = Vector2(0.1085, 0.1085)
+texture = SubResource("GradientTexture2D_t1s3b")
+metadata/editable_background_asset = true
+
+[node name="FogBand_1250" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1910811575]
+z_index = -3
+position = Vector2(1273.5009, 520.77893)
+scale = Vector2(1.9140625, 0.375)
+texture = SubResource("GradientTexture2D_wh1vr")
+metadata/fog_origin = Vector2(1250, 520)
+metadata/fog_phase = 2.378442944602266
+metadata/fog_speed = 0.04
+metadata/editable_background_asset = true
+
+[node name="FogBand_2280" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=536101546]
+z_index = 1
+position = Vector2(2253.778, 545.0434)
+scale = Vector2(2.3046875, 0.453125)
+texture = SubResource("GradientTexture2D_edxbf")
+metadata/fog_origin = Vector2(2280, 548)
+metadata/fog_phase = 5.40240537562278
+metadata/fog_speed = 0.055
+metadata/editable_background_asset = true
+
+[node name="FogBand_3820" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1175969481]
+z_index = -3
+position = Vector2(3807.48, 503.93057)
+scale = Vector2(2.109375, 0.40625)
+texture = SubResource("GradientTexture2D_847sm")
+metadata/fog_origin = Vector2(3820, 505)
+metadata/fog_phase = 3.518701985882369
+metadata/fog_speed = 0.045
+metadata/editable_background_asset = true
+
+[node name="FogBand_5200" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1216799625]
+z_index = 1
+position = Vector2(5219.463, 542.833)
+scale = Vector2(1.9140625, 0.46875)
+texture = SubResource("GradientTexture2D_s2tut")
+metadata/fog_origin = Vector2(5200, 540)
+metadata/fog_phase = 0.609479109723451
+metadata/fog_speed = 0.06
+metadata/editable_background_asset = true
+
+[node name="FogBand_6200" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1837574011]
+z_index = -3
+position = Vector2(6229.4116, 497.51776)
+scale = Vector2(1.7578125, 0.421875)
+texture = SubResource("GradientTexture2D_e6gix")
+metadata/fog_origin = Vector2(6200, 495)
+metadata/fog_phase = 1.0452576374225804
+metadata/fog_speed = 0.04
+metadata/editable_background_asset = true
+
+[node name="DriftingParticles_2080" type="GPUParticles2D" parent="Level/ExistingAssetShowcase" unique_id=1678088342]
+position = Vector2(2080, 500)
+amount = 12
+texture = SubResource("GradientTexture2D_6g4xq")
+lifetime = 6.0
+randomness = 0.7
+visibility_rect = Rect2(-312, -60.000004, 624, 120.00001)
+process_material = SubResource("ParticleProcessMaterial_sb2c8")
+metadata/editable_background_asset = true
+
+[node name="DriftingParticles_3980" type="GPUParticles2D" parent="Level/ExistingAssetShowcase" unique_id=1387226963]
+position = Vector2(3980, 480)
+amount = 12
+texture = SubResource("GradientTexture2D_t7r6g")
+lifetime = 6.0
+randomness = 0.7
+visibility_rect = Rect2(-276, -72, 552, 144)
+process_material = SubResource("ParticleProcessMaterial_2jrsi")
+metadata/editable_background_asset = true
+
+[node name="DriftingParticles_6100" type="GPUParticles2D" parent="Level/ExistingAssetShowcase" unique_id=1368881791]
+position = Vector2(6100, 485)
+amount = 12
+texture = SubResource("GradientTexture2D_l5b7j")
+lifetime = 6.0
+randomness = 0.7
+visibility_rect = Rect2(-300, -75, 600, 150)
+process_material = SubResource("ParticleProcessMaterial_7e6ow")
+metadata/editable_background_asset = true
+
+[node name="ContinuousGraveyardGround" type="StaticBody2D" parent="Level" unique_id=629546261]
+position = Vector2(2048, 748)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ContinuousGraveyardGround" unique_id=1132770547]
+position = Vector2(1.5, 187.5)
+shape = SubResource("RectangleShape2D_1gjcc")
+
+[node name="Tile_01_00" type="Sprite2D" parent="Level" unique_id=228737290]
+z_index = -1
+position = Vector2(192, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_01_02" type="Sprite2D" parent="Level" unique_id=1293749480]
+z_index = -1
+position = Vector2(68, 689)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_01_04" type="Sprite2D" parent="Level" unique_id=112114651]
+z_index = -1
+position = Vector2(-31, 690)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_02_00" type="Sprite2D" parent="Level" unique_id=768339713]
+z_index = -1
+position = Vector2(320, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_03_00" type="Sprite2D" parent="Level" unique_id=1050920044]
+z_index = -1
+position = Vector2(448, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_04_00" type="Sprite2D" parent="Level" unique_id=1835929428]
+z_index = -1
+position = Vector2(576, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_05_00" type="Sprite2D" parent="Level" unique_id=1738794071]
+z_index = -1
+position = Vector2(704, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_06_00" type="Sprite2D" parent="Level" unique_id=177622909]
+z_index = -1
+position = Vector2(832, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_07_00" type="Sprite2D" parent="Level" unique_id=1580816707]
+z_index = -1
+position = Vector2(960, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_08_00" type="Sprite2D" parent="Level" unique_id=451806868]
+z_index = -1
+position = Vector2(1088, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_09_00" type="Sprite2D" parent="Level" unique_id=1360647483]
+z_index = -1
+position = Vector2(1216, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_10_00" type="Sprite2D" parent="Level" unique_id=958103699]
+z_index = -1
+position = Vector2(1344, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_11_00" type="Sprite2D" parent="Level" unique_id=1629571242]
+z_index = -1
+position = Vector2(1472, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_12_00" type="Sprite2D" parent="Level" unique_id=1692886672]
+z_index = -1
+position = Vector2(1600, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_13_00" type="Sprite2D" parent="Level" unique_id=208595367]
+z_index = -1
+position = Vector2(1728, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_14_00" type="Sprite2D" parent="Level" unique_id=832144492]
+z_index = -1
+position = Vector2(1856, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_15_00" type="Sprite2D" parent="Level" unique_id=1518114040]
+z_index = -1
+position = Vector2(1984, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_16_00" type="Sprite2D" parent="Level" unique_id=19714821]
+z_index = -1
+position = Vector2(2112, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_17_00" type="Sprite2D" parent="Level" unique_id=464802980]
+z_index = -1
+position = Vector2(2240, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_18_00" type="Sprite2D" parent="Level" unique_id=145448303]
+z_index = -1
+position = Vector2(2368, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_19_00" type="Sprite2D" parent="Level" unique_id=1970283862]
+z_index = -1
+position = Vector2(2496, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_20_00" type="Sprite2D" parent="Level" unique_id=1531830537]
+z_index = -1
+position = Vector2(2624, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_21_00" type="Sprite2D" parent="Level" unique_id=1096687764]
+z_index = -1
+position = Vector2(2752, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_22_00" type="Sprite2D" parent="Level" unique_id=1497893740]
+z_index = -1
+position = Vector2(2880, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_23_00" type="Sprite2D" parent="Level" unique_id=1035925644]
+z_index = -1
+position = Vector2(3008, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_24_00" type="Sprite2D" parent="Level" unique_id=2001841907]
+z_index = -1
+position = Vector2(3136, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_25_00" type="Sprite2D" parent="Level" unique_id=521203739]
+z_index = -1
+position = Vector2(3264, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_26_00" type="Sprite2D" parent="Level" unique_id=967972691]
+z_index = -1
+position = Vector2(3392, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_27_00" type="Sprite2D" parent="Level" unique_id=814161776]
+z_index = -1
+position = Vector2(3520, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_28_00" type="Sprite2D" parent="Level" unique_id=2121487810]
+z_index = -1
+position = Vector2(3648, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_29_00" type="Sprite2D" parent="Level" unique_id=1204582364]
+z_index = -1
+position = Vector2(3776, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_30_00" type="Sprite2D" parent="Level" unique_id=438429590]
+z_index = -1
+position = Vector2(3904, 684)
+texture = ExtResource("5_0mpmd")
+
+[node name="Tile_31_00" type="Sprite2D" parent="Level" unique_id=1147289434]
+z_index = -1
+position = Vector2(4032, 684)
+texture = ExtResource("39_hxk04")
+
+[node name="Tile_00_02" type="Sprite2D" parent="Level" unique_id=1584246890]
+z_index = -1
+position = Vector2(4033, 809.5)
+scale = Vector2(1.03125, 1.0390625)
+texture = ExtResource("7_88k8y")
+flip_h = true
+flip_v = true
+
+[node name="Tile_01_01" type="Sprite2D" parent="Level" unique_id=1361656819]
+z_index = -1
+position = Vector2(193, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_01_03" type="Sprite2D" parent="Level" unique_id=503437421]
+z_index = -1
+position = Vector2(67, 813)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_01_05" type="Sprite2D" parent="Level" unique_id=1135340658]
+z_index = -1
+position = Vector2(-30, 814)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_02_01" type="Sprite2D" parent="Level" unique_id=578760537]
+z_index = -1
+position = Vector2(320, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_03_01" type="Sprite2D" parent="Level" unique_id=420978892]
+z_index = -1
+position = Vector2(448, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_04_01" type="Sprite2D" parent="Level" unique_id=1720469970]
+z_index = -1
+position = Vector2(576, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_05_01" type="Sprite2D" parent="Level" unique_id=977374778]
+z_index = -1
+position = Vector2(704, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_06_01" type="Sprite2D" parent="Level" unique_id=962475384]
+z_index = -1
+position = Vector2(832, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_07_01" type="Sprite2D" parent="Level" unique_id=480689191]
+z_index = -1
+position = Vector2(960, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_08_01" type="Sprite2D" parent="Level" unique_id=387217126]
+z_index = -1
+position = Vector2(1088, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_09_01" type="Sprite2D" parent="Level" unique_id=1372070775]
+z_index = -1
+position = Vector2(1216, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_10_01" type="Sprite2D" parent="Level" unique_id=650281575]
+z_index = -1
+position = Vector2(1344, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_11_01" type="Sprite2D" parent="Level" unique_id=1802706682]
+z_index = -1
+position = Vector2(1472, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_12_01" type="Sprite2D" parent="Level" unique_id=409949811]
+z_index = -1
+position = Vector2(1600, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_13_01" type="Sprite2D" parent="Level" unique_id=1410697245]
+z_index = -1
+position = Vector2(1728, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_14_01" type="Sprite2D" parent="Level" unique_id=1873501091]
+z_index = -1
+position = Vector2(1856, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_15_01" type="Sprite2D" parent="Level" unique_id=2143540689]
+z_index = -1
+position = Vector2(1984, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_16_01" type="Sprite2D" parent="Level" unique_id=1988654283]
+z_index = -1
+position = Vector2(2112, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_17_01" type="Sprite2D" parent="Level" unique_id=1756121343]
+z_index = -1
+position = Vector2(2240, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_18_01" type="Sprite2D" parent="Level" unique_id=1360470743]
+z_index = -1
+position = Vector2(2368, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_19_01" type="Sprite2D" parent="Level" unique_id=1538332140]
+z_index = -1
+position = Vector2(2496, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_20_01" type="Sprite2D" parent="Level" unique_id=1752661145]
+z_index = -1
+position = Vector2(2624, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_21_01" type="Sprite2D" parent="Level" unique_id=1916976395]
+z_index = -1
+position = Vector2(2752, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_22_01" type="Sprite2D" parent="Level" unique_id=653218483]
+z_index = -1
+position = Vector2(2880, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_23_01" type="Sprite2D" parent="Level" unique_id=388877115]
+z_index = -1
+position = Vector2(3008, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_24_01" type="Sprite2D" parent="Level" unique_id=1710313535]
+z_index = -1
+position = Vector2(3136, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_25_01" type="Sprite2D" parent="Level" unique_id=713875587]
+z_index = -1
+position = Vector2(3264, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_26_01" type="Sprite2D" parent="Level" unique_id=2008072208]
+z_index = -1
+position = Vector2(3392, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_27_01" type="Sprite2D" parent="Level" unique_id=497281940]
+z_index = -1
+position = Vector2(3520, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_28_01" type="Sprite2D" parent="Level" unique_id=711713288]
+z_index = -1
+position = Vector2(3648, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_29_01" type="Sprite2D" parent="Level" unique_id=1684233631]
+z_index = -1
+position = Vector2(3776, 812)
+texture = ExtResource("8_2020x")
+
+[node name="Tile_30_01" type="Sprite2D" parent="Level" unique_id=857229244]
+z_index = -1
+position = Vector2(3904, 812)
+texture = ExtResource("8_2020x")
+
+[node name="VerticalDropLanding" type="StaticBody2D" parent="Level" unique_id=1992150458]
+position = Vector2(4224, 1004)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/VerticalDropLanding" unique_id=1082044396]
+shape = SubResource("RectangleShape2D_vertical_drop_landing")
+
+[node name="VerticalDropLanding_Tile_00_00" type="Sprite2D" parent="Level" unique_id=949736851]
+z_index = -1
+position = Vector2(4160, 940)
+texture = ExtResource("43_8qluk")
+
+[node name="VerticalDropLanding_Tile_01_00" type="Sprite2D" parent="Level" unique_id=1161569821]
+z_index = -1
+position = Vector2(4288, 940)
+texture = ExtResource("39_hxk04")
+
+[node name="VerticalDropLanding_Tile_00_01" type="Sprite2D" parent="Level" unique_id=2060073640]
+z_index = -1
+position = Vector2(4160, 1068)
+texture = ExtResource("17_wlg5c")
+
+[node name="VerticalDropLanding_Tile_01_01" type="Sprite2D" parent="Level" unique_id=359207332]
+z_index = -1
+position = Vector2(4288, 1068)
+texture = ExtResource("19_gj544")
+
+[node name="WaterfallRockBanks" type="Node2D" parent="Level" unique_id=1390499169]
+modulate = Color(0.72, 0.78, 0.8, 1)
+z_index = -25
+position = Vector2(4608, 864)
+
+[node name="LeftCliff" type="Polygon2D" parent="Level/WaterfallRockBanks" unique_id=22489157]
+texture_filter = 1
+material = SubResource("ShaderMaterial_bank_stone_repeat")
+texture = ExtResource("Texture_waterfall_banks")
+polygon = PackedVector2Array(-328, -124, -116, -124, -125, -48, -118, 15, -132, 74, -110, 125, -143, 190, -122, 250, -155, 310, -135, 440, -328, 440)
+uv = PackedVector2Array(-72, 0, 140, 0, 131, 60, 138, 123, 124, 182, 146, 233, 113, 298, 134, 358, 101, 418, 121, 548, -72, 548)
+
+[node name="RightCliff" type="Polygon2D" parent="Level/WaterfallRockBanks" unique_id=1020657010]
+texture_filter = 1
+material = SubResource("ShaderMaterial_bank_stone_repeat")
+texture = ExtResource("Texture_waterfall_banks")
+polygon = PackedVector2Array(328, -124, 116, -124, 125, -48, 118, 15, 132, 74, 110, 125, 143, 190, 122, 250, 155, 310, 135, 440, 328, 440)
+uv = PackedVector2Array(232, 30, 20, 30, 29, 90, 22, 153, 36, 212, 14, 263, 47, 328, 26, 388, 59, 448, 39, 578, 232, 578)
+
+[node name="LeftLooseStones" type="Sprite2D" parent="Level/WaterfallRockBanks" unique_id=809999082]
+texture_filter = 1
+position = Vector2(-254, 29)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("Texture_bank_stones")
+region_enabled = true
+region_rect = Rect2(10, 131, 145, 29)
+
+[node name="RightLooseStones" type="Sprite2D" parent="Level/WaterfallRockBanks" unique_id=1818445929]
+texture_filter = 1
+position = Vector2(254, 29)
+scale = Vector2(-0.85, 0.85)
+texture = ExtResource("Texture_bank_stones")
+region_enabled = true
+region_rect = Rect2(10, 131, 145, 29)
+
+[node name="BankEdgeDressing" type="Node2D" parent="Level" unique_id=1305628066]
+z_index = -24
+texture_filter = 1
+position = Vector2(4608, 864)
+
+[node name="LeftBaseRock" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=703769263]
+position = Vector2(-389, -8)
+scale = Vector2(1.25, 1.2)
+texture = ExtResource("Texture_bank_edge_rock")
+
+[node name="LeftMiddleRock" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=1687059080]
+position = Vector2(-366, -51)
+rotation = -0.12
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("Texture_bank_edge_rock")
+
+[node name="LeftUpperRock" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=811314534]
+position = Vector2(-344, -94)
+rotation = -0.1
+scale = Vector2(1.2, 1.15)
+texture = ExtResource("Texture_bank_edge_rock")
+
+[node name="LeftRimRock" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=407199106]
+position = Vector2(-285, -117)
+scale = Vector2(1.1, 1)
+texture = ExtResource("Texture_bank_edge_rock")
+
+[node name="LeftBaseGrass" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=2011915865]
+position = Vector2(-389, 14)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("Texture_bank_edge_grass")
+offset = Vector2(0, -37.5)
+
+[node name="LeftRimGrass" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=787014561]
+position = Vector2(-327, -121)
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("61_ibml5")
+offset = Vector2(0, -37.5)
+
+[node name="LeftRockTuft" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=599900843]
+position = Vector2(-365, -66)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("Texture_bank_edge_grass")
+offset = Vector2(0, -37.5)
+
+[node name="RightBaseRock" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=587951696]
+position = Vector2(381, -7)
+scale = Vector2(-1.2, 1.15)
+texture = ExtResource("Texture_bank_edge_rock")
+
+[node name="RightMiddleRock" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=159711574]
+position = Vector2(360, -49)
+rotation = 0.09
+scale = Vector2(-1.05, 1.1)
+texture = ExtResource("Texture_bank_edge_rock")
+
+[node name="RightUpperRock" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=703714651]
+position = Vector2(340, -91)
+rotation = 0.13
+scale = Vector2(-1.15, 1.2)
+texture = ExtResource("Texture_bank_edge_rock")
+
+[node name="RightRimRock" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=1111250325]
+position = Vector2(283, -116)
+scale = Vector2(-1.2, 1)
+texture = ExtResource("Texture_bank_edge_rock")
+
+[node name="RightBaseGrass" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=1100488628]
+position = Vector2(384, 14)
+scale = Vector2(-0.75, 0.75)
+texture = ExtResource("61_ibml5")
+offset = Vector2(0, -37.5)
+
+[node name="RightRimGrass" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=738385562]
+position = Vector2(325, -121)
+scale = Vector2(-0.43, 0.43)
+texture = ExtResource("Texture_bank_edge_grass")
+offset = Vector2(0, -37.5)
+
+[node name="RightRockTuft" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=322205639]
+position = Vector2(359, -65)
+scale = Vector2(-0.3, 0.3)
+texture = ExtResource("61_ibml5")
+offset = Vector2(0, -37.5)
+
+[node name="RiverRockEmbankment" type="Sprite2D" parent="Level" unique_id=1607035570]
+z_index = -26
+texture_filter = 1
+position = Vector2(3890, 403)
+scale = Vector2(0.715352, 0.85999995)
+texture = ExtResource("Texture_river_embankment")
+centered = false
+
+[node name="BackgroundRiver" type="Sprite2D" parent="Level" unique_id=1739047716]
+z_index = -23
+texture_filter = 1
+material = SubResource("ShaderMaterial_river_join")
+position = Vector2(4601, 780)
+scale = Vector2(0.75, 0.4)
+texture = ExtResource("Texture_river_upstream")
+centered = false
+offset = Vector2(-1020, -950)
+
+[node name="BridgeWaterfall" parent="Level" unique_id=1167300854 instance=ExtResource("10_aonbx")]
+position = Vector2(4608, 864)
+
+[node name="ShortMoonlitBridge" type="Node2D" parent="Level" unique_id=130394507]
+position = Vector2(4352, 898)
+script = ExtResource("12_hk8g7")
+
+[node name="BridgeDeck" type="Node2D" parent="Level/ShortMoonlitBridge" unique_id=411895817]
+
+[node name="Plank_00" type="AnimatableBody2D" parent="Level/ShortMoonlitBridge/BridgeDeck" unique_id=996670500]
+physics_interpolation_mode = 2
+position = Vector2(32, -14)
+rotation = 0.035
+sync_to_physics = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_00" unique_id=174373]
+shape = SubResource("RectangleShape2D_uraxg")
+
+[node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_00" unique_id=2112394565]
+z_index = 1
+scale = Vector2(1.1, 1)
+texture = ExtResource("13_1su6u")
+
+[node name="Plank_01" type="AnimatableBody2D" parent="Level/ShortMoonlitBridge/BridgeDeck" unique_id=1442033915]
+physics_interpolation_mode = 2
+position = Vector2(96, -11)
+rotation = 0.028
+sync_to_physics = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_01" unique_id=2015507660]
+shape = SubResource("RectangleShape2D_ub0fu")
+
+[node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_01" unique_id=1431759052]
+z_index = 1
+scale = Vector2(1.1, 1)
+texture = ExtResource("14_4ko12")
+
+[node name="Plank_02" type="AnimatableBody2D" parent="Level/ShortMoonlitBridge/BridgeDeck" unique_id=776501596]
+physics_interpolation_mode = 2
+position = Vector2(160, -7)
+rotation = 0.018
+sync_to_physics = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_02" unique_id=402900756]
+shape = SubResource("RectangleShape2D_738wq")
+
+[node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_02" unique_id=764743307]
+z_index = 1
+scale = Vector2(1.1, 1)
+texture = ExtResource("13_1su6u")
+
+[node name="Plank_03" type="AnimatableBody2D" parent="Level/ShortMoonlitBridge/BridgeDeck" unique_id=853038668]
+physics_interpolation_mode = 2
+position = Vector2(224, -4)
+rotation = 0.006
+sync_to_physics = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_03" unique_id=1118567218]
+shape = SubResource("RectangleShape2D_lftyp")
+
+[node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_03" unique_id=35767255]
+z_index = 1
+scale = Vector2(1.1, 1)
+texture = ExtResource("14_4ko12")
+
+[node name="Plank_04" type="AnimatableBody2D" parent="Level/ShortMoonlitBridge/BridgeDeck" unique_id=1420698012]
+physics_interpolation_mode = 2
+position = Vector2(288, -4)
+rotation = -0.006
+sync_to_physics = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_04" unique_id=1160633076]
+shape = SubResource("RectangleShape2D_ga476")
+
+[node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_04" unique_id=590748317]
+z_index = 1
+scale = Vector2(1.1, 1)
+texture = ExtResource("13_1su6u")
+
+[node name="Plank_05" type="AnimatableBody2D" parent="Level/ShortMoonlitBridge/BridgeDeck" unique_id=280185313]
+physics_interpolation_mode = 2
+position = Vector2(352, -7)
+rotation = -0.018
+sync_to_physics = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_05" unique_id=1373245962]
+shape = SubResource("RectangleShape2D_vf3go")
+
+[node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_05" unique_id=1662250926]
+z_index = 1
+scale = Vector2(1.1, 1)
+texture = ExtResource("14_4ko12")
+
+[node name="Plank_06" type="AnimatableBody2D" parent="Level/ShortMoonlitBridge/BridgeDeck" unique_id=1168516628]
+physics_interpolation_mode = 2
+position = Vector2(416, -11)
+rotation = -0.028
+sync_to_physics = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_06" unique_id=303995541]
+shape = SubResource("RectangleShape2D_1k0py")
+
+[node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_06" unique_id=1177070075]
+z_index = 1
+scale = Vector2(1.1, 1)
+texture = ExtResource("13_1su6u")
+
+[node name="Plank_07" type="AnimatableBody2D" parent="Level/ShortMoonlitBridge/BridgeDeck" unique_id=206216329]
+physics_interpolation_mode = 2
+position = Vector2(480, -14)
+rotation = -0.035
+sync_to_physics = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_07" unique_id=1297838499]
+shape = SubResource("RectangleShape2D_coe7x")
+
+[node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_07" unique_id=254013628]
+z_index = 1
+scale = Vector2(1.1, 1)
+texture = ExtResource("14_4ko12")
+
+[node name="PlayerTrigger" type="Area2D" parent="Level/ShortMoonlitBridge" unique_id=1520661816]
+position = Vector2(256, -10)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/PlayerTrigger" unique_id=98779478]
+shape = SubResource("RectangleShape2D_m3ixb")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Level/ShortMoonlitBridge" unique_id=1214158642]
+callback_mode_process = 0
+libraries/ = SubResource("AnimationLibrary_iprd0")
+
+[node name="FinalGraveRow" type="StaticBody2D" parent="Level" unique_id=952609781]
+position = Vector2(5760, 1004)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/FinalGraveRow" unique_id=999205429]
+position = Vector2(-702, 0)
+shape = SubResource("RectangleShape2D_6muqy")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Level/FinalGraveRow" unique_id=952525276]
+position = Vector2(445, 0)
+shape = SubResource("RectangleShape2D_1u6mt")
+
+[node name="@Sprite2D@2" type="Sprite2D" parent="Level" unique_id=1921664975]
+z_index = -1
+position = Vector2(4928, 940)
+texture = ExtResource("37_6muqy")
+
+[node name="_Sprite2D_2" type="Sprite2D" parent="Level" unique_id=1784610419]
+z_index = -1
+position = Vector2(5182, 941)
+texture = ExtResource("37_6muqy")
+flip_h = true
+
+[node name="_Sprite2D_3" type="Sprite2D" parent="Level" unique_id=320817906]
+z_index = -1
+position = Vector2(5826, 942)
+texture = ExtResource("37_6muqy")
+
+[node name="@Sprite2D@3" type="Sprite2D" parent="Level" unique_id=174799321]
+z_index = -1
+position = Vector2(5056, 940)
+texture = ExtResource("5_0mpmd")
+
+[node name="@Sprite2D@10" type="Sprite2D" parent="Level" unique_id=942979632]
+z_index = -1
+position = Vector2(5952, 940)
+texture = ExtResource("5_0mpmd")
+
+[node name="@Sprite2D@11" type="Sprite2D" parent="Level" unique_id=2037894028]
+z_index = -1
+position = Vector2(6080, 940)
+texture = ExtResource("5_0mpmd")
+
+[node name="@Sprite2D@12" type="Sprite2D" parent="Level" unique_id=61388525]
+z_index = -1
+position = Vector2(6208, 940)
+texture = ExtResource("5_0mpmd")
+
+[node name="@Sprite2D@13" type="Sprite2D" parent="Level" unique_id=218203899]
+z_index = -1
+position = Vector2(6336, 940)
+texture = ExtResource("5_0mpmd")
+
+[node name="@Sprite2D@14" type="Sprite2D" parent="Level" unique_id=2058496245]
+z_index = -1
+position = Vector2(6464, 940)
+texture = ExtResource("5_0mpmd")
+
+[node name="@Sprite2D@15" type="Sprite2D" parent="Level" unique_id=1110081515]
+z_index = -1
+position = Vector2(6592, 940)
+texture = ExtResource("39_hxk04")
+
+[node name="@Sprite2D@16" type="Sprite2D" parent="Level" unique_id=993343245]
+z_index = -1
+position = Vector2(4928, 1068)
+texture = ExtResource("7_88k8y")
+
+[node name="@Sprite2D@17" type="Sprite2D" parent="Level" unique_id=1029580019]
+z_index = -1
+position = Vector2(5056, 1068)
+texture = ExtResource("8_2020x")
+
+[node name="@Sprite2D@24" type="Sprite2D" parent="Level" unique_id=1764649835]
+z_index = -1
+position = Vector2(5952, 1068)
+texture = ExtResource("8_2020x")
+
+[node name="@Sprite2D@25" type="Sprite2D" parent="Level" unique_id=881750997]
+z_index = -1
+position = Vector2(6080, 1068)
+texture = ExtResource("8_2020x")
+
+[node name="@Sprite2D@26" type="Sprite2D" parent="Level" unique_id=530597486]
+z_index = -1
+position = Vector2(6208, 1068)
+texture = ExtResource("8_2020x")
+
+[node name="_Sprite2D_27" type="Sprite2D" parent="Level" unique_id=820306940]
+z_index = -1
+position = Vector2(6336, 1068)
+texture = ExtResource("8_2020x")
+
+[node name="@Sprite2D@28" type="Sprite2D" parent="Level" unique_id=586146429]
+z_index = -1
+position = Vector2(6464, 1068)
+texture = ExtResource("8_2020x")
+
+[node name="_Sprite2D_29" type="Sprite2D" parent="Level" unique_id=1527443506]
+z_index = -1
+position = Vector2(6592, 1068)
+texture = ExtResource("9_c5j5y")
+
+[node name="StonesRedraw" type="Sprite2D" parent="Level" unique_id=834827352]
+z_index = -4
+position = Vector2(417, 568)
+scale = Vector2(0.8359375, 0.65625)
+texture = ExtResource("13_aonbx")
+
+[node name="DeepGroundVisuals" type="Node2D" parent="Level" unique_id=926331637]
+z_index = -2
+
+[node name="Span00_Tile_01_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1551329846]
+texture_filter = 1
+position = Vector2(192, 940)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span00_Tile_01_02" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1831376469]
+texture_filter = 1
+position = Vector2(65, 940)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span00_Tile_01_03" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1903259869]
+texture_filter = 1
+position = Vector2(-31, 940)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span00_Tile_02_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1424963049]
+texture_filter = 1
+position = Vector2(320, 940)
+texture = ExtResource("18_amn2u")
+
+[node name="Span00_Tile_03_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=792469498]
+texture_filter = 1
+position = Vector2(448, 940)
+texture = ExtResource("19_gj544")
+
+[node name="Span00_Tile_04_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=101384916]
+texture_filter = 1
+position = Vector2(576, 940)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span00_Tile_05_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=802290319]
+texture_filter = 1
+position = Vector2(704, 940)
+texture = ExtResource("18_amn2u")
+
+[node name="Span00_Tile_06_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=984151306]
+texture_filter = 1
+position = Vector2(832, 940)
+texture = ExtResource("19_gj544")
+
+[node name="Span00_Tile_07_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1110108528]
+texture_filter = 1
+position = Vector2(960, 940)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span00_Tile_08_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1928862006]
+texture_filter = 1
+position = Vector2(1088, 940)
+texture = ExtResource("18_amn2u")
+
+[node name="Span00_Tile_09_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1377671435]
+texture_filter = 1
+position = Vector2(1216, 940)
+texture = ExtResource("19_gj544")
+
+[node name="Span00_Tile_10_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=639091544]
+texture_filter = 1
+position = Vector2(1344, 940)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span00_Tile_11_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=464825974]
+texture_filter = 1
+position = Vector2(1472, 940)
+texture = ExtResource("18_amn2u")
+
+[node name="Span00_RockDetail_11" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1749997428]
+self_modulate = Color(1, 1, 1, 0.72)
+z_index = 1
+texture_filter = 1
+position = Vector2(1472, 940)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("20_8e665")
+
+[node name="Span00_Tile_12_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1664552200]
+texture_filter = 1
+position = Vector2(1600, 940)
+texture = ExtResource("19_gj544")
+
+[node name="Span00_Tile_13_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1411904410]
+texture_filter = 1
+position = Vector2(1728, 940)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span00_Tile_14_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=426069179]
+texture_filter = 1
+position = Vector2(1856, 940)
+texture = ExtResource("18_amn2u")
+
+[node name="UpperGapFill_Tile_15" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1604874725]
+texture_filter = 1
+position = Vector2(1984, 940)
+texture = ExtResource("19_gj544")
+
+[node name="UpperGapFill_Tile_16" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=101720243]
+texture_filter = 1
+position = Vector2(2112, 940)
+texture = ExtResource("17_wlg5c")
+
+[node name="UpperGapFill_Tile_17" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=592926455]
+texture_filter = 1
+position = Vector2(2240, 940)
+texture = ExtResource("18_amn2u")
+
+[node name="Span00_Tile_00_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1089824579]
+texture_filter = 1
+position = Vector2(64, 1068)
+texture = ExtResource("19_gj544")
+
+[node name="Span00_Tile_00_02" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=2010523238]
+texture_filter = 1
+position = Vector2(-31, 1066)
+texture = ExtResource("19_gj544")
+
+[node name="Span00_Tile_01_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1288655969]
+texture_filter = 1
+position = Vector2(192, 1068)
+texture = ExtResource("18_amn2u")
+
+[node name="Span00_Tile_02_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1166134808]
+texture_filter = 1
+position = Vector2(320, 1068)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span00_Tile_03_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=71384761]
+texture_filter = 1
+position = Vector2(448, 1068)
+texture = ExtResource("19_gj544")
+
+[node name="Span00_Tile_04_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=193841518]
+texture_filter = 1
+position = Vector2(576, 1068)
+texture = ExtResource("18_amn2u")
+
+[node name="Span00_Tile_05_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=983358265]
+texture_filter = 1
+position = Vector2(704, 1068)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span00_Tile_06_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=214277492]
+texture_filter = 1
+position = Vector2(832, 1068)
+texture = ExtResource("19_gj544")
+
+[node name="Span00_Tile_07_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=946646188]
+texture_filter = 1
+position = Vector2(960, 1068)
+texture = ExtResource("18_amn2u")
+
+[node name="Span00_Tile_08_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=969441297]
+texture_filter = 1
+position = Vector2(1088, 1068)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span00_Tile_09_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=66884133]
+texture_filter = 1
+position = Vector2(1216, 1068)
+texture = ExtResource("19_gj544")
+
+[node name="Span00_Tile_10_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=608434491]
+texture_filter = 1
+position = Vector2(1344, 1068)
+texture = ExtResource("18_amn2u")
+
+[node name="Span00_Tile_11_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1027261858]
+texture_filter = 1
+position = Vector2(1472, 1068)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span00_Tile_12_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1588860412]
+texture_filter = 1
+position = Vector2(1600, 1068)
+texture = ExtResource("19_gj544")
+
+[node name="Span00_Tile_13_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=98106882]
+texture_filter = 1
+position = Vector2(1728, 1068)
+texture = ExtResource("18_amn2u")
+
+[node name="Span00_Tile_14_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=219069634]
+texture_filter = 1
+position = Vector2(1856, 1068)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span01_Tile_00_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=580589698]
+texture_filter = 1
+position = Vector2(2368, 940)
+texture = ExtResource("19_gj544")
+
+[node name="Span01_Tile_01_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1358443003]
+texture_filter = 1
+position = Vector2(2496, 940)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span01_Tile_02_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1006748330]
+texture_filter = 1
+position = Vector2(2624, 940)
+texture = ExtResource("18_amn2u")
+
+[node name="Span01_Tile_03_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=765454580]
+texture_filter = 1
+position = Vector2(2752, 940)
+texture = ExtResource("19_gj544")
+
+[node name="Span01_Tile_04_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1880883159]
+texture_filter = 1
+position = Vector2(2880, 940)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span01_Tile_05_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1454792205]
+texture_filter = 1
+position = Vector2(3008, 940)
+texture = ExtResource("18_amn2u")
+
+[node name="Span01_Tile_06_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=578795359]
+texture_filter = 1
+position = Vector2(3136, 940)
+texture = ExtResource("19_gj544")
+
+[node name="Span01_RockDetail_06" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1368689212]
+self_modulate = Color(1, 1, 1, 0.72)
+z_index = 1
+texture_filter = 1
+position = Vector2(3136, 940)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("25_u0vqy")
+
+[node name="Span01_Tile_07_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1895083120]
+texture_filter = 1
+position = Vector2(3264, 940)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span01_Tile_08_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1206392637]
+texture_filter = 1
+position = Vector2(3392, 940)
+texture = ExtResource("18_amn2u")
+
+[node name="Span01_Tile_09_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=703063720]
+texture_filter = 1
+position = Vector2(3520, 940)
+texture = ExtResource("19_gj544")
+
+[node name="Span01_Tile_10_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1499374004]
+texture_filter = 1
+position = Vector2(3648, 940)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span01_Tile_11_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1190450483]
+texture_filter = 1
+position = Vector2(3776, 940)
+texture = ExtResource("18_amn2u")
+
+[node name="Span01_Tile_12_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=2079517011]
+texture_filter = 1
+position = Vector2(3904, 940)
+texture = ExtResource("19_gj544")
+
+[node name="Span01_Tile_13_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=631777896]
+texture_filter = 1
+position = Vector2(4032, 940)
+texture = ExtResource("18_amn2u")
+
+[node name="Span01_Tile_00_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1867212358]
+texture_filter = 1
+position = Vector2(2368, 1068)
+texture = ExtResource("19_gj544")
+
+[node name="Span01_Tile_01_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=330771157]
+texture_filter = 1
+position = Vector2(2496, 1068)
+texture = ExtResource("18_amn2u")
+
+[node name="Span01_Tile_02_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=2088806678]
+texture_filter = 1
+position = Vector2(2624, 1068)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span01_Tile_03_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=372888152]
+texture_filter = 1
+position = Vector2(2752, 1068)
+texture = ExtResource("19_gj544")
+
+[node name="Span01_Tile_04_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1589337752]
+texture_filter = 1
+position = Vector2(2880, 1068)
+texture = ExtResource("18_amn2u")
+
+[node name="Span01_Tile_05_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=821883123]
+texture_filter = 1
+position = Vector2(3008, 1068)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span01_Tile_06_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1229809026]
+texture_filter = 1
+position = Vector2(3136, 1068)
+texture = ExtResource("19_gj544")
+
+[node name="Span01_Tile_07_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=910872004]
+texture_filter = 1
+position = Vector2(3264, 1068)
+texture = ExtResource("18_amn2u")
+
+[node name="Span01_Tile_08_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=501003283]
+texture_filter = 1
+position = Vector2(3392, 1068)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span01_Tile_09_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=921486039]
+texture_filter = 1
+position = Vector2(3520, 1068)
+texture = ExtResource("19_gj544")
+
+[node name="Span01_Tile_10_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=521755715]
+texture_filter = 1
+position = Vector2(3648, 1068)
+texture = ExtResource("18_amn2u")
+
+[node name="Span01_Tile_11_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1153403043]
+texture_filter = 1
+position = Vector2(3776, 1068)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span01_Tile_12_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1658054768]
+texture_filter = 1
+position = Vector2(3904, 1068)
+texture = ExtResource("19_gj544")
+
+[node name="Span01_Tile_13_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1044298321]
+texture_filter = 1
+position = Vector2(4032, 1068)
+texture = ExtResource("18_amn2u")
+
+[node name="Span02_Tile_00_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=752086118]
+texture_filter = 1
+position = Vector2(4160, 1196)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span02_Tile_01_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=536364967]
+texture_filter = 1
+position = Vector2(4288, 1196)
+texture = ExtResource("19_gj544")
+
+[node name="Span02_Tile_00_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=2116429771]
+texture_filter = 1
+position = Vector2(4160, 1324)
+texture = ExtResource("61_vkw4u")
+
+[node name="Span02_Tile_01_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1442042234]
+texture_filter = 1
+position = Vector2(4288, 1324)
+texture = ExtResource("62_cxsg2")
+
+[node name="Span03_Tile_00_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=2125339111]
+texture_filter = 1
+position = Vector2(4928, 1196)
+texture = ExtResource("16_k5fei")
+
+[node name="Span03_Tile_01_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=776784917]
+texture_filter = 1
+position = Vector2(5056, 1196)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span03_Tile_02_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1196695472]
+texture_filter = 1
+position = Vector2(5184, 1196)
+texture = ExtResource("21_stvwn")
+
+[node name="Span03_Tile_02_02" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=374414138]
+texture_filter = 1
+position = Vector2(5184, 1069)
+texture = ExtResource("21_stvwn")
+
+[node name="Span03_Tile_00_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=498354725]
+texture_filter = 1
+position = Vector2(4928, 1324)
+texture = ExtResource("61_vkw4u")
+
+[node name="Span03_Tile_01_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1369657788]
+texture_filter = 1
+position = Vector2(5056, 1324)
+texture = ExtResource("64_yp222")
+
+[node name="Span03_Tile_02_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1120858971]
+texture_filter = 1
+position = Vector2(5184, 1324)
+texture = ExtResource("62_cxsg2")
+
+[node name="Span04_Tile_00_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=370769065]
+texture_filter = 1
+position = Vector2(5824, 1196)
+texture = ExtResource("16_k5fei")
+
+[node name="Span04_Tile_00_02" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1801063063]
+texture_filter = 1
+position = Vector2(5824, 1067)
+texture = ExtResource("16_k5fei")
+
+[node name="Span04_Tile_01_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=311663744]
+texture_filter = 1
+position = Vector2(5952, 1196)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span04_Tile_02_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=40312259]
+texture_filter = 1
+position = Vector2(6080, 1196)
+texture = ExtResource("18_amn2u")
+
+[node name="Span04_RockDetail_02" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1319436152]
+self_modulate = Color(1, 1, 1, 0.72)
+z_index = 1
+texture_filter = 1
+position = Vector2(6080, 1196)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("20_8e665")
+
+[node name="Span04_Tile_03_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1833026132]
+texture_filter = 1
+position = Vector2(6208, 1196)
+texture = ExtResource("19_gj544")
+
+[node name="Span04_Tile_04_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=885233185]
+texture_filter = 1
+position = Vector2(6336, 1196)
+texture = ExtResource("17_wlg5c")
+
+[node name="Span04_Tile_05_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=333019175]
+texture_filter = 1
+position = Vector2(6464, 1196)
+texture = ExtResource("18_amn2u")
+
+[node name="Span04_Tile_06_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=238807147]
+texture_filter = 1
+position = Vector2(6592, 1196)
+texture = ExtResource("21_stvwn")
+
+[node name="Span04_Tile_00_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1934438572]
+texture_filter = 1
+position = Vector2(5824, 1324)
+texture = ExtResource("61_vkw4u")
+
+[node name="Span04_Tile_01_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=316214829]
+texture_filter = 1
+position = Vector2(5952, 1324)
+texture = ExtResource("64_yp222")
+
+[node name="Span04_Tile_02_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1487213091]
+texture_filter = 1
+position = Vector2(6080, 1324)
+texture = ExtResource("64_yp222")
+
+[node name="Span04_Tile_03_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=446816479]
+texture_filter = 1
+position = Vector2(6208, 1324)
+texture = ExtResource("64_yp222")
+
+[node name="Span04_Tile_04_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=644876322]
+texture_filter = 1
+position = Vector2(6336, 1324)
+texture = ExtResource("64_yp222")
+
+[node name="Span04_Tile_05_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1957436841]
+texture_filter = 1
+position = Vector2(6464, 1324)
+texture = ExtResource("64_yp222")
+
+[node name="Span04_Tile_06_01" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1257414097]
+texture_filter = 1
+position = Vector2(6592, 1324)
+texture = ExtResource("62_cxsg2")
+
+[node name="ConnectedGroundRow" type="Node2D" parent="Level/DeepGroundVisuals" unique_id=405009765]
+
+[node name="ConnectionTile_00" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=2121053034]
+texture_filter = 1
+position = Vector2(64, 1196)
+texture = ExtResource("19_gj544")
+
+[node name="ConnectionTile_35" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=1454043678]
+texture_filter = 1
+position = Vector2(-31, 1193)
+texture = ExtResource("19_gj544")
+
+[node name="ConnectionTile_01" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=521941113]
+texture_filter = 1
+position = Vector2(192, 1196)
+texture = ExtResource("18_amn2u")
+
+[node name="ConnectionTile_02" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=76387733]
+texture_filter = 1
+position = Vector2(320, 1196)
+texture = ExtResource("17_wlg5c")
+
+[node name="ConnectionTile_03" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=1540856933]
+texture_filter = 1
+position = Vector2(448, 1196)
+texture = ExtResource("19_gj544")
+
+[node name="ConnectionTile_04" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=372854810]
+texture_filter = 1
+position = Vector2(576, 1196)
+texture = ExtResource("18_amn2u")
+
+[node name="ConnectionTile_05" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=1413434813]
+texture_filter = 1
+position = Vector2(704, 1196)
+texture = ExtResource("17_wlg5c")
+
+[node name="ConnectionTile_06" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=1102235888]
+texture_filter = 1
+position = Vector2(832, 1196)
+texture = ExtResource("19_gj544")
+
+[node name="ConnectionTile_07" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=781527713]
+texture_filter = 1
+position = Vector2(960, 1196)
+texture = ExtResource("18_amn2u")
+
+[node name="ConnectionTile_08" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=1677910803]
+texture_filter = 1
+position = Vector2(1088, 1196)
+texture = ExtResource("17_wlg5c")
+
+[node name="ConnectionTile_09" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=486119489]
+texture_filter = 1
+position = Vector2(1216, 1196)
+texture = ExtResource("19_gj544")
+
+[node name="ConnectionTile_10" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=500742412]
+texture_filter = 1
+position = Vector2(1344, 1196)
+texture = ExtResource("18_amn2u")
+
+[node name="ConnectionTile_11" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=1059183177]
+texture_filter = 1
+position = Vector2(1472, 1196)
+texture = ExtResource("17_wlg5c")
+
+[node name="ConnectionTile_12" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=534300924]
+texture_filter = 1
+position = Vector2(1600, 1196)
+texture = ExtResource("19_gj544")
+
+[node name="ConnectionTile_13" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=1303586605]
+texture_filter = 1
+position = Vector2(1728, 1196)
+texture = ExtResource("18_amn2u")
+
+[node name="ConnectionTile_14" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=1918662435]
+texture_filter = 1
+position = Vector2(1856, 1196)
+texture = ExtResource("17_wlg5c")
+
+[node name="ConnectionTile_15" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=435201091]
+texture_filter = 1
+position = Vector2(1984, 1196)
+texture = ExtResource("19_gj544")
+
+[node name="ConnectionTile_34" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=1353925677]
+texture_filter = 1
+position = Vector2(1983.5, 1066.5)
+scale = Vector2(1.0234375, 1.0390625)
+texture = ExtResource("19_gj544")
+
+[node name="ConnectionTile_16" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=585319394]
+texture_filter = 1
+position = Vector2(2112, 1196)
+texture = ExtResource("18_amn2u")
+
+[node name="ConnectionTile_33" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=1853988771]
+texture_filter = 1
+position = Vector2(2111, 1067.5)
+scale = Vector2(1, 1.0390625)
+texture = ExtResource("18_amn2u")
+
+[node name="ConnectionTile_17" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=1719160472]
+texture_filter = 1
+position = Vector2(2240, 1196)
+texture = ExtResource("17_wlg5c")
+
+[node name="ConnectionTile_32" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=1768346326]
+texture_filter = 1
+position = Vector2(2243, 1067.5)
+scale = Vector2(1.0625, 1.0390625)
+texture = ExtResource("17_wlg5c")
+
+[node name="ConnectionTile_18" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=835805335]
+texture_filter = 1
+position = Vector2(2368, 1196)
+texture = ExtResource("19_gj544")
+
+[node name="ConnectionTile_19" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=847545479]
+texture_filter = 1
+position = Vector2(2496, 1196)
+texture = ExtResource("18_amn2u")
+
+[node name="ConnectionTile_20" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=1286137806]
+texture_filter = 1
+position = Vector2(2624, 1196)
+texture = ExtResource("17_wlg5c")
+
+[node name="ConnectionTile_21" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=511857626]
+texture_filter = 1
+position = Vector2(2752, 1196)
+texture = ExtResource("19_gj544")
+
+[node name="ConnectionTile_22" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=649228699]
+texture_filter = 1
+position = Vector2(2880, 1196)
+texture = ExtResource("18_amn2u")
+
+[node name="ConnectionTile_23" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=2005012932]
+texture_filter = 1
+position = Vector2(3008, 1196)
+texture = ExtResource("17_wlg5c")
+
+[node name="ConnectionTile_24" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=259795966]
+texture_filter = 1
+position = Vector2(3136, 1196)
+texture = ExtResource("19_gj544")
+
+[node name="ConnectionTile_25" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=954416139]
+texture_filter = 1
+position = Vector2(3264, 1196)
+texture = ExtResource("18_amn2u")
+
+[node name="ConnectionTile_26" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=441733141]
+texture_filter = 1
+position = Vector2(3392, 1196)
+texture = ExtResource("17_wlg5c")
+
+[node name="ConnectionTile_27" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=1877740545]
+texture_filter = 1
+position = Vector2(3520, 1196)
+texture = ExtResource("19_gj544")
+
+[node name="ConnectionTile_28" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=1889420821]
+texture_filter = 1
+position = Vector2(3648, 1196)
+texture = ExtResource("18_amn2u")
+
+[node name="ConnectionTile_29" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=988957174]
+texture_filter = 1
+position = Vector2(3776, 1196)
+texture = ExtResource("17_wlg5c")
+
+[node name="ConnectionTile_30" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=2054699952]
+texture_filter = 1
+position = Vector2(3904, 1196)
+texture = ExtResource("19_gj544")
+
+[node name="ConnectionTile_31" type="Sprite2D" parent="Level/DeepGroundVisuals/ConnectedGroundRow" unique_id=853654953]
+texture_filter = 1
+position = Vector2(4032, 1196)
+texture = ExtResource("18_amn2u")
+
+[node name="HeavenGround" type="StaticBody2D" parent="Level" unique_id=1723567836]
+position = Vector2(6144, 448)
+
+[node name="WoodenLiftPixel" type="Sprite2D" parent="Level" unique_id=1080939645]
+position = Vector2(5505, 851)
+scale = Vector2(0.6816664, 0.66322637)
+texture = ExtResource("28_1w3in")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Level/WoodenLiftPixel" unique_id=241884668]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/WoodenLiftPixel/StaticBody2D" unique_id=831109886]
+position = Vector2(-8.633789, 198.46167)
+scale = Vector2(0.9999999, 1)
+shape = SubResource("RectangleShape2D_3nkxo")
+
+[node name="Ladder" type="Area2D" parent="Level" unique_id=841875176]
+position = Vector2(7865, 317)
+scale = Vector2(1.7109371, 2.8984375)
+
+[node name="LadderClimbArea" type="CollisionShape2D" parent="Level/Ladder" unique_id=793890803]
+z_index = 1
+position = Vector2(-134.72119, 27.083641)
+scale = Vector2(0.9999997, 1)
+shape = SubResource("RectangleShape2D_ladder_climb")
+
+[node name="ForbiddenGraveyard2dPlatformerTilesetPlatformerLadder" type="Sprite2D" parent="Level/Ladder" unique_id=767429847]
+z_index = 1
+position = Vector2(-136.47495, 79.525604)
+scale = Vector2(0.6529692, 0.45013475)
+texture = ExtResource("26_amn2u")
+
+[node name="ForbiddenGraveyard2dPlatformerTilesetPlatformerLadder2" type="Sprite2D" parent="Level/Ladder" unique_id=574769207]
+z_index = 1
+position = Vector2(-136.47495, 36.743935)
+scale = Vector2(0.6529692, 0.45013475)
+texture = ExtResource("26_amn2u")
+
+[node name="ForbiddenGraveyard2dPlatformerTilesetPlatformerLadder3" type="Sprite2D" parent="Level/Ladder" unique_id=1290567299]
+z_index = 1
+position = Vector2(-137.05939, -8.107819)
+scale = Vector2(0.6529692, 0.45013475)
+texture = ExtResource("26_amn2u")
+
+[node name="Decorations" type="Node2D" parent="." unique_id=425548461]
+
+[node name="BackLayer" type="Node2D" parent="Decorations" unique_id=475695517]
+
+[node name="AwakeningLanternGlow" type="Polygon2D" parent="Decorations/BackLayer" unique_id=419137535]
+z_index = -2
+position = Vector2(829, 523)
+color = Color(1, 0.73, 0.24, 0.1)
+polygon = PackedVector2Array(-20, -46, 20, -46, 98, 104, -98, 100)
+
+[node name="AwakeningLantern" type="Sprite2D" parent="Decorations/BackLayer" unique_id=802142316]
+z_index = -1
+position = Vector2(825.99994, 528)
+scale = Vector2(0.72, 0.72)
+texture = ExtResource("16_6e1lm")
+script = ExtResource("60_proximity_lantern")
+glow_path = NodePath("../AwakeningLanternGlow")
+
+[node name="TeachingFenceA" type="Sprite2D" parent="Decorations/BackLayer" unique_id=1901756265]
+z_index = -2
+position = Vector2(1172, 569)
+scale = Vector2(1.05, 1.05)
+texture = ExtResource("17_qil01")
+
+[node name="TeachingFenceB" type="Sprite2D" parent="Decorations/BackLayer" unique_id=364304350]
+z_index = -2
+position = Vector2(1281, 570)
+scale = Vector2(1.05, 1.05)
+texture = ExtResource("18_k753e")
+
+[node name="TeachingCottage" type="Node2D" parent="Decorations/BackLayer" unique_id=1957465745]
+modulate = Color(0.78, 0.82, 0.92, 0.96)
+z_index = -5
+position = Vector2(794, 500.00003)
+scale = Vector2(0.23, 0.23)
+
+[node name="Windows" type="Node2D" parent="Decorations/BackLayer/TeachingCottage" unique_id=1745232561]
+
+[node name="Window01" type="Node2D" parent="Decorations/BackLayer/TeachingCottage/Windows" unique_id=1839539195]
+script = ExtResource("58_window_light")
+light_enabled = false
+
+[node name="WindowSprite" type="Sprite2D" parent="Decorations/BackLayer/TeachingCottage/Windows/Window01" unique_id=1708753017]
+visible = false
+texture_filter = 1
+position = Vector2(163, -78.5)
+texture = SubResource("AtlasTexture_cottage_01")
+
+[node name="Window02" type="Node2D" parent="Decorations/BackLayer/TeachingCottage/Windows" unique_id=922683152]
+script = ExtResource("58_window_light")
+light_enabled = false
+
+[node name="WindowSprite" type="Sprite2D" parent="Decorations/BackLayer/TeachingCottage/Windows/Window02" unique_id=2121198351]
+visible = false
+texture_filter = 1
+position = Vector2(-197, 244)
+texture = SubResource("AtlasTexture_cottage_02")
+
+[node name="WindowLights" type="Node2D" parent="Decorations/BackLayer/TeachingCottage" unique_id=1680763973]
+
+[node name="House02TallBalcony" type="Sprite2D" parent="Decorations/BackLayer/TeachingCottage" unique_id=919647591]
+z_index = 2
+position = Vector2(-1947.8262, -304.34793)
+scale = Vector2(1.2262161, 1.109211)
+texture = ExtResource("21_hk8g7")
+
+[node name="PressureLanternGlow" type="Polygon2D" parent="Decorations/BackLayer" unique_id=1785507924]
+z_index = -2
+position = Vector2(2490, 527.83997)
+color = Color(1, 0.73, 0.24, 0.1)
+polygon = PackedVector2Array(-20, -46, 20, -46, 96, 92, -96, 92)
+
+[node name="PressureLantern" type="Sprite2D" parent="Decorations/BackLayer" unique_id=1580327483]
+z_index = -1
+position = Vector2(2490, 527.83997)
+scale = Vector2(0.72, 0.72)
+texture = ExtResource("16_6e1lm")
+
+[node name="PressureLonghouse" type="Node2D" parent="Decorations/BackLayer" unique_id=1938530624]
+modulate = Color(0.78, 0.82, 0.92, 0.96)
+z_index = -5
+position = Vector2(1769.9999, 520)
+scale = Vector2(0.21, 0.21)
+
+[node name="Windows" type="Node2D" parent="Decorations/BackLayer/PressureLonghouse" unique_id=64725890]
+
+[node name="Window01" type="Node2D" parent="Decorations/BackLayer/PressureLonghouse/Windows" unique_id=333929947]
+script = ExtResource("58_window_light")
+light_enabled = false
+
+[node name="WindowSprite" type="Sprite2D" parent="Decorations/BackLayer/PressureLonghouse/Windows/Window01" unique_id=422164722]
+visible = false
+texture_filter = 1
+position = Vector2(419.5, -12)
+texture = SubResource("AtlasTexture_longhouse_01")
+
+[node name="Window02" type="Node2D" parent="Decorations/BackLayer/PressureLonghouse/Windows" unique_id=1313899186]
+script = ExtResource("58_window_light")
+light_enabled = false
+
+[node name="WindowSprite" type="Sprite2D" parent="Decorations/BackLayer/PressureLonghouse/Windows/Window02" unique_id=759336502]
+visible = false
+texture_filter = 1
+position = Vector2(-313, 280.5)
+texture = SubResource("AtlasTexture_longhouse_02")
+
+[node name="Window03" type="Node2D" parent="Decorations/BackLayer/PressureLonghouse/Windows" unique_id=1809626386]
+script = ExtResource("58_window_light")
+light_enabled = false
+
+[node name="WindowSprite" type="Sprite2D" parent="Decorations/BackLayer/PressureLonghouse/Windows/Window03" unique_id=1308021206]
+visible = false
+texture_filter = 1
+position = Vector2(-8, 283)
+texture = SubResource("AtlasTexture_longhouse_03")
+
+[node name="WindowLights" type="Node2D" parent="Decorations/BackLayer/PressureLonghouse" unique_id=1169993306]
+
+[node name="CryptTree" type="Sprite2D" parent="Decorations/BackLayer" unique_id=1952533877]
+z_index = -4
+position = Vector2(3500, 489.5)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("19_1w3in")
+
+[node name="MemoryCrypt" type="Sprite2D" parent="Decorations/BackLayer" unique_id=93160303]
+z_index = -2
+position = Vector2(3839.9998, 446)
+scale = Vector2(0.88, 0.88)
+texture = ExtResource("20_pfu5p")
+
+[node name="CheckpointLanternGlow" type="Polygon2D" parent="Decorations/BackLayer" unique_id=403528384]
+z_index = -2
+position = Vector2(4260, 783.83997)
+color = Color(1, 0.73, 0.24, 0.1)
+polygon = PackedVector2Array(-20, -46, 20, -46, 96, 92, -96, 92)
+
+[node name="CheckpointLantern" type="Sprite2D" parent="Decorations/BackLayer" unique_id=2047316419]
+z_index = -1
+position = Vector2(4260, 783.83997)
+scale = Vector2(0.72, 0.72)
+texture = ExtResource("16_6e1lm")
+
+[node name="BridgeEntryLanternGlow" type="Polygon2D" parent="Decorations/BackLayer" unique_id=1887754430]
+z_index = -2
+position = Vector2(4320, 783.83997)
+color = Color(1, 0.73, 0.24, 0.1)
+polygon = PackedVector2Array(-20, -46, 20, -46, 96, 92, -96, 92)
+
+[node name="BridgeEntryLantern" type="Sprite2D" parent="Decorations/BackLayer" unique_id=1122326856]
+z_index = -1
+position = Vector2(4320, 783.83997)
+scale = Vector2(0.72, 0.72)
+texture = ExtResource("16_6e1lm")
+
+[node name="BridgeExitLanternGlow" type="Polygon2D" parent="Decorations/BackLayer" unique_id=1839750366]
+z_index = -2
+position = Vector2(4900, 783.83997)
+color = Color(1, 0.73, 0.24, 0.1)
+polygon = PackedVector2Array(-20, -46, 20, -46, 96, 92, -96, 92)
+
+[node name="BridgeExitLantern" type="Sprite2D" parent="Decorations/BackLayer" unique_id=1620025341]
+z_index = -1
+position = Vector2(4900, 783.83997)
+scale = Vector2(0.72, 0.72)
+texture = ExtResource("16_6e1lm")
+
+[node name="FinalManor" type="Node2D" parent="Decorations/BackLayer" unique_id=1394397706]
+modulate = Color(0.78, 0.82, 0.92, 0.96)
+z_index = -5
+position = Vector2(331, 413)
+scale = Vector2(0.22, 0.22)
+
+[node name="Windows" type="Node2D" parent="Decorations/BackLayer/FinalManor" unique_id=899567789]
+
+[node name="Window01" type="Node2D" parent="Decorations/BackLayer/FinalManor/Windows" unique_id=489189208]
+script = ExtResource("58_window_light")
+
+[node name="WindowSprite" type="Sprite2D" parent="Decorations/BackLayer/FinalManor/Windows/Window01" unique_id=406175471]
+texture_filter = 1
+position = Vector2(-215, -417)
+texture = SubResource("AtlasTexture_manor_01")
+
+[node name="Window02" type="Node2D" parent="Decorations/BackLayer/FinalManor/Windows" unique_id=1567512856]
+script = ExtResource("58_window_light")
+light_enabled = false
+
+[node name="WindowSprite" type="Sprite2D" parent="Decorations/BackLayer/FinalManor/Windows/Window02" unique_id=1990658666]
+visible = false
+texture_filter = 1
+position = Vector2(-222.5, -239.5)
+texture = SubResource("AtlasTexture_manor_02")
+
+[node name="Window03" type="Node2D" parent="Decorations/BackLayer/FinalManor/Windows" unique_id=1449808141]
+script = ExtResource("58_window_light")
+light_enabled = false
+
+[node name="WindowSprite" type="Sprite2D" parent="Decorations/BackLayer/FinalManor/Windows/Window03" unique_id=1951329056]
+visible = false
+texture_filter = 1
+position = Vector2(70, -129.5)
+texture = SubResource("AtlasTexture_manor_03")
+
+[node name="Window04" type="Node2D" parent="Decorations/BackLayer/FinalManor/Windows" unique_id=1227755777]
+script = ExtResource("58_window_light")
+light_enabled = false
+
+[node name="WindowSprite" type="Sprite2D" parent="Decorations/BackLayer/FinalManor/Windows/Window04" unique_id=1004612695]
+visible = false
+texture_filter = 1
+position = Vector2(12.5, 300.5)
+texture = SubResource("AtlasTexture_manor_04")
+
+[node name="Window05" type="Node2D" parent="Decorations/BackLayer/FinalManor/Windows" unique_id=2105035927]
+script = ExtResource("58_window_light")
+light_enabled = false
+
+[node name="WindowSprite" type="Sprite2D" parent="Decorations/BackLayer/FinalManor/Windows/Window05" unique_id=447206283]
+visible = false
+texture_filter = 1
+position = Vector2(280, 305.5)
+texture = SubResource("AtlasTexture_manor_05")
+
+[node name="WindowLights" type="Node2D" parent="Decorations/BackLayer/FinalManor" unique_id=1304067436]
+
+[node name="FinalTree" type="Sprite2D" parent="Decorations/BackLayer" unique_id=855956199]
+z_index = -4
+position = Vector2(6020, 738.25)
+scale = Vector2(-0.95, 0.95)
+texture = ExtResource("15_ip4fc")
+
+[node name="ExitLanternGlow" type="Polygon2D" parent="Decorations/BackLayer" unique_id=1356160991]
+z_index = -2
+position = Vector2(6450, 783.83997)
+color = Color(1, 0.73, 0.24, 0.1)
+polygon = PackedVector2Array(-20, -46, 20, -46, 96, 92, -96, 92)
+
+[node name="ExitLantern" type="Sprite2D" parent="Decorations/BackLayer" unique_id=1304945096]
+z_index = 1
+position = Vector2(6450, 783.83997)
+scale = Vector2(0.72, 0.72)
+texture = ExtResource("16_6e1lm")
+
+[node name="FrontLayer" type="Node2D" parent="Decorations" unique_id=448331071]
+
+[node name="AwakeningTombstone" type="Sprite2D" parent="Decorations/FrontLayer" unique_id=1556579043]
+position = Vector2(2147, 584)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("21_7gx6j")
+
+[node name="PressureHeadstoneA" type="Sprite2D" parent="Decorations/FrontLayer" unique_id=1456313598]
+position = Vector2(2640, 562.4)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("28_tvjuj")
+
+[node name="PressureFence" type="Sprite2D" parent="Decorations/FrontLayer" unique_id=359740526]
+z_index = -2
+position = Vector2(2870, 569)
+texture = ExtResource("18_k753e")
+
+[node name="PressureBarrel" type="Sprite2D" parent="Decorations/FrontLayer" unique_id=108125739]
+position = Vector2(3082, 564)
+scale = Vector2(0.95, 0.95)
+texture = ExtResource("29_5mcap")
+
+[node name="PressureHeadstoneB" type="Sprite2D" parent="Decorations/FrontLayer" unique_id=406091303]
+position = Vector2(3340, 562.4)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("30_fukak")
+
+[node name="CryptSkull" type="Sprite2D" parent="Decorations/FrontLayer" unique_id=570471253]
+position = Vector2(4080, 613.6)
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("31_u0vqy")
+
+[node name="FinalCoffin" type="Sprite2D" parent="Decorations/FrontLayer" unique_id=734717254]
+z_index = -1
+position = Vector2(5882, 761.00006)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("32_0e5vl")
+
+[node name="GameplayMarkers" type="Node2D" parent="." unique_id=512905736]
+
+[node name="PlayerSpawn" type="Marker2D" parent="GameplayMarkers" unique_id=666180913]
+position = Vector2(280, 540)
+metadata/purpose = "awakening spawn"
+
+[node name="SectionAwakeningEnd" type="Marker2D" parent="GameplayMarkers" unique_id=1960180798]
+position = Vector2(1024, 580)
+metadata/purpose = "awakening to teaching"
+
+[node name="SectionTeachingEnd" type="Marker2D" parent="GameplayMarkers" unique_id=1275941680]
+position = Vector2(2432, 580)
+metadata/purpose = "teaching to first pressure"
+
+[node name="SectionPressureEnd" type="Marker2D" parent="GameplayMarkers" unique_id=1553170951]
+position = Vector2(3456, 580)
+metadata/purpose = "pressure to crypt landmark"
+
+[node name="EnemySlot01" type="Marker2D" parent="GameplayMarkers" unique_id=1649394266]
+position = Vector2(2720, 578)
+metadata/purpose = "future skeleton encounter"
+
+[node name="EnemySlot02" type="Marker2D" parent="GameplayMarkers" unique_id=349531295]
+position = Vector2(3260, 578)
+metadata/purpose = "future skeleton encounter"
+
+[node name="MemoryStoryTrigger" type="Marker2D" parent="GameplayMarkers" unique_id=1516452539]
+position = Vector2(3840, 540)
+metadata/purpose = "first memory reveal"
+
+[node name="Checkpoint" type="Marker2D" parent="GameplayMarkers" unique_id=2093100157]
+position = Vector2(4230, 812)
+metadata/purpose = "safe checkpoint before bridge"
+
+[node name="EnemySlot03" type="Marker2D" parent="GameplayMarkers" unique_id=17056258]
+position = Vector2(5570, 834)
+metadata/purpose = "harder future skeleton encounter"
+
+[node name="ExitToForgottenPath" type="Marker2D" parent="GameplayMarkers" unique_id=180582161]
+z_index = 2
+position = Vector2(6669, 805)
+metadata/purpose = "level 2 transition"
+
+[node name="MemoryTriggerArea" type="Area2D" parent="GameplayMarkers" unique_id=863262330]
+position = Vector2(3840, 520)
+collision_layer = 0
+metadata/trigger_type = "story"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameplayMarkers/MemoryTriggerArea" unique_id=299725925]
+position = Vector2(15, 0)
+shape = SubResource("RectangleShape2D_hxk04")
+
+[node name="CheckpointArea" type="Area2D" parent="GameplayMarkers" unique_id=1497560215]
+position = Vector2(4230, 776)
+collision_layer = 0
+metadata/trigger_type = "checkpoint"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameplayMarkers/CheckpointArea" unique_id=357628611]
+shape = SubResource("RectangleShape2D_8qluk")
+
+[node name="ExitArea" type="Area2D" parent="GameplayMarkers" unique_id=1252563728]
+position = Vector2(6491, 757)
+collision_layer = 0
+metadata/trigger_type = "exit"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameplayMarkers/ExitArea" unique_id=1525346341]
+position = Vector2(-49, 2)
+shape = SubResource("RectangleShape2D_vkw4u")
+
+[node name="FallKillZone" type="Area2D" parent="." unique_id=1181241488]
+position = Vector2(3328, 1270)
+script = ExtResource("38_g1qam")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FallKillZone" unique_id=566670048]
+position = Vector2(1573, 175)
+shape = SubResource("RectangleShape2D_cxsg2")
+
+[node name="Timer" type="Timer" parent="FallKillZone" unique_id=440543066]
+wait_time = 0.15
+one_shot = true
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1597021953]
+z_index = 10
+position = Vector2(280, 540)
+script = ExtResource("39_djj6u")
+jump_sound = ExtResource("40_h1b5i")
+run_sound = ExtResource("41_tuktd")
+attack_sound = ExtResource("42_2a70d")
+kick_sound = ExtResource("43_5b677")
+hit_sound = ExtResource("43_5b677")
+landing_sound = ExtResource("44_srpt6")
+max_coin_power = 30
+dynamic_frames_root = "res://Characters/Active_Players/Ash_Golem/PNG Sequences"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1415188561]
+position = Vector2(0, 25)
+shape = SubResource("CapsuleShape2D_yp222")
+
+[node name="LadderDetector" type="Area2D" parent="Player" unique_id=1390141127]
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/LadderDetector" unique_id=12161724]
+position = Vector2(0, 25)
+shape = SubResource("CircleShape2D_ladder_detector")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player" unique_id=1190349155]
+z_index = 10
+position = Vector2(-2, 25)
+scale = Vector2(0.22, 0.22)
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1225183419]
+position = Vector2(2, -100)
+zoom = Vector2(1.35, 1.35)
+limit_left = -9
+limit_top = -119
+limit_right = 8600
+limit_bottom = 1241
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+
+[node name="PlayerHUD" type="CanvasLayer" parent="." unique_id=1158069440]
+process_mode = 3
+script = ExtResource("46_ibsnp")
+
+[node name="HealthBar" type="TextureProgressBar" parent="PlayerHUD" unique_id=1184578042]
+offset_left = 16.0
+offset_top = 34.0
+offset_right = 166.0
+offset_bottom = 53.0
+value = 100.0
+texture_under = ExtResource("47_n2pes")
+texture_progress = ExtResource("48_l8tr1")
+
+[node name="HealthLabel" type="Label" parent="PlayerHUD" unique_id=1085616806]
+visible = false
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 160.0
+offset_bottom = 30.0
+text = "Life:"
+
+[node name="CoinPowerBar" type="TextureProgressBar" parent="PlayerHUD" unique_id=1202991260]
+offset_left = 16.0
+offset_top = 88.0
+offset_right = 166.0
+offset_bottom = 107.0
+max_value = 30.0
+texture_under = ExtResource("49_wenad")
+texture_progress = ExtResource("50_55jme")
+
+[node name="CoinPowerLabel" type="Label" parent="PlayerHUD" unique_id=875334383]
+visible = false
+offset_left = 16.0
+offset_top = 62.0
+offset_right = 260.0
+offset_bottom = 84.0
+text = "Power:"
+
+[node name="EnemyCountLabel" type="Label" parent="PlayerHUD" unique_id=1358564899]
+visible = false
+offset_left = 128.0
+offset_top = 120.0
+offset_right = 182.0
+offset_bottom = 144.0
+text = "0"
+
+[node name="LivesText" type="TextureRect" parent="PlayerHUD" unique_id=1163426834]
+visible = false
+offset_left = 16.0
+offset_top = 148.0
+offset_right = 88.0
+offset_bottom = 178.0
+texture = ExtResource("51_whhd7")
+expand_mode = 1
+
+[node name="LivesLabel" type="Label" parent="PlayerHUD" unique_id=1979271889]
+visible = false
+offset_left = 106.0
+offset_top = 152.0
+offset_right = 172.0
+offset_bottom = 176.0
+text = "0/5"
+
+[node name="RoundLabel" type="Label" parent="PlayerHUD" unique_id=1378954021]
+visible = false
+offset_left = 16.0
+offset_top = 114.0
+offset_right = 100.0
+offset_bottom = 138.0
+text = "0/0"
+
+[node name="MenuButton" type="Button" parent="PlayerHUD" unique_id=96562753]
+visible = false
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -52.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = 44.0
+text = "..."
+
+[node name="PauseMenu" type="Panel" parent="PlayerHUD" unique_id=833667631]
+process_mode = 3
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -95.0
+offset_right = 150.0
+offset_bottom = 95.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_pause_panel")
+
+[node name="Box" type="VBoxContainer" parent="PlayerHUD/PauseMenu" unique_id=1436296251]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 16.0
+offset_right = -18.0
+offset_bottom = -16.0
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Title" type="Label" parent="PlayerHUD/PauseMenu/Box" unique_id=1007556667]
+layout_mode = 2
+text = "Paused"
+horizontal_alignment = 1
+
+[node name="OnlineStatusLabel" type="Label" parent="PlayerHUD/PauseMenu/Box" unique_id=879405599]
+layout_mode = 2
+text = "Online: offline"
+horizontal_alignment = 1
+
+[node name="ReturnButton" type="Button" parent="PlayerHUD/PauseMenu/Box" unique_id=1046057901]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+text = "Return to Game"
+
+[node name="MainMenuButton" type="Button" parent="PlayerHUD/PauseMenu/Box" unique_id=1644607706]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+text = "Main Menu"
+
+[node name="DesignNotes" type="Node" parent="." unique_id=1192771839]
+metadata/route = "awakening > teaching > pressure > crypt memory > short bridge > final graves > exit"
+metadata/collision_rule = "terrain and bridge collide; decorations do not"
+metadata/readability_rule = "lanterns mark landmarks and both bridge landings"
+metadata/enemy_policy = "grave tells, emergence, Easy chase/attack/recovery, death, and HUD counting"
+metadata/background_policy = "one moon; layered hills, fog, grounded houses; no cemetery waterfall"
+metadata/waterfall_policy = "one world-space assembly below and behind the bridge"
+metadata/ground_policy = "surface remains at y=620; visual soil extends below the camera with two-row overscan"
+metadata/online_scope = "story-only scene; online scenes and resources are unchanged"
+
+[node name="StairsRedraw" type="Sprite2D" parent="." unique_id=1016728656]
+position = Vector2(267, 576.5)
+scale = Vector2(1, 0.7937499)
+texture = ExtResource("58_aonbx")
+
+[node name="TerrainRedraw" type="Sprite2D" parent="." unique_id=1241038774]
+position = Vector2(442, 575)
+texture = ExtResource("59_ibml5")
+
+[node name="TreeRedraw" type="Sprite2D" parent="." unique_id=1133519571]
+z_index = -43
+position = Vector2(93, 437)
+texture = ExtResource("60_hk8g7")
+
+[node name="TerrainRedraw2" type="Sprite2D" parent="." unique_id=128462677]
+position = Vector2(120, 574)
+texture = ExtResource("59_ibml5")
+
+[node name="Grass2Redraw" type="Sprite2D" parent="." unique_id=1442651166]
+z_index = -25
+position = Vector2(417, 557)
+scale = Vector2(1, 1.9249996)
+texture = ExtResource("61_ibml5")
+
+[node name="Grass2Redraw2" type="Sprite2D" parent="." unique_id=2050045864]
+z_index = -15
+position = Vector2(92, 574)
+scale = Vector2(1, 1.7500001)
+texture = ExtResource("61_ibml5")
+
+[node name="FogShader" type="ColorRect" parent="." unique_id=1450261129]
+material = SubResource("ShaderMaterial_1u6mt")
+offset_left = -1456.0
+offset_top = -1769.0
+offset_right = 10357.0
+offset_bottom = 1660.0
+metadata/_edit_lock_ = true
+
+[node name="ForbiddenGraveyard2dPlatformerTilesetPlatformerStone" type="Sprite2D" parent="." unique_id=1648166146]
+position = Vector2(6968, 706)
+scale = Vector2(0.9765625, 1.0546875)
+texture = ExtResource("70_pfu5p")
+
+[node name="ForbiddenGraveyard2dPlatformerTilesetPlatformerStone2" type="Sprite2D" parent="ForbiddenGraveyard2dPlatformerTilesetPlatformerStone" unique_id=242768616]
+position = Vector2(419.84, 9.48148)
+texture = ExtResource("70_pfu5p")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="ForbiddenGraveyard2dPlatformerTilesetPlatformerStone" unique_id=2101342979]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ForbiddenGraveyard2dPlatformerTilesetPlatformerStone/StaticBody2D" unique_id=610562896]
+position = Vector2(-1.5361328, 0.47406006)
+shape = SubResource("RectangleShape2D_bdoqp")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="ForbiddenGraveyard2dPlatformerTilesetPlatformerStone/StaticBody2D" unique_id=660829448]
+position = Vector2(417.79178, 8.53331)
+shape = SubResource("RectangleShape2D_t0hve")
+
+[node name="ForbiddenGraveyard2dPlatformerTilesetPlatformerGround10" type="Sprite2D" parent="." unique_id=61814250]
+position = Vector2(7568, 247)
+scale = Vector2(1, 1.0625001)
+texture = ExtResource("73_8e665")
+
+[node name="ForbiddenGraveyard2dPlatformerTilesetPlatformerGround14" type="Sprite2D" parent="ForbiddenGraveyard2dPlatformerTilesetPlatformerGround10" unique_id=94890840]
+position = Vector2(127, 0.47061157)
+scale = Vector2(1, 1.0073528)
+texture = ExtResource("51_gj544")
+
+[node name="ForbiddenGraveyard2dPlatformerTilesetPlatformerGround11" type="Sprite2D" parent="ForbiddenGraveyard2dPlatformerTilesetPlatformerGround10" unique_id=1402285172]
+position = Vector2(251, 0.47061157)
+scale = Vector2(1, 1.0073528)
+texture = ExtResource("51_gj544")
+
+[node name="ForbiddenGraveyard2dPlatformerTilesetPlatformerGround13" type="Sprite2D" parent="ForbiddenGraveyard2dPlatformerTilesetPlatformerGround10" unique_id=703173903]
+position = Vector2(503, 0.47061157)
+scale = Vector2(1, 1.0073527)
+texture = ExtResource("74_stvwn")
+
+[node name="ForbiddenGraveyard2dPlatformerTilesetPlatformerGround12" type="Sprite2D" parent="ForbiddenGraveyard2dPlatformerTilesetPlatformerGround10" unique_id=1162089375]
+position = Vector2(375, 0)
+scale = Vector2(1, 0.99999976)
+texture = ExtResource("51_gj544")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="ForbiddenGraveyard2dPlatformerTilesetPlatformerGround10" unique_id=1688218729]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ForbiddenGraveyard2dPlatformerTilesetPlatformerGround10/StaticBody2D" unique_id=1149834140]
+z_index = -10
+position = Vector2(251, -2.823524)
+shape = SubResource("RectangleShape2D_1aaaq")
+one_way_collision = true
+
+[node name="RoadToHellSign" type="Sprite2D" parent="." unique_id=1384769538]
+position = Vector2(8006, 125)
+texture = ExtResource("72_k5fei")
+
+[node name="House012dClean" type="Sprite2D" parent="." unique_id=489456638]
+z_index = -1
+position = Vector2(663, 521)
+scale = Vector2(1.5123457, 1.607362)
+texture = ExtResource("20_ibml5")

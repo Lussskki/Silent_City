@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Enemies/story_enemy.gd" id="1_story_enemy"]
+
+[node name="ZombieVillager" type="CharacterBody2D"]
+z_index = 9
+script = ExtResource("1_story_enemy")
+enemy_kind = "zombie"
+max_life = 75
+move_speed = 95.0
+attack_distance = 78.0
+attack_damage = 10
+attack_animation = "kicking"
+windup_time = 0.62
+active_time = 0.16
+recovery_time = 0.95
+recognition_time = 0.6
+

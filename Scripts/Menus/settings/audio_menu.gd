@@ -225,6 +225,9 @@ func _save_audio_settings() -> void:
 		percent
 	)
 	config.save(AUDIO_CONFIG_PATH)
+	var settings := get_node_or_null("/root/GameSettings")
+	if settings and settings.has_method("notify_preferences_changed"):
+		settings.notify_preferences_changed()
 
 
 func _back_to_settings() -> void:

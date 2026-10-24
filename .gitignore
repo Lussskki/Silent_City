@@ -6,6 +6,10 @@
 .codex/
 /build/
 /builds/
+/Characters/builds/
+/.godot*.log
+/.tmp-*.log
+.DS_Store
 /output/
 tmp/
 Characters/craftpix-net-484869-free-minotaur-tiny-style-2d-sprites.zip

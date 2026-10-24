@@ -11,9 +11,6 @@ const BACK_BUTTON_SIZE := Vector2(320.0, 46.0)
 const LEVEL_START_WAIT_SECONDS := 2.0
 
 const EASY_CARD_PNG := "res://Resources/Buttons/difficulty_card_easy.png"
-const MEDIUM_CARD_PNG := "res://Resources/Buttons/difficulty_card_medium.png"
-const HARD_CARD_PNG := "res://Resources/Buttons/difficulty_card_hard.png"
-const SQUAD_CARD_PNG := "res://Resources/Buttons/character_card_stone.png"
 const BACK_BUTTON_PNG := "res://Resources/Buttons/menu_button_start.png"
 
 var level_page: VBoxContainer = null
@@ -21,9 +18,6 @@ var choose_page: VBoxContainer = null
 var home_page: VBoxContainer = null
 
 var easy_button: Button = null
-var medium_button: Button = null
-var hard_button: Button = null
-var squad_button: Button = null
 var map_title_label: Label = null
 var map_gallery_hint: Label = null
 var level_back_button: Button = null
@@ -53,9 +47,6 @@ func setup(nodes: Dictionary, services: Dictionary) -> void:
 	home_page = nodes.get("home_page")
 
 	easy_button = nodes.get("easy_button")
-	medium_button = nodes.get("medium_button")
-	hard_button = nodes.get("hard_button")
-	squad_button = nodes.get("squad_button")
 	map_title_label = nodes.get("map_title_label")
 	map_gallery_hint = nodes.get("map_gallery_hint")
 	level_back_button = nodes.get("level_back_button")
@@ -88,7 +79,7 @@ func open_preview() -> void:
 	selected_level = ""
 	hovered_level = ""
 
-	for button in [easy_button, medium_button, hard_button]:
+	for button in [easy_button]:
 		if button:
 			button.release_focus()
 
@@ -137,18 +128,6 @@ func _connect_buttons() -> void:
 		easy_button.pressed.connect(func(): _select_level("easy"))
 		_connect_hover(easy_button, "easy")
 
-	if medium_button:
-		medium_button.pressed.connect(func(): _select_level("medium"))
-		_connect_hover(medium_button, "medium")
-
-	if hard_button:
-		hard_button.pressed.connect(func(): _select_level("hard"))
-		_connect_hover(hard_button, "hard")
-
-	if squad_button:
-		squad_button.pressed.connect(func(): _select_level("squad"))
-		_connect_hover(squad_button, "squad")
-
 	if level_back_button:
 		level_back_button.pressed.connect(_on_back_pressed)
 
@@ -167,6 +146,7 @@ func _select_level(level: String) -> void:
 
 	if start_game_after_selection:
 		selection_pending = true
+		_show_loading_screen()
 		if map_gallery_hint:
 			map_gallery_hint.visible = true
 			map_gallery_hint.text = "Wait, game has cooldown xD"
@@ -178,6 +158,12 @@ func _select_level(level: String) -> void:
 		return
 
 	_show_page(choose_page)
+
+
+func _show_loading_screen() -> void:
+	var loading_screen := get_node_or_null("/root/LoadingScreen")
+	if loading_screen and loading_screen.has_method("show_loading"):
+		loading_screen.show_loading()
 
 
 func _connect_hover(button: Button, level: String) -> void:
@@ -205,7 +191,7 @@ func _connect_hover(button: Button, level: String) -> void:
 
 
 func _update_cards() -> void:
-	for level in ["easy", "medium", "hard", "squad"]:
+	for level in ["easy"]:
 		var button := _button_for_level(level)
 		if not button:
 			continue
@@ -220,12 +206,6 @@ func _update_cards() -> void:
 
 func _button_for_level(level: String) -> Button:
 	match level:
-		"medium":
-			return medium_button
-		"hard":
-			return hard_button
-		"squad":
-			return squad_button
 		_:
 			return easy_button
 
@@ -266,9 +246,6 @@ func _layout_page() -> void:
 
 func _apply_visuals() -> void:
 	_apply_difficulty_card_sprite(easy_button, EASY_CARD_PNG)
-	_apply_difficulty_card_sprite(medium_button, MEDIUM_CARD_PNG)
-	_apply_difficulty_card_sprite(hard_button, HARD_CARD_PNG)
-	_apply_difficulty_card_sprite(squad_button, SQUAD_CARD_PNG)
 
 	# Back uses the shared Main Menu button renderer so its appearance remains
 	# exactly the same as before.

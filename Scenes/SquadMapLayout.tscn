@@ -1,147 +1,259 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene format=3 uid="uid://cgi6yd2uiihsg"]
 
-[ext_resource type="Texture2D" path="res://Sprites/Tiles/Tile (14).png" id="1_left"]
-[ext_resource type="Texture2D" path="res://Sprites/Tiles/Tile (15).png" id="2_middle"]
-[ext_resource type="Texture2D" path="res://Sprites/Tiles/Tile (16).png" id="3_right"]
-[ext_resource type="Texture2D" path="res://Sprites/Objects/Tree.png" id="4_tree"]
-[ext_resource type="Texture2D" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Lantern.png" id="5_lantern"]
-[ext_resource type="Texture2D" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Crypt.png" id="6_crypt"]
-[ext_resource type="Texture2D" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Skull.png" id="7_skull"]
+[ext_resource type="PackedScene" uid="uid://dolqxrbdplsj6" path="res://Scenes/EasyLongRouteV2.tscn" id="1_long_route"]
+[ext_resource type="Texture2D" uid="uid://dn0anwejndvon" path="res://Sprites/Tiles/Tile (14).png" id="2_left"]
+[ext_resource type="Texture2D" uid="uid://bhbt6n0q3k5pw" path="res://Sprites/Tiles/Tile (15).png" id="3_middle"]
+[ext_resource type="Texture2D" uid="uid://dvfbye0ooj14w" path="res://Sprites/Tiles/Tile (16).png" id="4_right"]
+[ext_resource type="Texture2D" uid="uid://sfuk1rcuc7u" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Crypt.png" id="7_crypt"]
+[ext_resource type="Texture2D" uid="uid://b8yw283cmml8p" path="res://Sprites/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Skull.png" id="8_skull"]
+[ext_resource type="Texture2D" uid="uid://bq5l5nqmmiuqk" path="res://Sprites/Background/BG.png" id="9_background"]
 
 [sub_resource type="RectangleShape2D" id="Team1UpperShape"]
 size = Vector2(640, 128)
+
 [sub_resource type="RectangleShape2D" id="Team1LowerShape"]
 size = Vector2(640, 128)
+
 [sub_resource type="RectangleShape2D" id="CenterFightShape"]
 size = Vector2(640, 128)
+
 [sub_resource type="RectangleShape2D" id="Team2UpperShape"]
 size = Vector2(640, 128)
+
 [sub_resource type="RectangleShape2D" id="Team2LowerShape"]
 size = Vector2(640, 128)
 
-[node name="SquadMapLayout" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="OnlineRouteConnectorShape"]
+size = Vector2(640, 128)
 
-[node name="Team1Upper" type="StaticBody2D" parent="."]
-position = Vector2(1092, 284)
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Team1Upper"]
+[node name="SquadMapLayout" type="Node2D" unique_id=963710119]
+
+[node name="BackgroundA" type="Sprite2D" parent="." unique_id=321013917]
+z_index = -50
+position = Vector2(841.5, 458.325)
+scale = Vector2(1.0585, 1.072047)
+texture = ExtResource("9_background")
+
+[node name="BackgroundB" type="Sprite2D" parent="." unique_id=256553251]
+z_index = -50
+position = Vector2(2933, 460.325)
+scale = Vector2(1.033, 1.075547)
+texture = ExtResource("9_background")
+
+[node name="BackgroundC" type="Sprite2D" parent="." unique_id=1766784634]
+z_index = -50
+position = Vector2(4975, 460.325)
+scale = Vector2(1.033, 1.075547)
+texture = ExtResource("9_background")
+
+[node name="BackgroundD" type="Sprite2D" parent="." unique_id=1280256974]
+z_index = -50
+position = Vector2(7022, 458)
+scale = Vector2(1.033, 1.075547)
+texture = ExtResource("9_background")
+
+[node name="LongRouteHomesAndGrounds" parent="." unique_id=836494514 instance=ExtResource("1_long_route")]
+
+[node name="RunGround" parent="LongRouteHomesAndGrounds" index="0" unique_id=1030840173]
+position = Vector2(3920, 598)
+
+[node name="Run_0_0" parent="LongRouteHomesAndGrounds" index="1" unique_id=1901114869]
+position = Vector2(3664, 534)
+
+[node name="Run_1_0" parent="LongRouteHomesAndGrounds" index="2" unique_id=397707298]
+position = Vector2(3792, 534)
+
+[node name="Run_2_0" parent="LongRouteHomesAndGrounds" index="3" unique_id=1049973451]
+position = Vector2(3920, 534)
+
+[node name="Run_3_0" parent="LongRouteHomesAndGrounds" index="4" unique_id=236648182]
+position = Vector2(4048, 534)
+
+[node name="Run_4_0" parent="LongRouteHomesAndGrounds" index="5" unique_id=1260615247]
+position = Vector2(4176, 534)
+
+[node name="Run_0_1" parent="LongRouteHomesAndGrounds" index="6" unique_id=1569956699]
+position = Vector2(3664, 662)
+
+[node name="Run_1_1" parent="LongRouteHomesAndGrounds" index="7" unique_id=1553116539]
+position = Vector2(3792, 662)
+
+[node name="Run_2_1" parent="LongRouteHomesAndGrounds" index="8" unique_id=1135594872]
+position = Vector2(3920, 662)
+
+[node name="Run_3_1" parent="LongRouteHomesAndGrounds" index="9" unique_id=1806251501]
+position = Vector2(4048, 662)
+
+[node name="Run_4_1" parent="LongRouteHomesAndGrounds" index="10" unique_id=432416517]
+position = Vector2(4176, 662)
+
+[node name="DirectionSign" parent="LongRouteHomesAndGrounds" index="36" unique_id=1093965044]
+position = Vector2(3750, 422)
+
+[node name="RunTree" parent="LongRouteHomesAndGrounds" index="37" unique_id=119612021]
+position = Vector2(4059.9998, 384)
+
+[node name="EndTree" parent="LongRouteHomesAndGrounds" index="42" unique_id=1139968060]
+position = Vector2(5969, 252)
+
+[node name="Team1Upper" type="StaticBody2D" parent="." unique_id=483302030]
+position = Vector2(6500, 204)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Team1Upper" unique_id=1123308354]
 shape = SubResource("Team1UpperShape")
-[node name="Left" type="Sprite2D" parent="Team1Upper"]
-position = Vector2(-256, 0)
-texture = ExtResource("1_left")
-[node name="Middle" type="Sprite2D" parent="Team1Upper"]
-position = Vector2(-128, 0)
-texture = ExtResource("2_middle")
-[node name="Right" type="Sprite2D" parent="Team1Upper"]
-position = Vector2(256, 0)
-texture = ExtResource("3_right")
-[node name="Middle2" type="Sprite2D" parent="Team1Upper"]
-position = Vector2(0, 0)
-texture = ExtResource("2_middle")
-[node name="Middle3" type="Sprite2D" parent="Team1Upper"]
-position = Vector2(128, 0)
-texture = ExtResource("2_middle")
 
-[node name="Team1Lower" type="StaticBody2D" parent="."]
-position = Vector2(1092, 684)
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Team1Lower"]
+[node name="Left" type="Sprite2D" parent="Team1Upper" unique_id=2065020443]
+position = Vector2(-256, 0)
+texture = ExtResource("2_left")
+
+[node name="Middle" type="Sprite2D" parent="Team1Upper" unique_id=1066301424]
+position = Vector2(-128, 0)
+texture = ExtResource("3_middle")
+
+[node name="Middle2" type="Sprite2D" parent="Team1Upper" unique_id=1278002662]
+texture = ExtResource("3_middle")
+
+[node name="Middle3" type="Sprite2D" parent="Team1Upper" unique_id=363703932]
+position = Vector2(128, 0)
+texture = ExtResource("3_middle")
+
+[node name="Right" type="Sprite2D" parent="Team1Upper" unique_id=1192132627]
+position = Vector2(256, 0)
+texture = ExtResource("4_right")
+
+[node name="Team1Lower" type="StaticBody2D" parent="." unique_id=1380161200]
+position = Vector2(6500, 604)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Team1Lower" unique_id=2096661637]
 shape = SubResource("Team1LowerShape")
-[node name="Left" type="Sprite2D" parent="Team1Lower"]
-position = Vector2(-256, 0)
-texture = ExtResource("1_left")
-[node name="Middle" type="Sprite2D" parent="Team1Lower"]
-position = Vector2(-128, 0)
-texture = ExtResource("2_middle")
-[node name="Right" type="Sprite2D" parent="Team1Lower"]
-position = Vector2(256, 0)
-texture = ExtResource("3_right")
-[node name="Middle2" type="Sprite2D" parent="Team1Lower"]
-position = Vector2(0, 0)
-texture = ExtResource("2_middle")
-[node name="Middle3" type="Sprite2D" parent="Team1Lower"]
-position = Vector2(128, 0)
-texture = ExtResource("2_middle")
 
-[node name="CenterFight" type="StaticBody2D" parent="."]
+[node name="Left" type="Sprite2D" parent="Team1Lower" unique_id=1211018933]
+position = Vector2(-256, 0)
+texture = ExtResource("2_left")
+
+[node name="Middle" type="Sprite2D" parent="Team1Lower" unique_id=961777681]
+position = Vector2(-128, 0)
+texture = ExtResource("3_middle")
+
+[node name="Middle2" type="Sprite2D" parent="Team1Lower" unique_id=949428289]
+texture = ExtResource("3_middle")
+
+[node name="Middle3" type="Sprite2D" parent="Team1Lower" unique_id=2128756165]
+position = Vector2(128, 0)
+texture = ExtResource("3_middle")
+
+[node name="Right" type="Sprite2D" parent="Team1Lower" unique_id=191434208]
+position = Vector2(256, 0)
+texture = ExtResource("4_right")
+
+[node name="CenterFight" type="StaticBody2D" parent="." unique_id=552630636]
 position = Vector2(1800, 484)
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CenterFight"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CenterFight" unique_id=233329496]
 shape = SubResource("CenterFightShape")
-[node name="Left" type="Sprite2D" parent="CenterFight"]
-position = Vector2(-256, 0)
-texture = ExtResource("1_left")
-[node name="Middle" type="Sprite2D" parent="CenterFight"]
-position = Vector2(-128, 0)
-texture = ExtResource("2_middle")
-[node name="Right" type="Sprite2D" parent="CenterFight"]
-position = Vector2(256, 0)
-texture = ExtResource("3_right")
-[node name="Middle2" type="Sprite2D" parent="CenterFight"]
-position = Vector2(0, 0)
-texture = ExtResource("2_middle")
-[node name="Middle3" type="Sprite2D" parent="CenterFight"]
-position = Vector2(128, 0)
-texture = ExtResource("2_middle")
 
-[node name="Team2Upper" type="StaticBody2D" parent="."]
-position = Vector2(2508, 284)
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Team2Upper"]
+[node name="Left" type="Sprite2D" parent="CenterFight" unique_id=1169410775]
+position = Vector2(-256, 0)
+texture = ExtResource("2_left")
+
+[node name="Middle" type="Sprite2D" parent="CenterFight" unique_id=1660782392]
+position = Vector2(-128, 0)
+texture = ExtResource("3_middle")
+
+[node name="Middle2" type="Sprite2D" parent="CenterFight" unique_id=535234989]
+texture = ExtResource("3_middle")
+
+[node name="Middle3" type="Sprite2D" parent="CenterFight" unique_id=134959971]
+position = Vector2(128, 0)
+texture = ExtResource("3_middle")
+
+[node name="Right" type="Sprite2D" parent="CenterFight" unique_id=1648709516]
+position = Vector2(256, 0)
+texture = ExtResource("4_right")
+
+[node name="Team2Upper" type="StaticBody2D" parent="." unique_id=1127143963]
+position = Vector2(900, 284)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Team2Upper" unique_id=591314365]
 shape = SubResource("Team2UpperShape")
-[node name="Left" type="Sprite2D" parent="Team2Upper"]
-position = Vector2(-256, 0)
-texture = ExtResource("1_left")
-[node name="Middle" type="Sprite2D" parent="Team2Upper"]
-position = Vector2(-128, 0)
-texture = ExtResource("2_middle")
-[node name="Right" type="Sprite2D" parent="Team2Upper"]
-position = Vector2(256, 0)
-texture = ExtResource("3_right")
-[node name="Middle2" type="Sprite2D" parent="Team2Upper"]
-position = Vector2(0, 0)
-texture = ExtResource("2_middle")
-[node name="Middle3" type="Sprite2D" parent="Team2Upper"]
-position = Vector2(128, 0)
-texture = ExtResource("2_middle")
 
-[node name="Team2Lower" type="StaticBody2D" parent="."]
-position = Vector2(2508, 684)
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Team2Lower"]
+[node name="Left" type="Sprite2D" parent="Team2Upper" unique_id=177448929]
+position = Vector2(-256, 0)
+texture = ExtResource("2_left")
+
+[node name="Middle" type="Sprite2D" parent="Team2Upper" unique_id=34872408]
+position = Vector2(-128, 0)
+texture = ExtResource("3_middle")
+
+[node name="Middle2" type="Sprite2D" parent="Team2Upper" unique_id=736048440]
+texture = ExtResource("3_middle")
+
+[node name="Middle3" type="Sprite2D" parent="Team2Upper" unique_id=1901063799]
+position = Vector2(128, 0)
+texture = ExtResource("3_middle")
+
+[node name="Right" type="Sprite2D" parent="Team2Upper" unique_id=1050620126]
+position = Vector2(256, 0)
+texture = ExtResource("4_right")
+
+[node name="Team2Lower" type="StaticBody2D" parent="." unique_id=27903607]
+position = Vector2(900, 684)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Team2Lower" unique_id=898630902]
 shape = SubResource("Team2LowerShape")
-[node name="Left" type="Sprite2D" parent="Team2Lower"]
-position = Vector2(-256, 0)
-texture = ExtResource("1_left")
-[node name="Middle" type="Sprite2D" parent="Team2Lower"]
-position = Vector2(-128, 0)
-texture = ExtResource("2_middle")
-[node name="Right" type="Sprite2D" parent="Team2Lower"]
-position = Vector2(256, 0)
-texture = ExtResource("3_right")
-[node name="Middle2" type="Sprite2D" parent="Team2Lower"]
-position = Vector2(0, 0)
-texture = ExtResource("2_middle")
-[node name="Middle3" type="Sprite2D" parent="Team2Lower"]
-position = Vector2(128, 0)
-texture = ExtResource("2_middle")
 
-[node name="LeftTree" type="Sprite2D" parent="."]
-position = Vector2(940, 155)
+[node name="Left" type="Sprite2D" parent="Team2Lower" unique_id=1877585961]
+position = Vector2(-256, 0)
+texture = ExtResource("2_left")
+
+[node name="Middle" type="Sprite2D" parent="Team2Lower" unique_id=517038546]
+position = Vector2(-128, 0)
+texture = ExtResource("3_middle")
+
+[node name="Middle2" type="Sprite2D" parent="Team2Lower" unique_id=778158554]
+texture = ExtResource("3_middle")
+
+[node name="Middle3" type="Sprite2D" parent="Team2Lower" unique_id=1428310727]
+position = Vector2(128, 0)
+texture = ExtResource("3_middle")
+
+[node name="Right" type="Sprite2D" parent="Team2Lower" unique_id=407001914]
+position = Vector2(256, 0)
+texture = ExtResource("4_right")
+
+[node name="OnlineRouteConnector" type="StaticBody2D" parent="." unique_id=576078324]
+position = Vector2(2920, 570)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OnlineRouteConnector" unique_id=2073072948]
+shape = SubResource("OnlineRouteConnectorShape")
+
+[node name="Left" type="Sprite2D" parent="OnlineRouteConnector" unique_id=1688614900]
+position = Vector2(-256, 0)
+texture = ExtResource("2_left")
+
+[node name="Middle" type="Sprite2D" parent="OnlineRouteConnector" unique_id=284999753]
+position = Vector2(-128, 0)
+texture = ExtResource("3_middle")
+
+[node name="Middle2" type="Sprite2D" parent="OnlineRouteConnector" unique_id=1696607915]
+texture = ExtResource("3_middle")
+
+[node name="Middle3" type="Sprite2D" parent="OnlineRouteConnector" unique_id=1489585846]
+position = Vector2(128, 0)
+texture = ExtResource("3_middle")
+
+[node name="Right" type="Sprite2D" parent="OnlineRouteConnector" unique_id=1428687021]
+position = Vector2(256, 0)
+texture = ExtResource("4_right")
+
+[node name="CenterCrypt" type="Sprite2D" parent="." unique_id=1582194842]
+position = Vector2(1687, 325)
 scale = Vector2(0.55, 0.55)
-texture = ExtResource("4_tree")
-[node name="LeftLantern" type="Sprite2D" parent="."]
-position = Vector2(1215, 205)
-scale = Vector2(0.72, 0.72)
-texture = ExtResource("5_lantern")
-[node name="CenterCrypt" type="Sprite2D" parent="."]
-position = Vector2(1700, 344)
-scale = Vector2(0.55, 0.55)
-texture = ExtResource("6_crypt")
-[node name="CenterSkull" type="Sprite2D" parent="."]
+texture = ExtResource("7_crypt")
+
+[node name="CenterSkull" type="Sprite2D" parent="." unique_id=1732411563]
 position = Vector2(1900, 421)
 scale = Vector2(0.85, 0.85)
-texture = ExtResource("7_skull")
-[node name="RightLantern" type="Sprite2D" parent="."]
-position = Vector2(2385, 205)
-scale = Vector2(0.72, 0.72)
-texture = ExtResource("5_lantern")
-[node name="RightTree" type="Sprite2D" parent="."]
-position = Vector2(2660, 155)
-scale = Vector2(-0.55, 0.55)
-texture = ExtResource("4_tree")
+texture = ExtResource("8_skull")
+
+[editable path="LongRouteHomesAndGrounds"]

@@ -9,10 +9,8 @@ signal character_status_requested(status_text: String)
 signal character_refresh_requested
 signal playable_level_requested
 
-const MAIN_SCENE := "res://Scenes/main.tscn"
+const MAIN_SCENE := "res://Scenes/Online.tscn"
 const SQUAD_SCENE := "res://Scenes/SquadArena.tscn"
-const MEDIUM_SCENE := "res://Scenes/MainMedium.tscn"
-const HARD_SCENE := "res://Scenes/MainHard.tscn"
 
 const MAX_ROOM_PLAYERS := 4
 
@@ -159,6 +157,9 @@ func open() -> void:
 	if not configured:
 		return
 
+	# Online login, lobby selection, and character selection must stay usable.
+	# Clear any loader left behind by an interrupted connection attempt.
+	_hide_loading_screen()
 	_sync_online_state_with_peer()
 	_update_online_room_text()
 
@@ -647,6 +648,7 @@ func _host_online_game() -> void:
 		if online_status:
 			online_status.text = _t("hosting_active")
 
+		_show_loading_screen()
 		get_tree().change_scene_to_file(_online_scene_path_from_settings())
 		return
 
@@ -806,12 +808,20 @@ func _try_auto_start_online_match() -> void:
 	_update_room_buttons()
 	_sync_online_character_state()
 
-	rpc(
-		"_start_online_match",
-		scene_path,
-		host_character,
-		remote_client_character
-	)
+	# Assign each connected PC a unique loader skin. The local autoload chooses
+	# a non-repeating starting variant, then remote peers receive the others.
+	var loading_variant := _show_loading_screen()
+	var remote_peers := multiplayer.get_peers()
+	remote_peers.sort()
+	for peer_index in range(remote_peers.size()):
+		rpc_id(
+			remote_peers[peer_index],
+			"_start_online_match",
+			scene_path,
+			host_character,
+			remote_client_character,
+			(loading_variant + peer_index + 1) % 4
+		)
 	get_tree().change_scene_to_file(scene_path)
 
 
@@ -935,6 +945,7 @@ func _finish_steam_join_lobby(lobby_id: int) -> void:
 	) as MultiplayerPeer
 
 	if not peer:
+		_hide_loading_screen()
 		if online_status:
 			online_status.text = _t("steam_transport_missing")
 		_update_room_buttons()
@@ -946,6 +957,7 @@ func _finish_steam_join_lobby(lobby_id: int) -> void:
 		if online_status:
 			online_status.text = "Rejoining match..."
 
+		_show_loading_screen()
 		get_tree().change_scene_to_file(
 			_store_online_scene_path(_pending_lobby_scene_path())
 		)
@@ -1015,6 +1027,7 @@ func _on_connected_to_server() -> void:
 			if online_status:
 				online_status.text = "Rejoining match..."
 
+			_show_loading_screen()
 			get_tree().change_scene_to_file(
 				_store_online_scene_path(
 					_pending_lobby_scene_path()
@@ -1029,6 +1042,7 @@ func _on_connected_to_server() -> void:
 
 		settings.set("character_chosen", false)
 
+		_hide_loading_screen()
 		_request_character_page(_t("connected_choose"))
 
 
@@ -1077,6 +1091,7 @@ func _on_peer_disconnected(_peer_id: int) -> void:
 
 
 func _on_connection_failed() -> void:
+	_hide_loading_screen()
 	if online_status:
 		online_status.text = _t("connection_failed")
 
@@ -1097,6 +1112,7 @@ func _on_connection_failed() -> void:
 
 
 func _back_from_online() -> void:
+	_hide_loading_screen()
 	if settings:
 		settings.call("reset_online")
 
@@ -1294,6 +1310,7 @@ func _connect_steam_manager() -> void:
 
 
 func _on_steam_failed(_message: String) -> void:
+	_hide_loading_screen()
 	if (
 		online_connection_mode == ONLINE_MODE_STEAM
 		and online_page
@@ -1431,6 +1448,7 @@ func _online_character_state_updated(
 			== host_character
 	):
 		settings.set("character_chosen", false)
+		_hide_loading_screen()
 		_request_character_status(_t("connected_choose"))
 
 	_emit_character_refresh()
@@ -1441,7 +1459,8 @@ func _online_character_state_updated(
 func _start_online_match(
 	scene_path: String = MAIN_SCENE,
 	host_character: String = "crusader",
-	client_character: String = "crusader"
+	client_character: String = "crusader",
+	loading_variant: int = -1
 ) -> void:
 	# Preserve the authoritative host skin before the gameplay scene creates
 	# remote proxies. The proxy scene otherwise starts with Skeleton frames.
@@ -1455,6 +1474,7 @@ func _start_online_match(
 	joined_room_waiting_for_character = false
 	online_match_starting = true
 
+	_show_loading_screen(loading_variant)
 	get_tree().change_scene_to_file(
 		_store_online_scene_path(scene_path)
 	)
@@ -1462,19 +1482,27 @@ func _start_online_match(
 
 func _valid_online_scene_path(scene_path: String) -> String:
 	match scene_path:
-		MAIN_SCENE, MEDIUM_SCENE, HARD_SCENE, SQUAD_SCENE:
+		MAIN_SCENE, SQUAD_SCENE:
 			return scene_path
 
 	return MAIN_SCENE
 
 
-func _level_for_scene_path(scene_path: String) -> String:
-	match _valid_online_scene_path(scene_path):
-		HARD_SCENE:
-			return "hard"
-		MEDIUM_SCENE:
-			return "medium"
+func _show_loading_screen(variant_index: int = -1) -> int:
+	var loading_screen := get_node_or_null("/root/LoadingScreen")
+	if loading_screen and loading_screen.has_method("show_loading"):
+		return int(loading_screen.show_loading("", variant_index))
+	return 0
 
+
+func _hide_loading_screen() -> void:
+	var loading_screen := get_node_or_null("/root/LoadingScreen")
+	if loading_screen and loading_screen.has_method("hide_loading"):
+		loading_screen.hide_loading()
+
+
+func _level_for_scene_path(scene_path: String) -> String:
+	_valid_online_scene_path(scene_path)
 	return "easy"
 
 
@@ -1522,16 +1550,6 @@ func _selected_main_scene() -> String:
 		and selected_main_scene_callback.is_valid()
 	):
 		return String(selected_main_scene_callback.call())
-
-	if settings:
-		var selected_level := String(
-			settings.get("selected_level")
-		)
-
-		if selected_level == "hard":
-			return HARD_SCENE
-		if selected_level == "medium":
-			return MEDIUM_SCENE
 
 	return MAIN_SCENE
 
@@ -1593,7 +1611,7 @@ func _character_display_name(character: String) -> String:
 		"minotaur":
 			return "Minotaur"
 		"ranger":
-			return "Forest Ranger"
+			return "Nina"
 
 	return "Ash Golem"
 

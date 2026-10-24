@@ -136,6 +136,8 @@ func _restore_pending_drop() -> void:
 
 
 func _spawn_health_box_at(drop_id: int, drop_position: Vector2) -> void:
+	if active_pickups.has(drop_id):
+		return
 	var scene := pickup_scene if pickup_scene else DEFAULT_PICKUP_SCENE
 	var pickup := scene.instantiate() as Node2D
 	pickup.global_position = Vector2(drop_position.x, drop_position.y - drop_height)
@@ -143,6 +145,17 @@ func _spawn_health_box_at(drop_id: int, drop_position: Vector2) -> void:
 	pickup.set("drop_id", drop_id)
 	get_tree().current_scene.add_child(pickup)
 	active_pickups[drop_id] = pickup
+
+
+func sync_to_peer(peer_id: int) -> void:
+	if not multiplayer.has_multiplayer_peer() or not multiplayer.is_server():
+		return
+	if pending_drop_position != Vector2.INF:
+		rpc_id(peer_id, "_sync_health_drop_warning", pending_drop_id, pending_drop_position, warning_active)
+	for drop_id in active_pickups:
+		var pickup := active_pickups[drop_id] as Node2D
+		if pickup and is_instance_valid(pickup):
+			rpc_id(peer_id, "_spawn_remote_health_box", int(drop_id), Vector2(pickup.global_position.x, pickup.get("target_y")))
 
 
 func request_health_pickup(drop_id: int, body: Node) -> void:
@@ -165,6 +178,17 @@ func request_health_pickup(drop_id: int, body: Node) -> void:
 
 @rpc("authority", "reliable")
 func _show_remote_warning() -> void:
+	warning_sprite.visible = true
+
+
+@rpc("authority", "reliable")
+func _sync_health_drop_warning(drop_id: int, drop_position: Vector2, is_active: bool) -> void:
+	if not is_active:
+		return
+	pending_drop_id = drop_id
+	pending_drop_position = drop_position
+	warning_active = true
+	warning_timer = warning_duration
 	warning_sprite.visible = true
 
 

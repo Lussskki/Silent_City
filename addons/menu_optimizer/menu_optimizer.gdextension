@@ -7,3 +7,4 @@ reloadable = true
 [libraries]
 
 windows.debug.x86_64 = "./bin/windows/menu_optimizer.windows.template_debug.x86_64.dll"
+windows.release.x86_64 = "./bin/windows/menu_optimizer.windows.template_release.x86_64.dll"

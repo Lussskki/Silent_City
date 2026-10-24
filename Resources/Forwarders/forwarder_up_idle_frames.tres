@@ -1,0 +1,22 @@
+[gd_resource type="SpriteFrames" load_steps=13 format=3]
+
+[ext_resource type="Texture2D" path="res://Characters/Wraithes/PNG/Wraith_03/PNG Sequences/Idle/Wraith_03_Idle_000.png" id="1_up"]
+[ext_resource type="Texture2D" path="res://Characters/Wraithes/PNG/Wraith_03/PNG Sequences/Idle/Wraith_03_Idle_001.png" id="2_up"]
+[ext_resource type="Texture2D" path="res://Characters/Wraithes/PNG/Wraith_03/PNG Sequences/Idle/Wraith_03_Idle_002.png" id="3_up"]
+[ext_resource type="Texture2D" path="res://Characters/Wraithes/PNG/Wraith_03/PNG Sequences/Idle/Wraith_03_Idle_003.png" id="4_up"]
+[ext_resource type="Texture2D" path="res://Characters/Wraithes/PNG/Wraith_03/PNG Sequences/Idle/Wraith_03_Idle_004.png" id="5_up"]
+[ext_resource type="Texture2D" path="res://Characters/Wraithes/PNG/Wraith_03/PNG Sequences/Idle/Wraith_03_Idle_005.png" id="6_up"]
+[ext_resource type="Texture2D" path="res://Characters/Wraithes/PNG/Wraith_03/PNG Sequences/Idle/Wraith_03_Idle_006.png" id="7_up"]
+[ext_resource type="Texture2D" path="res://Characters/Wraithes/PNG/Wraith_03/PNG Sequences/Idle/Wraith_03_Idle_007.png" id="8_up"]
+[ext_resource type="Texture2D" path="res://Characters/Wraithes/PNG/Wraith_03/PNG Sequences/Idle/Wraith_03_Idle_008.png" id="9_up"]
+[ext_resource type="Texture2D" path="res://Characters/Wraithes/PNG/Wraith_03/PNG Sequences/Idle/Wraith_03_Idle_009.png" id="10_up"]
+[ext_resource type="Texture2D" path="res://Characters/Wraithes/PNG/Wraith_03/PNG Sequences/Idle/Wraith_03_Idle_010.png" id="11_up"]
+[ext_resource type="Texture2D" path="res://Characters/Wraithes/PNG/Wraith_03/PNG Sequences/Idle/Wraith_03_Idle_011.png" id="12_up"]
+
+[resource]
+animations = [{
+"frames": [{"duration": 1.0, "texture": ExtResource("1_up")}, {"duration": 1.0, "texture": ExtResource("2_up")}, {"duration": 1.0, "texture": ExtResource("3_up")}, {"duration": 1.0, "texture": ExtResource("4_up")}, {"duration": 1.0, "texture": ExtResource("5_up")}, {"duration": 1.0, "texture": ExtResource("6_up")}, {"duration": 1.0, "texture": ExtResource("7_up")}, {"duration": 1.0, "texture": ExtResource("8_up")}, {"duration": 1.0, "texture": ExtResource("9_up")}, {"duration": 1.0, "texture": ExtResource("10_up")}, {"duration": 1.0, "texture": ExtResource("11_up")}, {"duration": 1.0, "texture": ExtResource("12_up")}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}]

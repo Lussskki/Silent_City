@@ -3,21 +3,15 @@ extends CanvasLayer
 const MAX_CLIENTS := 1
 const SECOND_PLAYER_NAME := "SecondPlayer"
 const SECOND_PLAYER_SPAWNS_BY_SCENE := {
-	"res://Scenes/main.tscn": Vector2(3264, 404),
-	"res://Scenes/MainMedium.tscn": Vector2(3008, 410),
-	"res://Scenes/MainHard.tscn": Vector2(3282, 195),
+	"res://Scenes/Online.tscn": Vector2(3264, 404),
 }
-const ASH_GOLEM_FRAMES_ROOT := "res://Player/player_assets/PNG Sequences"
+const ASH_GOLEM_FRAMES_ROOT := "res://Characters/Active_Players/Ash_Golem/PNG Sequences"
 const ONLINE_CHARACTER_SPRITE_OFFSETS := {
 	"player": Vector2(0, -24),
 	"golem": Vector2(0, -24),
 	"ice_golem": Vector2(0, -24),
-	"crusader": Vector2(0, -24),
-	"wraith": Vector2(0, -24),
 }
-const ICE_GOLEM_FRAMES_ROOT := "res://Characters/Golem_1/PNG/PNG Sequences"
-const CRUSADER_FRAMES_ROOT := "res://Characters/Skeleton_crusider/Skeleton_Crusader_1/PNG/PNG Sequences"
-const WRAITH_FRAMES_ROOT := "res://Characters/Wraithes/PNG/Wraith_01/PNG Sequences"
+const ICE_GOLEM_FRAMES_ROOT := "res://Characters/Active_Players/Ice_Golem/PNG/PNG Sequences"
 const ASH_GOLEM_ANIMATION_DIRS := {
 	"Idle": "Idle",
 	"Walking": "Walking",
@@ -32,15 +26,6 @@ const ASH_GOLEM_ANIMATION_DIRS := {
 	"Throwing In Air": "Throwing in The Air",
 	"Dying": "Dying",
 	"Sliding": "Sliding"
-}
-const WRAITH_ANIMATION_DIRS := {
-	"Idle": "Idle", "Walking": "Walking", "Running": "Walking",
-	"Jump Looping": "Idle", "Falling Down": "Idle",
-	"Slashing": "Attacking", "Slashing In Air": "Attacking",
-	"Run Slashing": "Attacking", "Kicking": "Attacking",
-	"Hurt": "Hurt", "Throwing": "Casting Spells",
-	"Throwing In Air": "Casting Spells", "Dying": "Dying",
-	"Sliding": "Walking"
 }
 
 @export var golem_player_scene: PackedScene
@@ -387,22 +372,13 @@ func _set_player_active(player: Node2D, active: bool) -> void:
 
 
 func _apply_character_to_player(player: Node2D, character: String) -> void:
+	if character in ["crusader", "wraith", "minotaur", "ranger"]:
+		character = "player"
 	var sprite := player.get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
 	if not sprite:
 		return
 	if player.has_method("set_sprite_flip_inverted"):
-		player.call("set_sprite_flip_inverted", character in ["golem", "ice_golem", "crusader", "wraith"])
-
-	if character in ["crusader", "wraith"]:
-		var frames_root := CRUSADER_FRAMES_ROOT if character == "crusader" else WRAITH_FRAMES_ROOT
-		var animation_dirs: Dictionary = ASH_GOLEM_ANIMATION_DIRS if character == "crusader" else WRAITH_ANIMATION_DIRS
-		var squad_frames := _build_sprite_frames_from_root(frames_root, animation_dirs)
-		if squad_frames.has_animation("Idle"):
-			sprite.sprite_frames = squad_frames
-			sprite.position = _online_character_sprite_offset(character)
-			sprite.scale = Vector2(0.22, 0.22) if character == "crusader" else Vector2(0.34, 0.34)
-			sprite.play("Idle")
-		return
+		player.call("set_sprite_flip_inverted", character in ["golem", "ice_golem"])
 
 	if character == "ice_golem":
 		var ice_frames := _build_sprite_frames_from_root(ICE_GOLEM_FRAMES_ROOT)
@@ -418,7 +394,7 @@ func _apply_character_to_player(player: Node2D, character: String) -> void:
 		if golem_frames:
 			sprite.sprite_frames = golem_frames
 			if player.has_method("_add_animation_from_folder"):
-				player.call("_add_animation_from_folder", sprite.sprite_frames, "Hurt", "res://Characters/Golem/PNG/PNG Sequences/Hurt", 12.0, false)
+				player.call("_add_animation_from_folder", sprite.sprite_frames, "Hurt", "res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Hurt", 12.0, false)
 			sprite.position = _online_character_sprite_offset(character)
 			sprite.play("Idle")
 		_apply_stone_golem_sounds(player)

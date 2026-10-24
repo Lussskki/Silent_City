@@ -22,6 +22,7 @@ config/icon="res://Sprites/Splash/silent_city_icon_master.png"
 GameSettings="*res://Scripts/game_settings.gd"
 SteamManager="*res://Scripts/steam_manager.gd"
 BrightnessManager="*res://Scripts/Menus/brightness/brightness_manager.gd"
+LoadingScreen="*res://Scenes/LoadingScreen.tscn"
 
 [display]
 
@@ -109,8 +110,3 @@ menu_down={
 common/physics_jitter_fix=0.0
 3d/physics_engine="Jolt Physics"
 common/physics_interpolation=true
-
-[rendering]
-
-rendering_device/driver.windows="d3d12"
-renderer/rendering_method="gl_compatibility"

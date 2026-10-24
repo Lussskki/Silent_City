@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_menu_script"]
 [ext_resource type="Texture2D" path="res://Sprites/Background/BG.png" id="2_bg"]
-[ext_resource type="Texture2D" path="res://Resources/ash_golem_preview.png" id="3_player_preview"]
-[ext_resource type="Texture2D" path="res://Characters/Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_000.png" id="4_golem_preview"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_000.png" id="3_player_preview"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_000.png" id="4_golem_preview"]
 [ext_resource type="Texture2D" path="res://Resources/How_to_play/1_clean.png" id="5_how_attack"]
 [ext_resource type="Texture2D" path="res://Resources/How_to_play/3_clean.png" id="7_how_jump"]
 [ext_resource type="Texture2D" path="res://Resources/How_to_play/4_clean.png" id="8_how_kick"]
-[ext_resource type="Texture2D" path="res://Characters/Golem_1/PNG/PNG Sequences/Idle/0_Golem_Idle_000.png" id="9_ice_golem_preview"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Ice_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_000.png" id="9_ice_golem_preview"]
 [ext_resource type="Texture2D" path="res://Resources/MapPreviews/easy_map.png" id="10_easy_map_preview"]
 [ext_resource type="Texture2D" path="res://Resources/MapPreviews/medium_map.png" id="11_medium_map_preview"]
 [ext_resource type="Texture2D" path="res://Resources/MapPreviews/hard_map.png" id="12_hard_map_preview"]
@@ -133,35 +133,11 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Story Mode"
 
-[node name="SquadButton" type="Button" parent="Content/Root/Pages/ModeSelect"]
-custom_minimum_size = Vector2(320, 46)
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Squad"
-
 [node name="BackButton" type="Button" parent="Content/Root/Pages/ModeSelect"]
 custom_minimum_size = Vector2(320, 46)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Back"
-
-[node name="MapButton" type="Button" parent="Content/Root/Pages/Home"]
-custom_minimum_size = Vector2(320, 46)
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Map"
-
-[node name="ChooseButton" type="Button" parent="Content/Root/Pages/Home"]
-custom_minimum_size = Vector2(320, 46)
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Choose Character"
-
-[node name="OnlineButton" type="Button" parent="Content/Root/Pages/Home"]
-custom_minimum_size = Vector2(320, 46)
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Online"
 
 [node name="HowToPlayButton" type="Button" parent="Content/Root/Pages/Home"]
 custom_minimum_size = Vector2(320, 46)
@@ -322,42 +298,6 @@ theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
 theme_override_font_sizes/font_size = 18
 text = "Hard Map"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="SquadButton" type="Button" parent="Content/Root/Pages/ChooseLevel/MapCards"]
-clip_contents = true
-custom_minimum_size = Vector2(178, 120)
-layout_mode = 2
-tooltip_text = "Squad Map"
-
-[node name="Tombstone" type="TextureRect" parent="Content/Root/Pages/ChooseLevel/MapCards/SquadButton"]
-layout_mode = 0
-offset_left = 62.0
-offset_top = 52.0
-offset_right = 128.0
-offset_bottom = 145.0
-mouse_filter = 2
-texture = ExtResource("16_squad_tombstone")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Title" type="Label" parent="Content/Root/Pages/ChooseLevel/MapCards/SquadButton"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -31.0
-grow_horizontal = 2
-grow_vertical = 0
-mouse_filter = 2
-theme_override_colors/font_color = Color(0.82, 1, 0.88, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_offset_y = 2
-theme_override_font_sizes/font_size = 18
-text = "Squad Map"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -554,13 +494,6 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 20
 text = "Start Game"
-
-[node name="OnlineButton" type="Button" parent="Content/Root/Pages/ChooseCharacter"]
-custom_minimum_size = Vector2(260, 42)
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 20
-text = "Online"
 
 [node name="BackButton" type="Button" parent="Content/Root/Pages/ChooseCharacter"]
 custom_minimum_size = Vector2(260, 42)

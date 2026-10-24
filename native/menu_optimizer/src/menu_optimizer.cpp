@@ -128,6 +128,41 @@ void MenuOptimizer::_bind_methods()
 	);
 
 	ClassDB::bind_method(
+		D_METHOD("request_level_preload", "scene_path"),
+		&MenuOptimizer::request_level_preload
+	);
+
+	ClassDB::bind_method(
+		D_METHOD("get_level_preload_status", "scene_path"),
+		&MenuOptimizer::get_level_preload_status
+	);
+
+	ClassDB::bind_method(
+		D_METHOD("get_level_preload_progress", "scene_path"),
+		&MenuOptimizer::get_level_preload_progress
+	);
+
+	ClassDB::bind_method(
+		D_METHOD("get_preloaded_level", "scene_path"),
+		&MenuOptimizer::get_preloaded_level
+	);
+
+	ClassDB::bind_method(
+		D_METHOD("has_preloaded_level", "scene_path"),
+		&MenuOptimizer::has_preloaded_level
+	);
+
+	ClassDB::bind_method(
+		D_METHOD("get_preloaded_level_count"),
+		&MenuOptimizer::get_preloaded_level_count
+	);
+
+	ClassDB::bind_method(
+		D_METHOD("clear_preloaded_levels"),
+		&MenuOptimizer::clear_preloaded_levels
+	);
+
+	ClassDB::bind_method(
 		D_METHOD(
 			"remove_baked_checkerboard_background",
 			"image",
@@ -349,6 +384,135 @@ Ref<Texture2D> MenuOptimizer::load_runtime_texture(String texture_path)
 	}
 
 	return texture;
+}
+
+int MenuOptimizer::request_level_preload(String scene_path)
+{
+	if (scene_path.is_empty())
+	{
+		return static_cast<int>(ERR_INVALID_PARAMETER);
+	}
+
+	if (has_preloaded_level(scene_path))
+	{
+		return static_cast<int>(OK);
+	}
+
+	ResourceLoader *loader = ResourceLoader::get_singleton();
+	const ResourceLoader::ThreadLoadStatus status =
+		loader->load_threaded_get_status(scene_path);
+
+	if (status == ResourceLoader::THREAD_LOAD_LOADED)
+	{
+		Ref<PackedScene> packed_scene = loader->load_threaded_get(scene_path);
+		if (packed_scene.is_valid())
+		{
+			level_scene_cache[scene_path] = packed_scene;
+			return static_cast<int>(OK);
+		}
+		return static_cast<int>(ERR_CANT_OPEN);
+	}
+
+	if (status == ResourceLoader::THREAD_LOAD_IN_PROGRESS)
+	{
+		return static_cast<int>(OK);
+	}
+
+	return static_cast<int>(loader->load_threaded_request(
+		scene_path,
+		"PackedScene",
+		true,
+		ResourceLoader::CACHE_MODE_REUSE
+	));
+}
+
+int MenuOptimizer::get_level_preload_status(String scene_path)
+{
+	if (has_preloaded_level(scene_path))
+	{
+		return static_cast<int>(ResourceLoader::THREAD_LOAD_LOADED);
+	}
+
+	return static_cast<int>(
+		ResourceLoader::get_singleton()->load_threaded_get_status(scene_path)
+	);
+}
+
+double MenuOptimizer::get_level_preload_progress(String scene_path)
+{
+	if (has_preloaded_level(scene_path))
+	{
+		return 1.0;
+	}
+
+	Array progress;
+	const ResourceLoader::ThreadLoadStatus status =
+		ResourceLoader::get_singleton()->load_threaded_get_status(
+			scene_path,
+			progress
+		);
+
+	if (status == ResourceLoader::THREAD_LOAD_LOADED)
+	{
+		return 1.0;
+	}
+
+	if (!progress.is_empty())
+	{
+		return static_cast<double>(progress[0]);
+	}
+
+	return 0.0;
+}
+
+Ref<PackedScene> MenuOptimizer::get_preloaded_level(String scene_path)
+{
+	if (level_scene_cache.has(scene_path))
+	{
+		Ref<PackedScene> cached = level_scene_cache[scene_path];
+		if (cached.is_valid())
+		{
+			return cached;
+		}
+		level_scene_cache.erase(scene_path);
+	}
+
+	ResourceLoader *loader = ResourceLoader::get_singleton();
+	if (
+		loader->load_threaded_get_status(scene_path)
+		!= ResourceLoader::THREAD_LOAD_LOADED
+	)
+	{
+		return Ref<PackedScene>();
+	}
+
+	Ref<PackedScene> packed_scene = loader->load_threaded_get(scene_path);
+	if (packed_scene.is_valid())
+	{
+		level_scene_cache[scene_path] = packed_scene;
+	}
+	return packed_scene;
+}
+
+bool MenuOptimizer::has_preloaded_level(String scene_path) const
+{
+	if (!level_scene_cache.has(scene_path))
+	{
+		return false;
+	}
+
+	Ref<PackedScene> cached = level_scene_cache[scene_path];
+	return cached.is_valid();
+}
+
+int MenuOptimizer::get_preloaded_level_count() const
+{
+	return level_scene_cache.size();
+}
+
+void MenuOptimizer::clear_preloaded_levels()
+{
+	level_scene_cache.clear();
 }
 
 void MenuOptimizer::remove_baked_checkerboard_background(

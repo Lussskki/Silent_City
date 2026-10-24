@@ -329,6 +329,12 @@ func _setup_how_to_play_page() -> void:
 	if not how_to_play_page:
 		return
 
+	# Defence and health notices are intentionally not part of the controls help.
+	# Removing their container lets the remaining instructions reflow with no gap.
+	var notice_cards := how_to_play_page.get_node_or_null("NoticeCards")
+	if notice_cards:
+		notice_cards.queue_free()
+
 	how_to_play_header = how_to_play_page.get_node_or_null("Header") as Label
 	how_to_play_instructions = how_to_play_page.get_node_or_null(
 		"Instructions"

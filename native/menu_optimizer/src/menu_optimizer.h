@@ -1,6 +1,7 @@
 #pragma once
 
 #include <godot_cpp/classes/image.hpp>
+#include <godot_cpp/classes/packed_scene.hpp>
 #include <godot_cpp/classes/ref_counted.hpp>
 #include <godot_cpp/classes/texture2d.hpp>
 #include <godot_cpp/variant/dictionary.hpp>
@@ -13,6 +14,7 @@ class MenuOptimizer : public RefCounted
 	GDCLASS(MenuOptimizer, RefCounted);
 
 	Dictionary texture_cache;
+	Dictionary level_scene_cache;
 
 protected:
 	static void _bind_methods();
@@ -49,6 +51,18 @@ public:
 	// Lightweight runtime sprite path for already-transparent PNGs.
 	// Uses the shared cache without doing per-pixel cleanup.
 	Ref<Texture2D> load_runtime_texture(String texture_path);
+
+	// Native asynchronous level loading. A PackedScene request loads all of
+	// its external textures, scripts, audio, and other dependencies before the
+	// status becomes THREAD_LOAD_LOADED. The retained cache prevents those
+	// resources from being read again during the scene switch.
+	int request_level_preload(String scene_path);
+	int get_level_preload_status(String scene_path);
+	double get_level_preload_progress(String scene_path);
+	Ref<PackedScene> get_preloaded_level(String scene_path);
+	bool has_preloaded_level(String scene_path) const;
+	int get_preloaded_level_count() const;
+	void clear_preloaded_levels();
 
 	void remove_baked_checkerboard_background(
 		Ref<Image> image,

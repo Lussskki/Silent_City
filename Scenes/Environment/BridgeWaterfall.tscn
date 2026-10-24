@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Environment/bridge_waterfall.gd" id="1_waterfall"]
+
+[node name="BridgeWaterfall" type="Node2D"]
+z_index = -18
+scale = Vector2(1.85, 1.85)
+script = ExtResource("1_waterfall")
+

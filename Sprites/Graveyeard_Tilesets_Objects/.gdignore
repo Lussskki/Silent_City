@@ -1,0 +1,5 @@
+# Reference/source archive only.
+#
+# Playable graveyard assets are curated under res://Sprites/Graveyard.
+# Keeping this marker prevents Godot from importing duplicate PNG/vector files,
+# design PDFs, and the large source FLAC while preserving the archive on disk.

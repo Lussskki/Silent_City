@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Enemies/story_enemy.gd" id="1_story_enemy"]
+
+[node name="SkeletonWarrior" type="CharacterBody2D"]
+z_index = 9
+script = ExtResource("1_story_enemy")
+enemy_kind = "skeleton"
+max_life = 50
+move_speed = 130.0
+attack_distance = 92.0
+attack_damage = 10
+attack_animation = "slashing"
+windup_time = 0.46
+active_time = 0.14
+recovery_time = 0.72
+recognition_time = 0.48
+

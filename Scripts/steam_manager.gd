@@ -211,7 +211,7 @@ func _on_lobby_created(connect_result: int, lobby_id: int) -> void:
 	steam.call("setLobbyData", current_lobby_id, "state", "waiting")
 	steam.call("setLobbyData", current_lobby_id, "host_character", "")
 	steam.call("setLobbyData", current_lobby_id, "client_character", "")
-	steam.call("setLobbyData", current_lobby_id, "scene_path", "res://Scenes/main.tscn")
+	steam.call("setLobbyData", current_lobby_id, "scene_path", "res://Scenes/Online.tscn")
 	if steam.has_method("setLobbyJoinable"):
 		steam.call("setLobbyJoinable", current_lobby_id, true)
 	lobby_created.emit(current_lobby_id)
@@ -244,7 +244,7 @@ func _add_lobby(lobby_id: int) -> void:
 	var lobby_state := "waiting"
 	var host_character := ""
 	var client_character := ""
-	var scene_path := "res://Scenes/main.tscn"
+	var scene_path := "res://Scenes/Online.tscn"
 	var member_count := 1
 	var game_key := ""
 	if steam:

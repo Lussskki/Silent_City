@@ -4,19 +4,17 @@ const PORT := 8910
 const MAX_CLIENTS := 3
 const SECOND_PLAYER_NAME := "SecondPlayer"
 const SECOND_PLAYER_SPAWNS_BY_SCENE := {
-	"res://Scenes/main.tscn": Vector2(3264, 404),
-	"res://Scenes/MainMedium.tscn": Vector2(3264, 410),
-	"res://Scenes/MainHard.tscn": Vector2(3264, 195),
-	"res://Scenes/SquadArena.tscn": Vector2(3250, 228),
+	"res://Scenes/Online.tscn": Vector2(3264, 404),
+	"res://Scenes/SquadArena.tscn": Vector2(6620, 58),
 }
 const SQUAD_ARENA_SCENE := "res://Scenes/SquadArena.tscn"
 const SQUAD_ARENA_SPAWNS: Array[Vector2] = [
-	Vector2(1090, 178),
-	Vector2(2510, 178),
-	Vector2(1090, 578),
-	Vector2(2510, 578),
+	Vector2(6620, 58),
+	Vector2(900, 178),
+	Vector2(6620, 458),
+	Vector2(900, 578),
 ]
-const ASH_GOLEM_FRAMES_ROOT := "res://Player/player_assets/PNG Sequences"
+const ASH_GOLEM_FRAMES_ROOT := "res://Characters/Active_Players/Ash_Golem/PNG Sequences"
 const ONLINE_CHARACTER_SPRITE_OFFSETS := {
 	"player": Vector2(0, -24),
 	"golem": Vector2(0, -24),
@@ -61,23 +59,7 @@ const GEORGIAN_QWERTY_TO_LATIN := {
 	"ღ": "r",
 	"ჭ": "w",
 }
-const ICE_GOLEM_FRAMES_ROOT := "res://Characters/Golem_1/PNG/PNG Sequences"
-const CRUSADER_FRAMES_ROOT := "res://Characters/Skeleton_crusider/Skeleton_Crusader_1/PNG/PNG Sequences"
-const WRAITH_FRAMES_ROOT := "res://Characters/Wraithes/PNG/Wraith_01/PNG Sequences"
-const MINOTAUR_FRAMES_ROOT := "res://Characters/Minotaurs/Minotaur_3/PNG/PNG Sequences"
-const RANGER_FRAMES_ROOT := "res://Characters/Forest_Ranger_2/PNG/PNG Sequences"
-const SQUAD_IDLE_TEXTURES := {
-	"crusader": preload("res://Characters/Skeleton_crusider/Skeleton_Crusader_1/PNG/PNG Sequences/Idle/0_Skeleton_Crusader_Idle_000.png"),
-	"wraith": preload("res://Characters/Wraithes/PNG/Wraith_01/PNG Sequences/Idle/Wraith_01_Idle_000.png"),
-	"minotaur": preload("res://Characters/Minotaurs/Minotaur_3/PNG/PNG Sequences/Idle/0_Minotaur_Idle_000.png"),
-	"ranger": preload("res://Characters/Forest_Ranger_2/PNG/PNG Sequences/Idle/0_Forest_Ranger_Idle_000.png")
-}
-const SQUAD_CHARACTER_FRAMES := {
-	"crusader": preload("res://Resources/squad_crusader_sprite_frames.tres"),
-	"wraith": preload("res://Resources/squad_wraith_sprite_frames.tres"),
-	"minotaur": preload("res://Resources/squad_minotaur_sprite_frames.tres"),
-	"ranger": preload("res://Resources/squad_ranger_sprite_frames.tres")
-}
+const ICE_GOLEM_FRAMES_ROOT := "res://Characters/Active_Players/Ice_Golem/PNG/PNG Sequences"
 const ASH_GOLEM_ANIMATION_DIRS := {
 	"Idle": "Idle",
 	"Walking": "Walking",
@@ -91,33 +73,6 @@ const ASH_GOLEM_ANIMATION_DIRS := {
 	"Throwing": "Throwing",
 	"Throwing In Air": "Throwing in The Air",
 	"Dying": "Dying",
-	"Sliding": "Sliding"
-}
-const WRAITH_ANIMATION_DIRS := {
-	"Idle": "Idle", "Walking": "Walking", "Running": "Walking",
-	"Jump Looping": "Idle", "Falling Down": "Idle",
-	"Slashing": "Attacking", "Slashing In Air": "Attacking",
-	"Run Slashing": "Attacking", "Kicking": "Attacking",
-	"Hurt": "Hurt", "Throwing": "Casting Spells",
-	"Throwing In Air": "Casting Spells", "Dying": "Dying",
-	"Sliding": "Walking"
-}
-const MINOTAUR_ANIMATION_DIRS := {
-	"Idle": "Idle", "Walking": "Walking", "Running": "Running",
-	"Jump Looping": "Jump Loop", "Falling Down": "Falling Down",
-	"Slashing": "Slashing", "Slashing In Air": "Slashing in The Air",
-	"Run Slashing": "Run Slashing", "Kicking": "Kicking",
-	"Hurt": "Hurt", "Throwing": "Throwing",
-	"Throwing In Air": "Throwing In The Air", "Dying": "Dying",
-	"Sliding": "Sliding"
-}
-const RANGER_ANIMATION_DIRS := {
-	"Idle": "Idle", "Walking": "Walking", "Running": "Running",
-	"Jump Looping": "Jump Loop", "Falling Down": "Falling Down",
-	"Slashing": "Shooting", "Slashing In Air": "Shooting in The Air",
-	"Run Slashing": "Run Shooting", "Kicking": "Kicking",
-	"Hurt": "Hurt", "Throwing": "Throwing",
-	"Throwing In Air": "Throwing in The Air", "Dying": "Dying",
 	"Sliding": "Sliding"
 }
 
@@ -220,9 +175,11 @@ func _on_connected_to_server() -> void:
 	_face_player_for_spawn(main_player, local_id)
 	_set_status("Online: Connected")
 	rpc_id(1, "_client_ready", local_id, character)
+	_hide_loading_screen()
 
 
 func _on_connection_failed() -> void:
+	_hide_loading_screen()
 	_set_status("Online: Connection failed")
 	client_ready_sent = false
 
@@ -243,6 +200,7 @@ func _on_connection_failed() -> void:
 func _on_server_disconnected() -> void:
 	if closing_online_session:
 		return
+	_hide_loading_screen()
 	_set_status("Online: Server disconnected")
 	_prepare_disconnected_session_for_modal()
 	_show_online_disconnect_modal("Host left the server.")
@@ -311,6 +269,7 @@ func _spawn_remote_player(
 	peer_characters[peer_id] = character
 	peer_teams[peer_id] = team_id
 	_spawn_golem_player(peer_id, false, character, team_id)
+	_activate_local_player_camera.call_deferred()
 
 
 @rpc("authority", "reliable")
@@ -349,6 +308,12 @@ func _complete_peer_spawn(peer_id: int, character: String = "golem") -> void:
 	peer_teams[peer_id] = team_id
 	_spawn_golem_player(peer_id, false, character, team_id)
 	rpc_id(peer_id, "_configure_local_squad_player", slot, team_id)
+	var health_spawner := get_parent().get_node_or_null("HealthDropSpawner")
+	if health_spawner and health_spawner.has_method("sync_to_peer"):
+		health_spawner.sync_to_peer(peer_id)
+	var defence_spawner := get_parent().get_node_or_null("DefenceDropSpawner")
+	if defence_spawner and defence_spawner.has_method("sync_to_peer"):
+		defence_spawner.sync_to_peer(peer_id)
 
 	# Give the new player every existing remote proxy, then announce the new
 	# player to all clients already in the match.
@@ -416,6 +381,40 @@ func _configure_main_player(
 	main_player.global_position = first_player_spawn if spawn_point == Vector2.INF else spawn_point
 	if main_player.has_method("configure_online_player"):
 		main_player.configure_online_player(player_id, controlled_locally, team_id)
+	if controlled_locally:
+		_activate_local_player_camera.call_deferred()
+
+
+func _activate_local_player_camera() -> void:
+	if not is_instance_valid(main_player):
+		return
+
+	# Every connected computer renders the same four fighters, but only the
+	# scene Player is controlled locally on that computer. Never let a remote
+	# proxy camera become current because of network spawn order.
+	for player_node in get_tree().get_nodes_in_group("Player"):
+		if player_node == main_player:
+			continue
+		var remote_camera := player_node.get_node_or_null("Camera2D") as Camera2D
+		if remote_camera:
+			remote_camera.enabled = false
+
+	var local_camera := main_player.get_node_or_null("Camera2D") as Camera2D
+	if not local_camera:
+		return
+
+	if _is_squad_mode():
+		# These limits leave enough room for all four Squad spawn positions to
+		# remain centered, including player 2 on the upper platform.
+		local_camera.position = Vector2(2, -20)
+		local_camera.limit_left = 0
+		local_camera.limit_top = -450
+		local_camera.limit_right = 7500
+		local_camera.limit_bottom = 902
+
+	local_camera.enabled = true
+	local_camera.make_current()
+	local_camera.reset_smoothing()
 
 
 func _spawn_golem_player(
@@ -545,14 +544,97 @@ func _apply_player_network_state(peer_id: int, remote_position: Vector2, remote_
 	var player := _remote_player_for_peer(peer_id)
 	if not player:
 		return
-	# While moving, derive facing from the authoritative movement direction.
-	# This avoids mirroring the second player's sprite when a stale/raw flip
-	# value arrives through the relay. When standing still, preserve the last
-	# explicitly transmitted facing direction.
-	if not is_zero_approx(remote_velocity.x):
-		remote_flip_h = remote_velocity.x < 0.0
 	if player.has_method("_apply_remote_network_state"):
 		player.call("_apply_remote_network_state", remote_position, remote_velocity, remote_flip_h, remote_animation, remote_life, remote_dead)
+
+
+func send_player_shot_visual(
+	owner_peer_id: int,
+	origin: Vector2,
+	shot_direction: float,
+	character: String,
+	attack_animation: String
+) -> void:
+	if not multiplayer.has_multiplayer_peer():
+		return
+	if multiplayer.is_server():
+		for target_peer_id in multiplayer.get_peers():
+			rpc_id(
+				target_peer_id,
+				"_receive_player_shot_visual",
+				owner_peer_id,
+				origin,
+				shot_direction,
+				character,
+				attack_animation
+			)
+	else:
+		rpc_id(
+			1,
+			"_server_receive_player_shot_visual",
+			owner_peer_id,
+			origin,
+			shot_direction,
+			character,
+			attack_animation
+		)
+
+
+@rpc("any_peer", "reliable")
+func _server_receive_player_shot_visual(
+	owner_peer_id: int,
+	origin: Vector2,
+	shot_direction: float,
+	character: String,
+	attack_animation: String
+) -> void:
+	if not multiplayer.is_server():
+		return
+	var sender_id := multiplayer.get_remote_sender_id()
+	if sender_id == 0 or sender_id != owner_peer_id:
+		return
+	_display_remote_player_shot(owner_peer_id, origin, shot_direction, character, attack_animation)
+	for target_peer_id in multiplayer.get_peers():
+		if target_peer_id == sender_id:
+			continue
+		rpc_id(
+			target_peer_id,
+			"_receive_player_shot_visual",
+			owner_peer_id,
+			origin,
+			shot_direction,
+			character,
+			attack_animation
+		)
+
+
+@rpc("authority", "reliable")
+func _receive_player_shot_visual(
+	owner_peer_id: int,
+	origin: Vector2,
+	shot_direction: float,
+	character: String,
+	attack_animation: String
+) -> void:
+	_display_remote_player_shot(owner_peer_id, origin, shot_direction, character, attack_animation)
+
+
+func _display_remote_player_shot(
+	owner_peer_id: int,
+	origin: Vector2,
+	shot_direction: float,
+	character: String,
+	attack_animation: String
+) -> void:
+	var player := _remote_player_for_peer(owner_peer_id)
+	if player and player.has_method("play_remote_shot_visual"):
+		player.call(
+			"play_remote_shot_visual",
+			origin,
+			shot_direction,
+			character,
+			attack_animation
+		)
 
 
 @rpc("any_peer", "reliable")
@@ -637,7 +719,7 @@ func _local_chat_name() -> String:
 	if character == "minotaur":
 		return "Minotaur"
 	if character == "ranger":
-		return "Forest Ranger"
+		return "Nina"
 	if character == "ice_golem":
 		return "Ice Golem"
 	if character == "golem":
@@ -721,45 +803,15 @@ func _set_player_active(player: Node2D, active: bool) -> void:
 
 
 func _apply_character_to_player(player: Node2D, character: String) -> void:
-	if _is_squad_mode() and character not in [
-		"crusader",
-		"wraith",
-		"minotaur",
-		"ranger"
-	]:
-		character = "crusader"
+	if character in ["crusader", "wraith", "minotaur", "ranger"]:
+		character = "player"
+	if player.has_method("set_selected_character"):
+		player.call("set_selected_character", character)
 	var sprite := player.get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
 	if not sprite:
 		return
 	if player.has_method("set_sprite_flip_inverted"):
-		player.call("set_sprite_flip_inverted", character in ["golem", "ice_golem", "crusader", "wraith", "minotaur", "ranger"])
-
-	if character in ["crusader", "wraith", "minotaur", "ranger"]:
-		var frames_root := CRUSADER_FRAMES_ROOT
-		var animation_dirs: Dictionary = ASH_GOLEM_ANIMATION_DIRS
-		if character == "wraith":
-			frames_root = WRAITH_FRAMES_ROOT
-			animation_dirs = WRAITH_ANIMATION_DIRS
-		elif character == "minotaur":
-			frames_root = MINOTAUR_FRAMES_ROOT
-			animation_dirs = MINOTAUR_ANIMATION_DIRS
-		elif character == "ranger":
-			frames_root = RANGER_FRAMES_ROOT
-			animation_dirs = RANGER_ANIMATION_DIRS
-		var squad_frames := SQUAD_CHARACTER_FRAMES.get(character) as SpriteFrames
-		if not squad_frames:
-			squad_frames = _build_sprite_frames_from_root(frames_root, animation_dirs)
-		if not squad_frames.has_animation("Idle"):
-			var idle_texture := SQUAD_IDLE_TEXTURES.get(character) as Texture2D
-			if idle_texture:
-				squad_frames.add_animation("Idle")
-				squad_frames.add_frame("Idle", idle_texture)
-		if squad_frames.has_animation("Idle"):
-			sprite.sprite_frames = squad_frames
-			sprite.position = _online_character_sprite_offset(character)
-			sprite.scale = Vector2(0.22, 0.22) if character in ["crusader", "ranger"] else Vector2(0.34, 0.34)
-			sprite.play("Idle")
-		return
+		player.call("set_sprite_flip_inverted", character in ["golem", "ice_golem"])
 
 	if character == "ice_golem":
 		var ice_frames := _build_sprite_frames_from_root(ICE_GOLEM_FRAMES_ROOT)
@@ -775,7 +827,7 @@ func _apply_character_to_player(player: Node2D, character: String) -> void:
 		if golem_frames:
 			sprite.sprite_frames = golem_frames
 			if player.has_method("_add_animation_from_folder"):
-				player.call("_add_animation_from_folder", sprite.sprite_frames, "Hurt", "res://Characters/Golem/PNG/PNG Sequences/Hurt", 12.0, false)
+				player.call("_add_animation_from_folder", sprite.sprite_frames, "Hurt", "res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Hurt", 12.0, false)
 			sprite.position = _online_character_sprite_offset(character)
 			sprite.play("Idle")
 		_apply_stone_golem_sounds(player)
@@ -1015,7 +1067,20 @@ func _close_online_session_local() -> void:
 		settings.reset_online()
 
 	if get_tree().current_scene and get_tree().current_scene.scene_file_path != "res://Scenes/MainMenu.tscn":
+		_show_loading_screen()
 		get_tree().change_scene_to_file("res://Scenes/MainMenu.tscn")
+
+
+func _show_loading_screen() -> void:
+	var loading_screen := get_node_or_null("/root/LoadingScreen")
+	if loading_screen and loading_screen.has_method("show_loading"):
+		loading_screen.show_loading()
+
+
+func _hide_loading_screen() -> void:
+	var loading_screen := get_node_or_null("/root/LoadingScreen")
+	if loading_screen and loading_screen.has_method("hide_loading"):
+		loading_screen.hide_loading()
 
 
 func _get_ash_golem_frames(settings: Node) -> SpriteFrames:

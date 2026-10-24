@@ -7,7 +7,6 @@ extends Node
 
 signal character_selected(character: String)
 signal start_requested
-signal online_requested
 signal back_requested
 
 const ICE_GOLEM_UNLOCK_COINS := 2500
@@ -39,9 +38,9 @@ const CHARACTER_DISPLAY_NAMES := {
 
 const STORY_CHARACTERS := ["player", "golem", "ice_golem"]
 const SQUAD_CHARACTERS := ["crusader", "wraith", "minotaur", "ranger"]
-const ASH_PREVIEW_PNG := "res://Resources/ash_golem_preview.png"
-const STONE_PREVIEW_PNG := "res://Characters/Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_000.png"
-const ICE_PREVIEW_PNG := "res://Characters/Golem_1/PNG/PNG Sequences/Idle/0_Golem_Idle_000.png"
+const ASH_PREVIEW_PNG := "res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_000.png"
+const STONE_PREVIEW_PNG := "res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_000.png"
+const ICE_PREVIEW_PNG := "res://Characters/Active_Players/Ice_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_000.png"
 const CRUSADER_PREVIEW_PNG := "res://Characters/Skeleton_crusider/Skeleton_Crusader_1/PNG/PNG Sequences/Idle/0_Skeleton_Crusader_Idle_000.png"
 const WRAITH_PREVIEW_PNG := "res://Characters/Wraithes/PNG/Wraith_01/PNG Sequences/Idle/Wraith_01_Idle_000.png"
 const MINOTAUR_PREVIEW_PNG := "res://Characters/Minotaurs/Minotaur_3/PNG/PNG Sequences/Idle/0_Minotaur_Idle_000.png"
@@ -52,7 +51,6 @@ const STONE_CARD_PNG := "res://Resources/Buttons/character_card_stone.png"
 const ICE_CARD_PNG := "res://Resources/Buttons/character_card_ice.png"
 
 const START_BUTTON_PNG := "res://Resources/Buttons/menu_button_start.png"
-const ONLINE_BUTTON_PNG := "res://Resources/Buttons/menu_button_how_to_play.png"
 const BACK_BUTTON_PNG := "res://Resources/Buttons/menu_button_start.png"
 
 var choose_page: VBoxContainer = null
@@ -70,7 +68,6 @@ var minotaur_select_button: Button = null
 var ranger_select_button: Button = null
 var character_status: Label = null
 var choose_start_button: Button = null
-var choose_online_button: Button = null
 var choose_back_button: Button = null
 
 var character_header_group: VBoxContainer = null
@@ -124,7 +121,6 @@ func setup(page: VBoxContainer, services: Dictionary) -> void:
 
 	character_status = choose_page.get_node_or_null("StatusLabel") as Label
 	choose_start_button = choose_page.get_node_or_null("StartButton") as Button
-	choose_online_button = choose_page.get_node_or_null("OnlineButton") as Button
 	choose_back_button = choose_page.get_node_or_null("BackButton") as Button
 
 	settings = services.get("settings") as Node
@@ -243,8 +239,6 @@ func refresh_language() -> void:
 
 	if choose_start_button:
 		choose_start_button.text = _t("start_game")
-	if choose_online_button:
-		choose_online_button.text = _t("online_room")
 	if choose_back_button:
 		choose_back_button.text = _t("back")
 
@@ -322,11 +316,6 @@ func _connect_character_inputs() -> void:
 	if choose_start_button:
 		choose_start_button.pressed.connect(
 			func(): start_requested.emit()
-		)
-
-	if choose_online_button:
-		choose_online_button.pressed.connect(
-			func(): online_requested.emit()
 		)
 
 	if choose_back_button:
@@ -452,11 +441,6 @@ func _apply_character_visuals() -> void:
 			CHARACTER_ACTION_BUTTON_SIZE
 		)
 		apply_button_sprite_callback.call(
-			choose_online_button,
-			ONLINE_BUTTON_PNG,
-			CHARACTER_ACTION_BUTTON_SIZE
-		)
-		apply_button_sprite_callback.call(
 			choose_back_button,
 			BACK_BUTTON_PNG,
 			CHARACTER_ACTION_BUTTON_SIZE
@@ -468,7 +452,6 @@ func _apply_character_visuals() -> void:
 func _fix_character_action_button_sizes() -> void:
 	for button in [
 		choose_start_button,
-		choose_online_button,
 		choose_back_button
 	]:
 		if not button:
