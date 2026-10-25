@@ -1,8 +1,19 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://Scripts/Environment/cemetery_background.gd" id="1_background"]
+[ext_resource type="Texture2D" path="res://Sprites/Background/Forbidden_Graveyard_sky_only.png" id="graveyard_sky"]
+[ext_resource type="Shader" path="res://Scripts/Environment/graveyard_sky.gdshader" id="graveyard_sky_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_continuous_sky"]
+shader = ExtResource("graveyard_sky_shader")
+shader_parameter/sky_texture = ExtResource("graveyard_sky")
 
 [node name="CemeteryBackground" type="Node2D"]
 z_index = -100
+texture_filter = 1
 script = ExtResource("1_background")
+
+[node name="SkyFill" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_continuous_sky")
+polygon = PackedVector2Array(-100000, -100000, 100000, -100000, 100000, 100000, -100000, 100000)
 

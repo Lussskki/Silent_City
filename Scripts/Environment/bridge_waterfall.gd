@@ -53,8 +53,6 @@ func _ensure_visual_layers() -> void:
 
 func _build_visual_layers() -> void:
 	water_material = _make_water_alpha_material()
-	var cliff := _sprite("WaterfallCliff", "waterfall_cliff.png", Vector2(0.0, -62.0), -6)
-	cliff.modulate = Color(0.60, 0.63, 0.66, 1.0)
 	var rear := _sprite("WaterfallBack", "waterfall_back.png", Vector2(0.0, 20.0), -5)
 	rear.modulate = Color(0.50, 0.62, 0.72, 0.66)
 	rear.material = water_material

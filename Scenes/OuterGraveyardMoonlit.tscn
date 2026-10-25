@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c742a7p8yjb"]
 
-[ext_resource type="PackedScene" path="res://Scenes/Environment/CemeteryBackground.tscn" id="1_v51sb"]
+[ext_resource type="Script" uid="uid://bhmdx8plshrcd" path="res://Scripts/Environment/cemetery_background.gd" id="1_v51sb"]
 [ext_resource type="Script" uid="uid://jtqdy2cnjhr4" path="res://Scripts/Environment/responsive_ground.gd" id="3_c0xi8"]
 [ext_resource type="Texture2D" uid="uid://ugd1obogjjtb" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 04.png" id="4_j8wab"]
 [ext_resource type="Texture2D" uid="uid://ckh4ied50qpwq" path="res://Sprites/Graveyard/GraveyardTileset/png/Tiles/Tile (2).png" id="5_0mpmd"]
@@ -91,6 +91,13 @@
 [ext_resource type="Texture2D" uid="uid://ckbpqoqbv0aoq" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 10.png" id="73_8e665"]
 [ext_resource type="Texture2D" uid="uid://bblr16xg6wjxb" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 12.png" id="74_stvwn"]
 [ext_resource type="Script" uid="uid://b4nqiwahcw0f7" path="res://Scripts/Environment/existing_asset_showcase.gd" id="75_asset_showcase"]
+[ext_resource type="Texture2D" uid="uid://djaqqgu20hr88" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground Additional 01.png" id="bank_ground_01"]
+[ext_resource type="Texture2D" uid="uid://b6o6a5dhabdp5" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground Additional 05.png" id="bank_ground_05"]
+[ext_resource type="Texture2D" uid="uid://dod4rh3c8u42h" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground Additional 06.png" id="bank_ground_06"]
+[ext_resource type="Texture2D" uid="uid://rl3kxry6kcqx" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground Additional 07.png" id="bank_ground_07"]
+[ext_resource type="Texture2D" uid="uid://cjfdrkvjasa1v" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Rock 03.png" id="bank_rock_03"]
+[ext_resource type="Texture2D" uid="uid://b13dgryy3nrtd" path="res://Sprites/Background/Forbidden_Graveyard_sky_only.png" id="graveyard_sky"]
+[ext_resource type="Shader" uid="uid://bqgaiqhoeati8" path="res://Scripts/Environment/graveyard_sky.gdshader" id="graveyard_sky_shader"]
 [ext_resource type="Texture2D" uid="uid://bm5wbbhvyfrdy" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 06.png" id="rock_wall_fill"]
 [ext_resource type="Texture2D" uid="uid://km1leb24dtu1" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 09.png" id="rock_wall_left"]
 [ext_resource type="Texture2D" uid="uid://knsfke26defc" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 02.png" id="rock_wall_top"]
@@ -98,10 +105,12 @@
 [ext_resource type="Script" uid="uid://bg5e6oho4xfvc" path="res://Scripts/Environment/sea_water.gd" id="Script_sea_water"]
 [ext_resource type="Texture2D" uid="uid://c8elsh2imcekw" path="res://Resources/Levels/Grass_redraw.png" id="Texture_bank_edge_grass"]
 [ext_resource type="Texture2D" uid="uid://v0j0poxw372" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Rock 01.png" id="Texture_bank_edge_rock"]
-[ext_resource type="Texture2D" uid="uid://li1xi3tm2g" path="res://Resources/Second_prompt/background_assets/Aseprite_Redraws/broken_chimney_redraw.png" id="Texture_bank_stones"]
-[ext_resource type="Texture2D" uid="uid://cesxe45qg4vqb" path="res://Resources/Second_prompt/background_assets/Aseprite_Redraws/river_embankment_v1.png" id="Texture_river_embankment"]
-[ext_resource type="Texture2D" uid="uid://clxrxadbge26e" path="res://Resources/Second_prompt/background_assets/river_upstream_left_v2.png" id="Texture_river_upstream"]
-[ext_resource type="Texture2D" uid="uid://jfrcev6lfqbu" path="res://Resources/Second_prompt/background_assets/Aseprite_Redraws/waterfall_cliff_redraw.png" id="Texture_waterfall_banks"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_continuous_sky"]
+shader = ExtResource("graveyard_sky_shader")
+shader_parameter/sky_texture = ExtResource("graveyard_sky")
+shader_parameter/sky_origin = Vector2(400, 284)
+shader_parameter/art_scale = 0.75
 
 [sub_resource type="Shader" id="Shader_sea_water"]
 code = "shader_type canvas_item;
@@ -337,33 +346,6 @@ size = Vector2(4099, 633)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vertical_drop_landing"]
 size = Vector2(256, 256)
 
-[sub_resource type="Shader" id="Shader_bank_stone_repeat"]
-code = "shader_type canvas_item;
-varying vec4 bank_tint;
-void vertex() {
-    bank_tint = COLOR;
-}
-void fragment() {
-    vec2 size = vec2(textureSize(TEXTURE, 0));
-    vec2 mirrored_uv = 1.0 - abs(mod(UV * size / vec2(154.0, 98.0), 2.0) - 1.0);
-    vec2 stone_uv = (vec2(18.0, 45.0) + mirrored_uv * vec2(154.0, 98.0)) / size;
-    COLOR = texture(TEXTURE, stone_uv) * bank_tint;
-}
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bank_stone_repeat"]
-shader = SubResource("Shader_bank_stone_repeat")
-
-[sub_resource type="Shader" id="Shader_river_join"]
-code = "shader_type canvas_item;
-void fragment() {
-    COLOR.a *= 1.0 - smoothstep(0.895, 0.935, UV.y);
-}
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_river_join"]
-shader = SubResource("Shader_river_join")
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uraxg"]
 size = Vector2(66, 16)
 
@@ -387,9 +369,6 @@ size = Vector2(66, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_coe7x"]
 size = Vector2(66, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_m3ixb"]
-size = Vector2(488, 220)
 
 [sub_resource type="Animation" id="Animation_53h3j"]
 length = 0.001
@@ -915,7 +894,15 @@ metadata/layout_version = "Version 1 - Moonlit Procession"
 metadata/campaign_next = "Forgotten Path"
 metadata/_edit_vertical_guides_ = [-84.0]
 
-[node name="CemeteryBackground" parent="." unique_id=249818500 instance=ExtResource("1_v51sb")]
+[node name="CemeteryBackground" type="Node2D" parent="." unique_id=249818500]
+z_index = -100
+texture_filter = 1
+script = ExtResource("1_v51sb")
+
+[node name="SkyFill" type="Polygon2D" parent="CemeteryBackground" unique_id=1170256878]
+material = SubResource("ShaderMaterial_continuous_sky")
+position = Vector2(18, 111)
+polygon = PackedVector2Array(-100000, -100000, 100000, -100000, 100000, 100000, -100000, 100000)
 
 [node name="NeutralCharcoalNight" type="CanvasModulate" parent="." unique_id=283101697]
 color = Color(0.58, 0.6, 0.63, 1)
@@ -1261,6 +1248,15 @@ texture = ExtResource("4_j8wab")
 metadata/decorative_background_only = true
 metadata/editable_background_asset = true
 
+[node name="BackgroundGround_LiftApproach_00_05" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1081052945]
+modulate = Color(0.64, 0.69, 0.71, 1)
+z_index = -6
+texture_filter = 1
+position = Vector2(4476, 649)
+texture = ExtResource("4_j8wab")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
 [node name="BackgroundGround_LiftApproach_00_01" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=841102879]
 modulate = Color(0.64, 0.69, 0.71, 0.82)
 z_index = -6
@@ -1270,11 +1266,29 @@ texture = ExtResource("10_7gx6j")
 metadata/decorative_background_only = true
 metadata/editable_background_asset = true
 
+[node name="BackgroundGround_LiftApproach_00_04" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=424908050]
+modulate = Color(0.64, 0.69, 0.71, 1)
+z_index = -6
+texture_filter = 1
+position = Vector2(4604, 649)
+texture = ExtResource("10_7gx6j")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
 [node name="BackgroundGround_LiftApproach_00_02" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=2135379208]
 modulate = Color(0.64, 0.69, 0.71, 0.82)
 z_index = -6
 texture_filter = 1
 position = Vector2(5184, 684)
+texture = ExtResource("6_i67bi")
+metadata/decorative_background_only = true
+metadata/editable_background_asset = true
+
+[node name="BackgroundGround_LiftApproach_00_03" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1456598777]
+modulate = Color(0.64, 0.69, 0.71, 1)
+z_index = -6
+texture_filter = 1
+position = Vector2(4732, 649)
 texture = ExtResource("6_i67bi")
 metadata/decorative_background_only = true
 metadata/editable_background_asset = true
@@ -1788,51 +1802,51 @@ metadata/editable_background_asset = true
 
 [node name="FogBand_1250" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1910811575]
 z_index = -3
-position = Vector2(1273.5009, 520.77893)
+position = Vector2(1262.2797, 522.93823)
 scale = Vector2(1.9140625, 0.375)
 texture = SubResource("GradientTexture2D_wh1vr")
 metadata/fog_origin = Vector2(1250, 520)
-metadata/fog_phase = 2.378442944602266
+metadata/fog_phase = 0.3695184138310075
 metadata/fog_speed = 0.04
 metadata/editable_background_asset = true
 
 [node name="FogBand_2280" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=536101546]
 z_index = 1
-position = Vector2(2253.778, 545.0434)
+position = Vector2(2312.6387, 549.5698)
 scale = Vector2(2.3046875, 0.453125)
 texture = SubResource("GradientTexture2D_edxbf")
 metadata/fog_origin = Vector2(2280, 548)
-metadata/fog_phase = 5.40240537562278
+metadata/fog_phase = 1.8547359824146707
 metadata/fog_speed = 0.055
 metadata/editable_background_asset = true
 
 [node name="FogBand_3820" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1175969481]
 z_index = -3
-position = Vector2(3807.48, 503.93057)
+position = Vector2(3789.737, 502.12482)
 scale = Vector2(2.109375, 0.40625)
 texture = SubResource("GradientTexture2D_847sm")
 metadata/fog_origin = Vector2(3820, 505)
-metadata/fog_phase = 3.518701985882369
+metadata/fog_phase = 5.185652705751921
 metadata/fog_speed = 0.045
 metadata/editable_background_asset = true
 
 [node name="FogBand_5200" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1216799625]
 z_index = 1
-position = Vector2(5219.463, 542.833)
+position = Vector2(5222.8677, 542.7565)
 scale = Vector2(1.9140625, 0.46875)
 texture = SubResource("GradientTexture2D_s2tut")
 metadata/fog_origin = Vector2(5200, 540)
-metadata/fog_phase = 0.609479109723451
+metadata/fog_phase = 0.7376849671562544
 metadata/fog_speed = 0.06
 metadata/editable_background_asset = true
 
 [node name="FogBand_6200" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1837574011]
 z_index = -3
-position = Vector2(6229.4116, 497.51776)
+position = Vector2(6172.076, 492.0696)
 scale = Vector2(1.7578125, 0.421875)
 texture = SubResource("GradientTexture2D_e6gix")
 metadata/fog_origin = Vector2(6200, 495)
-metadata/fog_phase = 1.0452576374225804
+metadata/fog_phase = 5.31951841383092
 metadata/fog_speed = 0.04
 metadata/editable_background_asset = true
 
@@ -2233,145 +2247,125 @@ position = Vector2(4288, 1068)
 texture = ExtResource("19_gj544")
 
 [node name="WaterfallRockBanks" type="Node2D" parent="Level" unique_id=1390499169]
-modulate = Color(0.72, 0.78, 0.8, 1)
+modulate = Color(0.86, 0.91, 0.95, 1)
 z_index = -25
+texture_filter = 1
 position = Vector2(4608, 864)
 
-[node name="LeftCliff" type="Polygon2D" parent="Level/WaterfallRockBanks" unique_id=22489157]
-texture_filter = 1
-material = SubResource("ShaderMaterial_bank_stone_repeat")
-texture = ExtResource("Texture_waterfall_banks")
-polygon = PackedVector2Array(-328, -124, -116, -124, -125, -48, -118, 15, -132, 74, -110, 125, -143, 190, -122, 250, -155, 310, -135, 440, -328, 440)
-uv = PackedVector2Array(-72, 0, 140, 0, 131, 60, 138, 123, 124, 182, 146, 233, 113, 298, 134, 358, 101, 418, 121, 548, -72, 548)
+[node name="RightBankInfill" type="Polygon2D" parent="Level/WaterfallRockBanks" unique_id=1838873324]
+texture = ExtResource("bank_ground_07")
+polygon = PackedVector2Array(90, -100, 148, -110, 206, -110, 280, -90, 320, -90, 320, 24, 90, 24)
+uv = PackedVector2Array(32, 88, 97, 97, 161, 94, 243, 48, 288, 48, 288, 288, 32, 288)
 
-[node name="RightCliff" type="Polygon2D" parent="Level/WaterfallRockBanks" unique_id=1020657010]
-texture_filter = 1
-material = SubResource("ShaderMaterial_bank_stone_repeat")
-texture = ExtResource("Texture_waterfall_banks")
-polygon = PackedVector2Array(328, -124, 116, -124, 125, -48, 118, 15, 132, 74, 110, 125, 143, 190, 122, 250, 155, 310, 135, 440, 328, 440)
-uv = PackedVector2Array(232, 30, 20, 30, 29, 90, 22, 153, 36, 212, 14, 263, 47, 328, 26, 388, 59, 448, 39, 578, 232, 578)
+[node name="RightBankInfill2" type="Polygon2D" parent="Level/WaterfallRockBanks" unique_id=2084240374]
+position = Vector2(-367, 8)
+texture = ExtResource("bank_ground_07")
+polygon = PackedVector2Array(78, 3, 143, -22, 174, -47, 228, -76, 320, -90, 320, 24, 90, 24)
+uv = PackedVector2Array(32, 88, 97, 97, 161, 94, 243, 48, 288, 48, 288, 288, 32, 288)
 
-[node name="LeftLooseStones" type="Sprite2D" parent="Level/WaterfallRockBanks" unique_id=809999082]
-texture_filter = 1
-position = Vector2(-254, 29)
+[node name="UpperRockConnector" type="Sprite2D" parent="Level/WaterfallRockBanks" unique_id=1047648424]
+position = Vector2(192, -105.09013)
+rotation = 1.5707964
+scale = Vector2(0.4681867, 0.8)
+texture = ExtResource("25_u0vqy")
+
+[node name="OutletRock" type="Sprite2D" parent="Level/WaterfallRockBanks" unique_id=1508749741]
+position = Vector2(-148, -159)
 scale = Vector2(0.9, 0.9)
-texture = ExtResource("Texture_bank_stones")
-region_enabled = true
-region_rect = Rect2(10, 131, 145, 29)
+texture = ExtResource("bank_ground_01")
+centered = false
 
-[node name="RightLooseStones" type="Sprite2D" parent="Level/WaterfallRockBanks" unique_id=1818445929]
+[node name="LeftRockFace" type="Sprite2D" parent="Level/WaterfallRockBanks" unique_id=1912146985]
+position = Vector2(-299, -16)
+scale = Vector2(1.8, 1.8)
+texture = ExtResource("bank_ground_06")
+centered = false
+
+[node name="RightRockFace" type="Sprite2D" parent="Level/WaterfallRockBanks" unique_id=1499915773]
+position = Vector2(83, -18)
+scale = Vector2(1.8, 1.8)
+texture = ExtResource("bank_ground_05")
+centered = false
+
+[node name="RightBankContinuation" type="Node2D" parent="Level" unique_id=1472913579]
+modulate = Color(0.64, 0.69, 0.71, 0.82)
+z_index = -6
 texture_filter = 1
-position = Vector2(254, 29)
-scale = Vector2(-0.85, 0.85)
-texture = ExtResource("Texture_bank_stones")
-region_enabled = true
-region_rect = Rect2(10, 131, 145, 29)
+metadata/decorative_background_only = true
+
+[node name="Tile_0_0" type="Sprite2D" parent="Level/RightBankContinuation" unique_id=1440687579]
+position = Vector2(4928, 940)
+texture = ExtResource("22_tvjuj")
+
+[node name="Tile_0_1" type="Sprite2D" parent="Level/RightBankContinuation" unique_id=452248768]
+position = Vector2(5056, 940)
+texture = ExtResource("23_5mcap")
+
+[node name="Tile_0_2" type="Sprite2D" parent="Level/RightBankContinuation" unique_id=1121854656]
+position = Vector2(5184, 940)
+texture = ExtResource("24_fukak")
+
+[node name="Tile_1_0" type="Sprite2D" parent="Level/RightBankContinuation" unique_id=2008095381]
+position = Vector2(4928, 1068)
+texture = ExtResource("22_tvjuj")
+
+[node name="Tile_1_1" type="Sprite2D" parent="Level/RightBankContinuation" unique_id=1173008083]
+position = Vector2(5056, 1068)
+texture = ExtResource("23_5mcap")
+
+[node name="Tile_1_2" type="Sprite2D" parent="Level/RightBankContinuation" unique_id=249041940]
+position = Vector2(5184, 1068)
+texture = ExtResource("24_fukak")
 
 [node name="BankEdgeDressing" type="Node2D" parent="Level" unique_id=1305628066]
-z_index = -24
+z_index = -20
 texture_filter = 1
 position = Vector2(4608, 864)
 
-[node name="LeftBaseRock" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=703769263]
-position = Vector2(-389, -8)
-scale = Vector2(1.25, 1.2)
-texture = ExtResource("Texture_bank_edge_rock")
+[node name="LeftStonesRedraw" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=464534264]
+position = Vector2(-380, 0)
+scale = Vector2(-0.9, 0.72)
+texture = ExtResource("13_aonbx")
 
-[node name="LeftMiddleRock" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=1687059080]
-position = Vector2(-366, -51)
-rotation = -0.12
-scale = Vector2(1.1, 1.1)
-texture = ExtResource("Texture_bank_edge_rock")
-
-[node name="LeftUpperRock" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=811314534]
-position = Vector2(-344, -94)
-rotation = -0.1
-scale = Vector2(1.2, 1.15)
-texture = ExtResource("Texture_bank_edge_rock")
-
-[node name="LeftRimRock" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=407199106]
-position = Vector2(-285, -117)
-scale = Vector2(1.1, 1)
-texture = ExtResource("Texture_bank_edge_rock")
-
-[node name="LeftBaseGrass" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=2011915865]
-position = Vector2(-389, 14)
-scale = Vector2(0.8, 0.8)
+[node name="LeftLandingGrass" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=571257681]
+position = Vector2(-381, 0)
+scale = Vector2(-0.85, 0.72)
 texture = ExtResource("Texture_bank_edge_grass")
 offset = Vector2(0, -37.5)
 
-[node name="LeftRimGrass" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=787014561]
-position = Vector2(-327, -121)
-scale = Vector2(0.45, 0.45)
-texture = ExtResource("61_ibml5")
-offset = Vector2(0, -37.5)
+[node name="RightStonesRedraw" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=722212591]
+position = Vector2(380, 0)
+scale = Vector2(0.9, 0.72)
+texture = ExtResource("13_aonbx")
 
-[node name="LeftRockTuft" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=599900843]
-position = Vector2(-365, -66)
-scale = Vector2(0.28, 0.28)
+[node name="RightLandingGrass" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=1632982992]
+position = Vector2(381, 0)
+scale = Vector2(0.85, 0.72)
 texture = ExtResource("Texture_bank_edge_grass")
 offset = Vector2(0, -37.5)
 
-[node name="RightBaseRock" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=587951696]
-position = Vector2(381, -7)
-scale = Vector2(-1.2, 1.15)
-texture = ExtResource("Texture_bank_edge_rock")
+[node name="LeftLooseRock1" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=742982791]
+position = Vector2(-350, 2)
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("bank_rock_03")
 
-[node name="RightMiddleRock" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=159711574]
-position = Vector2(360, -49)
-rotation = 0.09
-scale = Vector2(-1.05, 1.1)
-texture = ExtResource("Texture_bank_edge_rock")
+[node name="LeftLooseRock2" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=1217360626]
+position = Vector2(-300, 7)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("24_738wq")
 
-[node name="RightUpperRock" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=703714651]
-position = Vector2(340, -91)
-rotation = 0.13
-scale = Vector2(-1.15, 1.2)
-texture = ExtResource("Texture_bank_edge_rock")
+[node name="RightLooseRock1" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=1954222492]
+position = Vector2(310, 4)
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("27_vf3go")
 
-[node name="RightRimRock" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=1111250325]
-position = Vector2(283, -116)
-scale = Vector2(-1.2, 1)
-texture = ExtResource("Texture_bank_edge_rock")
-
-[node name="RightBaseGrass" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=1100488628]
-position = Vector2(384, 14)
-scale = Vector2(-0.75, 0.75)
-texture = ExtResource("61_ibml5")
-offset = Vector2(0, -37.5)
-
-[node name="RightRimGrass" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=738385562]
-position = Vector2(325, -121)
-scale = Vector2(-0.43, 0.43)
-texture = ExtResource("Texture_bank_edge_grass")
-offset = Vector2(0, -37.5)
-
-[node name="RightRockTuft" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=322205639]
-position = Vector2(359, -65)
-scale = Vector2(-0.3, 0.3)
-texture = ExtResource("61_ibml5")
-offset = Vector2(0, -37.5)
-
-[node name="RiverRockEmbankment" type="Sprite2D" parent="Level" unique_id=1607035570]
-z_index = -26
-texture_filter = 1
-position = Vector2(3890, 403)
-scale = Vector2(0.715352, 0.85999995)
-texture = ExtResource("Texture_river_embankment")
-centered = false
-
-[node name="BackgroundRiver" type="Sprite2D" parent="Level" unique_id=1739047716]
-z_index = -23
-texture_filter = 1
-material = SubResource("ShaderMaterial_river_join")
-position = Vector2(4601, 780)
-scale = Vector2(0.75, 0.4)
-texture = ExtResource("Texture_river_upstream")
-centered = false
-offset = Vector2(-1020, -950)
+[node name="RightLooseRock2" type="Sprite2D" parent="Level/BankEdgeDressing" unique_id=1061049670]
+position = Vector2(365, 2)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("28_1k0py")
 
 [node name="BridgeWaterfall" parent="Level" unique_id=1167300854 instance=ExtResource("10_aonbx")]
-position = Vector2(4608, 864)
+position = Vector2(4608, 838)
 
 [node name="ShortMoonlitBridge" type="Node2D" parent="Level" unique_id=130394507]
 position = Vector2(4352, 898)
@@ -2494,9 +2488,6 @@ texture = ExtResource("14_4ko12")
 [node name="PlayerTrigger" type="Area2D" parent="Level/ShortMoonlitBridge" unique_id=1520661816]
 position = Vector2(256, -10)
 collision_layer = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/PlayerTrigger" unique_id=98779478]
-shape = SubResource("RectangleShape2D_m3ixb")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Level/ShortMoonlitBridge" unique_id=1214158642]
 callback_mode_process = 0
@@ -3442,25 +3433,25 @@ texture = ExtResource("20_pfu5p")
 
 [node name="CheckpointLanternGlow" type="Polygon2D" parent="Decorations/BackLayer" unique_id=403528384]
 z_index = -2
-position = Vector2(4260, 783.83997)
+position = Vector2(4273, 797)
 color = Color(1, 0.73, 0.24, 0.1)
-polygon = PackedVector2Array(-20, -46, 20, -46, 96, 92, -96, 92)
+polygon = PackedVector2Array(-20, -46, 20, -46, 40.58362, -8.624634, 60.71649, 27.932434, 96, 92, -96, 92, -64.4715, 34.750854)
 
 [node name="CheckpointLantern" type="Sprite2D" parent="Decorations/BackLayer" unique_id=2047316419]
 z_index = -1
-position = Vector2(4260, 783.83997)
+position = Vector2(4272.9995, 804.99994)
 scale = Vector2(0.72, 0.72)
 texture = ExtResource("16_6e1lm")
 
 [node name="BridgeEntryLanternGlow" type="Polygon2D" parent="Decorations/BackLayer" unique_id=1887754430]
 z_index = -2
-position = Vector2(4320, 783.83997)
+position = Vector2(4166, 798)
 color = Color(1, 0.73, 0.24, 0.1)
 polygon = PackedVector2Array(-20, -46, 20, -46, 96, 92, -96, 92)
 
 [node name="BridgeEntryLantern" type="Sprite2D" parent="Decorations/BackLayer" unique_id=1122326856]
 z_index = -1
-position = Vector2(4320, 783.83997)
+position = Vector2(4166, 796.99994)
 scale = Vector2(0.72, 0.72)
 texture = ExtResource("16_6e1lm")
 
@@ -3648,6 +3639,7 @@ collision_layer = 0
 metadata/trigger_type = "checkpoint"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GameplayMarkers/CheckpointArea" unique_id=357628611]
+position = Vector2(-17, -7)
 shape = SubResource("RectangleShape2D_8qluk")
 
 [node name="ExitArea" type="Area2D" parent="GameplayMarkers" unique_id=1252563728]
@@ -3880,8 +3872,8 @@ texture = ExtResource("61_ibml5")
 
 [node name="FogShader" type="ColorRect" parent="." unique_id=1450261129]
 material = SubResource("ShaderMaterial_1u6mt")
-offset_left = -1456.0
-offset_top = -1769.0
+offset_left = -611.0
+offset_top = -118.0
 offset_right = 10357.0
 offset_bottom = 1660.0
 metadata/_edit_lock_ = true
@@ -3947,3 +3939,10 @@ z_index = -1
 position = Vector2(663, 521)
 scale = Vector2(1.5123457, 1.607362)
 texture = ExtResource("20_ibml5")
+
+[node name="ForbiddenGraveyard2dPlatformerTilesetPlatformerGroundAdditional06" type="Sprite2D" parent="." unique_id=1252963380]
+z_index = -25
+position = Vector2(4443, 816.45447)
+rotation = -2.1816616
+scale = Vector2(1.36413, 1.0574143)
+texture = ExtResource("bank_ground_06")
