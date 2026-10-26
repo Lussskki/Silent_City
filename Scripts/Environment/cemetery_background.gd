@@ -1,5 +1,9 @@
 extends Node2D
 
+const RAIN_LIGHT := preload("res://Sprites/rain/png/64x64/rain_light.png")
+const RAIN_NORMAL := preload("res://Sprites/rain/png/64x64/rain.png")
+const RAIN_HEAVY := preload("res://Sprites/rain/png/64x64/rain_heavy.png")
+
 const SKY_STOPS := [
 	[0.0, Color("32283f"), Color("655572")],
 	[6.0, Color("32283f"), Color("655572")],
@@ -11,20 +15,166 @@ const SKY_STOPS := [
 	[24.0, Color("32283f"), Color("655572")],
 ]
 
+@export_group("Story Weather")
+## 0 disables rain; 1 is the current light rain; higher values add more drops.
+@export_range(0.0, 5.0, 0.05) var rain_intensity := 1.0
+## 0 is calm; 1 is the current breeze; higher values strengthen wind and cloud drift.
+@export_range(0.0, 5.0, 0.05) var wind_intensity := 1.0
+
 var _clock_elapsed := 0.0
+var _rain: Polygon2D
+var _weather_debug: PanelContainer
+var _rain_toggle: CheckButton
+var _rain_amount: SpinBox
 @onready var _sky_material := $SkyFill.material as ShaderMaterial
 
 
 func _ready() -> void:
 	z_index = -100
 	_update_local_sky()
+	_setup_rain()
+	_setup_weather_debug()
 
 
 func _process(delta: float) -> void:
+	_update_rain()
 	_clock_elapsed += delta
 	if _clock_elapsed >= 1.0:
 		_clock_elapsed = 0.0
 		_update_local_sky()
+
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F3:
+		_weather_debug.visible = not _weather_debug.visible
+		if not _weather_debug.visible:
+			_rain_amount.get_line_edit().release_focus()
+		get_viewport().set_input_as_handled()
+
+
+func _setup_weather_debug() -> void:
+	var layer := CanvasLayer.new()
+	layer.name = "WeatherDebug"
+	layer.layer = 100
+	add_child(layer)
+	var screen := Control.new()
+	screen.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	screen.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	layer.add_child(screen)
+	_weather_debug = PanelContainer.new()
+	_weather_debug.name = "Panel"
+	screen.add_child(_weather_debug)
+	_weather_debug.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+	_weather_debug.offset_left = -300
+	_weather_debug.offset_right = -20
+	_weather_debug.offset_top = 100
+	_weather_debug.offset_bottom = 100
+	_weather_debug.custom_minimum_size = Vector2(280, 0)
+	_weather_debug.hide()
+	var margin := MarginContainer.new()
+	for side in ["left", "top", "right", "bottom"]:
+		margin.add_theme_constant_override("margin_" + side, 14)
+	_weather_debug.add_child(margin)
+	var content := VBoxContainer.new()
+	content.add_theme_constant_override("separation", 10)
+	margin.add_child(content)
+	var title := Label.new()
+	title.text = "Weather Debug (F3)"
+	content.add_child(title)
+	_rain_toggle = CheckButton.new()
+	_rain_toggle.name = "RainEnabled"
+	_rain_toggle.text = "Rain On / Off"
+	_rain_toggle.button_pressed = rain_intensity > 0.0
+	content.add_child(_rain_toggle)
+	var row := HBoxContainer.new()
+	content.add_child(row)
+	var label := Label.new()
+	label.text = "Intensity"
+	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(label)
+	_rain_amount = SpinBox.new()
+	_rain_amount.name = "RainIntensity"
+	_rain_amount.min_value = 0.0
+	_rain_amount.max_value = 5.0
+	_rain_amount.step = 0.05
+	_rain_amount.custom_minimum_size.x = 110
+	_rain_amount.value = rain_intensity if rain_intensity > 0.0 else 1.0
+	_rain_amount.update_on_text_changed = true
+	row.add_child(_rain_amount)
+	var hint := Label.new()
+	hint.text = "0 = off   1 = light   5 = heavy"
+	content.add_child(hint)
+	_rain_toggle.toggled.connect(_set_debug_rain_enabled)
+	_rain_amount.value_changed.connect(_set_debug_rain_intensity)
+
+
+func _set_debug_rain_enabled(enabled: bool) -> void:
+	rain_intensity = _rain_amount.value if enabled else 0.0
+	_update_rain()
+
+
+func _set_debug_rain_intensity(value: float) -> void:
+	if _rain_toggle.button_pressed:
+		rain_intensity = value
+		_update_rain()
+
+
+func _setup_rain() -> void:
+	_rain = Polygon2D.new()
+	_rain.name = "LightRain"
+	_rain.top_level = true
+	_rain.z_as_relative = false
+	_rain.z_index = 1400
+	var rain_shader := Shader.new()
+	rain_shader.code = """shader_type canvas_item;
+uniform sampler2D rain_sheet : source_color, filter_nearest, repeat_disable;
+uniform float water_surface = 1000000.0;
+uniform float rain_opacity = 0.5;
+uniform float wind_strength = 1.0;
+varying vec2 world_position;
+void vertex() { world_position = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy; }
+void fragment() {
+	if (world_position.y >= water_surface) { discard; }
+	vec2 sheet_size = vec2(textureSize(rain_sheet, 0));
+	float frame = mod(floor(TIME * 12.0), sheet_size.x / 64.0);
+	vec2 rain_pixel = world_position / 2.0;
+	rain_pixel.x -= rain_pixel.y * 0.2 * wind_strength + TIME * 24.0 * wind_strength;
+	vec2 tile_pixel = floor(mod(rain_pixel, vec2(64.0))) + vec2(0.5);
+	vec2 rain_uv = (vec2(frame * 64.0, 0.0) + tile_pixel) / sheet_size;
+	float rain_alpha = texture(rain_sheet, rain_uv).a;
+	COLOR = vec4(0.7, 0.82, 0.9, rain_alpha * rain_opacity) * COLOR;
+}
+"""
+	var rain_material := ShaderMaterial.new()
+	rain_material.shader = rain_shader
+	var water := get_parent().get_node_or_null("Level/SeaWater") as Control
+	if water != null:
+		rain_material.set_shader_parameter("water_surface", water.get_global_rect().position.y + 8.0)
+	_rain.material = rain_material
+	add_child(_rain)
+	_update_rain()
+
+
+func _update_rain() -> void:
+	if not is_instance_valid(_rain):
+		return
+	_rain.visible = rain_intensity > 0.0
+	var view := get_viewport_rect()
+	var inverse_canvas := get_viewport().get_canvas_transform().affine_inverse()
+	var view_start := inverse_canvas * view.position
+	var view_end := inverse_canvas * view.end
+	_rain.global_position = view_start
+	var view_size := view_end - view_start
+	_rain.polygon = PackedVector2Array([Vector2.ZERO, Vector2(view_size.x, 0), view_size, Vector2(0, view_size.y)])
+	var rain_material := _rain.material as ShaderMaterial
+	var sheet := RAIN_LIGHT if rain_intensity <= 1.5 else (RAIN_NORMAL if rain_intensity <= 3.0 else RAIN_HEAVY)
+	if rain_material.get_shader_parameter("rain_sheet") != sheet:
+		rain_material.set_shader_parameter("rain_sheet", sheet)
+	rain_material.set_shader_parameter("rain_opacity", clampf(rain_intensity * 0.35, 0.0, 0.85))
+	var breeze := (1.0 + sin(float(Time.get_ticks_msec()) * 0.0004) * 0.2) * wind_intensity
+	rain_material.set_shader_parameter("wind_strength", breeze)
+	if _sky_material != null:
+		_sky_material.set_shader_parameter("cloud_wind_speed", 4.0 * wind_intensity)
 
 
 func _update_local_sky() -> void:
