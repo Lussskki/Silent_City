@@ -3,6 +3,7 @@ shader_type canvas_item;
 uniform sampler2D sky_texture : source_color, filter_nearest, repeat_disable;
 uniform vec2 sky_origin = vec2(400.0, 284.0);
 uniform float art_scale = 0.75;
+uniform float moon_vertical_offset = -64.0;
 uniform vec2 lower_cloud_scroll = vec2(0.52, 0.68);
 uniform vec2 upper_cloud_scroll = vec2(0.28, 0.52);
 uniform float cloud_wind_speed = 4.0;
@@ -14,6 +15,23 @@ varying vec2 world_position;
 varying vec2 camera_origin;
 varying vec2 camera_axis_x;
 varying vec2 camera_axis_y;
+
+vec3 moon_detail_at(vec2 pixel) {
+	if (pixel.x < 0.0 || pixel.x >= 1334.0 || pixel.y < 0.0 || pixel.y >= 750.0) {
+		return vec3(0.0);
+	}
+	vec2 uv = pixel / vec2(1334.0, 750.0);
+	vec3 artwork = texture(sky_texture, uv).rgb;
+	vec3 background = texture(sky_texture, vec2(1333.5 / 1334.0, uv.y)).rgb;
+	float radius = distance(pixel, vec2(410.0, 124.0));
+	float disc = 1.0 - smoothstep(66.0, 72.0, radius);
+	// Sample the radial glow on the clear right side of the moon, excluding clouds.
+	vec2 glow_uv = vec2(410.0 + max(radius, 68.0), 124.0) / vec2(1334.0, 750.0);
+	vec3 glow_background = texture(sky_texture, vec2(1333.5, 124.0) / vec2(1334.0, 750.0)).rgb;
+	vec3 glow = texture(sky_texture, glow_uv).rgb - glow_background;
+	float region = 1.0 - smoothstep(140.0, 170.0, radius);
+	return mix(glow, artwork - background, disc) * region;
+}
 
 void vertex() {
 	world_position = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;
@@ -50,6 +68,9 @@ void fragment() {
 	vec3 timed_sky = mix(time_sky_top.rgb, time_sky_bottom.rgb, clamp(source_pixel.y / 750.0, 0.0, 1.0));
 	clear_sky = mix(clear_sky, timed_sky, time_sky_blend);
 	vec3 lower_detail = texture(sky_texture, uv).rgb - texture(sky_texture, vec2(1333.5 / 1334.0, uv.y)).rgb;
+	if (!clouds_only) {
+		lower_detail -= moon_detail_at(lower_pixel);
+	}
 	vec4 sky_color = vec4(clamp(clear_sky + lower_detail, vec3(0.0), vec3(1.0)), 1.0);
 	if (clouds_only) {
 		// Fixed variation per cloud group; keep the sky gradient at its original height.
@@ -67,5 +88,7 @@ void fragment() {
 	);
 	vec3 upper_cloud = texture(sky_texture, upper_uv).rgb - texture(sky_texture, vec2(1333.5 / 1334.0, upper_uv.y)).rgb;
 	sky_color.rgb = clamp(sky_color.rgb + upper_cloud * 0.75, vec3(0.0), vec3(1.0));
+	vec2 moon_pixel = lower_pixel - vec2(0.0, moon_vertical_offset / art_scale);
+	sky_color.rgb = clamp(sky_color.rgb + moon_detail_at(moon_pixel), vec3(0.0), vec3(1.0));
 	COLOR *= sky_color;
 }
