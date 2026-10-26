@@ -1832,6 +1832,13 @@ texture = ExtResource("16_6e1lm")
 metadata/source_asset = "Lantern.png"
 metadata/editable_background_asset = true
 
+[node name="LampLight" type="PointLight2D" parent="Level/ExistingAssetShowcase/EnvironmentPreview_Lantern_5050"]
+position = Vector2(0, -72)
+color = Color(1, 0.78, 0.48, 1)
+energy = 0.65
+texture = SubResource("GradientTexture_torch_light")
+texture_scale = 1.3
+
 [node name="EnvironmentPreview_Fence02_5340" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1785325395]
 z_index = -2
 texture_filter = 1
@@ -3477,6 +3484,13 @@ texture = ExtResource("16_6e1lm")
 script = ExtResource("60_proximity_lantern")
 glow_path = NodePath("../AwakeningLanternGlow")
 
+[node name="LampLight" type="PointLight2D" parent="Decorations/BackLayer/AwakeningLantern"]
+position = Vector2(0, -72)
+color = Color(1, 0.78, 0.48, 1)
+energy = 0.65
+texture = SubResource("GradientTexture_torch_light")
+texture_scale = 1.3
+
 [node name="TeachingFenceA" type="Sprite2D" parent="Decorations/BackLayer" unique_id=1901756265]
 z_index = -2
 position = Vector2(1172, 569)
@@ -3536,6 +3550,13 @@ z_index = -1
 position = Vector2(2490, 527.83997)
 scale = Vector2(0.72, 0.72)
 texture = ExtResource("16_6e1lm")
+
+[node name="LampLight" type="PointLight2D" parent="Decorations/BackLayer/PressureLantern"]
+position = Vector2(0, -72)
+color = Color(1, 0.78, 0.48, 1)
+energy = 0.65
+texture = SubResource("GradientTexture_torch_light")
+texture_scale = 1.3
 
 [node name="PressureLonghouse" type="Node2D" parent="Decorations/BackLayer" unique_id=1938530624]
 modulate = Color(0.78, 0.82, 0.92, 0.96)
@@ -3601,6 +3622,13 @@ position = Vector2(4272.9995, 804.99994)
 scale = Vector2(0.72, 0.72)
 texture = ExtResource("16_6e1lm")
 
+[node name="LampLight" type="PointLight2D" parent="Decorations/BackLayer/CheckpointLantern"]
+position = Vector2(0, -72)
+color = Color(1, 0.78, 0.48, 1)
+energy = 0.65
+texture = SubResource("GradientTexture_torch_light")
+texture_scale = 1.3
+
 [node name="BridgeEntryLanternGlow" type="Polygon2D" parent="Decorations/BackLayer" unique_id=1887754430]
 z_index = -2
 position = Vector2(4166, 798)
@@ -3613,6 +3641,13 @@ position = Vector2(4166, 796.99994)
 scale = Vector2(0.72, 0.72)
 texture = ExtResource("16_6e1lm")
 
+[node name="LampLight" type="PointLight2D" parent="Decorations/BackLayer/BridgeEntryLantern"]
+position = Vector2(0, -72)
+color = Color(1, 0.78, 0.48, 1)
+energy = 0.65
+texture = SubResource("GradientTexture_torch_light")
+texture_scale = 1.3
+
 [node name="BridgeExitLanternGlow" type="Polygon2D" parent="Decorations/BackLayer" unique_id=1839750366]
 z_index = -2
 position = Vector2(4900, 783.83997)
@@ -3624,6 +3659,13 @@ z_index = -1
 position = Vector2(4900, 783.83997)
 scale = Vector2(0.72, 0.72)
 texture = ExtResource("16_6e1lm")
+
+[node name="LampLight" type="PointLight2D" parent="Decorations/BackLayer/BridgeExitLantern"]
+position = Vector2(0, -72)
+color = Color(1, 0.78, 0.48, 1)
+energy = 0.65
+texture = SubResource("GradientTexture_torch_light")
+texture_scale = 1.3
 
 [node name="FinalManor" type="Node2D" parent="Decorations/BackLayer" unique_id=1394397706]
 modulate = Color(0.78, 0.82, 0.92, 0.96)
@@ -3700,6 +3742,13 @@ z_index = 1
 position = Vector2(6450, 783.83997)
 scale = Vector2(0.72, 0.72)
 texture = ExtResource("16_6e1lm")
+
+[node name="LampLight" type="PointLight2D" parent="Decorations/BackLayer/ExitLantern"]
+position = Vector2(0, -72)
+color = Color(1, 0.78, 0.48, 1)
+energy = 0.65
+texture = SubResource("GradientTexture_torch_light")
+texture_scale = 1.3
 
 [node name="FrontLayer" type="Node2D" parent="Decorations" unique_id=448331071]
 

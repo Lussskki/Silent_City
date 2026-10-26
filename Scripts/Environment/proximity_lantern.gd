@@ -60,6 +60,9 @@ func turn_off() -> void:
 
 func _set_light(light_on: bool) -> void:
 	self_modulate = _on_tint if light_on else off_tint
+	var lamp_light := get_node_or_null("LampLight") as PointLight2D
+	if lamp_light != null:
+		lamp_light.enabled = light_on
 	if not glow_path.is_empty():
 		var glow := get_node_or_null(glow_path) as CanvasItem
 		if glow != null:
