@@ -26,12 +26,14 @@ var _rain: Polygon2D
 var _weather_debug: PanelContainer
 var _rain_toggle: CheckButton
 var _rain_amount: SpinBox
+var _wind_materials: Array[ShaderMaterial] = []
 @onready var _sky_material := $SkyFill.material as ShaderMaterial
 
 
 func _ready() -> void:
 	z_index = -100
 	_update_local_sky()
+	_setup_wind_materials()
 	_setup_rain()
 	_setup_weather_debug()
 
@@ -119,6 +121,14 @@ func _set_debug_rain_intensity(value: float) -> void:
 		_update_rain()
 
 
+func _setup_wind_materials() -> void:
+	for sprite in get_parent().find_children("*", "Sprite2D", true, false):
+		var material := sprite.material as ShaderMaterial
+		if material != null and material.shader != null and material.shader.resource_path == "res://Scripts/Environment/wind_sway.gdshader":
+			if not _wind_materials.has(material):
+				_wind_materials.append(material)
+
+
 func _setup_rain() -> void:
 	_rain = Polygon2D.new()
 	_rain.name = "LightRain"
@@ -173,6 +183,8 @@ func _update_rain() -> void:
 	rain_material.set_shader_parameter("rain_opacity", clampf(rain_intensity * 0.35, 0.0, 0.85))
 	var breeze := (1.0 + sin(float(Time.get_ticks_msec()) * 0.0004) * 0.2) * wind_intensity
 	rain_material.set_shader_parameter("wind_strength", breeze)
+	for material in _wind_materials:
+		material.set_shader_parameter("wind_strength", breeze)
 	if _sky_material != null:
 		_sky_material.set_shader_parameter("cloud_wind_speed", 4.0 * wind_intensity)
 
