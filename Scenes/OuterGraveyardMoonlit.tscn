@@ -413,6 +413,9 @@ size = Vector2(66, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_coe7x"]
 size = Vector2(66, 16)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bridge_trigger"]
+size = Vector2(592, 150)
+
 [sub_resource type="Animation" id="Animation_53h3j"]
 length = 0.001
 tracks/0/type = "value"
@@ -2538,6 +2541,11 @@ script = ExtResource("12_hk8g7")
 
 [node name="BridgeDeck" type="Node2D" parent="Level/ShortMoonlitBridge" unique_id=411895817]
 
+[node name="WalkingSurface" type="StaticBody2D" parent="Level/ShortMoonlitBridge/BridgeDeck"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level/ShortMoonlitBridge/BridgeDeck/WalkingSurface"]
+polygon = PackedVector2Array(-64, -22, 32, -22, 96, -19, 160, -15, 224, -12, 288, -12, 352, -15, 416, -19, 480, -22, 576, -22, 576, 64, -64, 64)
+
 [node name="Plank_00" type="AnimatableBody2D" parent="Level/ShortMoonlitBridge/BridgeDeck" unique_id=996670500]
 physics_interpolation_mode = 2
 position = Vector2(32, -14)
@@ -2545,6 +2553,7 @@ rotation = 0.035
 sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_00" unique_id=174373]
+disabled = true
 shape = SubResource("RectangleShape2D_uraxg")
 
 [node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_00" unique_id=2112394565]
@@ -2559,6 +2568,7 @@ rotation = 0.028
 sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_01" unique_id=2015507660]
+disabled = true
 shape = SubResource("RectangleShape2D_ub0fu")
 
 [node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_01" unique_id=1431759052]
@@ -2573,6 +2583,7 @@ rotation = 0.018
 sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_02" unique_id=402900756]
+disabled = true
 shape = SubResource("RectangleShape2D_738wq")
 
 [node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_02" unique_id=764743307]
@@ -2587,6 +2598,7 @@ rotation = 0.006
 sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_03" unique_id=1118567218]
+disabled = true
 shape = SubResource("RectangleShape2D_lftyp")
 
 [node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_03" unique_id=35767255]
@@ -2601,6 +2613,7 @@ rotation = -0.006
 sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_04" unique_id=1160633076]
+disabled = true
 shape = SubResource("RectangleShape2D_ga476")
 
 [node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_04" unique_id=590748317]
@@ -2615,6 +2628,7 @@ rotation = -0.018
 sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_05" unique_id=1373245962]
+disabled = true
 shape = SubResource("RectangleShape2D_vf3go")
 
 [node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_05" unique_id=1662250926]
@@ -2629,6 +2643,7 @@ rotation = -0.028
 sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_06" unique_id=303995541]
+disabled = true
 shape = SubResource("RectangleShape2D_1k0py")
 
 [node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_06" unique_id=1177070075]
@@ -2643,6 +2658,7 @@ rotation = -0.035
 sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_07" unique_id=1297838499]
+disabled = true
 shape = SubResource("RectangleShape2D_coe7x")
 
 [node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_07" unique_id=254013628]
@@ -2653,6 +2669,9 @@ texture = ExtResource("14_4ko12")
 [node name="PlayerTrigger" type="Area2D" parent="Level/ShortMoonlitBridge" unique_id=1520661816]
 position = Vector2(256, -10)
 collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/PlayerTrigger"]
+shape = SubResource("RectangleShape2D_bridge_trigger")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Level/ShortMoonlitBridge" unique_id=1214158642]
 callback_mode_process = 0
