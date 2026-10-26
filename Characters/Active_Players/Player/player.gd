@@ -1169,13 +1169,13 @@ func _facing_direction() -> float:
 	)
 
 
-func take_damage(amount: int) -> void:
+func take_damage(amount: int, bypass_defence: bool = false) -> void:
 
 	if dead:
 		return
 
 
-	if defence_power_timer > 0.0:
+	if defence_power_timer > 0.0 and not bypass_defence:
 		defence_block_flash_timer = 0.16
 		_update_defence_power_visual()
 		_send_network_state(

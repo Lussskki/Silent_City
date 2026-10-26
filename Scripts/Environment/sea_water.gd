@@ -6,10 +6,15 @@ const DROWNING_DAMAGE := 25
 const DROWNING_INTERVAL := 1.0
 const WATER_SOUND := preload("res://Resources/character_voices/14_Step_water_02.wav")
 
+@export var impact_damage := 25
+@export var minimum_impact_speed := 150.0
+@export var fatal_impact_speed := 900.0
+
 var player: CharacterBody2D
 var submerged := false
 var drowning_time := 0.0
 var splash_audio: AudioStreamPlayer2D
+var rock_contacts: Array[int] = []
 
 
 func _ready() -> void:
@@ -35,10 +40,14 @@ func _physics_process(delta: float) -> void:
 	if in_water:
 		if not submerged:
 			_splash(Vector2(feet.x, surface_y), player.velocity.y)
+			_apply_impact_damage(player.velocity.y)
 		var diving := Input.is_action_pressed("ui_down")
 		if InputMap.has_action("move_down"):
 			diving = diving or Input.is_action_pressed("move_down")
 		player.velocity.y = DIVE_SPEED if diving else minf(player.velocity.y, SINK_SPEED)
+		_apply_rock_damage()
+	else:
+		rock_contacts.clear()
 	submerged = in_water
 	var head_y := player.global_position.y - 64.0
 	if in_water and head_y >= surface_y and not player.dead:
@@ -48,6 +57,28 @@ func _physics_process(delta: float) -> void:
 			player.take_damage(DROWNING_DAMAGE)
 	else:
 		drowning_time = 0.0
+
+
+func _apply_rock_damage() -> void:
+	var current_contacts: Array[int] = []
+	for index in range(player.get_slide_collision_count()):
+		var collider := player.get_slide_collision(index).get_collider() as Node
+		if not is_instance_valid(collider) or not collider.is_in_group("underwater_rock"):
+			continue
+		var contact_id := collider.get_instance_id()
+		if current_contacts.has(contact_id):
+			continue
+		current_contacts.append(contact_id)
+		if not rock_contacts.has(contact_id) and not player.dead:
+			player.take_damage(impact_damage, true)
+	rock_contacts = current_contacts
+
+
+func _apply_impact_damage(impact_speed: float) -> void:
+	if player.dead or impact_speed < minimum_impact_speed:
+		return
+	var damage := int(player.life) if impact_speed >= fatal_impact_speed else impact_damage
+	player.take_damage(damage, true)
 
 
 func _splash(at: Vector2, impact_speed: float) -> void:
