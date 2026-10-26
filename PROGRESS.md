@@ -11,6 +11,20 @@ Existing project files include a main menu scene and Steam lobby creation, listi
 
 ## Current task
 
+- Latest Git delivery groups the bridge walking/bank-edge fixes, moon-only height correction, and persistent Windows debug export settings into separate commits. Previously verified Godot checks are recorded below; unrelated artwork edits, downloaded archives, generated DLL copies, and build packages remain local.
+
+- Raised only the moon by 64 world pixels through moon_vertical_offset in the sky shader. Retained prior camera-scroll speeds and cloud placement; sampled the moon's radial glow separately to avoid moving cloud fragments or leaving its old outline. Render comparison verified vertical movement, unchanged horizontal position, and unchanged sky/cloud pixels outside the moon footprint; final image visually reviewed. Existing environment/cache warnings remain. No executable rebuild.
+
+- Rolled back the rejected moon-speed change at the user's request: restored the previous shader default and scene scroll settings and removed the added placement compensation.
+
+- Fixed bridge lowering while the player stands on an adjacent bank: sag now requires grounded support from the actual deck inside its 0–512 span, verified by a floor ray. Broad-trigger overlap alone no longer activates it. Tests passed for both bank edges staying raised, deck sag/release, and walking/running across both directions without sliding (exit 0; existing environment/shutdown warnings). No executable rebuild.
+
+- Fixed bridge walking in Godot: replaced individual plank collision with one continuous curved floor that follows the existing sag animation and joins both banks. Restored PlayerTrigger's missing collision shape and ordered animation/surface physics updates before player movement. Walking/running passed in both directions without sliding or stalls (maximum measured floor angle 14.04 degrees); sag activation/reset and standing on the lowered bridge passed. Final bridge render visually reviewed. Existing environment/cache/shutdown warnings remain; no executable rebuild.
+
+- Fixed Windows debug packaging: disabled embedded PCK and set the playable export path to builds/windows-debug/SilentCity.exe. Added builds/.gdignore. Built the debug EXE, separate PCK, console launcher, runtime DLLs, and Steam test App ID; packaged builds/SilentCity-windows-debug.zip (290.7 MiB). Export and exported-game headless startup returned exit 0; all seven ZIP entries passed SHA-256 comparison with the originals. Existing editor shutdown leak warnings remain. Use Export Project with Export With Debug for playable builds; Export PCK/ZIP creates data-only packages.
+
+- Inspected Videos/2026-10-26 21-52-40.mp4 and reproduced the bridge walking issue without changing gameplay code: separate plank corners produce a 50.34° floor normal near X=4666, exceeding the player's 15° auto-slide threshold and switching Walking to Sliding. PlayerTrigger also has zero collision shapes, so bridge sag cannot detect the player. Recommended next step: smooth the bridge's walkable collision surface while preserving plank artwork, and restore its detection shape. No fix applied yet.
+
 - Grouped completed session work into separate sky/local-time, water hazards, rain/debug controls, wind/torch lighting, and lamp lighting Git commits. Earlier house/export changes and unrelated downloaded archives remain local.
 
 - Added a small warm PointLight2D to all seven standing lamps (energy 0.65, texture scale 1.3). Reused the existing radial light texture and synchronized AwakeningLantern's light with its proximity flicker/off/on behavior. Godot assertions passed for all seven lamps and off/on synchronization; lamp-area render visually reviewed (exit 0; existing environment/cache/shutdown warnings). No executable rebuild.
