@@ -297,6 +297,22 @@ func _sync_gait_to_motion(ground_speed: float) -> void:
 	sprite.speed_scale = ground_speed * cycle_duration / maxf(stride, 0.001)
 
 
+func _get_support_normal() -> Vector2:
+	# Capsule contact normals can jitter on flat surfaces. Sample the actual
+	# surface beneath the feet before deciding whether it is a sliding slope.
+	var foot: Vector2 = slide_collision.to_global(Vector2(0, slide_collision.shape.get_rect().end.y))
+	var query := PhysicsRayQueryParameters2D.create(
+		slide_collision.global_position,
+		foot - up_direction * maxf(floor_snap_length, 8.0),
+		collision_mask,
+		[get_rid()]
+	)
+	var hit := get_world_2d().direct_space_state.intersect_ray(query)
+	if not hit.is_empty() and (hit.normal as Vector2).dot(up_direction) >= cos(floor_max_angle):
+		return hit.normal
+	return get_floor_normal()
+
+
 func _physics_process(delta):
 
 	# =====================================================
@@ -611,6 +627,7 @@ func _physics_process(delta):
 		speed = character_run_speed
 
 
+	var support_normal := _get_support_normal() if is_on_floor() else up_direction
 
 
 	if direction != 0:
@@ -631,13 +648,13 @@ func _physics_process(delta):
 
 			var angle = abs(
 				rad_to_deg(
-					get_floor_angle()
+					support_normal.angle_to(up_direction)
 				)
 			)
 
 			if angle > SLIDE_ANGLE:
 
-				var normal = get_floor_normal()
+				var normal = support_normal
 
 				var downhill = Vector2(
 					normal.y,
@@ -668,7 +685,7 @@ func _physics_process(delta):
 
 		var angle = abs(
 			rad_to_deg(
-				get_floor_angle()
+				support_normal.angle_to(up_direction)
 			)
 		)
 
@@ -678,7 +695,7 @@ func _physics_process(delta):
 
 			if direction == 0:
 
-				var normal = get_floor_normal()
+				var normal = support_normal
 
 				var downhill = Vector2(
 					normal.y,
@@ -697,6 +714,11 @@ func _physics_process(delta):
 			is_sliding = false
 
 	move_and_slide()
+
+	is_sliding = (
+		is_on_floor()
+		and absf(rad_to_deg(_get_support_normal().angle_to(up_direction))) > SLIDE_ANGLE
+	)
 
 	_update_landing_sound()
 
@@ -757,7 +779,7 @@ func _physics_process(delta):
 			_safe_play("Sliding")
 
 
-	elif direction != 0:
+	elif absf(velocity.x) > 1.0:
 
 		if (
 			not gameplay_input_blocked
