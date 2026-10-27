@@ -36,6 +36,7 @@ const SKY_STOPS := [
 
 var _clock_elapsed := 0.0
 var _lamps: Array[Dictionary] = []
+var _torch_lights: Array[PointLight2D] = []
 var _lamps_on := false
 var _lamp_time_initialized := false
 var _rain: Polygon2D
@@ -228,17 +229,26 @@ func _setup_lamps() -> void:
 			"light": light,
 			"glow": lamp.get_parent().get_node_or_null(str(lamp.name) + "Glow") as CanvasItem,
 		})
+	for light in get_parent().find_children("FlameLight", "PointLight2D", true, false):
+		var torch := light.get_parent() as Sprite2D
+		if torch == null or not torch.material is ShaderMaterial:
+			continue
+		(torch.material as ShaderMaterial).set_shader_parameter("flame_cutoff", 0.46)
+		_torch_lights.append(light as PointLight2D)
 	_update_local_sky()
 
 
 func _update_lamp_time(hour: float) -> void:
-	if _lamps.is_empty():
+	if _lamps.is_empty() and _torch_lights.is_empty():
 		return
 	var lights_on := hour >= 20.0 or hour < 6.0
 	if _lamp_time_initialized and lights_on == _lamps_on:
 		return
 	_lamp_time_initialized = true
 	_lamps_on = lights_on
+	for light in _torch_lights:
+		light.enabled = lights_on
+		(light.get_parent().material as ShaderMaterial).set_shader_parameter("flame_enabled", lights_on)
 	for entry in _lamps:
 		var lamp := entry.sprite as Sprite2D
 		if lamp is ProximityLantern:

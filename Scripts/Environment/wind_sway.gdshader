@@ -6,6 +6,8 @@ uniform float bend_height : hint_range(0.01, 1.0) = 0.5;
 uniform float bend_amount : hint_range(0.0, 0.15) = 0.065;
 uniform float sway_speed = 2.0;
 uniform float sway_amplitude = 0.25;
+uniform bool flame_enabled = true;
+uniform float flame_cutoff : hint_range(0.0, 1.0) = 0.0;
 varying float instance_phase;
 
 void vertex() {
@@ -13,6 +15,7 @@ void vertex() {
 }
 
 void fragment() {
+	if (!flame_enabled && UV.y < flame_cutoff) { discard; }
 	float height_weight = pow(clamp((bend_base - UV.y) / bend_height, 0.0, 1.0), 2.0);
 	float flutter = 0.65 + sin(TIME * sway_speed + instance_phase) * sway_amplitude
 		+ sin(TIME * sway_speed * 2.3 + instance_phase) * 0.1;
