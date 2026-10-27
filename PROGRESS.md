@@ -11,6 +11,8 @@ Existing project files include a main menu scene and Steam lobby creation, listi
 
 ## Current task
 
+- Synchronized walking/running footsteps to animation contact poses instead of an independent timer. Existing sound assets retained. Godot checks passed for contact-only footsteps, idle silence, and Ash/Stone/Ice variants at 30/60/120 physics ticks (exit 0; existing environment/camera warnings). No executable rebuild.
+
 - Connected existing rain to Tbilisi current rain/showers through Open-Meteo HTTPS, checked at startup and every 15 minutes. Dry weather stops rain; wet conditions select light/normal/heavy intensity. Failed requests retain the last result (dry until first success). F3 manual controls override automatic weather; the Tbilisi live-weather checkbox resumes it. Added provider attribution to existing credits. Godot assertions passed for rain mapping, malformed/offline responses, manual override/resume; live Godot HTTPS returned HTTP 200 and dry conditions with intensity 0 (exit 0; existing shutdown warnings). Location stays fixed to Tbilisi for development; no Steam location lookup or executable rebuild.
 
 - Both existing torches now use the same local-time schedule as lamps: flame and PointLight2D off from 06:00 until 20:00, on overnight. Torch stands remain visible and unchanged; existing wind sway remains at night. Godot boundary assertions passed for both torches; OpenGL comparison verified only flame pixels disappear and stands stay identical, visually reviewed (exit 0; existing headless environment/shutdown warnings). No executable rebuild.

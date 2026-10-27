@@ -45,6 +45,7 @@ const GOLEM_GAITS := {
 	"ice_golem": {"Idle": 308.0, "Walking": 312.0, "Running": 308.0,
 		"walk_stride": 550.0, "run_stride": 1000.0},
 }
+const FOOT_CONTACT_FRAMES := {"Walking": [6, 18], "Running": [0, 6]}
 const ARROW_PROJECTILE_SCENE := preload("res://Scenes/ArrowProjectile.tscn")
 const CHARACTER_DISPLAY_NAMES := {
 	"player": "Ash Golem",
@@ -80,9 +81,6 @@ signal power_changed(power: int, max_power: int)
 
 @export_range(-80.0, 6.0, 0.5)
 var character_sound_volume_db := -8.0
-
-@export_range(0.1, 2.0, 0.05)
-var run_sound_interval := 0.35
 
 
 @export_group("Player Life")
@@ -145,7 +143,6 @@ var kick_audio: AudioStreamPlayer2D
 var hit_audio: AudioStreamPlayer2D
 var landing_audio: AudioStreamPlayer2D
 
-var run_sound_timer := 0.0
 var manual_slide_timer := 0.0
 var manual_slide_speed := 0.0
 var manual_slide_direction := 1.0
@@ -241,6 +238,7 @@ func _ready():
 	floor_max_angle = deg_to_rad(60)
 	floor_snap_length = 80.0
 	floor_constant_speed = true
+	sprite.frame_changed.connect(_on_footstep_frame_changed)
 
 
 func _ensure_ladder_detector() -> void:
@@ -400,7 +398,6 @@ func _physics_process(delta):
 			floor_snap_length = 0.0
 			velocity = Vector2(0.0, climb_direction * character_climb_speed)
 			is_sliding = false
-			run_sound_timer = 0.0
 			move_and_slide()
 			_send_network_state(delta)
 
@@ -614,10 +611,6 @@ func _physics_process(delta):
 		speed = character_run_speed
 
 
-	_update_run_sound(
-		delta,
-		direction
-	)
 
 
 	if direction != 0:
@@ -1041,35 +1034,17 @@ func _play_sound(
 	player.play()
 
 
-func _update_run_sound(
-	delta: float,
-	direction: float
-) -> void:
-
-	var should_play_run := (
-		direction != 0
-		and is_on_floor()
-		and Input.is_action_pressed("run")
-		and not attacking
-		and not is_sliding
-	)
-
-
-	if not should_play_run:
-
-		run_sound_timer = 0.0
-
+func _on_footstep_frame_changed() -> void:
+	if not local_player or dead or attacking or is_sliding or not is_on_floor():
 		return
-
-
-	run_sound_timer -= delta
-
-
-	if run_sound_timer <= 0.0:
-
-		_play_sound(run_audio)
-
-		run_sound_timer = run_sound_interval
+	if hurt_animation_timer > 0.0 or is_climbing_ladder or _is_gameplay_input_blocked():
+		return
+	var contacts: Array = FOOT_CONTACT_FRAMES.get(String(sprite.animation), [])
+	if sprite.frame not in contacts:
+		return
+	if (get_real_velocity() - get_platform_velocity()).length() <= 1.0:
+		return
+	_play_sound(run_audio)
 
 
 func _update_landing_sound() -> void:
