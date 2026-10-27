@@ -4,6 +4,19 @@ const RAIN_LIGHT := preload("res://Sprites/rain/png/64x64/rain_light.png")
 const RAIN_NORMAL := preload("res://Sprites/rain/png/64x64/rain.png")
 const RAIN_HEAVY := preload("res://Sprites/rain/png/64x64/rain_heavy.png")
 
+const LAMP_SHADER := """
+shader_type canvas_item;
+uniform bool bulb_on = true;
+void fragment() {
+	// Only the yellow glass/bulb pixels; preserve the roof, frame, and post.
+	if (!bulb_on && UV.x >= 0.25 && UV.x <= 0.76 && UV.y >= 0.23 && UV.y <= 0.46
+			&& COLOR.r > 0.4 && COLOR.g > 0.36 && COLOR.b < COLOR.g * 0.85) {
+		float glass = dot(COLOR.rgb, vec3(0.299, 0.587, 0.114)) * 0.3;
+		COLOR.rgb = vec3(glass * 0.9, glass, glass * 0.95);
+	}
+}
+"""
+
 const SKY_STOPS := [
 	[0.0, Color("32283f"), Color("655572")],
 	[6.0, Color("32283f"), Color("655572")],
@@ -22,6 +35,9 @@ const SKY_STOPS := [
 @export_range(0.0, 5.0, 0.05) var wind_intensity := 1.0
 
 var _clock_elapsed := 0.0
+var _lamps: Array[Dictionary] = []
+var _lamps_on := false
+var _lamp_time_initialized := false
 var _rain: Polygon2D
 var _weather_debug: PanelContainer
 var _rain_toggle: CheckButton
@@ -33,6 +49,7 @@ var _wind_materials: Array[ShaderMaterial] = []
 func _ready() -> void:
 	z_index = -100
 	_update_local_sky()
+	_setup_lamps.call_deferred()
 	_setup_wind_materials()
 	_setup_rain()
 	_setup_weather_debug()
@@ -193,6 +210,45 @@ func _update_local_sky() -> void:
 	var local_time := Time.get_time_dict_from_system()
 	var hour := float(local_time.hour) + float(local_time.minute) / 60.0 + float(local_time.second) / 3600.0
 	_update_sky_time(hour)
+	_update_lamp_time(hour)
+
+
+func _setup_lamps() -> void:
+	var bulb_shader := Shader.new()
+	bulb_shader.code = LAMP_SHADER
+	for light in get_parent().find_children("LampLight", "PointLight2D", true, false):
+		var lamp := light.get_parent() as Sprite2D
+		if lamp == null:
+			continue
+		var bulb_material := ShaderMaterial.new()
+		bulb_material.shader = bulb_shader
+		lamp.material = bulb_material
+		_lamps.append({
+			"sprite": lamp,
+			"light": light,
+			"glow": lamp.get_parent().get_node_or_null(str(lamp.name) + "Glow") as CanvasItem,
+		})
+	_update_local_sky()
+
+
+func _update_lamp_time(hour: float) -> void:
+	if _lamps.is_empty():
+		return
+	var lights_on := hour >= 20.0 or hour < 6.0
+	if _lamp_time_initialized and lights_on == _lamps_on:
+		return
+	_lamp_time_initialized = true
+	_lamps_on = lights_on
+	for entry in _lamps:
+		var lamp := entry.sprite as Sprite2D
+		if lamp is ProximityLantern:
+			lamp.set_night_enabled(lights_on)
+		else:
+			(lamp.material as ShaderMaterial).set_shader_parameter("bulb_on", lights_on)
+			(entry.light as PointLight2D).enabled = lights_on
+			var glow := entry.glow as CanvasItem
+			if glow != null:
+				glow.visible = lights_on
 
 
 func _update_sky_time(hour: float) -> void:

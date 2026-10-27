@@ -10,6 +10,7 @@ var _player: Node2D
 var _flickering := false
 var _armed := true
 var _on_tint := Color.WHITE
+var _night_enabled := true
 
 
 func _ready() -> void:
@@ -17,6 +18,8 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
+	if not _night_enabled:
+		return
 	if not is_instance_valid(_player):
 		_player = get_tree().get_first_node_in_group("Player") as Node2D
 		if _player == null:
@@ -31,7 +34,7 @@ func _process(_delta: float) -> void:
 
 
 func play_flicker() -> void:
-	if _flickering:
+	if _flickering or not _night_enabled:
 		return
 	_flickering = true
 
@@ -58,8 +61,16 @@ func turn_off() -> void:
 	_set_light(false)
 
 
+func set_night_enabled(enabled: bool) -> void:
+	_night_enabled = enabled
+	_set_light(enabled)
+
+
 func _set_light(light_on: bool) -> void:
-	self_modulate = _on_tint if light_on else off_tint
+	light_on = light_on and _night_enabled
+	self_modulate = _on_tint
+	if material is ShaderMaterial:
+		(material as ShaderMaterial).set_shader_parameter("bulb_on", light_on)
 	var lamp_light := get_node_or_null("LampLight") as PointLight2D
 	if lamp_light != null:
 		lamp_light.enabled = light_on

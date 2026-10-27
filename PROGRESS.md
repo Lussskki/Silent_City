@@ -11,6 +11,8 @@ Existing project files include a main menu scene and Steam lobby creation, listi
 
 ## Current task
 
+- All seven standing lamps follow the local computer clock: off from 06:00 until 20:00, on overnight. Corrected the rejected whole-lamp dimming: only the yellow bulb/glass pixels darken; roof, frame, and post retain their original appearance. Light nodes and glow cones switch together; nighttime proximity flicker remains. Godot assertions passed for all seven lamps, time boundaries, and flicker crossing dawn. OpenGL render confirmed 2221 changed bulb pixels with the rest unchanged; comparison visually reviewed (exit 0; existing headless environment/shutdown warnings). No executable rebuild.
+
 - Latest Git delivery groups the bridge walking/bank-edge fixes, moon-only height correction, and persistent Windows debug export settings into separate commits. Previously verified Godot checks are recorded below; unrelated artwork edits, downloaded archives, generated DLL copies, and build packages remain local.
 
 - Raised only the moon by 64 world pixels through moon_vertical_offset in the sky shader. Retained prior camera-scroll speeds and cloud placement; sampled the moon's radial glow separately to avoid moving cloud fragments or leaving its old outline. Render comparison verified vertical movement, unchanged horizontal position, and unchanged sky/cloud pixels outside the moon footprint; final image visually reviewed. Existing environment/cache warnings remain. No executable rebuild.
