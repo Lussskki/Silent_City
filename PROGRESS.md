@@ -11,6 +11,8 @@ Existing project files include a main menu scene and Steam lobby creation, listi
 
 ## Current task
 
+- Connected existing rain to Tbilisi current rain/showers through Open-Meteo HTTPS, checked at startup and every 15 minutes. Dry weather stops rain; wet conditions select light/normal/heavy intensity. Failed requests retain the last result (dry until first success). F3 manual controls override automatic weather; the Tbilisi live-weather checkbox resumes it. Added provider attribution to existing credits. Godot assertions passed for rain mapping, malformed/offline responses, manual override/resume; live Godot HTTPS returned HTTP 200 and dry conditions with intensity 0 (exit 0; existing shutdown warnings). Location stays fixed to Tbilisi for development; no Steam location lookup or executable rebuild.
+
 - Both existing torches now use the same local-time schedule as lamps: flame and PointLight2D off from 06:00 until 20:00, on overnight. Torch stands remain visible and unchanged; existing wind sway remains at night. Godot boundary assertions passed for both torches; OpenGL comparison verified only flame pixels disappear and stands stay identical, visually reviewed (exit 0; existing headless environment/shutdown warnings). No executable rebuild.
 
 - All seven standing lamps follow the local computer clock: off from 06:00 until 20:00, on overnight. Corrected the rejected whole-lamp dimming: only the yellow bulb/glass pixels darken; roof, frame, and post retain their original appearance. Light nodes and glow cones switch together; nighttime proximity flicker remains. Godot assertions passed for all seven lamps, time boundaries, and flicker crossing dawn. OpenGL render confirmed 2221 changed bulb pixels with the rest unchanged; comparison visually reviewed (exit 0; existing headless environment/shutdown warnings). No executable rebuild.
@@ -96,6 +98,8 @@ Existing project files include a main menu scene and Steam lobby creation, listi
 Completed: produced a second corrected tall-balcony house with one uniform dark contour tight to the colored silhouette, removing the doubled black halo and uneven exterior blocks. The scene uses the v2 asset; earlier versions remain preserved.
 
 ## Important decisions
+Weather stays fixed to Tbilisi during development. When the game is put on Steam, add player-local weather using the player's city/region (for example, a US player's local city). Defer implementation until Steam release preparation; Steam's country lookup alone does not provide state/city.
+
 The second tileset is used only as darkened decorative background ground. The playable ground and collision geometry remain original and unchanged. No background photo is used. Story direction is in `AGENTS.md`.
 
 ## Known issues

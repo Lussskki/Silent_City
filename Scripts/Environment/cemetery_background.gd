@@ -3,7 +3,7 @@ extends Node2D
 const RAIN_LIGHT := preload("res://Sprites/rain/png/64x64/rain_light.png")
 const RAIN_NORMAL := preload("res://Sprites/rain/png/64x64/rain.png")
 const RAIN_HEAVY := preload("res://Sprites/rain/png/64x64/rain_heavy.png")
-
+const TBILISI_WEATHER_URL := "https://api.open-meteo.com/v1/forecast?latitude=41.7151&longitude=44.8271&current=rain,showers&timezone=Asia%2FTbilisi&forecast_days=1"
 const LAMP_SHADER := """
 shader_type canvas_item;
 uniform bool bulb_on = true;
@@ -33,6 +33,8 @@ const SKY_STOPS := [
 @export_range(0.0, 5.0, 0.05) var rain_intensity := 1.0
 ## 0 is calm; 1 is the current breeze; higher values strengthen wind and cloud drift.
 @export_range(0.0, 5.0, 0.05) var wind_intensity := 1.0
+## Development weather location; F3 controls can temporarily override it.
+@export var use_tbilisi_weather := true
 
 var _clock_elapsed := 0.0
 var _lamps: Array[Dictionary] = []
@@ -43,6 +45,10 @@ var _rain: Polygon2D
 var _weather_debug: PanelContainer
 var _rain_toggle: CheckButton
 var _rain_amount: SpinBox
+var _auto_weather: CheckButton
+var _weather_status: Label
+var _weather_request: HTTPRequest
+var _weather_rain_intensity := 0.0
 var _wind_materials: Array[ShaderMaterial] = []
 @onready var _sky_material := $SkyFill.material as ShaderMaterial
 
@@ -52,8 +58,11 @@ func _ready() -> void:
 	_update_local_sky()
 	_setup_lamps.call_deferred()
 	_setup_wind_materials()
+	if use_tbilisi_weather:
+		rain_intensity = 0.0
 	_setup_rain()
 	_setup_weather_debug()
+	_setup_live_weather()
 
 
 func _process(delta: float) -> void:
@@ -101,6 +110,15 @@ func _setup_weather_debug() -> void:
 	var title := Label.new()
 	title.text = "Weather Debug (F3)"
 	content.add_child(title)
+	_auto_weather = CheckButton.new()
+	_auto_weather.text = "Tbilisi live weather"
+	_auto_weather.button_pressed = use_tbilisi_weather
+	content.add_child(_auto_weather)
+	_auto_weather.toggled.connect(_set_live_weather_enabled)
+	_weather_status = Label.new()
+	_weather_status.text = "Tbilisi: waiting for weather"
+	_weather_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(_weather_status)
 	_rain_toggle = CheckButton.new()
 	_rain_toggle.name = "RainEnabled"
 	_rain_toggle.text = "Rain On / Off"
@@ -129,14 +147,80 @@ func _setup_weather_debug() -> void:
 
 
 func _set_debug_rain_enabled(enabled: bool) -> void:
+	use_tbilisi_weather = false
+	_auto_weather.set_pressed_no_signal(false)
 	rain_intensity = _rain_amount.value if enabled else 0.0
 	_update_rain()
 
 
 func _set_debug_rain_intensity(value: float) -> void:
+	use_tbilisi_weather = false
+	_auto_weather.set_pressed_no_signal(false)
 	if _rain_toggle.button_pressed:
 		rain_intensity = value
 		_update_rain()
+
+
+func _setup_live_weather() -> void:
+	_weather_request = HTTPRequest.new()
+	_weather_request.timeout = 10.0
+	_weather_request.body_size_limit = 65536
+	add_child(_weather_request)
+	_weather_request.request_completed.connect(_on_weather_completed)
+	var refresh := Timer.new()
+	refresh.wait_time = 900.0
+	add_child(refresh)
+	refresh.timeout.connect(_request_weather)
+	refresh.start()
+	_request_weather()
+
+
+func _request_weather() -> void:
+	if not use_tbilisi_weather or _weather_request.get_http_client_status() != HTTPClient.STATUS_DISCONNECTED:
+		return
+	if _weather_request.request(TBILISI_WEATHER_URL) != OK:
+		_weather_status.text = "Tbilisi: unavailable; keeping last weather"
+
+
+func _on_weather_completed(result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
+	if result != HTTPRequest.RESULT_SUCCESS or response_code != 200 or not _apply_weather_data(body):
+		_weather_status.text = "Tbilisi: unavailable; keeping last weather"
+
+
+func _apply_weather_data(body: PackedByteArray) -> bool:
+	var json := JSON.new()
+	if json.parse(body.get_string_from_utf8()) != OK or not json.data is Dictionary:
+		return false
+	var current: Variant = json.data.get("current")
+	if not current is Dictionary:
+		return false
+	var rain: Variant = current.get("rain")
+	var showers: Variant = current.get("showers")
+	if not (rain is float or rain is int) or not (showers is float or showers is int):
+		return false
+	if float(rain) < 0.0 or float(showers) < 0.0:
+		return false
+	var amount := float(rain) + float(showers)
+	_weather_rain_intensity = 0.0 if amount == 0.0 else (1.0 if amount <= 0.5 else (2.5 if amount <= 2.0 else 4.5))
+	_weather_status.text = "Tbilisi: " + ("dry" if amount == 0.0 else "rain") + " (Open-Meteo)"
+	if use_tbilisi_weather:
+		_apply_live_rain()
+	return true
+
+
+func _set_live_weather_enabled(enabled: bool) -> void:
+	use_tbilisi_weather = enabled
+	if enabled:
+		_apply_live_rain()
+		_request_weather()
+
+
+func _apply_live_rain() -> void:
+	rain_intensity = _weather_rain_intensity
+	_rain_toggle.set_pressed_no_signal(rain_intensity > 0.0)
+	if rain_intensity > 0.0:
+		_rain_amount.set_value_no_signal(rain_intensity)
+	_update_rain()
 
 
 func _setup_wind_materials() -> void:

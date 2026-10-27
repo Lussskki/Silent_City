@@ -97,6 +97,7 @@ func refresh_language() -> void:
 		credits_header.text = _t("credits")
 	if credits_text:
 		credits_text.text = _t("credits_text") + "\n\nRain animations: Jordan Irwin (AntumDeluge) & Kimmo Rundelin (kiheru).\n[url=https://opengameart.org/node/134019]Tileable rain animations[/url] — [url=https://creativecommons.org/licenses/by/4.0/]CC BY 4.0[/url].\nAdapted for animated tiling, tint, wind, and intensity."
+		credits_text.text += "\n\nWeather data: [url=https://open-meteo.com/]Open-Meteo[/url], [url=https://creativecommons.org/licenses/by/4.0/]CC BY 4.0[/url]."
 	if back_button:
 		back_button.text = _t("back")
 
