@@ -45,7 +45,7 @@ const GOLEM_GAITS := {
 	"ice_golem": {"Idle": 308.0, "Walking": 312.0, "Running": 308.0,
 		"walk_stride": 550.0, "run_stride": 1000.0},
 }
-const FOOT_CONTACT_FRAMES := {"Walking": [6, 18], "Running": [0, 6]}
+const FOOT_CONTACT_PHASES := {"Walking": [0.25, 0.75], "Running": [0.0, 0.5]}
 const ARROW_PROJECTILE_SCENE := preload("res://Scenes/ArrowProjectile.tscn")
 const CHARACTER_DISPLAY_NAMES := {
 	"player": "Ash Golem",
@@ -1061,8 +1061,14 @@ func _on_footstep_frame_changed() -> void:
 		return
 	if hurt_animation_timer > 0.0 or is_climbing_ladder or _is_gameplay_input_blocked():
 		return
-	var contacts: Array = FOOT_CONTACT_FRAMES.get(String(sprite.animation), [])
-	if sprite.frame not in contacts:
+	var phases: Array = FOOT_CONTACT_PHASES.get(String(sprite.animation), [])
+	var frame_count: int = sprite.sprite_frames.get_frame_count(sprite.animation)
+	var is_contact := false
+	for phase in phases:
+		if sprite.frame == roundi(float(phase) * frame_count):
+			is_contact = true
+			break
+	if not is_contact:
 		return
 	if (get_real_velocity() - get_platform_velocity()).length() <= 1.0:
 		return

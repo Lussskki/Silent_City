@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_menu_script"]
 [ext_resource type="Texture2D" path="res://Sprites/Background/BG.png" id="2_bg"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_000.png" id="3_player_preview"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Ash_Golem/Polished/ash_preview.png" id="3_player_preview"]
 [ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_000.png" id="4_golem_preview"]
 [ext_resource type="Texture2D" path="res://Resources/How_to_play/1_clean.png" id="5_how_attack"]
 [ext_resource type="Texture2D" path="res://Resources/How_to_play/3_clean.png" id="7_how_jump"]

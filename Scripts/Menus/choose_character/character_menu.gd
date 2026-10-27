@@ -38,7 +38,7 @@ const CHARACTER_DISPLAY_NAMES := {
 
 const STORY_CHARACTERS := ["player", "golem", "ice_golem"]
 const SQUAD_CHARACTERS := ["crusader", "wraith", "minotaur", "ranger"]
-const ASH_PREVIEW_PNG := "res://Characters/Active_Players/Ash_Golem/PNG Sequences/Idle/0_Golem_Idle_000.png"
+const ASH_PREVIEW_PNG := "res://Characters/Active_Players/Ash_Golem/Polished/ash_preview.png"
 const STONE_PREVIEW_PNG := "res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_000.png"
 const ICE_PREVIEW_PNG := "res://Characters/Active_Players/Ice_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_000.png"
 const CRUSADER_PREVIEW_PNG := "res://Characters/Skeleton_crusider/Skeleton_Crusader_1/PNG/PNG Sequences/Idle/0_Skeleton_Crusader_Idle_000.png"

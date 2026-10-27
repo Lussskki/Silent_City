@@ -547,27 +547,14 @@ func _get_ash_golem_frames(settings: Node) -> SpriteFrames:
 		if cached_frames is SpriteFrames and cached_frames.has_animation("Idle") and not String(cached_frames.resource_path).contains("golem_sprite_frames"):
 			return cached_frames
 
-	var frames := SpriteFrames.new()
-	for animation_name in ASH_GOLEM_ANIMATION_DIRS:
-		var folder_name: String = ASH_GOLEM_ANIMATION_DIRS[animation_name]
-		var folder_path := "%s/%s" % [ASH_GOLEM_FRAMES_ROOT, folder_name]
-		var image_files := _get_png_files(folder_path)
-		if image_files.is_empty():
-			continue
-
-		frames.add_animation(animation_name)
-		frames.set_animation_speed(animation_name, 12.0)
-		frames.set_animation_loop(animation_name, animation_name in ["Idle", "Walking", "Running", "Jump Looping", "Falling Down"])
-		for file_name in image_files:
-			var texture := load("%s/%s" % [folder_path, file_name]) as Texture2D
-			if texture:
-				frames.add_frame(animation_name, texture)
-
-	if frames.has_animation("Idle"):
-		if settings:
-			settings.set("player_sprite_frames", frames)
-		return frames
-	return null
+	# Share the polished frames and their logical-canvas margins with story play.
+	var source := load(AshGolemAnimations.FRAMES_PATH) as SpriteFrames
+	if source == null:
+		return null
+	var frames := source.duplicate(false) as SpriteFrames
+	if settings:
+		settings.set("player_sprite_frames", frames)
+	return frames
 
 
 func _build_sprite_frames_from_root(frames_root: String, animation_dirs: Dictionary = ASH_GOLEM_ANIMATION_DIRS) -> SpriteFrames:
