@@ -45,6 +45,7 @@
 [ext_resource type="Texture2D" uid="uid://bmqml1qb2ste6" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Rock 05.png" id="27_vf3go"]
 [ext_resource type="Texture2D" uid="uid://dmvag26f4riy0" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Rock 06.png" id="28_1k0py"]
 [ext_resource type="Texture2D" uid="uid://b5v2lypec8huw" path="res://Resources/Lifts/wooden_lift/wooden_lift_pixel.png" id="28_1w3in"]
+[ext_resource type="Script" uid="uid://doerni7xqcsc" path="res://Scripts/wooden_lift.gd" id="lift_descent"]
 [ext_resource type="Texture2D" uid="uid://bkwtfdjwobqkd" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Headstone 01.png" id="28_tvjuj"]
 [ext_resource type="Texture2D" uid="uid://n32j5t8ayqs8" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Wooden Barrel.png" id="29_5mcap"]
 [ext_resource type="Texture2D" uid="uid://ccxksfacw0f1a" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Signpost 04.png" id="29_coe7x"]
@@ -843,7 +844,7 @@ size = Vector2(388, 256)
 size = Vector2(900, 258)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3nkxo"]
-size = Vector2(648.921, 125.522675)
+size = Vector2(491, 125.522675)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ladder_climb"]
 size = Vector2(46.758545, 143.87077)
@@ -3446,14 +3447,17 @@ texture = ExtResource("18_amn2u")
 position = Vector2(6144, 448)
 
 [node name="WoodenLiftPixel" type="Sprite2D" parent="Level" unique_id=1080939645]
-position = Vector2(5505, 851)
-scale = Vector2(0.6816664, 0.66322637)
+position = Vector2(5501, 851)
+scale = Vector2(0.7127393, 0.66322637)
 texture = ExtResource("28_1w3in")
+script = ExtResource("lift_descent")
+metadata/_edit_group_ = true
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Level/WoodenLiftPixel" unique_id=241884668]
+[node name="StaticBody2D" type="AnimatableBody2D" parent="Level/WoodenLiftPixel" unique_id=241884668]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/WoodenLiftPixel/StaticBody2D" unique_id=831109886]
-position = Vector2(-8.633789, 198.46167)
+z_index = -100
+position = Vector2(-1, 198.46167)
 scale = Vector2(0.9999999, 1)
 shape = SubResource("RectangleShape2D_3nkxo")
 
