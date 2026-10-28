@@ -33,8 +33,8 @@ const SKY_STOPS := [
 @export_range(0.0, 5.0, 0.05) var rain_intensity := 1.0
 ## 0 is calm; 1 is the current breeze; higher values strengthen wind and cloud drift.
 @export_range(0.0, 5.0, 0.05) var wind_intensity := 1.0
-## Development weather location; F3 controls can temporarily override it.
-@export var use_tbilisi_weather := true
+## Optional development weather connection; disabled by default. F3 can enable it.
+@export var use_tbilisi_weather := false
 
 var _clock_elapsed := 0.0
 var _lamps: Array[Dictionary] = []
@@ -116,7 +116,7 @@ func _setup_weather_debug() -> void:
 	content.add_child(_auto_weather)
 	_auto_weather.toggled.connect(_set_live_weather_enabled)
 	_weather_status = Label.new()
-	_weather_status.text = "Tbilisi: waiting for weather"
+	_weather_status.text = "Tbilisi: waiting for weather" if use_tbilisi_weather else "Manual weather (live weather off)"
 	_weather_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	content.add_child(_weather_status)
 	_rain_toggle = CheckButton.new()

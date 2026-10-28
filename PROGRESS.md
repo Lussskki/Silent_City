@@ -11,6 +11,8 @@ Existing project files include a main menu scene and Steam lobby creation, listi
 
 ## Current task
 
+- Disabled Tbilisi live weather by default at the user's request. Startup keeps manual rain intensity, the F3 live-weather checkbox starts off, and the status identifies manual weather; the existing disabled-state guard prevents automatic weather requests. Manual rain controls remain available. Main-scene headless startup passed (exit 0; camera/shutdown warnings). Restart the scene to apply; no executable rebuild or GitHub push.
+
 - Restored the lift root to Sprite2D with its full native editor selection bounds and grouped its collision for moving the asset as one piece. Runtime-only separated artwork retains F down/up operation. Selection bounds, parent/collision translation, prompts, and supported round-trip assertions passed; OpenGL lower-stop render visually reviewed. Rendered run printed PASS but exited 1 during shutdown; headless confirmation exited 0 with resource-leak warnings. Reload the editor scene to refresh the root type. No executable rebuild.
 
 - Enabled manual lift return: F descends at the top and ascends at the bottom, with matching `[F] Descend` / `[F] Ascend` prompts. Both directions use the same four-second easing and carry the rider; travel-time key presses do not queue a return. OpenGL round-trip assertions passed for physical F activation, both prompts, rider support/health, and exact return to the start (exit 0; camera/shutdown warnings). Returned render visually reviewed. Restart the running scene for this update; no executable rebuild.
