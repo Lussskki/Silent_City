@@ -11,6 +11,10 @@ Existing project files include a main menu scene and Steam lobby creation, listi
 
 ## Current task
 
+- Clarified architecture PDF completion and currency rules on new bilingual page 12: Moth Reaper ends the story with credits below 100%; optional side bosses advance the completion bar; exploration continues after credits; world coins and chest money buy powers from the storyteller/seller. Existing ending and post-game rules retained. PDF page tree, streams, and cross-reference offsets checked. No gameplay changes.
+
+- Updated the 11-page bilingual architecture PDF: combined storyteller and power seller replaces Waykeeper; Wraith Lifter characters removed, lifts retained. Added the user's boss diagram: optional Witches, Minotaur, Wraiths, and Skeletons point toward final cemetery boss Moth Reaper. Route placement, mechanics, and rewards remain open. PDF streams, roster, and cross-reference offsets checked; no Godot changes.
+
 - Disabled Tbilisi live weather by default at the user's request. Startup keeps manual rain intensity, the F3 live-weather checkbox starts off, and the status identifies manual weather; the existing disabled-state guard prevents automatic weather requests. Manual rain controls remain available. Main-scene headless startup passed (exit 0; camera/shutdown warnings). Restart the scene to apply; no executable rebuild or GitHub push.
 
 - Restored the lift root to Sprite2D with its full native editor selection bounds and grouped its collision for moving the asset as one piece. Runtime-only separated artwork retains F down/up operation. Selection bounds, parent/collision translation, prompts, and supported round-trip assertions passed; OpenGL lower-stop render visually reviewed. Rendered run printed PASS but exited 1 during shutdown; headless confirmation exited 0 with resource-leak warnings. Reload the editor scene to refresh the root type. No executable rebuild.
