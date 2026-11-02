@@ -27,10 +27,10 @@
 [ext_resource type="Texture2D" uid="uid://b8agm8yfofok0" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Rock 02.png" id="19_whhd7"]
 [ext_resource type="Texture2D" uid="uid://dmjwdeo0hm1s5" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Bone.png" id="20_1gjcc"]
 [ext_resource type="Texture2D" uid="uid://dnfva1eie0arg" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground Additional 02.png" id="20_8e665"]
-[ext_resource type="Texture2D" uid="uid://bstcrvsl4jsgl" path="res://Resources/Second_prompt/background_assets/house_01_2d_clean.png" id="20_ibml5"]
+[ext_resource type="Texture2D" uid="uid://c54qdi4ofux25" path="res://Resources/Second_prompt/background_assets/house_01_2d_roof_redrawn.png" id="20_ibml5"]
 [ext_resource type="Texture2D" uid="uid://csa0jqjx3e76x" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Crypt.png" id="20_pfu5p"]
 [ext_resource type="Texture2D" uid="uid://cbnfs511urn73" path="res://Sprites/Graveyard/GraveyardTileset/png/Objects/TombStone (1).png" id="21_7gx6j"]
-[ext_resource type="Texture2D" uid="uid://cv4w5w2a3p11c" path="res://Resources/Second_prompt/background_assets/house_02_tall_balcony.png" id="21_hk8g7"]
+[ext_resource type="Texture2D" uid="uid://bx8ihs35ovrvv" path="res://Resources/Second_prompt/background_assets/house_02_tall_balcony_roof_redrawn.png" id="21_hk8g7"]
 [ext_resource type="Texture2D" uid="uid://g6vhjk887opq" path="res://Sprites/Tiles/Tile (6).png" id="21_stvwn"]
 [ext_resource type="Texture2D" uid="uid://dmk1oo154jqne" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Bush 02.png" id="21_uraxg"]
 [ext_resource type="Texture2D" uid="uid://brcbmto3fj114" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 09.png" id="22_tvjuj"]
@@ -45,7 +45,6 @@
 [ext_resource type="Texture2D" uid="uid://bmqml1qb2ste6" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Rock 05.png" id="27_vf3go"]
 [ext_resource type="Texture2D" uid="uid://dmvag26f4riy0" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Rock 06.png" id="28_1k0py"]
 [ext_resource type="Texture2D" uid="uid://b5v2lypec8huw" path="res://Resources/Lifts/wooden_lift/wooden_lift_pixel.png" id="28_1w3in"]
-[ext_resource type="Script" uid="uid://doerni7xqcsc" path="res://Scripts/wooden_lift.gd" id="lift_descent"]
 [ext_resource type="Texture2D" uid="uid://bkwtfdjwobqkd" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Headstone 01.png" id="28_tvjuj"]
 [ext_resource type="Texture2D" uid="uid://n32j5t8ayqs8" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Wooden Barrel.png" id="29_5mcap"]
 [ext_resource type="Texture2D" uid="uid://ccxksfacw0f1a" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Signpost 04.png" id="29_coe7x"]
@@ -99,91 +98,32 @@
 [ext_resource type="Texture2D" uid="uid://cjfdrkvjasa1v" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Rock 03.png" id="bank_rock_03"]
 [ext_resource type="Texture2D" uid="uid://b13dgryy3nrtd" path="res://Sprites/Background/Forbidden_Graveyard_sky_only.png" id="graveyard_sky"]
 [ext_resource type="Shader" uid="uid://bqgaiqhoeati8" path="res://Scripts/Environment/graveyard_sky.gdshader" id="graveyard_sky_shader"]
+[ext_resource type="Script" uid="uid://doerni7xqcsc" path="res://Scripts/wooden_lift.gd" id="lift_descent"]
 [ext_resource type="Texture2D" uid="uid://bm5wbbhvyfrdy" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 06.png" id="rock_wall_fill"]
 [ext_resource type="Texture2D" uid="uid://km1leb24dtu1" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 09.png" id="rock_wall_left"]
 [ext_resource type="Texture2D" uid="uid://knsfke26defc" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 02.png" id="rock_wall_top"]
 [ext_resource type="Texture2D" uid="uid://ciohjpdn4l80u" path="res://Sprites/Tiles/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground 04.png" id="rock_wall_top_left"]
-[ext_resource type="Script" uid="uid://bg5e6oho4xfvc" path="res://Scripts/Environment/sea_water.gd" id="Script_sea_water"]
 [ext_resource type="Texture2D" uid="uid://c8elsh2imcekw" path="res://Resources/Levels/Grass_redraw.png" id="Texture_bank_edge_grass"]
 [ext_resource type="Texture2D" uid="uid://v0j0poxw372" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Environment/Forbidden_Graveyard_2D_Platformer_Tileset_Environment - Rock 01.png" id="Texture_bank_edge_rock"]
-
 [ext_resource type="Texture2D" uid="uid://dxarauibeocma" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground Additional 02.png" id="underwater_ground_02"]
 [ext_resource type="Texture2D" uid="uid://c7atvhyfdqfyb" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground Additional 03.png" id="underwater_ground_03"]
 [ext_resource type="Texture2D" uid="uid://beud73l6que8h" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground Additional 04.png" id="underwater_ground_04"]
+[ext_resource type="Shader" uid="uid://cnug53n4onyj7" path="res://Scripts/Environment/wind_sway.gdshader" id="wind_sway_shader"]
 
-[ext_resource type="Shader" path="res://Scripts/Environment/wind_sway.gdshader" id="wind_sway_shader"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wind_grass"]
-shader = ExtResource("wind_sway_shader")
-shader_parameter/bend_base = 0.9
-shader_parameter/bend_height = 0.4
-shader_parameter/bend_amount = 0.14
-shader_parameter/sway_speed = 2.4
-shader_parameter/sway_amplitude = 0.8
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wind_flame"]
-shader = ExtResource("wind_sway_shader")
-shader_parameter/bend_base = 0.46
-shader_parameter/bend_height = 0.46
-shader_parameter/bend_amount = 0.07
-shader_parameter/sway_speed = 4.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wind_grass_strip"]
-shader = ExtResource("wind_sway_shader")
-shader_parameter/bend_amount = 0.025
-
-[sub_resource type="Gradient" id="Gradient_torch_light"]
-offsets = PackedFloat32Array(0, 0.25, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.4, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture_torch_light"]
-gradient = SubResource("Gradient_torch_light")
-width = 256
-height = 256
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(1, 0.5)
+[ext_resource type="PackedScene" path="res://Scenes/Environment/SeaWater.tscn" id="shared_sea"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_continuous_sky"]
 shader = ExtResource("graveyard_sky_shader")
 shader_parameter/sky_texture = ExtResource("graveyard_sky")
 shader_parameter/sky_origin = Vector2(400, 284)
 shader_parameter/art_scale = 0.75
+shader_parameter/moon_vertical_offset = -64.0
 shader_parameter/lower_cloud_scroll = Vector2(0.65, 0.85)
 shader_parameter/upper_cloud_scroll = Vector2(0.35, 0.65)
 shader_parameter/cloud_wind_speed = 4.0
 shader_parameter/time_sky_top = Color(0.196, 0.157, 0.247, 1)
 shader_parameter/time_sky_bottom = Color(0.396, 0.333, 0.447, 1)
 shader_parameter/time_sky_blend = 0.0
-
-[sub_resource type="Shader" id="Shader_sea_water"]
-code = "shader_type canvas_item;
-render_mode unshaded;
-uniform float water_opacity = 1.0;
-
-void fragment() {
-    vec2 p = floor(UV * vec2(2364.0, 860.0) / 4.0) * 4.0;
-    float wave = 8.0 + floor((sin(p.x * 0.018 + TIME * 1.2) + sin(p.x * 0.041 - TIME * 0.8)) * 0.5) * 4.0;
-    float depth = p.y - wave;
-    vec3 water = mix(vec3(0.055, 0.22, 0.26), vec3(0.025, 0.075, 0.12), clamp(depth / 480.0, 0.0, 1.0));
-    float ripple = step(0.94, sin(p.x * 0.027 + TIME * 0.65 + floor(p.y / 20.0) * 2.3));
-    ripple *= step(0.75, cos(p.y * 0.31)) * (1.0 - clamp(depth / 300.0, 0.0, 1.0));
-    water += vec3(0.06, 0.12, 0.12) * ripple;
-    if (depth < 4.0) {
-        water = vec3(0.28, 0.49, 0.48);
-    } else if (depth < 12.0) {
-        water = vec3(0.12, 0.34, 0.37);
-    }
-    COLOR = vec4(water, step(0.0, depth) * water_opacity);
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sea_water"]
-shader = SubResource("Shader_sea_water")
-shader_parameter/water_opacity = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sea_overlay"]
-shader = SubResource("Shader_sea_water")
-shader_parameter/water_opacity = 0.55
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kh1dd"]
 blend_mode = 1
@@ -198,6 +138,49 @@ height = 128
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wind_grass"]
+shader = ExtResource("wind_sway_shader")
+shader_parameter/wind_strength = 1.0
+shader_parameter/bend_base = 0.9
+shader_parameter/bend_height = 0.4
+shader_parameter/bend_amount = 0.14
+shader_parameter/sway_speed = 2.4
+shader_parameter/sway_amplitude = 0.8
+shader_parameter/flame_enabled = true
+shader_parameter/flame_cutoff = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wind_flame"]
+shader = ExtResource("wind_sway_shader")
+shader_parameter/wind_strength = 1.0
+shader_parameter/bend_base = 0.46
+shader_parameter/bend_height = 0.46
+shader_parameter/bend_amount = 0.07
+shader_parameter/sway_speed = 4.0
+shader_parameter/sway_amplitude = 0.25
+shader_parameter/flame_enabled = true
+shader_parameter/flame_cutoff = 0.0
+
+[sub_resource type="Gradient" id="Gradient_torch_light"]
+offsets = PackedFloat32Array(0, 0.25, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.4, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture_torch_light"]
+gradient = SubResource("Gradient_torch_light")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wind_tree"]
+shader = ExtResource("wind_sway_shader")
+shader_parameter/preserve_texture_color = true
+shader_parameter/bend_base = 0.73
+shader_parameter/bend_height = 0.7
+shader_parameter/bend_amount = 0.035
+shader_parameter/sway_speed = 1.2
+shader_parameter/sway_amplitude = 0.55
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7blmt"]
 blend_mode = 1
@@ -385,10 +368,21 @@ scale_max = 1.8
 color = Color(0.68, 0.76, 0.78, 0.28)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1gjcc"]
-size = Vector2(4099, 633)
+size = Vector2(4099, 505)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vertical_drop_landing"]
 size = Vector2(256, 256)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wind_grass_strip"]
+shader = ExtResource("wind_sway_shader")
+shader_parameter/wind_strength = 1.0
+shader_parameter/bend_base = 0.95
+shader_parameter/bend_height = 0.5
+shader_parameter/bend_amount = 0.025
+shader_parameter/sway_speed = 2.0
+shader_parameter/sway_amplitude = 0.25
+shader_parameter/flame_enabled = true
+shader_parameter/flame_cutoff = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uraxg"]
 size = Vector2(66, 16)
@@ -948,8 +942,8 @@ script = ExtResource("1_v51sb")
 
 [node name="SkyFill" type="Polygon2D" parent="CemeteryBackground" unique_id=1170256878]
 material = SubResource("ShaderMaterial_continuous_sky")
-position = Vector2(18, 111)
-polygon = PackedVector2Array(-100000, -100000, 100000, -100000, 100000, 100000, -100000, 100000)
+position = Vector2(48, 75)
+polygon = PackedVector2Array(-1024, -1024, 10240, -1024, 10240, 2304, -1024, 2304)
 
 [node name="NeutralCharcoalNight" type="CanvasModulate" parent="." unique_id=283101697]
 color = Color(0.58, 0.6, 0.63, 1)
@@ -957,25 +951,15 @@ color = Color(0.58, 0.6, 0.63, 1)
 [node name="Level" type="Node2D" parent="." unique_id=1900744520]
 script = ExtResource("3_c0xi8")
 
-[node name="SeaWater" type="ColorRect" parent="Level" unique_id=444116471]
-z_index = -2
-material = SubResource("ShaderMaterial_sea_water")
+[node name="SeaWater" parent="Level" unique_id=444116471 instance=ExtResource("shared_sea")]
 offset_left = 6592.0
 offset_top = 940.0
 offset_right = 8956.0
 offset_bottom = 1800.0
-mouse_filter = 2
-script = ExtResource("Script_sea_water")
 
-[node name="SubmergedTint" type="ColorRect" parent="Level/SeaWater" unique_id=967367291]
-z_index = 1325
-material = SubResource("ShaderMaterial_sea_overlay")
-layout_mode = 0
-offset_left = 64.0
-offset_top = 13.0
-offset_right = 2364.0
-offset_bottom = 860.0
-mouse_filter = 2
+[node name="Object17" type="Sprite2D" parent="Level/SeaWater" unique_id=1947087949]
+position = Vector2(-7116.0005, -699)
+scale = Vector2(0.76171875, 1)
 
 [node name="UnderwaterRocks" type="Node2D" parent="Level" unique_id=1127294128]
 
@@ -1357,17 +1341,17 @@ texture = ExtResource("rock_wall_fill")
 script = ExtResource("75_asset_showcase")
 
 [node name="RouteSection_VillageEdge" type="Marker2D" parent="Level/ExistingAssetShowcase" unique_id=322586217]
-position = Vector2(650, 620)
+position = Vector2(650, 748)
 metadata/section_name = "VillageEdge"
 metadata/editable_background_asset = true
 
 [node name="RouteSection_FloodedRuins" type="Marker2D" parent="Level/ExistingAssetShowcase" unique_id=1364373012]
-position = Vector2(1900, 620)
+position = Vector2(1900, 748)
 metadata/section_name = "FloodedRuins"
 metadata/editable_background_asset = true
 
 [node name="RouteSection_WaterfallBridge" type="Marker2D" parent="Level/ExistingAssetShowcase" unique_id=933560061]
-position = Vector2(3650, 620)
+position = Vector2(3650, 748)
 metadata/section_name = "WaterfallBridge"
 metadata/editable_background_asset = true
 
@@ -1466,7 +1450,7 @@ metadata/editable_background_asset = true
 modulate = Color(0.64, 0.69, 0.71, 0.82)
 z_index = -6
 texture_filter = 1
-position = Vector2(5824, 684)
+position = Vector2(5815, 685)
 texture = ExtResource("4_j8wab")
 metadata/decorative_background_only = true
 metadata/editable_background_asset = true
@@ -1475,7 +1459,7 @@ metadata/editable_background_asset = true
 modulate = Color(0.64, 0.69, 0.71, 0.82)
 z_index = -6
 texture_filter = 1
-position = Vector2(5824, 812)
+position = Vector2(5815, 813)
 texture = ExtResource("22_tvjuj")
 metadata/decorative_background_only = true
 metadata/editable_background_asset = true
@@ -1493,7 +1477,7 @@ metadata/editable_background_asset = true
 modulate = Color(0.64, 0.69, 0.71, 0.82)
 z_index = -6
 texture_filter = 1
-position = Vector2(5952, 812)
+position = Vector2(5943, 813)
 texture = ExtResource("23_5mcap")
 metadata/decorative_background_only = true
 metadata/editable_background_asset = true
@@ -1511,7 +1495,7 @@ metadata/editable_background_asset = true
 modulate = Color(0.64, 0.69, 0.71, 0.82)
 z_index = -6
 texture_filter = 1
-position = Vector2(6080, 812)
+position = Vector2(6071, 813)
 texture = ExtResource("23_5mcap")
 metadata/decorative_background_only = true
 metadata/editable_background_asset = true
@@ -1529,7 +1513,7 @@ metadata/editable_background_asset = true
 modulate = Color(0.64, 0.69, 0.71, 0.82)
 z_index = -6
 texture_filter = 1
-position = Vector2(6208, 812)
+position = Vector2(6199, 813)
 texture = ExtResource("23_5mcap")
 metadata/decorative_background_only = true
 metadata/editable_background_asset = true
@@ -1547,7 +1531,7 @@ metadata/editable_background_asset = true
 modulate = Color(0.64, 0.69, 0.71, 0.82)
 z_index = -6
 texture_filter = 1
-position = Vector2(6336, 812)
+position = Vector2(6327, 813)
 texture = ExtResource("23_5mcap")
 metadata/decorative_background_only = true
 metadata/editable_background_asset = true
@@ -1565,7 +1549,7 @@ metadata/editable_background_asset = true
 modulate = Color(0.64, 0.69, 0.71, 0.82)
 z_index = -6
 texture_filter = 1
-position = Vector2(6464, 812)
+position = Vector2(6455, 813)
 texture = ExtResource("23_5mcap")
 metadata/decorative_background_only = true
 metadata/editable_background_asset = true
@@ -1583,7 +1567,7 @@ metadata/editable_background_asset = true
 modulate = Color(0.64, 0.69, 0.71, 0.82)
 z_index = -6
 texture_filter = 1
-position = Vector2(6583, 812)
+position = Vector2(6583, 813)
 texture = ExtResource("24_fukak")
 metadata/decorative_background_only = true
 metadata/editable_background_asset = true
@@ -1592,7 +1576,7 @@ metadata/editable_background_asset = true
 modulate = Color(0.42, 0.49, 0.52, 0.48)
 z_index = -4
 texture_filter = 1
-position = Vector2(250, 536)
+position = Vector2(250, 664)
 scale = Vector2(0.57931036, 0.57931036)
 texture = ExtResource("15_ip4fc")
 flip_h = true
@@ -1603,7 +1587,7 @@ metadata/editable_background_asset = true
 modulate = Color(0.63, 0.69, 0.71, 0.82)
 z_index = -2
 texture_filter = 1
-position = Vector2(430, 584)
+position = Vector2(430, 712)
 scale = Vector2(0.5625, 0.5625)
 texture = ExtResource("17_qil01")
 metadata/source_asset = "Fence 01.png"
@@ -1611,7 +1595,7 @@ metadata/editable_background_asset = true
 
 [node name="EnvironmentPreview_Signpost01_1010" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1906453562]
 texture_filter = 1
-position = Vector2(1010, 585)
+position = Vector2(1010, 713)
 scale = Vector2(0.546875, 0.546875)
 texture = ExtResource("36_tthmt")
 metadata/source_asset = "Signpost 01.png"
@@ -1620,7 +1604,7 @@ metadata/editable_background_asset = true
 [node name="EnvironmentPreview_Rock01_1130" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1702060533]
 z_index = -1
 texture_filter = 1
-position = Vector2(1127, 614.00006)
+position = Vector2(1127, 742.00006)
 scale = Vector2(0.5625, 0.5625)
 texture = ExtResource("Texture_bank_edge_rock")
 metadata/source_asset = "Rock 01.png"
@@ -1629,7 +1613,7 @@ metadata/editable_background_asset = true
 [node name="AtmosphereGlow_715" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1106379269]
 z_index = -1
 material = SubResource("CanvasItemMaterial_kh1dd")
-position = Vector2(715, 562)
+position = Vector2(715, 690)
 scale = Vector2(0.1016, 0.1016)
 texture = SubResource("GradientTexture2D_bb5oq")
 metadata/editable_background_asset = true
@@ -1638,7 +1622,7 @@ metadata/editable_background_asset = true
 modulate = Color(0.38, 0.46, 0.5, 0.44)
 z_index = -4
 texture_filter = 1
-position = Vector2(1320, 539)
+position = Vector2(1320, 667)
 scale = Vector2(0.5586207, 0.5586207)
 texture = ExtResource("19_1w3in")
 metadata/source_asset = "Tree 02.png"
@@ -1647,7 +1631,7 @@ metadata/editable_background_asset = true
 [node name="EnvironmentPreview_Rock02_1580" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1545578427]
 z_index = -1
 texture_filter = 1
-position = Vector2(1777, 610)
+position = Vector2(1777, 738)
 scale = Vector2(0.65625, 0.65625)
 texture = ExtResource("19_whhd7")
 metadata/source_asset = "Rock 02.png"
@@ -1655,17 +1639,17 @@ metadata/editable_background_asset = true
 
 [node name="EnvironmentPreview_Bone_1690" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1244576973]
 texture_filter = 1
-position = Vector2(1767.0001, 606)
+position = Vector2(1767.0001, 734)
 scale = Vector2(0.1875, 0.1875)
 texture = ExtResource("20_1gjcc")
 metadata/source_asset = "Bone.png"
 metadata/editable_background_asset = true
 
 [node name="EnvironmentPreview_Bush02_1810" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=179939601]
-material = SubResource("ShaderMaterial_wind_grass")
 z_index = -1
 texture_filter = 1
-position = Vector2(1810, 592.5)
+material = SubResource("ShaderMaterial_wind_grass")
+position = Vector2(1810, 720.5)
 scale = Vector2(0.4296875, 0.4296875)
 texture = ExtResource("21_uraxg")
 metadata/source_asset = "Bush 02.png"
@@ -1673,7 +1657,7 @@ metadata/editable_background_asset = true
 
 [node name="EnvironmentPreview_Skull_2180" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=983424296]
 texture_filter = 1
-position = Vector2(2180, 606)
+position = Vector2(2180, 734)
 scale = Vector2(0.21875, 0.21875)
 texture = ExtResource("31_u0vqy")
 metadata/source_asset = "Skull.png"
@@ -1690,7 +1674,7 @@ metadata/editable_background_asset = true
 [node name="EnvironmentPreview_Rock04_2425" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=447289747]
 z_index = -1
 texture_filter = 1
-position = Vector2(2221, 611)
+position = Vector2(2221, 739)
 scale = Vector2(0.703125, 0.703125)
 texture = ExtResource("24_738wq")
 metadata/source_asset = "Rock 04.png"
@@ -1699,7 +1683,7 @@ metadata/editable_background_asset = true
 [node name="EnvironmentPreview_Stonefence02_2580" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1235126252]
 z_index = -2
 texture_filter = 1
-position = Vector2(2580, 582)
+position = Vector2(2580, 710)
 scale = Vector2(0.59375, 0.59375)
 texture = ExtResource("25_lftyp")
 metadata/source_asset = "Stone fence 02.png"
@@ -1707,7 +1691,7 @@ metadata/editable_background_asset = true
 
 [node name="EnvironmentPreview_Signpost03_2730" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1613149639]
 texture_filter = 1
-position = Vector2(2730, 587)
+position = Vector2(2730, 715)
 scale = Vector2(0.515625, 0.515625)
 texture = ExtResource("26_ga476")
 metadata/source_asset = "Signpost 03.png"
@@ -1716,7 +1700,7 @@ metadata/editable_background_asset = true
 [node name="EnvironmentPreview_Rock05_2850" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=846827077]
 z_index = -1
 texture_filter = 1
-position = Vector2(3435, 594)
+position = Vector2(3435, 722)
 scale = Vector2(0.59375, 0.59375)
 texture = ExtResource("27_vf3go")
 metadata/source_asset = "Rock 05.png"
@@ -1725,7 +1709,7 @@ metadata/editable_background_asset = true
 [node name="EnvironmentPreview_Rock06_2960" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1225343778]
 z_index = -22
 texture_filter = 1
-position = Vector2(3450, 610.00006)
+position = Vector2(3450, 738.00006)
 scale = Vector2(0.6875, 0.6875)
 texture = ExtResource("28_1k0py")
 metadata/source_asset = "Rock 06.png"
@@ -1735,17 +1719,17 @@ metadata/editable_background_asset = true
 modulate = Color(0.4, 0.48, 0.51, 0.46)
 z_index = -4
 texture_filter = 1
-position = Vector2(3180, 543)
+position = Vector2(3180, 671)
 scale = Vector2(0.53103447, 0.53103447)
 texture = ExtResource("15_ip4fc")
 metadata/source_asset = "Tree 01.png"
 metadata/editable_background_asset = true
 
 [node name="EnvironmentPreview_Bush01_3330" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=671081561]
-material = SubResource("ShaderMaterial_wind_grass")
 z_index = -22
 texture_filter = 1
-position = Vector2(3330, 595)
+material = SubResource("ShaderMaterial_wind_grass")
+position = Vector2(3330, 723)
 scale = Vector2(0.390625, 0.390625)
 texture = ExtResource("12_wenad")
 metadata/source_asset = "Bush 01.png"
@@ -1754,7 +1738,7 @@ metadata/editable_background_asset = true
 [node name="EnvironmentPreview_Rock04_3440" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1794025530]
 z_index = -1
 texture_filter = 1
-position = Vector2(3427, 605)
+position = Vector2(3427, 733)
 scale = Vector2(0.65625, 0.65625)
 texture = ExtResource("24_738wq")
 metadata/source_asset = "Rock 04.png"
@@ -1762,7 +1746,7 @@ metadata/editable_background_asset = true
 
 [node name="EnvironmentPreview_Signpost04_3790" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=975353090]
 texture_filter = 1
-position = Vector2(3790, 586)
+position = Vector2(3790, 714)
 scale = Vector2(0.53125, 0.53125)
 texture = ExtResource("29_coe7x")
 metadata/source_asset = "Signpost 04.png"
@@ -1771,22 +1755,22 @@ metadata/editable_background_asset = true
 [node name="EnvironmentPreview_Rock05_3920" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1641174628]
 z_index = -1
 texture_filter = 1
-position = Vector2(3476.0002, 613.00006)
+position = Vector2(3476.0002, 741.00006)
 scale = Vector2(0.703125, 0.703125)
 texture = ExtResource("27_vf3go")
 metadata/source_asset = "Rock 05.png"
 metadata/editable_background_asset = true
 
 [node name="EnvironmentPreview_Fire_4070" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=2039083756]
-material = SubResource("ShaderMaterial_wind_flame")
 texture_filter = 1
-position = Vector2(4070, 587)
+material = SubResource("ShaderMaterial_wind_flame")
+position = Vector2(4070, 715)
 scale = Vector2(0.515625, 0.515625)
 texture = ExtResource("30_m3ixb")
 metadata/source_asset = "Fire.png"
 metadata/editable_background_asset = true
 
-[node name="FlameLight" type="PointLight2D" parent="Level/ExistingAssetShowcase/EnvironmentPreview_Fire_4070"]
+[node name="FlameLight" type="PointLight2D" parent="Level/ExistingAssetShowcase/EnvironmentPreview_Fire_4070" unique_id=1878043646]
 position = Vector2(0, -38)
 color = Color(1, 0.72, 0.38, 1)
 energy = 1.2
@@ -1796,7 +1780,7 @@ texture_scale = 2.5
 [node name="AtmosphereGlow_3570" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=346103313]
 z_index = -1
 material = SubResource("CanvasItemMaterial_7blmt")
-position = Vector2(3570, 564)
+position = Vector2(3570, 692)
 scale = Vector2(0.1004, 0.1004)
 texture = SubResource("GradientTexture2D_e7x4x")
 metadata/editable_background_asset = true
@@ -1804,7 +1788,7 @@ metadata/editable_background_asset = true
 [node name="AtmosphereGlow_4070" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1358125769]
 z_index = -1
 material = SubResource("CanvasItemMaterial_21pn0")
-position = Vector2(4070, 575)
+position = Vector2(4070, 703)
 scale = Vector2(0.1085, 0.1085)
 texture = SubResource("GradientTexture2D_tqe2w")
 metadata/editable_background_asset = true
@@ -1836,7 +1820,7 @@ texture = ExtResource("16_6e1lm")
 metadata/source_asset = "Lantern.png"
 metadata/editable_background_asset = true
 
-[node name="LampLight" type="PointLight2D" parent="Level/ExistingAssetShowcase/EnvironmentPreview_Lantern_5050"]
+[node name="LampLight" type="PointLight2D" parent="Level/ExistingAssetShowcase/EnvironmentPreview_Lantern_5050" unique_id=1241607174]
 position = Vector2(0, -72)
 color = Color(1, 0.78, 0.48, 1)
 energy = 0.65
@@ -1850,15 +1834,6 @@ position = Vector2(5340, 582)
 scale = Vector2(0.59375, 0.59375)
 texture = ExtResource("18_k753e")
 metadata/source_asset = "Fence 02.png"
-metadata/editable_background_asset = true
-
-[node name="EnvironmentPreview_Rock02_5470" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1288606019]
-z_index = -1
-texture_filter = 1
-position = Vector2(5470, 600)
-scale = Vector2(0.625, 0.625)
-texture = ExtResource("19_whhd7")
-metadata/source_asset = "Rock 02.png"
 metadata/editable_background_asset = true
 
 [node name="AtmosphereGlow_5050" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1229582774]
@@ -1900,7 +1875,7 @@ metadata/editable_background_asset = true
 [node name="EnvironmentPreview_Headstone02_5900" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1632702662]
 z_index = -1
 texture_filter = 1
-position = Vector2(5900, 581)
+position = Vector2(5902.0005, 585)
 scale = Vector2(0.609375, 0.609375)
 texture = ExtResource("30_fukak")
 metadata/source_asset = "Headstone 02.png"
@@ -1909,7 +1884,7 @@ metadata/editable_background_asset = true
 [node name="EnvironmentPreview_Headstone03_6250" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1908838706]
 z_index = -1
 texture_filter = 1
-position = Vector2(5970.0005, 580.00006)
+position = Vector2(5970, 584.00006)
 scale = Vector2(0.640625, 0.640625)
 texture = ExtResource("34_nx30a")
 metadata/source_asset = "Headstone 03.png"
@@ -1918,7 +1893,7 @@ metadata/editable_background_asset = true
 [node name="EnvironmentPreview_Coffin_6360" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=603710884]
 z_index = -2
 texture_filter = 1
-position = Vector2(6360, 577)
+position = Vector2(6357, 585)
 scale = Vector2(0.32330826, 0.32330826)
 texture = ExtResource("32_0e5vl")
 metadata/source_asset = "Coffin.png"
@@ -1926,22 +1901,22 @@ metadata/editable_background_asset = true
 
 [node name="EnvironmentPreview_Signpost06_6460" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=914634065]
 texture_filter = 1
-position = Vector2(6460, 584)
+position = Vector2(6460, 593)
 scale = Vector2(0.5625, 0.5625)
 texture = ExtResource("36_iprd0")
 metadata/source_asset = "Signpost 06.png"
 metadata/editable_background_asset = true
 
 [node name="EnvironmentPreview_Fire_6540" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=322329535]
-material = SubResource("ShaderMaterial_wind_flame")
 texture_filter = 1
+material = SubResource("ShaderMaterial_wind_flame")
 position = Vector2(6164, 591)
 scale = Vector2(0.53125, 0.53125)
 texture = ExtResource("30_m3ixb")
 metadata/source_asset = "Fire.png"
 metadata/editable_background_asset = true
 
-[node name="FlameLight" type="PointLight2D" parent="Level/ExistingAssetShowcase/EnvironmentPreview_Fire_6540"]
+[node name="FlameLight" type="PointLight2D" parent="Level/ExistingAssetShowcase/EnvironmentPreview_Fire_6540" unique_id=752179470]
 position = Vector2(0, -38)
 color = Color(1, 0.72, 0.38, 1)
 energy = 1.2
@@ -1952,7 +1927,7 @@ texture_scale = 2.5
 modulate = Color(0.4, 0.47, 0.5, 0.48)
 z_index = -4
 texture_filter = 1
-position = Vector2(6313, 528)
+position = Vector2(6314, 537)
 scale = Vector2(0.62068963, 0.62068963)
 texture = ExtResource("19_1w3in")
 flip_h = true
@@ -1969,56 +1944,56 @@ metadata/editable_background_asset = true
 
 [node name="FogBand_1250" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1910811575]
 z_index = -3
-position = Vector2(1262.2797, 522.93823)
+position = Vector2(1229.3257, 646.5183)
 scale = Vector2(1.9140625, 0.375)
 texture = SubResource("GradientTexture2D_wh1vr")
-metadata/fog_origin = Vector2(1250, 520)
-metadata/fog_phase = 0.3695184138310075
+metadata/fog_origin = Vector2(1250, 648)
+metadata/fog_phase = 3.7952165435610232
 metadata/fog_speed = 0.04
 metadata/editable_background_asset = true
 
 [node name="FogBand_2280" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=536101546]
 z_index = 1
-position = Vector2(2312.6387, 549.5698)
+position = Vector2(2296.4053, 676.3587)
 scale = Vector2(2.3046875, 0.453125)
 texture = SubResource("GradientTexture2D_edxbf")
-metadata/fog_origin = Vector2(2280, 548)
-metadata/fog_phase = 1.8547359824146707
+metadata/fog_origin = Vector2(2280, 676)
+metadata/fog_phase = 2.6380800938062277
 metadata/fog_speed = 0.055
 metadata/editable_background_asset = true
 
 [node name="FogBand_3820" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1175969481]
 z_index = -3
-position = Vector2(3789.737, 502.12482)
+position = Vector2(3806.7542, 631.8951)
 scale = Vector2(2.109375, 0.40625)
 texture = SubResource("GradientTexture2D_847sm")
-metadata/fog_origin = Vector2(3820, 505)
-metadata/fog_phase = 5.185652705751921
+metadata/fog_origin = Vector2(3820, 633)
+metadata/fog_phase = 3.5417759579161023
 metadata/fog_speed = 0.045
 metadata/editable_background_asset = true
 
 [node name="FogBand_5200" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1216799625]
 z_index = 1
-position = Vector2(5222.8677, 542.7565)
+position = Vector2(5213.4575, 540.2001)
 scale = Vector2(1.9140625, 0.46875)
 texture = SubResource("GradientTexture2D_s2tut")
 metadata/fog_origin = Vector2(5200, 540)
-metadata/fog_phase = 0.7376849671562544
+metadata/fog_phase = 2.7346395081615067
 metadata/fog_speed = 0.06
 metadata/editable_background_asset = true
 
 [node name="FogBand_6200" type="Sprite2D" parent="Level/ExistingAssetShowcase" unique_id=1837574011]
 z_index = -3
-position = Vector2(6172.076, 492.0696)
+position = Vector2(6221.367, 495.64496)
 scale = Vector2(1.7578125, 0.421875)
 texture = SubResource("GradientTexture2D_e6gix")
 metadata/fog_origin = Vector2(6200, 495)
-metadata/fog_phase = 5.31951841383092
+metadata/fog_phase = 2.4620312363814567
 metadata/fog_speed = 0.04
 metadata/editable_background_asset = true
 
 [node name="DriftingParticles_2080" type="GPUParticles2D" parent="Level/ExistingAssetShowcase" unique_id=1678088342]
-position = Vector2(2080, 500)
+position = Vector2(2080, 628)
 amount = 12
 texture = SubResource("GradientTexture2D_6g4xq")
 lifetime = 6.0
@@ -2028,7 +2003,7 @@ process_material = SubResource("ParticleProcessMaterial_sb2c8")
 metadata/editable_background_asset = true
 
 [node name="DriftingParticles_3980" type="GPUParticles2D" parent="Level/ExistingAssetShowcase" unique_id=1387226963]
-position = Vector2(3980, 480)
+position = Vector2(3980, 608)
 amount = 12
 texture = SubResource("GradientTexture2D_t7r6g")
 lifetime = 6.0
@@ -2048,349 +2023,183 @@ process_material = SubResource("ParticleProcessMaterial_7e6ow")
 metadata/editable_background_asset = true
 
 [node name="ContinuousGraveyardGround" type="StaticBody2D" parent="Level" unique_id=629546261]
-position = Vector2(2048, 748)
+position = Vector2(2048, 812)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ContinuousGraveyardGround" unique_id=1132770547]
+z_index = -100
 position = Vector2(1.5, 187.5)
 shape = SubResource("RectangleShape2D_1gjcc")
 
 [node name="Tile_01_00" type="Sprite2D" parent="Level" unique_id=228737290]
 z_index = -1
-position = Vector2(192, 684)
+position = Vector2(192, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_01_02" type="Sprite2D" parent="Level" unique_id=1293749480]
 z_index = -1
-position = Vector2(68, 689)
+position = Vector2(68, 817)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_01_04" type="Sprite2D" parent="Level" unique_id=112114651]
 z_index = -1
-position = Vector2(-31, 690)
+position = Vector2(-31, 818)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_02_00" type="Sprite2D" parent="Level" unique_id=768339713]
 z_index = -1
-position = Vector2(320, 684)
+position = Vector2(320, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_03_00" type="Sprite2D" parent="Level" unique_id=1050920044]
 z_index = -1
-position = Vector2(448, 684)
+position = Vector2(448, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_04_00" type="Sprite2D" parent="Level" unique_id=1835929428]
 z_index = -1
-position = Vector2(576, 684)
+position = Vector2(576, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_05_00" type="Sprite2D" parent="Level" unique_id=1738794071]
 z_index = -1
-position = Vector2(704, 684)
+position = Vector2(704, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_06_00" type="Sprite2D" parent="Level" unique_id=177622909]
 z_index = -1
-position = Vector2(832, 684)
+position = Vector2(832, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_07_00" type="Sprite2D" parent="Level" unique_id=1580816707]
 z_index = -1
-position = Vector2(960, 684)
+position = Vector2(960, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_08_00" type="Sprite2D" parent="Level" unique_id=451806868]
 z_index = -1
-position = Vector2(1088, 684)
+position = Vector2(1088, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_09_00" type="Sprite2D" parent="Level" unique_id=1360647483]
 z_index = -1
-position = Vector2(1216, 684)
+position = Vector2(1216, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_10_00" type="Sprite2D" parent="Level" unique_id=958103699]
 z_index = -1
-position = Vector2(1344, 684)
+position = Vector2(1344, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_11_00" type="Sprite2D" parent="Level" unique_id=1629571242]
 z_index = -1
-position = Vector2(1472, 684)
+position = Vector2(1472, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_12_00" type="Sprite2D" parent="Level" unique_id=1692886672]
 z_index = -1
-position = Vector2(1600, 684)
+position = Vector2(1600, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_13_00" type="Sprite2D" parent="Level" unique_id=208595367]
 z_index = -1
-position = Vector2(1728, 684)
+position = Vector2(1728, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_14_00" type="Sprite2D" parent="Level" unique_id=832144492]
 z_index = -1
-position = Vector2(1856, 684)
+position = Vector2(1856, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_15_00" type="Sprite2D" parent="Level" unique_id=1518114040]
 z_index = -1
-position = Vector2(1984, 684)
+position = Vector2(1984, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_16_00" type="Sprite2D" parent="Level" unique_id=19714821]
 z_index = -1
-position = Vector2(2112, 684)
+position = Vector2(2112, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_17_00" type="Sprite2D" parent="Level" unique_id=464802980]
 z_index = -1
-position = Vector2(2240, 684)
+position = Vector2(2240, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_18_00" type="Sprite2D" parent="Level" unique_id=145448303]
 z_index = -1
-position = Vector2(2368, 684)
+position = Vector2(2368, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_19_00" type="Sprite2D" parent="Level" unique_id=1970283862]
 z_index = -1
-position = Vector2(2496, 684)
+position = Vector2(2496, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_20_00" type="Sprite2D" parent="Level" unique_id=1531830537]
 z_index = -1
-position = Vector2(2624, 684)
+position = Vector2(2624, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_21_00" type="Sprite2D" parent="Level" unique_id=1096687764]
 z_index = -1
-position = Vector2(2752, 684)
+position = Vector2(2752, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_22_00" type="Sprite2D" parent="Level" unique_id=1497893740]
 z_index = -1
-position = Vector2(2880, 684)
+position = Vector2(2880, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_23_00" type="Sprite2D" parent="Level" unique_id=1035925644]
 z_index = -1
-position = Vector2(3008, 684)
+position = Vector2(3008, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_24_00" type="Sprite2D" parent="Level" unique_id=2001841907]
 z_index = -1
-position = Vector2(3136, 684)
+position = Vector2(3136, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_25_00" type="Sprite2D" parent="Level" unique_id=521203739]
 z_index = -1
-position = Vector2(3264, 684)
+position = Vector2(3264, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_26_00" type="Sprite2D" parent="Level" unique_id=967972691]
 z_index = -1
-position = Vector2(3392, 684)
+position = Vector2(3392, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_27_00" type="Sprite2D" parent="Level" unique_id=814161776]
 z_index = -1
-position = Vector2(3520, 684)
+position = Vector2(3520, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_28_00" type="Sprite2D" parent="Level" unique_id=2121487810]
 z_index = -1
-position = Vector2(3648, 684)
+position = Vector2(3648, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_29_00" type="Sprite2D" parent="Level" unique_id=1204582364]
 z_index = -1
-position = Vector2(3776, 684)
+position = Vector2(3776, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_30_00" type="Sprite2D" parent="Level" unique_id=438429590]
 z_index = -1
-position = Vector2(3904, 684)
+position = Vector2(3904, 812)
 texture = ExtResource("5_0mpmd")
 
 [node name="Tile_31_00" type="Sprite2D" parent="Level" unique_id=1147289434]
 z_index = -1
-position = Vector2(4032, 684)
+position = Vector2(4032, 812)
 texture = ExtResource("39_hxk04")
-
-[node name="Tile_00_02" type="Sprite2D" parent="Level" unique_id=1584246890]
-z_index = -1
-position = Vector2(4033, 809.5)
-scale = Vector2(1.03125, 1.0390625)
-texture = ExtResource("7_88k8y")
-flip_h = true
-flip_v = true
-
-[node name="Tile_01_01" type="Sprite2D" parent="Level" unique_id=1361656819]
-z_index = -1
-position = Vector2(193, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_01_03" type="Sprite2D" parent="Level" unique_id=503437421]
-z_index = -1
-position = Vector2(67, 813)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_01_05" type="Sprite2D" parent="Level" unique_id=1135340658]
-z_index = -1
-position = Vector2(-30, 814)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_02_01" type="Sprite2D" parent="Level" unique_id=578760537]
-z_index = -1
-position = Vector2(320, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_03_01" type="Sprite2D" parent="Level" unique_id=420978892]
-z_index = -1
-position = Vector2(448, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_04_01" type="Sprite2D" parent="Level" unique_id=1720469970]
-z_index = -1
-position = Vector2(576, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_05_01" type="Sprite2D" parent="Level" unique_id=977374778]
-z_index = -1
-position = Vector2(704, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_06_01" type="Sprite2D" parent="Level" unique_id=962475384]
-z_index = -1
-position = Vector2(832, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_07_01" type="Sprite2D" parent="Level" unique_id=480689191]
-z_index = -1
-position = Vector2(960, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_08_01" type="Sprite2D" parent="Level" unique_id=387217126]
-z_index = -1
-position = Vector2(1088, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_09_01" type="Sprite2D" parent="Level" unique_id=1372070775]
-z_index = -1
-position = Vector2(1216, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_10_01" type="Sprite2D" parent="Level" unique_id=650281575]
-z_index = -1
-position = Vector2(1344, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_11_01" type="Sprite2D" parent="Level" unique_id=1802706682]
-z_index = -1
-position = Vector2(1472, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_12_01" type="Sprite2D" parent="Level" unique_id=409949811]
-z_index = -1
-position = Vector2(1600, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_13_01" type="Sprite2D" parent="Level" unique_id=1410697245]
-z_index = -1
-position = Vector2(1728, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_14_01" type="Sprite2D" parent="Level" unique_id=1873501091]
-z_index = -1
-position = Vector2(1856, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_15_01" type="Sprite2D" parent="Level" unique_id=2143540689]
-z_index = -1
-position = Vector2(1984, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_16_01" type="Sprite2D" parent="Level" unique_id=1988654283]
-z_index = -1
-position = Vector2(2112, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_17_01" type="Sprite2D" parent="Level" unique_id=1756121343]
-z_index = -1
-position = Vector2(2240, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_18_01" type="Sprite2D" parent="Level" unique_id=1360470743]
-z_index = -1
-position = Vector2(2368, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_19_01" type="Sprite2D" parent="Level" unique_id=1538332140]
-z_index = -1
-position = Vector2(2496, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_20_01" type="Sprite2D" parent="Level" unique_id=1752661145]
-z_index = -1
-position = Vector2(2624, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_21_01" type="Sprite2D" parent="Level" unique_id=1916976395]
-z_index = -1
-position = Vector2(2752, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_22_01" type="Sprite2D" parent="Level" unique_id=653218483]
-z_index = -1
-position = Vector2(2880, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_23_01" type="Sprite2D" parent="Level" unique_id=388877115]
-z_index = -1
-position = Vector2(3008, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_24_01" type="Sprite2D" parent="Level" unique_id=1710313535]
-z_index = -1
-position = Vector2(3136, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_25_01" type="Sprite2D" parent="Level" unique_id=713875587]
-z_index = -1
-position = Vector2(3264, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_26_01" type="Sprite2D" parent="Level" unique_id=2008072208]
-z_index = -1
-position = Vector2(3392, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_27_01" type="Sprite2D" parent="Level" unique_id=497281940]
-z_index = -1
-position = Vector2(3520, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_28_01" type="Sprite2D" parent="Level" unique_id=711713288]
-z_index = -1
-position = Vector2(3648, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_29_01" type="Sprite2D" parent="Level" unique_id=1684233631]
-z_index = -1
-position = Vector2(3776, 812)
-texture = ExtResource("8_2020x")
-
-[node name="Tile_30_01" type="Sprite2D" parent="Level" unique_id=857229244]
-z_index = -1
-position = Vector2(3904, 812)
-texture = ExtResource("8_2020x")
 
 [node name="VerticalDropLanding" type="StaticBody2D" parent="Level" unique_id=1992150458]
 position = Vector2(4224, 1004)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/VerticalDropLanding" unique_id=1082044396]
+z_index = -100
 shape = SubResource("RectangleShape2D_vertical_drop_landing")
 
 [node name="VerticalDropLanding_Tile_00_00" type="Sprite2D" parent="Level" unique_id=949736851]
@@ -2542,9 +2351,9 @@ script = ExtResource("12_hk8g7")
 
 [node name="BridgeDeck" type="Node2D" parent="Level/ShortMoonlitBridge" unique_id=411895817]
 
-[node name="WalkingSurface" type="StaticBody2D" parent="Level/ShortMoonlitBridge/BridgeDeck"]
+[node name="WalkingSurface" type="StaticBody2D" parent="Level/ShortMoonlitBridge/BridgeDeck" unique_id=989805324]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level/ShortMoonlitBridge/BridgeDeck/WalkingSurface"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level/ShortMoonlitBridge/BridgeDeck/WalkingSurface" unique_id=1352836150]
 polygon = PackedVector2Array(-64, -22, 32, -22, 96, -19, 160, -15, 224, -12, 288, -12, 352, -15, 416, -19, 480, -22, 576, -22, 576, 64, -64, 64)
 
 [node name="Plank_00" type="AnimatableBody2D" parent="Level/ShortMoonlitBridge/BridgeDeck" unique_id=996670500]
@@ -2554,8 +2363,8 @@ rotation = 0.035
 sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_00" unique_id=174373]
-disabled = true
 shape = SubResource("RectangleShape2D_uraxg")
+disabled = true
 
 [node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_00" unique_id=2112394565]
 z_index = 1
@@ -2569,8 +2378,8 @@ rotation = 0.028
 sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_01" unique_id=2015507660]
-disabled = true
 shape = SubResource("RectangleShape2D_ub0fu")
+disabled = true
 
 [node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_01" unique_id=1431759052]
 z_index = 1
@@ -2584,8 +2393,8 @@ rotation = 0.018
 sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_02" unique_id=402900756]
-disabled = true
 shape = SubResource("RectangleShape2D_738wq")
+disabled = true
 
 [node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_02" unique_id=764743307]
 z_index = 1
@@ -2599,8 +2408,8 @@ rotation = 0.006
 sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_03" unique_id=1118567218]
-disabled = true
 shape = SubResource("RectangleShape2D_lftyp")
+disabled = true
 
 [node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_03" unique_id=35767255]
 z_index = 1
@@ -2614,8 +2423,8 @@ rotation = -0.006
 sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_04" unique_id=1160633076]
-disabled = true
 shape = SubResource("RectangleShape2D_ga476")
+disabled = true
 
 [node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_04" unique_id=590748317]
 z_index = 1
@@ -2629,8 +2438,8 @@ rotation = -0.018
 sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_05" unique_id=1373245962]
-disabled = true
 shape = SubResource("RectangleShape2D_vf3go")
+disabled = true
 
 [node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_05" unique_id=1662250926]
 z_index = 1
@@ -2644,8 +2453,8 @@ rotation = -0.028
 sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_06" unique_id=303995541]
-disabled = true
 shape = SubResource("RectangleShape2D_1k0py")
+disabled = true
 
 [node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_06" unique_id=1177070075]
 z_index = 1
@@ -2659,8 +2468,8 @@ rotation = -0.035
 sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_07" unique_id=1297838499]
-disabled = true
 shape = SubResource("RectangleShape2D_coe7x")
+disabled = true
 
 [node name="BridgePiece" type="Sprite2D" parent="Level/ShortMoonlitBridge/BridgeDeck/Plank_07" unique_id=254013628]
 z_index = 1
@@ -2671,7 +2480,9 @@ texture = ExtResource("14_4ko12")
 position = Vector2(256, -10)
 collision_layer = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/PlayerTrigger"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/ShortMoonlitBridge/PlayerTrigger" unique_id=1691850698]
+z_index = -50
+position = Vector2(5, 9)
 shape = SubResource("RectangleShape2D_bridge_trigger")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Level/ShortMoonlitBridge" unique_id=1214158642]
@@ -2682,10 +2493,12 @@ libraries/ = SubResource("AnimationLibrary_iprd0")
 position = Vector2(5760, 1004)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/FinalGraveRow" unique_id=999205429]
+z_index = -100
 position = Vector2(-702, 0)
 shape = SubResource("RectangleShape2D_6muqy")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Level/FinalGraveRow" unique_id=952525276]
+z_index = -100
 position = Vector2(445, 0)
 shape = SubResource("RectangleShape2D_1u6mt")
 
@@ -2782,7 +2595,7 @@ texture = ExtResource("9_c5j5y")
 
 [node name="StonesRedraw" type="Sprite2D" parent="Level" unique_id=834827352]
 z_index = -4
-position = Vector2(417, 568)
+position = Vector2(417, 696)
 scale = Vector2(0.8359375, 0.65625)
 texture = ExtResource("13_aonbx")
 
@@ -3182,7 +2995,7 @@ texture = ExtResource("16_k5fei")
 
 [node name="Span04_Tile_00_02" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=1801063063]
 texture_filter = 1
-position = Vector2(5824, 1067)
+position = Vector2(5824, 1068)
 texture = ExtResource("16_k5fei")
 
 [node name="Span04_Tile_01_00" type="Sprite2D" parent="Level/DeepGroundVisuals" unique_id=311663744]
@@ -3451,9 +3264,25 @@ position = Vector2(5501, 851)
 scale = Vector2(0.7127393, 0.66322637)
 texture = ExtResource("28_1w3in")
 script = ExtResource("lift_descent")
+bottom_scene = "res://Scenes/cemetery_road.tscn"
 metadata/_edit_group_ = true
 
+[node name="FixedSupports" type="Node2D" parent="Level/WoodenLiftPixel"]
+
+[node name="LeftSupport" type="Node2D" parent="Level/WoodenLiftPixel/FixedSupports"]
+
+[node name="RightSupport" type="Node2D" parent="Level/WoodenLiftPixel/FixedSupports"]
+
+[node name="Cables" type="Node2D" parent="Level/WoodenLiftPixel"]
+z_index = 1
+
+[node name="FixedForeground" type="Node2D" parent="Level/WoodenLiftPixel"]
+z_index = 3
+
 [node name="StaticBody2D" type="AnimatableBody2D" parent="Level/WoodenLiftPixel" unique_id=241884668]
+z_index = 2
+
+[node name="PlatformArt" type="Node2D" parent="Level/WoodenLiftPixel/StaticBody2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/WoodenLiftPixel/StaticBody2D" unique_id=831109886]
 z_index = -100
@@ -3495,19 +3324,19 @@ texture = ExtResource("26_amn2u")
 
 [node name="AwakeningLanternGlow" type="Polygon2D" parent="Decorations/BackLayer" unique_id=419137535]
 z_index = -2
-position = Vector2(829, 523)
+position = Vector2(829, 651)
 color = Color(1, 0.73, 0.24, 0.1)
 polygon = PackedVector2Array(-20, -46, 20, -46, 98, 104, -98, 100)
 
 [node name="AwakeningLantern" type="Sprite2D" parent="Decorations/BackLayer" unique_id=802142316]
 z_index = -1
-position = Vector2(825.99994, 528)
+position = Vector2(825.99994, 656)
 scale = Vector2(0.72, 0.72)
 texture = ExtResource("16_6e1lm")
 script = ExtResource("60_proximity_lantern")
 glow_path = NodePath("../AwakeningLanternGlow")
 
-[node name="LampLight" type="PointLight2D" parent="Decorations/BackLayer/AwakeningLantern"]
+[node name="LampLight" type="PointLight2D" parent="Decorations/BackLayer/AwakeningLantern" unique_id=606525428]
 position = Vector2(0, -72)
 color = Color(1, 0.78, 0.48, 1)
 energy = 0.65
@@ -3516,20 +3345,20 @@ texture_scale = 1.3
 
 [node name="TeachingFenceA" type="Sprite2D" parent="Decorations/BackLayer" unique_id=1901756265]
 z_index = -2
-position = Vector2(1172, 569)
+position = Vector2(1172, 697)
 scale = Vector2(1.05, 1.05)
 texture = ExtResource("17_qil01")
 
 [node name="TeachingFenceB" type="Sprite2D" parent="Decorations/BackLayer" unique_id=364304350]
 z_index = -2
-position = Vector2(1281, 570)
+position = Vector2(1281, 698)
 scale = Vector2(1.05, 1.05)
 texture = ExtResource("18_k753e")
 
 [node name="TeachingCottage" type="Node2D" parent="Decorations/BackLayer" unique_id=1957465745]
 modulate = Color(0.78, 0.82, 0.92, 0.96)
 z_index = -5
-position = Vector2(794, 500.00003)
+position = Vector2(794, 628.00003)
 scale = Vector2(0.23, 0.23)
 
 [node name="Windows" type="Node2D" parent="Decorations/BackLayer/TeachingCottage" unique_id=1745232561]
@@ -3564,17 +3393,17 @@ texture = ExtResource("21_hk8g7")
 
 [node name="PressureLanternGlow" type="Polygon2D" parent="Decorations/BackLayer" unique_id=1785507924]
 z_index = -2
-position = Vector2(2490, 527.83997)
+position = Vector2(2490, 655.83997)
 color = Color(1, 0.73, 0.24, 0.1)
 polygon = PackedVector2Array(-20, -46, 20, -46, 96, 92, -96, 92)
 
 [node name="PressureLantern" type="Sprite2D" parent="Decorations/BackLayer" unique_id=1580327483]
 z_index = -1
-position = Vector2(2490, 527.83997)
+position = Vector2(2490, 655.83997)
 scale = Vector2(0.72, 0.72)
 texture = ExtResource("16_6e1lm")
 
-[node name="LampLight" type="PointLight2D" parent="Decorations/BackLayer/PressureLantern"]
+[node name="LampLight" type="PointLight2D" parent="Decorations/BackLayer/PressureLantern" unique_id=661017094]
 position = Vector2(0, -72)
 color = Color(1, 0.78, 0.48, 1)
 energy = 0.65
@@ -3584,7 +3413,7 @@ texture_scale = 1.3
 [node name="PressureLonghouse" type="Node2D" parent="Decorations/BackLayer" unique_id=1938530624]
 modulate = Color(0.78, 0.82, 0.92, 0.96)
 z_index = -5
-position = Vector2(1769.9999, 520)
+position = Vector2(1769.9999, 648)
 scale = Vector2(0.21, 0.21)
 
 [node name="Windows" type="Node2D" parent="Decorations/BackLayer/PressureLonghouse" unique_id=64725890]
@@ -3623,13 +3452,13 @@ texture = SubResource("AtlasTexture_longhouse_03")
 
 [node name="CryptTree" type="Sprite2D" parent="Decorations/BackLayer" unique_id=1952533877]
 z_index = -4
-position = Vector2(3500, 489.5)
+position = Vector2(3500, 617.5)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("19_1w3in")
 
 [node name="MemoryCrypt" type="Sprite2D" parent="Decorations/BackLayer" unique_id=93160303]
 z_index = -2
-position = Vector2(3839.9998, 446)
+position = Vector2(3839.9998, 574)
 scale = Vector2(0.88, 0.88)
 texture = ExtResource("20_pfu5p")
 
@@ -3645,7 +3474,7 @@ position = Vector2(4272.9995, 804.99994)
 scale = Vector2(0.72, 0.72)
 texture = ExtResource("16_6e1lm")
 
-[node name="LampLight" type="PointLight2D" parent="Decorations/BackLayer/CheckpointLantern"]
+[node name="LampLight" type="PointLight2D" parent="Decorations/BackLayer/CheckpointLantern" unique_id=1909654901]
 position = Vector2(0, -72)
 color = Color(1, 0.78, 0.48, 1)
 energy = 0.65
@@ -3656,7 +3485,7 @@ texture_scale = 1.3
 z_index = -2
 position = Vector2(4166, 798)
 color = Color(1, 0.73, 0.24, 0.1)
-polygon = PackedVector2Array(-20, -46, 20, -46, 96, 92, -96, 92)
+polygon = PackedVector2Array(-20, -46, 20, -46, 96, 92, -72, 91)
 
 [node name="BridgeEntryLantern" type="Sprite2D" parent="Decorations/BackLayer" unique_id=1122326856]
 z_index = -1
@@ -3664,7 +3493,7 @@ position = Vector2(4166, 796.99994)
 scale = Vector2(0.72, 0.72)
 texture = ExtResource("16_6e1lm")
 
-[node name="LampLight" type="PointLight2D" parent="Decorations/BackLayer/BridgeEntryLantern"]
+[node name="LampLight" type="PointLight2D" parent="Decorations/BackLayer/BridgeEntryLantern" unique_id=754789886]
 position = Vector2(0, -72)
 color = Color(1, 0.78, 0.48, 1)
 energy = 0.65
@@ -3683,7 +3512,7 @@ position = Vector2(4900, 783.83997)
 scale = Vector2(0.72, 0.72)
 texture = ExtResource("16_6e1lm")
 
-[node name="LampLight" type="PointLight2D" parent="Decorations/BackLayer/BridgeExitLantern"]
+[node name="LampLight" type="PointLight2D" parent="Decorations/BackLayer/BridgeExitLantern" unique_id=1028233516]
 position = Vector2(0, -72)
 color = Color(1, 0.78, 0.48, 1)
 energy = 0.65
@@ -3693,7 +3522,7 @@ texture_scale = 1.3
 [node name="FinalManor" type="Node2D" parent="Decorations/BackLayer" unique_id=1394397706]
 modulate = Color(0.78, 0.82, 0.92, 0.96)
 z_index = -5
-position = Vector2(331, 413)
+position = Vector2(331, 541)
 scale = Vector2(0.22, 0.22)
 
 [node name="Windows" type="Node2D" parent="Decorations/BackLayer/FinalManor" unique_id=899567789]
@@ -3766,7 +3595,7 @@ position = Vector2(6450, 783.83997)
 scale = Vector2(0.72, 0.72)
 texture = ExtResource("16_6e1lm")
 
-[node name="LampLight" type="PointLight2D" parent="Decorations/BackLayer/ExitLantern"]
+[node name="LampLight" type="PointLight2D" parent="Decorations/BackLayer/ExitLantern" unique_id=693202895]
 position = Vector2(0, -72)
 color = Color(1, 0.78, 0.48, 1)
 energy = 0.65
@@ -3776,32 +3605,32 @@ texture_scale = 1.3
 [node name="FrontLayer" type="Node2D" parent="Decorations" unique_id=448331071]
 
 [node name="AwakeningTombstone" type="Sprite2D" parent="Decorations/FrontLayer" unique_id=1556579043]
-position = Vector2(2147, 584)
+position = Vector2(2147, 712)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("21_7gx6j")
 
 [node name="PressureHeadstoneA" type="Sprite2D" parent="Decorations/FrontLayer" unique_id=1456313598]
-position = Vector2(2640, 562.4)
+position = Vector2(2640, 690.4)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("28_tvjuj")
 
 [node name="PressureFence" type="Sprite2D" parent="Decorations/FrontLayer" unique_id=359740526]
 z_index = -2
-position = Vector2(2870, 569)
+position = Vector2(2870, 697)
 texture = ExtResource("18_k753e")
 
 [node name="PressureBarrel" type="Sprite2D" parent="Decorations/FrontLayer" unique_id=108125739]
-position = Vector2(3082, 564)
+position = Vector2(3082, 692)
 scale = Vector2(0.95, 0.95)
 texture = ExtResource("29_5mcap")
 
 [node name="PressureHeadstoneB" type="Sprite2D" parent="Decorations/FrontLayer" unique_id=406091303]
-position = Vector2(3340, 562.4)
+position = Vector2(3340, 690.4)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("30_fukak")
 
 [node name="CryptSkull" type="Sprite2D" parent="Decorations/FrontLayer" unique_id=570471253]
-position = Vector2(4080, 613.6)
+position = Vector2(4080, 741.6)
 scale = Vector2(0.85, 0.85)
 texture = ExtResource("31_u0vqy")
 
@@ -3814,31 +3643,31 @@ texture = ExtResource("32_0e5vl")
 [node name="GameplayMarkers" type="Node2D" parent="." unique_id=512905736]
 
 [node name="PlayerSpawn" type="Marker2D" parent="GameplayMarkers" unique_id=666180913]
-position = Vector2(280, 540)
+position = Vector2(280, 668)
 metadata/purpose = "awakening spawn"
 
 [node name="SectionAwakeningEnd" type="Marker2D" parent="GameplayMarkers" unique_id=1960180798]
-position = Vector2(1024, 580)
+position = Vector2(1024, 708)
 metadata/purpose = "awakening to teaching"
 
 [node name="SectionTeachingEnd" type="Marker2D" parent="GameplayMarkers" unique_id=1275941680]
-position = Vector2(2432, 580)
+position = Vector2(2432, 708)
 metadata/purpose = "teaching to first pressure"
 
 [node name="SectionPressureEnd" type="Marker2D" parent="GameplayMarkers" unique_id=1553170951]
-position = Vector2(3456, 580)
+position = Vector2(3456, 708)
 metadata/purpose = "pressure to crypt landmark"
 
 [node name="EnemySlot01" type="Marker2D" parent="GameplayMarkers" unique_id=1649394266]
-position = Vector2(2720, 578)
+position = Vector2(2720, 706)
 metadata/purpose = "future skeleton encounter"
 
 [node name="EnemySlot02" type="Marker2D" parent="GameplayMarkers" unique_id=349531295]
-position = Vector2(3260, 578)
+position = Vector2(3260, 706)
 metadata/purpose = "future skeleton encounter"
 
 [node name="MemoryStoryTrigger" type="Marker2D" parent="GameplayMarkers" unique_id=1516452539]
-position = Vector2(3840, 540)
+position = Vector2(3840, 668)
 metadata/purpose = "first memory reveal"
 
 [node name="Checkpoint" type="Marker2D" parent="GameplayMarkers" unique_id=2093100157]
@@ -3855,11 +3684,12 @@ position = Vector2(6669, 805)
 metadata/purpose = "level 2 transition"
 
 [node name="MemoryTriggerArea" type="Area2D" parent="GameplayMarkers" unique_id=863262330]
-position = Vector2(3840, 520)
+position = Vector2(3840, 648)
 collision_layer = 0
 metadata/trigger_type = "story"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GameplayMarkers/MemoryTriggerArea" unique_id=299725925]
+z_index = -100
 position = Vector2(15, 0)
 shape = SubResource("RectangleShape2D_hxk04")
 
@@ -3869,6 +3699,7 @@ collision_layer = 0
 metadata/trigger_type = "checkpoint"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GameplayMarkers/CheckpointArea" unique_id=357628611]
+z_index = -100
 position = Vector2(-17, -7)
 shape = SubResource("RectangleShape2D_8qluk")
 
@@ -3878,6 +3709,7 @@ collision_layer = 0
 metadata/trigger_type = "exit"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GameplayMarkers/ExitArea" unique_id=1525346341]
+z_index = -100
 position = Vector2(-49, 2)
 shape = SubResource("RectangleShape2D_vkw4u")
 
@@ -3886,6 +3718,7 @@ position = Vector2(3328, 1270)
 script = ExtResource("38_g1qam")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FallKillZone" unique_id=566670048]
+z_index = -100
 position = Vector2(1573, 175)
 shape = SubResource("RectangleShape2D_cxsg2")
 
@@ -3895,7 +3728,7 @@ one_shot = true
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1597021953]
 z_index = 10
-position = Vector2(280, 540)
+position = Vector2(280, 668)
 script = ExtResource("39_djj6u")
 jump_sound = ExtResource("40_h1b5i")
 run_sound = ExtResource("41_tuktd")
@@ -3925,7 +3758,7 @@ scale = Vector2(0.22, 0.22)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1225183419]
 position = Vector2(2, -100)
-zoom = Vector2(1.35, 1.35)
+zoom = Vector2(1.5, 1.5)
 limit_left = -9
 limit_top = -119
 limit_right = 8600
@@ -4071,34 +3904,35 @@ metadata/ground_policy = "surface remains at y=620; visual soil extends below th
 metadata/online_scope = "story-only scene; online scenes and resources are unchanged"
 
 [node name="StairsRedraw" type="Sprite2D" parent="." unique_id=1016728656]
-position = Vector2(267, 576.5)
+position = Vector2(267, 704.5)
 scale = Vector2(1, 0.7937499)
 texture = ExtResource("58_aonbx")
 
 [node name="TerrainRedraw" type="Sprite2D" parent="." unique_id=1241038774]
-position = Vector2(442, 575)
+position = Vector2(442, 703)
 texture = ExtResource("59_ibml5")
 
 [node name="TreeRedraw" type="Sprite2D" parent="." unique_id=1133519571]
 z_index = -43
-position = Vector2(93, 437)
+material = SubResource("ShaderMaterial_wind_tree")
+position = Vector2(91, 551)
 texture = ExtResource("60_hk8g7")
 
 [node name="TerrainRedraw2" type="Sprite2D" parent="." unique_id=128462677]
-position = Vector2(120, 574)
+position = Vector2(120, 702)
 texture = ExtResource("59_ibml5")
 
 [node name="Grass2Redraw" type="Sprite2D" parent="." unique_id=1442651166]
-material = SubResource("ShaderMaterial_wind_grass_strip")
 z_index = -25
-position = Vector2(417, 557)
-scale = Vector2(1, 1.9249996)
+material = SubResource("ShaderMaterial_wind_grass_strip")
+position = Vector2(416, 685)
+scale = Vector2(1.0078125, 1.9249996)
 texture = ExtResource("61_ibml5")
 
 [node name="Grass2Redraw2" type="Sprite2D" parent="." unique_id=2050045864]
-material = SubResource("ShaderMaterial_wind_grass_strip")
 z_index = -15
-position = Vector2(92, 574)
+material = SubResource("ShaderMaterial_wind_grass_strip")
+position = Vector2(92, 702)
 scale = Vector2(1, 1.7500001)
 texture = ExtResource("61_ibml5")
 
@@ -4122,10 +3956,12 @@ texture = ExtResource("70_pfu5p")
 [node name="StaticBody2D" type="StaticBody2D" parent="ForbiddenGraveyard2dPlatformerTilesetPlatformerStone" unique_id=2101342979]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ForbiddenGraveyard2dPlatformerTilesetPlatformerStone/StaticBody2D" unique_id=610562896]
+z_index = -100
 position = Vector2(-1.5361328, 0.47406006)
 shape = SubResource("RectangleShape2D_bdoqp")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="ForbiddenGraveyard2dPlatformerTilesetPlatformerStone/StaticBody2D" unique_id=660829448]
+z_index = -100
 position = Vector2(417.79178, 8.53331)
 shape = SubResource("RectangleShape2D_t0hve")
 
@@ -4168,8 +4004,8 @@ texture = ExtResource("72_k5fei")
 
 [node name="House012dClean" type="Sprite2D" parent="." unique_id=489456638]
 z_index = -1
-position = Vector2(663, 521)
-scale = Vector2(1.5123457, 1.607362)
+position = Vector2(662, 660)
+scale = Vector2(0.19774012, 0.20646179)
 texture = ExtResource("20_ibml5")
 
 [node name="ForbiddenGraveyard2dPlatformerTilesetPlatformerGroundAdditional06" type="Sprite2D" parent="." unique_id=1252963380]

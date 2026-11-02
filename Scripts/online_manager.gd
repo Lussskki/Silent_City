@@ -814,9 +814,9 @@ func _apply_character_to_player(player: Node2D, character: String) -> void:
 		player.call("set_sprite_flip_inverted", character in ["golem", "ice_golem"])
 
 	if character == "ice_golem":
-		var ice_frames := _build_sprite_frames_from_root(ICE_GOLEM_FRAMES_ROOT)
-		if ice_frames.has_animation("Idle"):
-			sprite.sprite_frames = ice_frames
+		var ice_frames := load(IceGolemAnimations.FRAMES_PATH) as SpriteFrames
+		if ice_frames and ice_frames.has_animation("Idle"):
+			sprite.sprite_frames = ice_frames.duplicate(false)
 			sprite.position = _online_character_sprite_offset(character)
 			sprite.play("Idle")
 		_apply_stone_golem_sounds(player)
@@ -825,9 +825,7 @@ func _apply_character_to_player(player: Node2D, character: String) -> void:
 	if character == "golem":
 		var golem_frames := load("res://Resources/golem_sprite_frames.tres") as SpriteFrames
 		if golem_frames:
-			sprite.sprite_frames = golem_frames
-			if player.has_method("_add_animation_from_folder"):
-				player.call("_add_animation_from_folder", sprite.sprite_frames, "Hurt", "res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Hurt", 12.0, false)
+			sprite.sprite_frames = golem_frames.duplicate(false)
 			sprite.position = _online_character_sprite_offset(character)
 			sprite.play("Idle")
 		_apply_stone_golem_sounds(player)

@@ -1,18 +1,20 @@
 class_name IceGolemAnimations
 extends RefCounted
 
+# Rig motion uses double pose samples while preserving clip durations.
+
 # Keep the complete frame collection prebuilt so selecting Ice Golem never
 # scans animation folders or synchronously constructs hundreds of frames.
 const FRAMES_PATH := "res://Resources/ice_golem_sprite_frames.tres"
 const ANIMATIONS := {
-	"Climbing": [8.0, true], "Dying": [12.0, false],
-	"Falling Down": [12.0, true], "Hurt": [12.0, false],
-	"Idle": [12.0, true], "Jump Looping": [12.0, true],
-	"Kicking": [12.0, false], "Run Slashing": [12.0, false],
-	"Running": [15.0, true], "Slashing": [12.0, false],
-	"Slashing In Air": [12.0, false], "Sliding": [12.0, false],
-	"Throwing": [12.0, false], "Throwing In Air": [12.0, false],
-	"Walking": [30.0, true]
+	"Climbing": [8.0, true], "Dying": [24.0, false],
+	"Falling Down": [24.0, true], "Hurt": [24.0, false],
+	"Idle": [24.0, true], "Jump Looping": [24.0, true],
+	"Kicking": [24.0, false], "Run Slashing": [24.0, false],
+	"Running": [30.0, true], "Slashing": [24.0, false],
+	"Slashing In Air": [24.0, false], "Sliding": [24.0, false],
+	"Throwing": [24.0, false], "Throwing In Air": [24.0, false],
+	"Walking": [60.0, true]
 }
 
 static func apply(player) -> bool:

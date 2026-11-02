@@ -8,10 +8,13 @@ uniform float sway_speed = 2.0;
 uniform float sway_amplitude = 0.25;
 uniform bool flame_enabled = true;
 uniform float flame_cutoff : hint_range(0.0, 1.0) = 0.0;
+uniform bool preserve_texture_color = false;
 varying float instance_phase;
+varying vec4 sprite_tint;
 
 void vertex() {
 	instance_phase = MODEL_MATRIX[3].x * 0.017;
+	sprite_tint = COLOR;
 }
 
 void fragment() {
@@ -22,5 +25,9 @@ void fragment() {
 	vec2 sample_uv = UV;
 	sample_uv.x -= height_weight * bend_amount * wind_strength * flutter;
 	if (sample_uv.x < 0.0 || sample_uv.x > 1.0) { discard; }
-	COLOR *= texture(TEXTURE, sample_uv);
+	if (preserve_texture_color) {
+		COLOR = sprite_tint * texture(TEXTURE, sample_uv);
+	} else {
+		COLOR *= texture(TEXTURE, sample_uv);
+	}
 }

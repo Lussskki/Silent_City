@@ -1,793 +1,2528 @@
 [gd_resource type="SpriteFrames" format=3]
 
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_000.png" id="1"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_001.png" id="2"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_002.png" id="3"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_003.png" id="4"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_004.png" id="5"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_005.png" id="6"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_006.png" id="7"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_007.png" id="8"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_008.png" id="9"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_009.png" id="10"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_010.png" id="11"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_011.png" id="12"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_012.png" id="13"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_013.png" id="14"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_014.png" id="15"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_015.png" id="16"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_016.png" id="17"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Idle/0_Golem_Idle_017.png" id="18"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_000.png" id="19"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_001.png" id="20"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_002.png" id="21"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_003.png" id="22"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Hurt/0_Golem_Hurt_000.png" id="22_gurce"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_004.png" id="23"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Hurt/0_Golem_Hurt_001.png" id="23_ewvkp"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_005.png" id="24"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Hurt/0_Golem_Hurt_002.png" id="24_pxvmd"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_006.png" id="25"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Hurt/0_Golem_Hurt_003.png" id="25_hd8tx"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_007.png" id="26"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Hurt/0_Golem_Hurt_004.png" id="26_1icvg"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_008.png" id="27"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Hurt/0_Golem_Hurt_005.png" id="27_6lob1"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_009.png" id="28"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Hurt/0_Golem_Hurt_006.png" id="28_5owek"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_010.png" id="29"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Hurt/0_Golem_Hurt_007.png" id="29_tsff3"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_011.png" id="30"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Hurt/0_Golem_Hurt_008.png" id="30_7n46d"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_012.png" id="31"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Hurt/0_Golem_Hurt_009.png" id="31_8xlw6"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_013.png" id="32"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Hurt/0_Golem_Hurt_010.png" id="32_053lw"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_014.png" id="33"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Hurt/0_Golem_Hurt_011.png" id="33_5fcpy"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_015.png" id="34"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_016.png" id="35"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_017.png" id="36"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_018.png" id="37"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_019.png" id="38"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_020.png" id="39"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_021.png" id="40"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_022.png" id="41"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Walking/0_Golem_Walking_023.png" id="42"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Running/0_Golem_Running_000.png" id="43"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Running/0_Golem_Running_001.png" id="44"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Running/0_Golem_Running_002.png" id="45"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Running/0_Golem_Running_003.png" id="46"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Running/0_Golem_Running_004.png" id="47"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Running/0_Golem_Running_005.png" id="48"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Running/0_Golem_Running_006.png" id="49"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Running/0_Golem_Running_007.png" id="50"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Running/0_Golem_Running_008.png" id="51"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Running/0_Golem_Running_009.png" id="52"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Running/0_Golem_Running_010.png" id="53"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Running/0_Golem_Running_011.png" id="54"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Jump Loop/0_Golem_Jump Loop_000.png" id="55"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Jump Loop/0_Golem_Jump Loop_001.png" id="56"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Jump Loop/0_Golem_Jump Loop_002.png" id="57"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Jump Loop/0_Golem_Jump Loop_003.png" id="58"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Jump Loop/0_Golem_Jump Loop_004.png" id="59"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Jump Loop/0_Golem_Jump Loop_005.png" id="60"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Falling Down/0_Golem_Falling Down_000.png" id="61"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Falling Down/0_Golem_Falling Down_001.png" id="62"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Falling Down/0_Golem_Falling Down_002.png" id="63"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Falling Down/0_Golem_Falling Down_003.png" id="64"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Falling Down/0_Golem_Falling Down_004.png" id="65"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Falling Down/0_Golem_Falling Down_005.png" id="66"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing/0_Golem_Slashing_000.png" id="67"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing/0_Golem_Slashing_001.png" id="68"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing/0_Golem_Slashing_002.png" id="69"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing/0_Golem_Slashing_003.png" id="70"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing/0_Golem_Slashing_004.png" id="71"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing/0_Golem_Slashing_005.png" id="72"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing/0_Golem_Slashing_006.png" id="73"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing/0_Golem_Slashing_007.png" id="74"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing/0_Golem_Slashing_008.png" id="75"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing/0_Golem_Slashing_009.png" id="76"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing/0_Golem_Slashing_010.png" id="77"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing/0_Golem_Slashing_011.png" id="78"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_000.png" id="79"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_001.png" id="80"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_002.png" id="81"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_003.png" id="82"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_004.png" id="83"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_005.png" id="84"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_006.png" id="85"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_007.png" id="86"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_008.png" id="87"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_009.png" id="88"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_010.png" id="89"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Slashing in The Air/0_Golem_Slashing in The Air_011.png" id="90"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Run Slashing/0_Golem_Run Slashing_000.png" id="91"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Run Slashing/0_Golem_Run Slashing_001.png" id="92"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Run Slashing/0_Golem_Run Slashing_002.png" id="93"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Run Slashing/0_Golem_Run Slashing_003.png" id="94"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Run Slashing/0_Golem_Run Slashing_004.png" id="95"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Run Slashing/0_Golem_Run Slashing_005.png" id="96"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Run Slashing/0_Golem_Run Slashing_006.png" id="97"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Run Slashing/0_Golem_Run Slashing_007.png" id="98"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Run Slashing/0_Golem_Run Slashing_008.png" id="99"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Run Slashing/0_Golem_Run Slashing_009.png" id="100"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Run Slashing/0_Golem_Run Slashing_010.png" id="101"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Run Slashing/0_Golem_Run Slashing_011.png" id="102"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Kicking/0_Golem_Kicking_000.png" id="103"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Kicking/0_Golem_Kicking_001.png" id="104"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Kicking/0_Golem_Kicking_002.png" id="105"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Kicking/0_Golem_Kicking_003.png" id="106"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Kicking/0_Golem_Kicking_004.png" id="107"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Kicking/0_Golem_Kicking_005.png" id="108"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Kicking/0_Golem_Kicking_006.png" id="109"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Kicking/0_Golem_Kicking_007.png" id="110"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Kicking/0_Golem_Kicking_008.png" id="111"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Kicking/0_Golem_Kicking_009.png" id="112"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Kicking/0_Golem_Kicking_010.png" id="113"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Kicking/0_Golem_Kicking_011.png" id="114"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing/0_Golem_Throwing_000.png" id="115"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing/0_Golem_Throwing_001.png" id="116"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing/0_Golem_Throwing_002.png" id="117"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing/0_Golem_Throwing_003.png" id="118"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing/0_Golem_Throwing_004.png" id="119"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing/0_Golem_Throwing_005.png" id="120"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing/0_Golem_Throwing_006.png" id="121"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing/0_Golem_Throwing_007.png" id="122"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing/0_Golem_Throwing_008.png" id="123"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing/0_Golem_Throwing_009.png" id="124"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing/0_Golem_Throwing_010.png" id="125"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing/0_Golem_Throwing_011.png" id="126"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_000.png" id="127"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_001.png" id="128"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_002.png" id="129"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_003.png" id="130"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_004.png" id="131"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_005.png" id="132"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_006.png" id="133"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_007.png" id="134"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_008.png" id="135"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_009.png" id="136"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_010.png" id="137"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Throwing in The Air/0_Golem_Throwing in The Air_011.png" id="138"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Dying/0_Golem_Dying_000.png" id="139"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Dying/0_Golem_Dying_001.png" id="140"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Dying/0_Golem_Dying_002.png" id="141"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Dying/0_Golem_Dying_003.png" id="142"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Dying/0_Golem_Dying_004.png" id="143"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Dying/0_Golem_Dying_005.png" id="144"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Dying/0_Golem_Dying_006.png" id="145"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Dying/0_Golem_Dying_007.png" id="146"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Dying/0_Golem_Dying_008.png" id="147"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Dying/0_Golem_Dying_009.png" id="148"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Dying/0_Golem_Dying_010.png" id="149"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Dying/0_Golem_Dying_011.png" id="150"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Dying/0_Golem_Dying_012.png" id="151"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Dying/0_Golem_Dying_013.png" id="152"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Dying/0_Golem_Dying_014.png" id="153"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Sliding/0_Golem_Sliding_000.png" id="154"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Sliding/0_Golem_Sliding_001.png" id="155"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Sliding/0_Golem_Sliding_002.png" id="156"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Sliding/0_Golem_Sliding_003.png" id="157"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Sliding/0_Golem_Sliding_004.png" id="158"]
-[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Sliding/0_Golem_Sliding_005.png" id="159"]
-[ext_resource type="Texture2D" uid="uid://dhxt0g5mytp87" path="res://Characters/Active_Players/Stone_Golem/PNG/PNG Sequences/Climbing/Climbing.png" id="160_climbing"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_00.png" id="motion_0"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_01.png" id="motion_1"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_02.png" id="motion_2"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_03.png" id="motion_3"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_04.png" id="motion_4"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_05.png" id="motion_5"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_06.png" id="motion_6"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_07.png" id="motion_7"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_08.png" id="motion_8"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_09.png" id="motion_9"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_10.png" id="motion_10"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_11.png" id="motion_11"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_12.png" id="motion_12"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_13.png" id="motion_13"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_14.png" id="motion_14"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_15.png" id="motion_15"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_16.png" id="motion_16"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_17.png" id="motion_17"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_18.png" id="motion_18"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_19.png" id="motion_19"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_20.png" id="motion_20"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_21.png" id="motion_21"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_22.png" id="motion_22"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_23.png" id="motion_23"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_24.png" id="motion_24"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_25.png" id="motion_25"]
+[ext_resource type="Texture2D" path="res://Characters/Active_Players/Stone_Golem/PNG/AnimationAtlases/motion_26.png" id="motion_26"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_climbing_0"]
-atlas = ExtResource("160_climbing")
-region = Rect2(0, 0, 627, 627)
+[sub_resource type="AtlasTexture" id="MotionFrame_0"]
+atlas = ExtResource("motion_7")
+region = Rect2(2, 602, 538, 610)
+margin = Rect2(89, 9, 89, 17)
+filter_clip = true
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_climbing_1"]
-atlas = ExtResource("160_climbing")
-region = Rect2(627, 0, 627, 627)
+[sub_resource type="AtlasTexture" id="MotionFrame_1"]
+atlas = ExtResource("motion_7")
+region = Rect2(2, 2, 552, 596)
+margin = Rect2(1, 23, 75, 31)
+filter_clip = true
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_climbing_2"]
-atlas = ExtResource("160_climbing")
-region = Rect2(0, 627, 627, 627)
+[sub_resource type="AtlasTexture" id="MotionFrame_2"]
+atlas = ExtResource("motion_7")
+region = Rect2(2, 1216, 536, 603)
+margin = Rect2(89, 0, 91, 24)
+filter_clip = true
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_climbing_3"]
-atlas = ExtResource("160_climbing")
-region = Rect2(627, 627, 627, 627)
+[sub_resource type="AtlasTexture" id="MotionFrame_3"]
+atlas = ExtResource("motion_7")
+region = Rect2(542, 1216, 586, 514)
+margin = Rect2(1, 25, 41, 113)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_4"]
+atlas = ExtResource("motion_25")
+region = Rect2(2, 583, 377, 577)
+margin = Rect2(242, 178, 523, 323)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_5"]
+atlas = ExtResource("motion_24")
+region = Rect2(384, 586, 378, 578)
+margin = Rect2(242, 177, 522, 322)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_6"]
+atlas = ExtResource("motion_23")
+region = Rect2(766, 589, 379, 579)
+margin = Rect2(242, 176, 521, 321)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_7"]
+atlas = ExtResource("motion_24")
+region = Rect2(2, 2, 378, 580)
+margin = Rect2(243, 175, 522, 320)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_8"]
+atlas = ExtResource("motion_23")
+region = Rect2(2, 2, 379, 581)
+margin = Rect2(243, 174, 521, 319)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_9"]
+atlas = ExtResource("motion_23")
+region = Rect2(384, 1173, 378, 582)
+margin = Rect2(244, 173, 522, 318)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_10"]
+atlas = ExtResource("motion_22")
+region = Rect2(384, 1178, 379, 582)
+margin = Rect2(244, 173, 521, 318)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_11"]
+atlas = ExtResource("motion_23")
+region = Rect2(2, 1173, 378, 582)
+margin = Rect2(243, 173, 522, 318)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_12"]
+atlas = ExtResource("motion_23")
+region = Rect2(2, 587, 378, 582)
+margin = Rect2(242, 173, 522, 318)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_13"]
+atlas = ExtResource("motion_23")
+region = Rect2(1528, 2, 378, 581)
+margin = Rect2(240, 174, 522, 319)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_14"]
+atlas = ExtResource("motion_23")
+region = Rect2(1528, 587, 378, 581)
+margin = Rect2(239, 174, 522, 319)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_15"]
+atlas = ExtResource("motion_22")
+region = Rect2(1156, 577, 377, 580)
+margin = Rect2(238, 175, 523, 320)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_16"]
+atlas = ExtResource("motion_24")
+region = Rect2(2, 586, 378, 580)
+margin = Rect2(236, 175, 522, 320)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_17"]
+atlas = ExtResource("motion_24")
+region = Rect2(765, 1168, 377, 579)
+margin = Rect2(235, 176, 523, 321)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_18"]
+atlas = ExtResource("motion_24")
+region = Rect2(2, 1170, 378, 579)
+margin = Rect2(233, 176, 522, 321)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_19"]
+atlas = ExtResource("motion_24")
+region = Rect2(1530, 584, 377, 578)
+margin = Rect2(232, 177, 523, 322)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_20"]
+atlas = ExtResource("motion_24")
+region = Rect2(1530, 2, 377, 578)
+margin = Rect2(231, 177, 523, 322)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_21"]
+atlas = ExtResource("motion_25")
+region = Rect2(2, 2, 377, 577)
+margin = Rect2(230, 178, 523, 323)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_22"]
+atlas = ExtResource("motion_25")
+region = Rect2(2, 1164, 377, 577)
+margin = Rect2(228, 178, 523, 323)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_23"]
+atlas = ExtResource("motion_25")
+region = Rect2(1526, 2, 377, 576)
+margin = Rect2(228, 179, 523, 324)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_24"]
+atlas = ExtResource("motion_25")
+region = Rect2(764, 582, 377, 576)
+margin = Rect2(228, 179, 523, 324)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_25"]
+atlas = ExtResource("motion_25")
+region = Rect2(1527, 582, 377, 575)
+margin = Rect2(228, 180, 523, 325)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_26"]
+atlas = ExtResource("motion_26")
+region = Rect2(383, 2, 376, 574)
+margin = Rect2(228, 181, 524, 326)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_27"]
+atlas = ExtResource("motion_26")
+region = Rect2(383, 580, 376, 574)
+margin = Rect2(228, 181, 524, 326)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_28"]
+atlas = ExtResource("motion_26")
+region = Rect2(1521, 2, 376, 573)
+margin = Rect2(228, 182, 524, 327)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_29"]
+atlas = ExtResource("motion_26")
+region = Rect2(1521, 579, 376, 573)
+margin = Rect2(229, 182, 524, 327)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_30"]
+atlas = ExtResource("motion_26")
+region = Rect2(2, 581, 377, 574)
+margin = Rect2(230, 181, 523, 326)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_31"]
+atlas = ExtResource("motion_26")
+region = Rect2(2, 1159, 377, 574)
+margin = Rect2(231, 181, 523, 326)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_32"]
+atlas = ExtResource("motion_25")
+region = Rect2(1146, 1160, 377, 575)
+margin = Rect2(232, 180, 523, 325)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_33"]
+atlas = ExtResource("motion_25")
+region = Rect2(1527, 1161, 377, 575)
+margin = Rect2(233, 180, 523, 325)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_34"]
+atlas = ExtResource("motion_26")
+region = Rect2(2, 2, 377, 575)
+margin = Rect2(235, 180, 523, 325)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_35"]
+atlas = ExtResource("motion_25")
+region = Rect2(1145, 2, 377, 576)
+margin = Rect2(236, 179, 523, 324)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_36"]
+atlas = ExtResource("motion_25")
+region = Rect2(764, 2, 377, 576)
+margin = Rect2(237, 179, 523, 324)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_37"]
+atlas = ExtResource("motion_24")
+region = Rect2(1148, 576, 378, 577)
+margin = Rect2(238, 178, 522, 323)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_38"]
+atlas = ExtResource("motion_24")
+region = Rect2(1146, 1157, 378, 577)
+margin = Rect2(239, 178, 522, 323)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_39"]
+atlas = ExtResource("motion_24")
+region = Rect2(766, 576, 378, 577)
+margin = Rect2(240, 178, 522, 323)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_40"]
+atlas = ExtResource("motion_16")
+region = Rect2(2, 2, 394, 574)
+margin = Rect2(217, 181, 506, 326)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_41"]
+atlas = ExtResource("motion_25")
+region = Rect2(1145, 582, 378, 574)
+margin = Rect2(223, 181, 522, 326)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_42"]
+atlas = ExtResource("motion_26")
+region = Rect2(1142, 2, 375, 575)
+margin = Rect2(229, 180, 525, 325)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_43"]
+atlas = ExtResource("motion_11")
+region = Rect2(1315, 1197, 412, 574)
+margin = Rect2(199, 181, 488, 326)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_44"]
+atlas = ExtResource("motion_0")
+region = Rect2(1239, 1151, 604, 590)
+margin = Rect2(261, 165, 296, 310)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_45"]
+atlas = ExtResource("motion_3")
+region = Rect2(2, 2, 583, 600)
+margin = Rect2(282, 156, 317, 300)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_46"]
+atlas = ExtResource("motion_1")
+region = Rect2(617, 2, 585, 603)
+margin = Rect2(280, 153, 315, 297)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_47"]
+atlas = ExtResource("motion_1")
+region = Rect2(2, 585, 586, 600)
+margin = Rect2(279, 157, 314, 300)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_48"]
+atlas = ExtResource("motion_3")
+region = Rect2(589, 588, 586, 596)
+margin = Rect2(279, 161, 314, 304)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_49"]
+atlas = ExtResource("motion_2")
+region = Rect2(1185, 601, 587, 596)
+margin = Rect2(278, 161, 313, 304)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_50"]
+atlas = ExtResource("motion_3")
+region = Rect2(1194, 2, 587, 595)
+margin = Rect2(278, 161, 313, 305)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_51"]
+atlas = ExtResource("motion_2")
+region = Rect2(2, 1180, 588, 595)
+margin = Rect2(277, 161, 312, 305)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_52"]
+atlas = ExtResource("motion_2")
+region = Rect2(608, 2, 588, 595)
+margin = Rect2(277, 161, 312, 305)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_53"]
+atlas = ExtResource("motion_1")
+region = Rect2(2, 1203, 589, 595)
+margin = Rect2(276, 161, 311, 305)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_54"]
+atlas = ExtResource("motion_1")
+region = Rect2(595, 1203, 589, 594)
+margin = Rect2(276, 161, 311, 306)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_55"]
+atlas = ExtResource("motion_4")
+region = Rect2(599, 1188, 584, 594)
+margin = Rect2(275, 161, 316, 306)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_56"]
+atlas = ExtResource("motion_4")
+region = Rect2(1187, 1156, 579, 599)
+margin = Rect2(276, 156, 321, 301)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_57"]
+atlas = ExtResource("motion_5")
+region = Rect2(2, 606, 573, 601)
+margin = Rect2(278, 154, 327, 299)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_58"]
+atlas = ExtResource("motion_6")
+region = Rect2(2, 2, 565, 602)
+margin = Rect2(281, 153, 335, 298)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_59"]
+atlas = ExtResource("motion_6")
+region = Rect2(1178, 605, 556, 602)
+margin = Rect2(285, 153, 344, 298)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_60"]
+atlas = ExtResource("motion_6")
+region = Rect2(1178, 2, 559, 599)
+margin = Rect2(277, 156, 341, 301)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_61"]
+atlas = ExtResource("motion_6")
+region = Rect2(571, 2, 569, 595)
+margin = Rect2(262, 160, 331, 305)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_62"]
+atlas = ExtResource("motion_5")
+region = Rect2(1195, 1183, 578, 590)
+margin = Rect2(247, 165, 322, 310)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_63"]
+atlas = ExtResource("motion_5")
+region = Rect2(604, 1180, 587, 583)
+margin = Rect2(232, 172, 313, 317)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_64"]
+atlas = ExtResource("motion_16")
+region = Rect2(2, 580, 394, 574)
+margin = Rect2(217, 181, 506, 326)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_65"]
+atlas = ExtResource("motion_25")
+region = Rect2(764, 1162, 378, 574)
+margin = Rect2(223, 181, 522, 326)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_66"]
+atlas = ExtResource("motion_18")
+region = Rect2(1169, 596, 376, 575)
+margin = Rect2(229, 180, 524, 325)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_67"]
+atlas = ExtResource("motion_26")
+region = Rect2(383, 1158, 376, 574)
+margin = Rect2(235, 181, 524, 326)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_68"]
+atlas = ExtResource("motion_18")
+region = Rect2(785, 598, 380, 590)
+margin = Rect2(261, 165, 520, 310)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_69"]
+atlas = ExtResource("motion_12")
+region = Rect2(792, 607, 388, 600)
+margin = Rect2(282, 156, 512, 300)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_70"]
+atlas = ExtResource("motion_11")
+region = Rect2(457, 2, 415, 603)
+margin = Rect2(280, 153, 485, 297)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_71"]
+atlas = ExtResource("motion_8")
+region = Rect2(507, 1051, 438, 601)
+margin = Rect2(279, 156, 462, 299)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_72"]
+atlas = ExtResource("motion_7")
+region = Rect2(1466, 2, 449, 596)
+margin = Rect2(279, 161, 451, 304)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_73"]
+atlas = ExtResource("motion_7")
+region = Rect2(544, 602, 450, 596)
+margin = Rect2(278, 161, 450, 304)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_74"]
+atlas = ExtResource("motion_7")
+region = Rect2(1586, 1200, 449, 595)
+margin = Rect2(278, 161, 451, 305)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_75"]
+atlas = ExtResource("motion_7")
+region = Rect2(1012, 2, 450, 595)
+margin = Rect2(277, 161, 450, 305)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_76"]
+atlas = ExtResource("motion_7")
+region = Rect2(998, 601, 450, 595)
+margin = Rect2(277, 161, 450, 305)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_77"]
+atlas = ExtResource("motion_7")
+region = Rect2(558, 2, 450, 595)
+margin = Rect2(276, 161, 450, 305)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_78"]
+atlas = ExtResource("motion_7")
+region = Rect2(1452, 602, 450, 594)
+margin = Rect2(276, 161, 450, 306)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_79"]
+atlas = ExtResource("motion_7")
+region = Rect2(1132, 1200, 450, 594)
+margin = Rect2(275, 161, 450, 306)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_80"]
+atlas = ExtResource("motion_8")
+region = Rect2(972, 964, 438, 599)
+margin = Rect2(276, 156, 462, 301)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_81"]
+atlas = ExtResource("motion_10")
+region = Rect2(902, 1178, 423, 601)
+margin = Rect2(278, 154, 477, 299)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_82"]
+atlas = ExtResource("motion_11")
+region = Rect2(1329, 2, 406, 602)
+margin = Rect2(281, 153, 494, 298)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_83"]
+atlas = ExtResource("motion_12")
+region = Rect2(1206, 607, 388, 602)
+margin = Rect2(285, 153, 512, 298)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_84"]
+atlas = ExtResource("motion_13")
+region = Rect2(993, 606, 381, 600)
+margin = Rect2(278, 155, 519, 300)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_85"]
+atlas = ExtResource("motion_16")
+region = Rect2(402, 1176, 380, 595)
+margin = Rect2(262, 160, 520, 305)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_86"]
+atlas = ExtResource("motion_19")
+region = Rect2(385, 1171, 379, 590)
+margin = Rect2(247, 165, 521, 310)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_87"]
+atlas = ExtResource("motion_22")
+region = Rect2(1537, 574, 378, 583)
+margin = Rect2(232, 172, 522, 317)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_88"]
+atlas = ExtResource("motion_25")
+region = Rect2(383, 583, 377, 577)
+margin = Rect2(242, 178, 523, 323)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_89"]
+atlas = ExtResource("motion_23")
+region = Rect2(766, 1172, 378, 581)
+margin = Rect2(238, 174, 522, 319)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_90"]
+atlas = ExtResource("motion_22")
+region = Rect2(2, 591, 378, 585)
+margin = Rect2(235, 170, 522, 315)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_91"]
+atlas = ExtResource("motion_20")
+region = Rect2(1160, 591, 378, 588)
+margin = Rect2(231, 167, 522, 312)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_92"]
+atlas = ExtResource("motion_19")
+region = Rect2(1532, 2, 378, 591)
+margin = Rect2(228, 164, 522, 309)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_93"]
+atlas = ExtResource("motion_18")
+region = Rect2(400, 2, 378, 594)
+margin = Rect2(224, 161, 522, 306)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_94"]
+atlas = ExtResource("motion_15")
+region = Rect2(771, 2, 378, 596)
+margin = Rect2(221, 159, 522, 304)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_95"]
+atlas = ExtResource("motion_16")
+region = Rect2(1568, 2, 378, 598)
+margin = Rect2(218, 157, 522, 302)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_96"]
+atlas = ExtResource("motion_13")
+region = Rect2(2, 2, 387, 600)
+margin = Rect2(214, 155, 513, 300)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_97"]
+atlas = ExtResource("motion_12")
+region = Rect2(2, 608, 392, 602)
+margin = Rect2(211, 153, 508, 298)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_98"]
+atlas = ExtResource("motion_12")
+region = Rect2(2, 2, 392, 602)
+margin = Rect2(211, 153, 508, 298)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_99"]
+atlas = ExtResource("motion_12")
+region = Rect2(2, 1214, 391, 602)
+margin = Rect2(212, 153, 509, 298)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_100"]
+atlas = ExtResource("motion_12")
+region = Rect2(397, 1214, 390, 602)
+margin = Rect2(212, 153, 510, 298)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_101"]
+atlas = ExtResource("motion_12")
+region = Rect2(398, 2, 390, 601)
+margin = Rect2(212, 154, 510, 299)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_102"]
+atlas = ExtResource("motion_12")
+region = Rect2(1599, 2, 389, 601)
+margin = Rect2(213, 154, 511, 299)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_103"]
+atlas = ExtResource("motion_12")
+region = Rect2(1206, 2, 389, 601)
+margin = Rect2(213, 154, 511, 299)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_104"]
+atlas = ExtResource("motion_12")
+region = Rect2(792, 2, 389, 601)
+margin = Rect2(213, 154, 511, 299)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_105"]
+atlas = ExtResource("motion_12")
+region = Rect2(1598, 607, 388, 601)
+margin = Rect2(214, 154, 512, 299)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_106"]
+atlas = ExtResource("motion_12")
+region = Rect2(1206, 1213, 387, 601)
+margin = Rect2(214, 154, 513, 299)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_107"]
+atlas = ExtResource("motion_15")
+region = Rect2(2, 604, 380, 598)
+margin = Rect2(218, 157, 520, 302)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_108"]
+atlas = ExtResource("motion_17")
+region = Rect2(2, 1196, 378, 595)
+margin = Rect2(223, 160, 522, 305)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_109"]
+atlas = ExtResource("motion_19")
+region = Rect2(768, 2, 378, 591)
+margin = Rect2(228, 164, 522, 309)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_110"]
+atlas = ExtResource("motion_21")
+region = Rect2(384, 1159, 378, 587)
+margin = Rect2(232, 168, 522, 313)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_111"]
+atlas = ExtResource("motion_22")
+region = Rect2(767, 1166, 378, 583)
+margin = Rect2(237, 172, 522, 317)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_112"]
+atlas = ExtResource("motion_15")
+region = Rect2(386, 2, 381, 596)
+margin = Rect2(263, 167, 519, 304)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_113"]
+atlas = ExtResource("motion_15")
+region = Rect2(771, 602, 380, 596)
+margin = Rect2(264, 166, 520, 304)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_114"]
+atlas = ExtResource("motion_15")
+region = Rect2(770, 1202, 380, 596)
+margin = Rect2(264, 165, 520, 304)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_115"]
+atlas = ExtResource("motion_14")
+region = Rect2(1551, 2, 381, 597)
+margin = Rect2(264, 164, 519, 303)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_116"]
+atlas = ExtResource("motion_15")
+region = Rect2(386, 1202, 380, 597)
+margin = Rect2(263, 163, 520, 303)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_117"]
+atlas = ExtResource("motion_15")
+region = Rect2(1154, 2, 380, 596)
+margin = Rect2(260, 164, 520, 304)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_118"]
+atlas = ExtResource("motion_15")
+region = Rect2(1538, 2, 380, 596)
+margin = Rect2(257, 164, 520, 304)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_119"]
+atlas = ExtResource("motion_16")
+region = Rect2(786, 601, 380, 594)
+margin = Rect2(254, 165, 520, 306)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_120"]
+atlas = ExtResource("motion_17")
+region = Rect2(1580, 2, 379, 593)
+margin = Rect2(252, 165, 521, 307)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_121"]
+atlas = ExtResource("motion_18")
+region = Rect2(782, 2, 379, 592)
+margin = Rect2(249, 166, 521, 308)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_122"]
+atlas = ExtResource("motion_19")
+region = Rect2(2, 577, 379, 590)
+margin = Rect2(246, 167, 521, 310)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_123"]
+atlas = ExtResource("motion_19")
+region = Rect2(1162, 1170, 379, 588)
+margin = Rect2(243, 168, 521, 312)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_124"]
+atlas = ExtResource("motion_21")
+region = Rect2(2, 1159, 378, 587)
+margin = Rect2(241, 169, 522, 313)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_125"]
+atlas = ExtResource("motion_21")
+region = Rect2(1158, 1162, 378, 585)
+margin = Rect2(240, 170, 522, 315)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_126"]
+atlas = ExtResource("motion_21")
+region = Rect2(1540, 1162, 378, 585)
+margin = Rect2(240, 171, 522, 315)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_127"]
+atlas = ExtResource("motion_22")
+region = Rect2(2, 1180, 378, 584)
+margin = Rect2(240, 173, 522, 316)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_128"]
+atlas = ExtResource("motion_22")
+region = Rect2(2, 2, 378, 585)
+margin = Rect2(241, 173, 522, 315)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_129"]
+atlas = ExtResource("motion_21")
+region = Rect2(2, 568, 378, 587)
+margin = Rect2(244, 172, 522, 313)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_130"]
+atlas = ExtResource("motion_20")
+region = Rect2(396, 573, 378, 589)
+margin = Rect2(247, 171, 522, 311)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_131"]
+atlas = ExtResource("motion_18")
+region = Rect2(1166, 1192, 379, 591)
+margin = Rect2(250, 170, 521, 309)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_132"]
+atlas = ExtResource("motion_16")
+region = Rect2(786, 1199, 380, 593)
+margin = Rect2(253, 169, 520, 307)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_133"]
+atlas = ExtResource("motion_16")
+region = Rect2(1184, 2, 380, 595)
+margin = Rect2(256, 168, 520, 305)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_134"]
+atlas = ExtResource("motion_15")
+region = Rect2(1539, 602, 380, 596)
+margin = Rect2(259, 168, 520, 304)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_135"]
+atlas = ExtResource("motion_14")
+region = Rect2(407, 1208, 381, 598)
+margin = Rect2(262, 167, 519, 302)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_136"]
+atlas = ExtResource("motion_14")
+region = Rect2(2, 605, 381, 599)
+margin = Rect2(265, 167, 519, 301)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_137"]
+atlas = ExtResource("motion_14")
+region = Rect2(387, 606, 381, 598)
+margin = Rect2(265, 166, 519, 302)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_138"]
+atlas = ExtResource("motion_15")
+region = Rect2(2, 1206, 380, 598)
+margin = Rect2(266, 165, 520, 302)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_139"]
+atlas = ExtResource("motion_14")
+region = Rect2(771, 2, 381, 598)
+margin = Rect2(265, 164, 519, 302)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_140"]
+atlas = ExtResource("motion_14")
+region = Rect2(772, 604, 381, 598)
+margin = Rect2(264, 163, 519, 302)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_141"]
+atlas = ExtResource("motion_14")
+region = Rect2(1561, 1204, 381, 597)
+margin = Rect2(261, 164, 519, 303)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_142"]
+atlas = ExtResource("motion_15")
+region = Rect2(1155, 602, 380, 596)
+margin = Rect2(259, 164, 520, 304)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_143"]
+atlas = ExtResource("motion_16")
+region = Rect2(402, 577, 380, 595)
+margin = Rect2(255, 165, 520, 305)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_144"]
+atlas = ExtResource("motion_16")
+region = Rect2(1554, 1182, 380, 593)
+margin = Rect2(252, 166, 520, 307)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_145"]
+atlas = ExtResource("motion_17")
+region = Rect2(1578, 1194, 380, 591)
+margin = Rect2(249, 167, 520, 309)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_146"]
+atlas = ExtResource("motion_19")
+region = Rect2(1150, 2, 378, 591)
+margin = Rect2(247, 167, 522, 309)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_147"]
+atlas = ExtResource("motion_20")
+region = Rect2(396, 1166, 378, 589)
+margin = Rect2(244, 168, 522, 311)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_148"]
+atlas = ExtResource("motion_21")
+region = Rect2(384, 568, 378, 587)
+margin = Rect2(241, 169, 522, 313)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_149"]
+atlas = ExtResource("motion_22")
+region = Rect2(384, 2, 378, 584)
+margin = Rect2(240, 171, 522, 316)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_150"]
+atlas = ExtResource("motion_22")
+region = Rect2(1149, 1166, 378, 583)
+margin = Rect2(240, 172, 522, 317)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_151"]
+atlas = ExtResource("motion_23")
+region = Rect2(766, 2, 377, 583)
+margin = Rect2(240, 173, 523, 317)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_152"]
+atlas = ExtResource("motion_23")
+region = Rect2(1147, 2, 377, 583)
+margin = Rect2(241, 174, 523, 317)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_153"]
+atlas = ExtResource("motion_22")
+region = Rect2(384, 590, 378, 584)
+margin = Rect2(243, 173, 522, 316)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_154"]
+atlas = ExtResource("motion_20")
+region = Rect2(1163, 1183, 379, 586)
+margin = Rect2(246, 172, 521, 314)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_155"]
+atlas = ExtResource("motion_19")
+region = Rect2(1545, 1180, 379, 588)
+margin = Rect2(249, 171, 521, 312)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_156"]
+atlas = ExtResource("motion_19")
+region = Rect2(2, 1171, 379, 590)
+margin = Rect2(252, 170, 521, 310)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_157"]
+atlas = ExtResource("motion_18")
+region = Rect2(400, 1193, 379, 592)
+margin = Rect2(255, 169, 521, 308)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_158"]
+atlas = ExtResource("motion_16")
+region = Rect2(1170, 1199, 380, 593)
+margin = Rect2(258, 168, 520, 307)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_159"]
+atlas = ExtResource("motion_15")
+region = Rect2(1538, 1202, 381, 594)
+margin = Rect2(260, 168, 519, 306)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_160"]
+atlas = ExtResource("motion_20")
+region = Rect2(1160, 2, 380, 585)
+margin = Rect2(252, 170, 520, 315)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_161"]
+atlas = ExtResource("motion_18")
+region = Rect2(1165, 2, 380, 590)
+margin = Rect2(255, 163, 520, 310)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_162"]
+atlas = ExtResource("motion_17")
+region = Rect2(2, 2, 380, 593)
+margin = Rect2(255, 158, 520, 307)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_163"]
+atlas = ExtResource("motion_18")
+region = Rect2(1549, 579, 379, 591)
+margin = Rect2(245, 158, 521, 309)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_164"]
+atlas = ExtResource("motion_21")
+region = Rect2(766, 2, 378, 587)
+margin = Rect2(236, 159, 522, 313)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_165"]
+atlas = ExtResource("motion_23")
+region = Rect2(1148, 1172, 377, 582)
+margin = Rect2(226, 161, 523, 318)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_166"]
+atlas = ExtResource("motion_26")
+region = Rect2(1143, 581, 374, 576)
+margin = Rect2(218, 163, 526, 324)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_167"]
+atlas = ExtResource("motion_26")
+region = Rect2(1521, 1156, 373, 572)
+margin = Rect2(216, 171, 527, 328)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_168"]
+atlas = ExtResource("motion_24")
+region = Rect2(1152, 2, 373, 569)
+margin = Rect2(216, 177, 527, 331)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_169"]
+atlas = ExtResource("motion_26")
+region = Rect2(763, 2, 375, 575)
+margin = Rect2(225, 174, 525, 325)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_170"]
+atlas = ExtResource("motion_24")
+region = Rect2(384, 1168, 377, 579)
+margin = Rect2(234, 172, 523, 321)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_171"]
+atlas = ExtResource("motion_23")
+region = Rect2(384, 587, 378, 582)
+margin = Rect2(243, 171, 522, 318)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_172"]
+atlas = ExtResource("motion_20")
+region = Rect2(1544, 2, 380, 585)
+margin = Rect2(252, 170, 520, 315)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_173"]
+atlas = ExtResource("motion_18")
+region = Rect2(2, 576, 380, 591)
+margin = Rect2(255, 163, 520, 309)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_174"]
+atlas = ExtResource("motion_16")
+region = Rect2(1170, 601, 380, 594)
+margin = Rect2(255, 158, 520, 306)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_175"]
+atlas = ExtResource("motion_18")
+region = Rect2(783, 1193, 379, 592)
+margin = Rect2(245, 158, 521, 308)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_176"]
+atlas = ExtResource("motion_20")
+region = Rect2(778, 595, 378, 588)
+margin = Rect2(236, 159, 522, 312)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_177"]
+atlas = ExtResource("motion_21")
+region = Rect2(1531, 576, 380, 582)
+margin = Rect2(226, 161, 520, 318)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_178"]
+atlas = ExtResource("motion_16")
+region = Rect2(1554, 604, 393, 574)
+margin = Rect2(218, 163, 507, 326)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_179"]
+atlas = ExtResource("motion_19")
+region = Rect2(768, 1176, 390, 572)
+margin = Rect2(216, 171, 510, 328)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_180"]
+atlas = ExtResource("motion_24")
+region = Rect2(765, 2, 383, 570)
+margin = Rect2(216, 177, 517, 330)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_181"]
+atlas = ExtResource("motion_23")
+region = Rect2(1149, 589, 375, 576)
+margin = Rect2(225, 174, 525, 324)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_182"]
+atlas = ExtResource("motion_24")
+region = Rect2(384, 2, 377, 580)
+margin = Rect2(234, 172, 523, 320)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_183"]
+atlas = ExtResource("motion_22")
+region = Rect2(1531, 1161, 378, 583)
+margin = Rect2(243, 171, 522, 317)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_184"]
+atlas = ExtResource("motion_11")
+region = Rect2(1316, 608, 412, 585)
+margin = Rect2(220, 170, 488, 315)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_185"]
+atlas = ExtResource("motion_11")
+region = Rect2(2, 567, 428, 590)
+margin = Rect2(207, 163, 472, 310)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_186"]
+atlas = ExtResource("motion_10")
+region = Rect2(427, 500, 437, 593)
+margin = Rect2(198, 158, 463, 307)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_187"]
+atlas = ExtResource("motion_10")
+region = Rect2(1380, 621, 432, 591)
+margin = Rect2(192, 158, 468, 309)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_188"]
+atlas = ExtResource("motion_0")
+region = Rect2(2, 582, 609, 587)
+margin = Rect2(236, 159, 291, 313)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_189"]
+atlas = ExtResource("motion_0")
+region = Rect2(633, 2, 619, 582)
+margin = Rect2(226, 161, 281, 318)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_190"]
+atlas = ExtResource("motion_0")
+region = Rect2(2, 2, 627, 576)
+margin = Rect2(218, 163, 273, 324)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_191"]
+atlas = ExtResource("motion_0")
+region = Rect2(1256, 2, 629, 572)
+margin = Rect2(216, 171, 271, 328)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_192"]
+atlas = ExtResource("motion_0")
+region = Rect2(1256, 578, 629, 569)
+margin = Rect2(216, 177, 271, 331)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_193"]
+atlas = ExtResource("motion_0")
+region = Rect2(615, 588, 620, 575)
+margin = Rect2(225, 174, 280, 325)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_194"]
+atlas = ExtResource("motion_1")
+region = Rect2(2, 2, 611, 579)
+margin = Rect2(234, 172, 289, 321)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_195"]
+atlas = ExtResource("motion_2")
+region = Rect2(2, 2, 602, 582)
+margin = Rect2(243, 171, 298, 318)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_196"]
+atlas = ExtResource("motion_4")
+region = Rect2(2, 1202, 593, 585)
+margin = Rect2(252, 170, 307, 315)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_197"]
+atlas = ExtResource("motion_3")
+region = Rect2(591, 1188, 590, 591)
+margin = Rect2(255, 163, 310, 309)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_198"]
+atlas = ExtResource("motion_1")
+region = Rect2(1206, 594, 590, 594)
+margin = Rect2(255, 158, 310, 306)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_199"]
+atlas = ExtResource("motion_4")
+region = Rect2(2, 2, 588, 592)
+margin = Rect2(245, 158, 312, 308)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_200"]
+atlas = ExtResource("motion_2")
+region = Rect2(2, 588, 595, 588)
+margin = Rect2(236, 159, 305, 312)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_201"]
+atlas = ExtResource("motion_3")
+region = Rect2(589, 2, 601, 582)
+margin = Rect2(226, 161, 299, 318)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_202"]
+atlas = ExtResource("motion_4")
+region = Rect2(1199, 2, 606, 574)
+margin = Rect2(218, 163, 294, 326)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_203"]
+atlas = ExtResource("motion_4")
+region = Rect2(1199, 580, 608, 572)
+margin = Rect2(216, 171, 292, 328)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_204"]
+atlas = ExtResource("motion_5")
+region = Rect2(583, 2, 606, 570)
+margin = Rect2(216, 177, 294, 330)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_205"]
+atlas = ExtResource("motion_5")
+region = Rect2(1195, 603, 593, 576)
+margin = Rect2(225, 174, 307, 324)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_206"]
+atlas = ExtResource("motion_6")
+region = Rect2(2, 1185, 580, 580)
+margin = Rect2(234, 172, 320, 320)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_207"]
+atlas = ExtResource("motion_6")
+region = Rect2(1178, 1211, 566, 583)
+margin = Rect2(243, 171, 334, 317)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_208"]
+atlas = ExtResource("motion_10")
+region = Rect2(427, 2, 525, 494)
+margin = Rect2(10, 315, 375, 406)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_209"]
+atlas = ExtResource("motion_9")
+region = Rect2(1492, 1248, 527, 493)
+margin = Rect2(9, 316, 373, 407)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_210"]
+atlas = ExtResource("motion_9")
+region = Rect2(1072, 626, 529, 493)
+margin = Rect2(8, 316, 371, 407)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_211"]
+atlas = ExtResource("motion_9")
+region = Rect2(2, 497, 531, 492)
+margin = Rect2(7, 317, 369, 408)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_212"]
+atlas = ExtResource("motion_9")
+region = Rect2(540, 2, 534, 491)
+margin = Rect2(5, 318, 366, 409)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_213"]
+atlas = ExtResource("motion_8")
+region = Rect2(487, 2, 536, 491)
+margin = Rect2(4, 318, 364, 409)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_214"]
+atlas = ExtResource("motion_8")
+region = Rect2(430, 557, 538, 490)
+margin = Rect2(3, 319, 362, 410)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_215"]
+atlas = ExtResource("motion_8")
+region = Rect2(1027, 2, 536, 491)
+margin = Rect2(4, 318, 364, 409)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_216"]
+atlas = ExtResource("motion_9")
+region = Rect2(2, 2, 534, 491)
+margin = Rect2(5, 318, 366, 409)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_217"]
+atlas = ExtResource("motion_9")
+region = Rect2(537, 497, 531, 492)
+margin = Rect2(7, 317, 369, 408)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_218"]
+atlas = ExtResource("motion_9")
+region = Rect2(2, 1123, 529, 493)
+margin = Rect2(8, 316, 371, 407)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_219"]
+atlas = ExtResource("motion_9")
+region = Rect2(961, 1123, 527, 493)
+margin = Rect2(9, 316, 373, 407)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_220"]
+atlas = ExtResource("motion_16")
+region = Rect2(2, 1158, 396, 571)
+margin = Rect2(183, 153, 504, 329)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_221"]
+atlas = ExtResource("motion_18")
+region = Rect2(2, 1171, 394, 570)
+margin = Rect2(185, 153, 506, 330)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_222"]
+atlas = ExtResource("motion_19")
+region = Rect2(2, 2, 392, 571)
+margin = Rect2(187, 152, 508, 329)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_223"]
+atlas = ExtResource("motion_20")
+region = Rect2(2, 573, 390, 571)
+margin = Rect2(189, 152, 510, 329)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_224"]
+atlas = ExtResource("motion_21")
+region = Rect2(766, 1162, 388, 570)
+margin = Rect2(191, 152, 512, 330)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_225"]
+atlas = ExtResource("motion_22")
+region = Rect2(1147, 2, 386, 571)
+margin = Rect2(193, 151, 514, 329)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_226"]
+atlas = ExtResource("motion_23")
+region = Rect2(1529, 1172, 384, 571)
+margin = Rect2(195, 151, 516, 329)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_227"]
+atlas = ExtResource("motion_22")
+region = Rect2(766, 591, 386, 571)
+margin = Rect2(193, 151, 514, 329)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_228"]
+atlas = ExtResource("motion_21")
+region = Rect2(1531, 2, 388, 570)
+margin = Rect2(191, 152, 512, 330)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_229"]
+atlas = ExtResource("motion_20")
+region = Rect2(2, 1148, 390, 571)
+margin = Rect2(189, 152, 510, 329)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_230"]
+atlas = ExtResource("motion_18")
+region = Rect2(1549, 1174, 392, 571)
+margin = Rect2(187, 152, 508, 329)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_231"]
+atlas = ExtResource("motion_18")
+region = Rect2(2, 2, 394, 570)
+margin = Rect2(185, 153, 506, 330)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_232"]
+atlas = ExtResource("motion_11")
+region = Rect2(464, 1197, 419, 571)
+margin = Rect2(183, 153, 481, 329)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_233"]
+atlas = ExtResource("motion_14")
+region = Rect2(2, 1208, 401, 569)
+margin = Rect2(188, 153, 499, 331)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_234"]
+atlas = ExtResource("motion_22")
+region = Rect2(1537, 2, 388, 568)
+margin = Rect2(192, 153, 512, 332)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_235"]
+atlas = ExtResource("motion_20")
+region = Rect2(2, 2, 393, 567)
+margin = Rect2(188, 152, 507, 333)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_236"]
+atlas = ExtResource("motion_0")
+region = Rect2(615, 1167, 620, 572)
+margin = Rect2(215, 145, 280, 328)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_237"]
+atlas = ExtResource("motion_0")
+region = Rect2(2, 1173, 607, 582)
+margin = Rect2(228, 133, 293, 318)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_238"]
+atlas = ExtResource("motion_3")
+region = Rect2(1185, 601, 592, 589)
+margin = Rect2(243, 124, 308, 311)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_239"]
+atlas = ExtResource("motion_5")
+region = Rect2(1193, 2, 578, 597)
+margin = Rect2(257, 117, 322, 303)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_240"]
+atlas = ExtResource("motion_5")
+region = Rect2(583, 576, 574, 600)
+margin = Rect2(264, 114, 326, 300)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_241"]
+atlas = ExtResource("motion_5")
+region = Rect2(2, 2, 577, 600)
+margin = Rect2(261, 115, 323, 300)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_242"]
+atlas = ExtResource("motion_4")
+region = Rect2(2, 598, 579, 600)
+margin = Rect2(258, 115, 321, 300)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_243"]
+atlas = ExtResource("motion_4")
+region = Rect2(594, 585, 580, 599)
+margin = Rect2(256, 116, 320, 301)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_244"]
+atlas = ExtResource("motion_3")
+region = Rect2(1185, 1194, 583, 598)
+margin = Rect2(253, 117, 317, 302)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_245"]
+atlas = ExtResource("motion_3")
+region = Rect2(2, 1188, 585, 597)
+margin = Rect2(250, 118, 315, 303)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_246"]
+atlas = ExtResource("motion_2")
+region = Rect2(594, 1180, 587, 596)
+margin = Rect2(248, 119, 313, 304)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_247"]
+atlas = ExtResource("motion_2")
+region = Rect2(1200, 2, 588, 595)
+margin = Rect2(245, 120, 312, 305)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_248"]
+atlas = ExtResource("motion_1")
+region = Rect2(592, 609, 594, 590)
+margin = Rect2(239, 123, 306, 310)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_249"]
+atlas = ExtResource("motion_1")
+region = Rect2(1206, 2, 597, 588)
+margin = Rect2(233, 127, 303, 312)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_250"]
+atlas = ExtResource("motion_2")
+region = Rect2(1185, 1201, 598, 585)
+margin = Rect2(227, 131, 302, 315)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_251"]
+atlas = ExtResource("motion_1")
+region = Rect2(1190, 1192, 601, 583)
+margin = Rect2(221, 135, 299, 317)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_252"]
+atlas = ExtResource("motion_4")
+region = Rect2(594, 2, 601, 579)
+margin = Rect2(215, 140, 299, 321)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_253"]
+atlas = ExtResource("motion_5")
+region = Rect2(2, 1211, 598, 575)
+margin = Rect2(209, 145, 302, 325)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_254"]
+atlas = ExtResource("motion_6")
+region = Rect2(2, 608, 592, 573)
+margin = Rect2(203, 149, 308, 327)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_255"]
+atlas = ExtResource("motion_6")
+region = Rect2(586, 1185, 588, 572)
+margin = Rect2(193, 151, 312, 328)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_256"]
+atlas = ExtResource("motion_16")
+region = Rect2(400, 2, 396, 571)
+margin = Rect2(183, 153, 504, 329)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_257"]
+atlas = ExtResource("motion_19")
+region = Rect2(1160, 597, 392, 569)
+margin = Rect2(188, 153, 508, 331)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_258"]
+atlas = ExtResource("motion_13")
+region = Rect2(1378, 606, 402, 568)
+margin = Rect2(192, 153, 498, 332)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_259"]
+atlas = ExtResource("motion_12")
+region = Rect2(1598, 1212, 411, 567)
+margin = Rect2(196, 152, 489, 333)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_260"]
+atlas = ExtResource("motion_13")
+region = Rect2(393, 2, 400, 572)
+margin = Rect2(215, 145, 500, 328)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_261"]
+atlas = ExtResource("motion_14")
+region = Rect2(1156, 2, 391, 582)
+margin = Rect2(228, 133, 509, 318)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_262"]
+atlas = ExtResource("motion_20")
+region = Rect2(778, 2, 378, 589)
+margin = Rect2(243, 124, 522, 311)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_263"]
+atlas = ExtResource("motion_14")
+region = Rect2(1176, 1204, 381, 597)
+margin = Rect2(257, 117, 519, 303)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_264"]
+atlas = ExtResource("motion_14")
+region = Rect2(387, 2, 380, 600)
+margin = Rect2(264, 114, 520, 300)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_265"]
+atlas = ExtResource("motion_13")
+region = Rect2(1567, 2, 381, 600)
+margin = Rect2(261, 115, 519, 300)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_266"]
+atlas = ExtResource("motion_13")
+region = Rect2(1182, 2, 381, 600)
+margin = Rect2(258, 115, 519, 300)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_267"]
+atlas = ExtResource("motion_14")
+region = Rect2(792, 1206, 380, 599)
+margin = Rect2(256, 116, 520, 301)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_268"]
+atlas = ExtResource("motion_15")
+region = Rect2(2, 2, 380, 598)
+margin = Rect2(253, 117, 520, 302)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_269"]
+atlas = ExtResource("motion_14")
+region = Rect2(1157, 588, 381, 597)
+margin = Rect2(250, 118, 519, 303)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_270"]
+atlas = ExtResource("motion_15")
+region = Rect2(1154, 1202, 380, 596)
+margin = Rect2(248, 119, 520, 304)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_271"]
+atlas = ExtResource("motion_16")
+region = Rect2(800, 2, 380, 595)
+margin = Rect2(245, 120, 520, 305)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_272"]
+atlas = ExtResource("motion_19")
+region = Rect2(385, 577, 379, 590)
+margin = Rect2(239, 123, 521, 310)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_273"]
+atlas = ExtResource("motion_20")
+region = Rect2(1542, 591, 378, 588)
+margin = Rect2(233, 127, 522, 312)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_274"]
+atlas = ExtResource("motion_22")
+region = Rect2(766, 2, 377, 585)
+margin = Rect2(227, 131, 523, 315)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_275"]
+atlas = ExtResource("motion_20")
+region = Rect2(778, 1187, 381, 583)
+margin = Rect2(221, 135, 519, 317)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_276"]
+atlas = ExtResource("motion_19")
+region = Rect2(1556, 597, 385, 579)
+margin = Rect2(215, 140, 515, 321)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_277"]
+atlas = ExtResource("motion_19")
+region = Rect2(768, 597, 388, 575)
+margin = Rect2(209, 145, 512, 325)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_278"]
+atlas = ExtResource("motion_18")
+region = Rect2(1549, 2, 391, 573)
+margin = Rect2(203, 149, 509, 327)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_279"]
+atlas = ExtResource("motion_13")
+region = Rect2(1378, 1178, 399, 572)
+margin = Rect2(193, 151, 501, 328)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_280"]
+atlas = ExtResource("motion_10")
+region = Rect2(1380, 2, 420, 615)
+margin = Rect2(256, 99, 480, 285)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_281"]
+atlas = ExtResource("motion_10")
+region = Rect2(956, 2, 420, 616)
+margin = Rect2(255, 99, 480, 284)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_282"]
+atlas = ExtResource("motion_10")
+region = Rect2(2, 623, 421, 617)
+margin = Rect2(254, 98, 479, 283)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_283"]
+atlas = ExtResource("motion_9")
+region = Rect2(535, 993, 422, 618)
+margin = Rect2(252, 98, 478, 282)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_284"]
+atlas = ExtResource("motion_9")
+region = Rect2(1078, 2, 422, 620)
+margin = Rect2(251, 97, 478, 280)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_285"]
+atlas = ExtResource("motion_8")
+region = Rect2(1544, 627, 423, 621)
+margin = Rect2(249, 97, 477, 279)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_286"]
+atlas = ExtResource("motion_8")
+region = Rect2(2, 557, 424, 623)
+margin = Rect2(248, 96, 476, 277)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_287"]
+atlas = ExtResource("motion_8")
+region = Rect2(1567, 2, 423, 621)
+margin = Rect2(249, 97, 477, 279)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_288"]
+atlas = ExtResource("motion_9")
+region = Rect2(1504, 2, 422, 620)
+margin = Rect2(251, 97, 478, 280)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_289"]
+atlas = ExtResource("motion_9")
+region = Rect2(1605, 626, 422, 618)
+margin = Rect2(252, 98, 478, 282)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_290"]
+atlas = ExtResource("motion_10")
+region = Rect2(2, 2, 421, 617)
+margin = Rect2(254, 98, 479, 283)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_291"]
+atlas = ExtResource("motion_10")
+region = Rect2(478, 1097, 420, 616)
+margin = Rect2(255, 99, 480, 284)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_292"]
+atlas = ExtResource("motion_25")
+region = Rect2(383, 1164, 377, 577)
+margin = Rect2(242, 178, 523, 323)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_293"]
+atlas = ExtResource("motion_18")
+region = Rect2(400, 600, 381, 589)
+margin = Rect2(263, 166, 519, 311)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_294"]
+atlas = ExtResource("motion_15")
+region = Rect2(386, 602, 381, 596)
+margin = Rect2(286, 159, 519, 304)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_295"]
+atlas = ExtResource("motion_12")
+region = Rect2(398, 607, 390, 600)
+margin = Rect2(297, 155, 510, 300)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_296"]
+atlas = ExtResource("motion_13")
+region = Rect2(797, 2, 381, 600)
+margin = Rect2(278, 155, 519, 300)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_297"]
+atlas = ExtResource("motion_17")
+region = Rect2(2, 599, 380, 593)
+margin = Rect2(248, 162, 520, 307)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_298"]
+atlas = ExtResource("motion_23")
+region = Rect2(385, 2, 377, 581)
+margin = Rect2(220, 174, 523, 319)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_299"]
+atlas = ExtResource("motion_12")
+region = Rect2(791, 1211, 411, 569)
+margin = Rect2(187, 186, 489, 331)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_300"]
+atlas = ExtResource("motion_11")
+region = Rect2(2, 2, 451, 561)
+margin = Rect2(145, 194, 449, 339)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_301"]
+atlas = ExtResource("motion_2")
+region = Rect2(601, 601, 485, 552)
+margin = Rect2(107, 203, 415, 348)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_302"]
+atlas = ExtResource("motion_8")
+region = Rect2(2, 2, 481, 551)
+margin = Rect2(112, 204, 419, 349)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_303"]
+atlas = ExtResource("motion_8")
+region = Rect2(1414, 1252, 476, 551)
+margin = Rect2(117, 204, 424, 349)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_304"]
+atlas = ExtResource("motion_10")
+region = Rect2(2, 1244, 472, 550)
+margin = Rect2(121, 205, 428, 350)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_305"]
+atlas = ExtResource("motion_10")
+region = Rect2(902, 622, 461, 552)
+margin = Rect2(132, 203, 439, 348)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_306"]
+atlas = ExtResource("motion_11")
+region = Rect2(876, 2, 449, 554)
+margin = Rect2(143, 201, 451, 346)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_307"]
+atlas = ExtResource("motion_11")
+region = Rect2(876, 560, 436, 556)
+margin = Rect2(154, 199, 464, 344)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_308"]
+atlas = ExtResource("motion_11")
+region = Rect2(887, 1120, 424, 558)
+margin = Rect2(165, 197, 476, 342)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_309"]
+atlas = ExtResource("motion_13")
+region = Rect2(387, 606, 410, 560)
+margin = Rect2(177, 195, 490, 340)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_310"]
+atlas = ExtResource("motion_21")
+region = Rect2(2, 2, 395, 562)
+margin = Rect2(189, 194, 505, 338)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_311"]
+atlas = ExtResource("motion_21")
+region = Rect2(766, 593, 381, 562)
+margin = Rect2(201, 194, 519, 338)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_312"]
+atlas = ExtResource("motion_26")
+region = Rect2(1143, 1161, 373, 565)
+margin = Rect2(210, 191, 527, 335)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_313"]
+atlas = ExtResource("motion_26")
+region = Rect2(763, 581, 375, 569)
+margin = Rect2(218, 187, 525, 331)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_314"]
+atlas = ExtResource("motion_26")
+region = Rect2(763, 1156, 376, 573)
+margin = Rect2(226, 183, 524, 327)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_315"]
+atlas = ExtResource("motion_24")
+region = Rect2(1528, 1166, 378, 576)
+margin = Rect2(233, 180, 522, 324)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_316"]
+atlas = ExtResource("motion_25")
+region = Rect2(383, 2, 377, 577)
+margin = Rect2(242, 178, 523, 323)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_317"]
+atlas = ExtResource("motion_21")
+region = Rect2(1148, 2, 379, 585)
+margin = Rect2(255, 161, 521, 315)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_318"]
+atlas = ExtResource("motion_17")
+region = Rect2(1580, 599, 380, 591)
+margin = Rect2(269, 145, 520, 309)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_319"]
+atlas = ExtResource("motion_14")
+region = Rect2(1542, 603, 381, 597)
+margin = Rect2(282, 129, 519, 303)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_320"]
+atlas = ExtResource("motion_13")
+region = Rect2(993, 1210, 381, 600)
+margin = Rect2(296, 115, 519, 300)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_321"]
+atlas = ExtResource("motion_13")
+region = Rect2(609, 1170, 380, 603)
+margin = Rect2(310, 102, 520, 297)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_322"]
+atlas = ExtResource("motion_13")
+region = Rect2(2, 606, 381, 605)
+margin = Rect2(322, 90, 519, 295)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_323"]
+atlas = ExtResource("motion_14")
+region = Rect2(2, 2, 381, 599)
+margin = Rect2(286, 83, 519, 301)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_324"]
+atlas = ExtResource("motion_20")
+region = Rect2(1546, 1183, 377, 589)
+margin = Rect2(249, 89, 523, 311)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_325"]
+atlas = ExtResource("motion_11")
+region = Rect2(464, 609, 406, 568)
+margin = Rect2(214, 105, 494, 332)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_326"]
+atlas = ExtResource("motion_11")
+region = Rect2(2, 1161, 458, 551)
+margin = Rect2(163, 114, 442, 349)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_327"]
+atlas = ExtResource("motion_8")
+region = Rect2(2, 1184, 501, 527)
+margin = Rect2(120, 129, 399, 373)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_328"]
+atlas = ExtResource("motion_6")
+region = Rect2(598, 601, 538, 501)
+margin = Rect2(87, 146, 362, 399)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_329"]
+atlas = ExtResource("motion_3")
+region = Rect2(2, 606, 551, 484)
+margin = Rect2(68, 185, 349, 416)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_330"]
+atlas = ExtResource("motion_8")
+region = Rect2(972, 497, 568, 463)
+margin = Rect2(52, 226, 332, 437)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_331"]
+atlas = ExtResource("motion_10")
+region = Rect2(1329, 1216, 581, 437)
+margin = Rect2(40, 270, 319, 463)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_332"]
+atlas = ExtResource("motion_9")
+region = Rect2(2, 1620, 594, 409)
+margin = Rect2(27, 315, 306, 491)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_333"]
+atlas = ExtResource("motion_10")
+region = Rect2(1329, 1657, 601, 388)
+margin = Rect2(18, 353, 299, 512)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_334"]
+atlas = ExtResource("motion_9")
+region = Rect2(600, 1620, 613, 379)
+margin = Rect2(13, 394, 287, 521)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_335"]
+atlas = ExtResource("motion_8")
+region = Rect2(507, 1656, 612, 381)
+margin = Rect2(13, 407, 288, 519)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_336"]
+atlas = ExtResource("motion_13")
+region = Rect2(2, 1215, 603, 381)
+margin = Rect2(19, 423, 297, 519)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_337"]
+atlas = ExtResource("motion_13")
+region = Rect2(2, 1600, 594, 380)
+margin = Rect2(29, 440, 306, 520)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_338"]
+atlas = ExtResource("motion_17")
+region = Rect2(384, 1196, 593, 379)
+margin = Rect2(30, 442, 307, 521)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_339"]
+atlas = ExtResource("motion_17")
+region = Rect2(384, 1579, 593, 379)
+margin = Rect2(30, 442, 307, 521)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_340"]
+atlas = ExtResource("motion_17")
+region = Rect2(981, 2, 593, 379)
+margin = Rect2(30, 442, 307, 521)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_341"]
+atlas = ExtResource("motion_17")
+region = Rect2(386, 385, 593, 379)
+margin = Rect2(30, 442, 307, 521)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_342"]
+atlas = ExtResource("motion_17")
+region = Rect2(386, 768, 593, 379)
+margin = Rect2(30, 442, 307, 521)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_343"]
+atlas = ExtResource("motion_17")
+region = Rect2(983, 385, 593, 379)
+margin = Rect2(30, 442, 307, 521)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_344"]
+atlas = ExtResource("motion_17")
+region = Rect2(983, 768, 593, 379)
+margin = Rect2(30, 442, 307, 521)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="MotionFrame_345"]
+atlas = ExtResource("motion_17")
+region = Rect2(981, 1151, 593, 379)
+margin = Rect2(30, 442, 307, 521)
+filter_clip = true
 
 [resource]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_climbing_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_climbing_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_climbing_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_climbing_3")
-}],
-"loop": 1,
+"frames": [{"duration": 1.0, "texture": SubResource("MotionFrame_0")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_1")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_2")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_3")}],
+"loop": true,
 "name": &"Climbing",
 "speed": 8.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("139")
-}, {
-"duration": 1.0,
-"texture": ExtResource("140")
-}, {
-"duration": 1.0,
-"texture": ExtResource("141")
-}, {
-"duration": 1.0,
-"texture": ExtResource("142")
-}, {
-"duration": 1.0,
-"texture": ExtResource("143")
-}, {
-"duration": 1.0,
-"texture": ExtResource("144")
-}, {
-"duration": 1.0,
-"texture": ExtResource("145")
-}, {
-"duration": 1.0,
-"texture": ExtResource("146")
-}, {
-"duration": 1.0,
-"texture": ExtResource("147")
-}, {
-"duration": 1.0,
-"texture": ExtResource("148")
-}, {
-"duration": 1.0,
-"texture": ExtResource("149")
-}, {
-"duration": 1.0,
-"texture": ExtResource("150")
-}, {
-"duration": 1.0,
-"texture": ExtResource("151")
-}, {
-"duration": 1.0,
-"texture": ExtResource("152")
-}, {
-"duration": 1.0,
-"texture": ExtResource("153")
-}],
-"loop": 0,
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("MotionFrame_316")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_317")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_318")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_319")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_320")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_321")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_322")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_323")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_324")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_325")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_326")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_327")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_328")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_329")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_330")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_331")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_332")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_333")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_334")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_335")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_336")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_337")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_338")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_339")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_340")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_341")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_342")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_343")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_344")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_345")}],
+"loop": false,
 "name": &"Dying",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("61")
-}, {
-"duration": 1.0,
-"texture": ExtResource("62")
-}, {
-"duration": 1.0,
-"texture": ExtResource("63")
-}, {
-"duration": 1.0,
-"texture": ExtResource("64")
-}, {
-"duration": 1.0,
-"texture": ExtResource("65")
-}, {
-"duration": 1.0,
-"texture": ExtResource("66")
-}],
-"loop": 1,
+"speed": 24.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("MotionFrame_280")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_281")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_282")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_283")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_284")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_285")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_286")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_287")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_288")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_289")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_290")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_291")}],
+"loop": true,
 "name": &"Falling Down",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("22_gurce")
-}, {
-"duration": 1.0,
-"texture": ExtResource("23_ewvkp")
-}, {
-"duration": 1.0,
-"texture": ExtResource("24_pxvmd")
-}, {
-"duration": 1.0,
-"texture": ExtResource("25_hd8tx")
-}, {
-"duration": 1.0,
-"texture": ExtResource("26_1icvg")
-}, {
-"duration": 1.0,
-"texture": ExtResource("27_6lob1")
-}, {
-"duration": 1.0,
-"texture": ExtResource("28_5owek")
-}, {
-"duration": 1.0,
-"texture": ExtResource("29_tsff3")
-}, {
-"duration": 1.0,
-"texture": ExtResource("30_7n46d")
-}, {
-"duration": 1.0,
-"texture": ExtResource("31_8xlw6")
-}, {
-"duration": 1.0,
-"texture": ExtResource("32_053lw")
-}, {
-"duration": 1.0,
-"texture": ExtResource("33_5fcpy")
-}],
-"loop": 0,
+"speed": 24.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("MotionFrame_292")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_293")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_294")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_295")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_296")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_297")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_298")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_299")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_300")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_301")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_302")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_303")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_304")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_305")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_306")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_307")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_308")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_309")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_310")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_311")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_312")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_313")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_314")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_315")}],
+"loop": false,
 "name": &"Hurt",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1")
-}, {
-"duration": 1.0,
-"texture": ExtResource("2")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8")
-}, {
-"duration": 1.0,
-"texture": ExtResource("9")
-}, {
-"duration": 1.0,
-"texture": ExtResource("10")
-}, {
-"duration": 1.0,
-"texture": ExtResource("11")
-}, {
-"duration": 1.0,
-"texture": ExtResource("12")
-}, {
-"duration": 1.0,
-"texture": ExtResource("13")
-}, {
-"duration": 1.0,
-"texture": ExtResource("14")
-}, {
-"duration": 1.0,
-"texture": ExtResource("15")
-}, {
-"duration": 1.0,
-"texture": ExtResource("16")
-}, {
-"duration": 1.0,
-"texture": ExtResource("17")
-}, {
-"duration": 1.0,
-"texture": ExtResource("18")
-}],
-"loop": 1,
+"speed": 24.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("MotionFrame_4")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_5")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_6")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_7")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_8")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_9")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_10")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_11")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_12")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_13")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_14")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_15")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_16")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_17")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_18")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_19")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_20")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_21")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_22")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_23")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_24")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_25")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_26")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_27")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_28")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_29")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_30")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_31")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_32")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_33")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_34")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_35")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_36")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_37")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_38")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_39")}],
+"loop": true,
 "name": &"Idle",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("55")
-}, {
-"duration": 1.0,
-"texture": ExtResource("56")
-}, {
-"duration": 1.0,
-"texture": ExtResource("57")
-}, {
-"duration": 1.0,
-"texture": ExtResource("58")
-}, {
-"duration": 1.0,
-"texture": ExtResource("59")
-}, {
-"duration": 1.0,
-"texture": ExtResource("60")
-}],
-"loop": 1,
+"speed": 24.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("MotionFrame_220")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_221")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_222")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_223")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_224")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_225")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_226")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_227")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_228")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_229")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_230")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_231")}],
+"loop": true,
 "name": &"Jump Looping",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("103")
-}, {
-"duration": 1.0,
-"texture": ExtResource("104")
-}, {
-"duration": 1.0,
-"texture": ExtResource("105")
-}, {
-"duration": 1.0,
-"texture": ExtResource("106")
-}, {
-"duration": 1.0,
-"texture": ExtResource("107")
-}, {
-"duration": 1.0,
-"texture": ExtResource("108")
-}, {
-"duration": 1.0,
-"texture": ExtResource("109")
-}, {
-"duration": 1.0,
-"texture": ExtResource("110")
-}, {
-"duration": 1.0,
-"texture": ExtResource("111")
-}, {
-"duration": 1.0,
-"texture": ExtResource("112")
-}, {
-"duration": 1.0,
-"texture": ExtResource("113")
-}, {
-"duration": 1.0,
-"texture": ExtResource("114")
-}],
-"loop": 0,
+"speed": 24.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("MotionFrame_88")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_89")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_90")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_91")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_92")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_93")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_94")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_95")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_96")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_97")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_98")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_99")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_100")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_101")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_102")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_103")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_104")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_105")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_106")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_107")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_108")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_109")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_110")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_111")}],
+"loop": false,
 "name": &"Kicking",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("91")
-}, {
-"duration": 1.0,
-"texture": ExtResource("92")
-}, {
-"duration": 1.0,
-"texture": ExtResource("93")
-}, {
-"duration": 1.0,
-"texture": ExtResource("94")
-}, {
-"duration": 1.0,
-"texture": ExtResource("95")
-}, {
-"duration": 1.0,
-"texture": ExtResource("96")
-}, {
-"duration": 1.0,
-"texture": ExtResource("97")
-}, {
-"duration": 1.0,
-"texture": ExtResource("98")
-}, {
-"duration": 1.0,
-"texture": ExtResource("99")
-}, {
-"duration": 1.0,
-"texture": ExtResource("100")
-}, {
-"duration": 1.0,
-"texture": ExtResource("101")
-}, {
-"duration": 1.0,
-"texture": ExtResource("102")
-}],
-"loop": 0,
+"speed": 24.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("MotionFrame_184")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_185")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_186")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_187")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_188")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_189")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_190")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_191")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_192")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_193")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_194")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_195")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_196")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_197")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_198")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_199")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_200")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_201")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_202")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_203")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_204")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_205")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_206")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_207")}],
+"loop": false,
 "name": &"Run Slashing",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("43")
-}, {
-"duration": 1.0,
-"texture": ExtResource("44")
-}, {
-"duration": 1.0,
-"texture": ExtResource("45")
-}, {
-"duration": 1.0,
-"texture": ExtResource("46")
-}, {
-"duration": 1.0,
-"texture": ExtResource("47")
-}, {
-"duration": 1.0,
-"texture": ExtResource("48")
-}, {
-"duration": 1.0,
-"texture": ExtResource("49")
-}, {
-"duration": 1.0,
-"texture": ExtResource("50")
-}, {
-"duration": 1.0,
-"texture": ExtResource("51")
-}, {
-"duration": 1.0,
-"texture": ExtResource("52")
-}, {
-"duration": 1.0,
-"texture": ExtResource("53")
-}, {
-"duration": 1.0,
-"texture": ExtResource("54")
-}],
-"loop": 1,
+"speed": 24.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("MotionFrame_160")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_161")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_162")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_163")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_164")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_165")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_166")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_167")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_168")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_169")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_170")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_171")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_172")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_173")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_174")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_175")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_176")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_177")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_178")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_179")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_180")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_181")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_182")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_183")}],
+"loop": true,
 "name": &"Running",
-"speed": 15.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("67")
-}, {
-"duration": 1.0,
-"texture": ExtResource("68")
-}, {
-"duration": 1.0,
-"texture": ExtResource("69")
-}, {
-"duration": 1.0,
-"texture": ExtResource("70")
-}, {
-"duration": 1.0,
-"texture": ExtResource("71")
-}, {
-"duration": 1.0,
-"texture": ExtResource("72")
-}, {
-"duration": 1.0,
-"texture": ExtResource("73")
-}, {
-"duration": 1.0,
-"texture": ExtResource("74")
-}, {
-"duration": 1.0,
-"texture": ExtResource("75")
-}, {
-"duration": 1.0,
-"texture": ExtResource("76")
-}, {
-"duration": 1.0,
-"texture": ExtResource("77")
-}, {
-"duration": 1.0,
-"texture": ExtResource("78")
-}],
-"loop": 0,
-"name": &"Slashing",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("79")
-}, {
-"duration": 1.0,
-"texture": ExtResource("80")
-}, {
-"duration": 1.0,
-"texture": ExtResource("81")
-}, {
-"duration": 1.0,
-"texture": ExtResource("82")
-}, {
-"duration": 1.0,
-"texture": ExtResource("83")
-}, {
-"duration": 1.0,
-"texture": ExtResource("84")
-}, {
-"duration": 1.0,
-"texture": ExtResource("85")
-}, {
-"duration": 1.0,
-"texture": ExtResource("86")
-}, {
-"duration": 1.0,
-"texture": ExtResource("87")
-}, {
-"duration": 1.0,
-"texture": ExtResource("88")
-}, {
-"duration": 1.0,
-"texture": ExtResource("89")
-}, {
-"duration": 1.0,
-"texture": ExtResource("90")
-}],
-"loop": 0,
-"name": &"Slashing In Air",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("154")
-}, {
-"duration": 1.0,
-"texture": ExtResource("155")
-}, {
-"duration": 1.0,
-"texture": ExtResource("156")
-}, {
-"duration": 1.0,
-"texture": ExtResource("157")
-}, {
-"duration": 1.0,
-"texture": ExtResource("158")
-}, {
-"duration": 1.0,
-"texture": ExtResource("159")
-}],
-"loop": 1,
-"name": &"Sliding",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("115")
-}, {
-"duration": 1.0,
-"texture": ExtResource("116")
-}, {
-"duration": 1.0,
-"texture": ExtResource("117")
-}, {
-"duration": 1.0,
-"texture": ExtResource("118")
-}, {
-"duration": 1.0,
-"texture": ExtResource("119")
-}, {
-"duration": 1.0,
-"texture": ExtResource("120")
-}, {
-"duration": 1.0,
-"texture": ExtResource("121")
-}, {
-"duration": 1.0,
-"texture": ExtResource("122")
-}, {
-"duration": 1.0,
-"texture": ExtResource("123")
-}, {
-"duration": 1.0,
-"texture": ExtResource("124")
-}, {
-"duration": 1.0,
-"texture": ExtResource("125")
-}, {
-"duration": 1.0,
-"texture": ExtResource("126")
-}],
-"loop": 0,
-"name": &"Throwing",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("127")
-}, {
-"duration": 1.0,
-"texture": ExtResource("128")
-}, {
-"duration": 1.0,
-"texture": ExtResource("129")
-}, {
-"duration": 1.0,
-"texture": ExtResource("130")
-}, {
-"duration": 1.0,
-"texture": ExtResource("131")
-}, {
-"duration": 1.0,
-"texture": ExtResource("132")
-}, {
-"duration": 1.0,
-"texture": ExtResource("133")
-}, {
-"duration": 1.0,
-"texture": ExtResource("134")
-}, {
-"duration": 1.0,
-"texture": ExtResource("135")
-}, {
-"duration": 1.0,
-"texture": ExtResource("136")
-}, {
-"duration": 1.0,
-"texture": ExtResource("137")
-}, {
-"duration": 1.0,
-"texture": ExtResource("138")
-}],
-"loop": 0,
-"name": &"Throwing In Air",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("19")
-}, {
-"duration": 1.0,
-"texture": ExtResource("20")
-}, {
-"duration": 1.0,
-"texture": ExtResource("21")
-}, {
-"duration": 1.0,
-"texture": ExtResource("22")
-}, {
-"duration": 1.0,
-"texture": ExtResource("23")
-}, {
-"duration": 1.0,
-"texture": ExtResource("24")
-}, {
-"duration": 1.0,
-"texture": ExtResource("25")
-}, {
-"duration": 1.0,
-"texture": ExtResource("26")
-}, {
-"duration": 1.0,
-"texture": ExtResource("27")
-}, {
-"duration": 1.0,
-"texture": ExtResource("28")
-}, {
-"duration": 1.0,
-"texture": ExtResource("29")
-}, {
-"duration": 1.0,
-"texture": ExtResource("30")
-}, {
-"duration": 1.0,
-"texture": ExtResource("31")
-}, {
-"duration": 1.0,
-"texture": ExtResource("32")
-}, {
-"duration": 1.0,
-"texture": ExtResource("33")
-}, {
-"duration": 1.0,
-"texture": ExtResource("34")
-}, {
-"duration": 1.0,
-"texture": ExtResource("35")
-}, {
-"duration": 1.0,
-"texture": ExtResource("36")
-}, {
-"duration": 1.0,
-"texture": ExtResource("37")
-}, {
-"duration": 1.0,
-"texture": ExtResource("38")
-}, {
-"duration": 1.0,
-"texture": ExtResource("39")
-}, {
-"duration": 1.0,
-"texture": ExtResource("40")
-}, {
-"duration": 1.0,
-"texture": ExtResource("41")
-}, {
-"duration": 1.0,
-"texture": ExtResource("42")
-}],
-"loop": 1,
-"name": &"Walking",
 "speed": 30.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("MotionFrame_40")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_41")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_42")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_43")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_44")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_45")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_46")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_47")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_48")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_49")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_50")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_51")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_52")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_53")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_54")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_55")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_56")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_57")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_58")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_59")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_60")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_61")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_62")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_63")}],
+"loop": false,
+"name": &"Slashing",
+"speed": 24.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("MotionFrame_232")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_233")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_234")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_235")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_236")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_237")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_238")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_239")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_240")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_241")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_242")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_243")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_244")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_245")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_246")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_247")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_248")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_249")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_250")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_251")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_252")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_253")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_254")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_255")}],
+"loop": false,
+"name": &"Slashing In Air",
+"speed": 24.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("MotionFrame_208")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_209")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_210")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_211")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_212")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_213")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_214")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_215")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_216")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_217")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_218")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_219")}],
+"loop": true,
+"name": &"Sliding",
+"speed": 24.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("MotionFrame_64")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_65")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_66")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_67")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_68")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_69")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_70")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_71")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_72")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_73")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_74")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_75")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_76")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_77")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_78")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_79")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_80")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_81")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_82")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_83")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_84")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_85")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_86")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_87")}],
+"loop": false,
+"name": &"Throwing",
+"speed": 24.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("MotionFrame_256")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_257")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_258")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_259")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_260")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_261")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_262")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_263")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_264")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_265")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_266")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_267")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_268")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_269")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_270")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_271")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_272")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_273")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_274")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_275")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_276")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_277")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_278")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_279")}],
+"loop": false,
+"name": &"Throwing In Air",
+"speed": 24.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("MotionFrame_112")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_113")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_114")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_115")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_116")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_117")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_118")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_119")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_120")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_121")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_122")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_123")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_124")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_125")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_126")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_127")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_128")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_129")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_130")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_131")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_132")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_133")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_134")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_135")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_136")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_137")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_138")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_139")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_140")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_141")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_142")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_143")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_144")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_145")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_146")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_147")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_148")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_149")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_150")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_151")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_152")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_153")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_154")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_155")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_156")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_157")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_158")},
+{"duration": 1.0, "texture": SubResource("MotionFrame_159")}],
+"loop": true,
+"name": &"Walking",
+"speed": 60.0
 }]

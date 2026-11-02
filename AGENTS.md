@@ -15,6 +15,7 @@
 
 ## Token and usage efficiency
 
+- Do not rush work to save tokens. Prioritize careful analysis, correctness, and completing the requested task over minimizing token usage.
 - Keep responses short, direct, and relevant; do not generate lengthy explanations unless requested.
 - Read only files necessary for the requested task. Do not scan the entire project unless explicitly requested.
 - Use targeted searches instead of large file dumps; do not repeatedly read unchanged files.

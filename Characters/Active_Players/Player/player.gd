@@ -4,7 +4,7 @@ const WALK_SPEED = 150.0
 const RUN_SPEED = 400.0
 const MOVE_ACCELERATION = 2200.0
 const MOVE_DECELERATION = 3000.0
-const JUMP_VELOCITY = -520.0
+const JUMP_VELOCITY = -480.0
 const MAX_JUMPS = 2
 const SLIDE_SPEED = 830.0
 const SLIDE_ANGLE = 15.0
@@ -21,7 +21,7 @@ const GOLEM_CLIMB_SPRITE_SCALE = 1.15
 const GOLEM_MOVEMENT := {
 	"walk_speed": 150.0,
 	"run_speed": 400.0,
-	"jump_velocity": -520.0,
+	"jump_velocity": -480.0,
 	"max_jumps": 2,
 	"slide_speed": 430.0,
 	"climb_speed": 180.0
@@ -464,6 +464,7 @@ func _physics_process(delta):
 	if (
 		not gameplay_input_blocked
 		and Input.is_action_just_pressed("jump")
+		and int(get_meta(&"lift_interaction_frame", -1)) != Engine.get_physics_frames()
 		and jumps_left > 0
 		and not is_sliding
 	):
@@ -570,6 +571,7 @@ func _physics_process(delta):
 	if (
 		not gameplay_input_blocked
 		and Input.is_action_just_pressed("special_power")
+		and int(get_meta(&"lift_interaction_frame", -1)) != Engine.get_physics_frames()
 	):
 
 		_try_activate_shockwave()

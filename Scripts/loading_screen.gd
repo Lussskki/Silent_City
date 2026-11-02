@@ -43,6 +43,7 @@ const LOADER_VARIANTS := [
 
 var animation_time := 0.0
 var last_variant_index := -1
+var scene_change_in_progress := false
 
 func _ready() -> void:
 	layer = 100
@@ -85,6 +86,46 @@ func show_loading(_message := "", variant_index: int = -1) -> int:
 
 func hide_loading() -> void:
 	overlay.visible = false
+
+
+func change_scene_with_loading(scene_path: String) -> Error:
+	if scene_change_in_progress:
+		return ERR_BUSY
+	scene_change_in_progress = true
+	var tree := get_tree()
+	var previous_scene := tree.current_scene
+	var previous_process_mode := previous_scene.process_mode
+	previous_scene.process_mode = Node.PROCESS_MODE_DISABLED
+	show_loading()
+	# Draw the existing loader before starting the resource request.
+	await tree.process_frame
+	await tree.process_frame
+	var shown_at := Time.get_ticks_msec()
+	var status := ResourceLoader.load_threaded_get_status(scene_path)
+	var error := OK
+	if status == ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
+		error = ResourceLoader.load_threaded_request(scene_path, "PackedScene", true)
+	if error == OK:
+		while true:
+			status = ResourceLoader.load_threaded_get_status(scene_path)
+			if status == ResourceLoader.THREAD_LOAD_LOADED:
+				break
+			if status != ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+				error = ERR_CANT_OPEN
+				break
+			await tree.process_frame
+	if error == OK:
+		var packed_scene := ResourceLoader.load_threaded_get(scene_path) as PackedScene
+		# Let the orbit animation read clearly even on a cached scene load.
+		while Time.get_ticks_msec() - shown_at < 350:
+			await tree.process_frame
+		error = tree.change_scene_to_packed(packed_scene) if packed_scene != null else ERR_CANT_OPEN
+	if error != OK:
+		if is_instance_valid(previous_scene):
+			previous_scene.process_mode = previous_process_mode
+		hide_loading()
+	scene_change_in_progress = false
+	return error
 
 
 func _select_variant(requested_index: int) -> int:

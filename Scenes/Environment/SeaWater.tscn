@@ -1,0 +1,49 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://bg5e6oho4xfvc" path="res://Scripts/Environment/sea_water.gd" id="Script_sea_water"]
+[sub_resource type="Shader" id="Shader_sea_water"]
+code = "shader_type canvas_item;
+render_mode unshaded;
+uniform float water_opacity = 1.0;
+
+void fragment() {
+    vec2 p = floor(UV * vec2(2364.0, 860.0) / 4.0) * 4.0;
+    float wave = 8.0 + floor((sin(p.x * 0.018 + TIME * 1.2) + sin(p.x * 0.041 - TIME * 0.8)) * 0.5) * 4.0;
+    float depth = p.y - wave;
+    vec3 water = mix(vec3(0.055, 0.22, 0.26), vec3(0.025, 0.075, 0.12), clamp(depth / 480.0, 0.0, 1.0));
+    float ripple = step(0.94, sin(p.x * 0.027 + TIME * 0.65 + floor(p.y / 20.0) * 2.3));
+    ripple *= step(0.75, cos(p.y * 0.31)) * (1.0 - clamp(depth / 300.0, 0.0, 1.0));
+    water += vec3(0.06, 0.12, 0.12) * ripple;
+    if (depth < 4.0) {
+        water = vec3(0.28, 0.49, 0.48);
+    } else if (depth < 12.0) {
+        water = vec3(0.12, 0.34, 0.37);
+    }
+    COLOR = vec4(water, step(0.0, depth) * water_opacity);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sea_water"]
+shader = SubResource("Shader_sea_water")
+shader_parameter/water_opacity = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sea_overlay"]
+shader = SubResource("Shader_sea_water")
+shader_parameter/water_opacity = 0.55
+
+[node name="SeaWater" type="ColorRect"]
+z_index = -2
+material = SubResource("ShaderMaterial_sea_water")
+offset_right = 2364.0
+offset_bottom = 860.0
+mouse_filter = 2
+script = ExtResource("Script_sea_water")
+
+[node name="SubmergedTint" type="ColorRect" parent="."]
+z_index = 1325
+material = SubResource("ShaderMaterial_sea_overlay")
+layout_mode = 0
+offset_left = 64.0
+offset_top = 13.0
+offset_right = 2364.0
+offset_bottom = 860.0
+mouse_filter = 2
