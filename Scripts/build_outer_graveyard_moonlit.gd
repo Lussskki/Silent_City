@@ -677,7 +677,7 @@ func _add_player(root: Node2D) -> void:
 	player.set("max_coin_power", 30)
 	player.set("local_player", true)
 	player.set("network_player_id", 1)
-	player.set("dynamic_frames_root", "res://Characters/Active_Players/Ash_Golem/PNG Sequences")
+	player.set("dynamic_frames_root", "res://Characters/Active_Players/Ash_Golem/Polished")
 	root.add_child(player)
 	player.owner = root
 

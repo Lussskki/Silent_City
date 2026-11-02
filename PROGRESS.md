@@ -189,6 +189,8 @@ Existing project files include a main menu scene and Steam lobby creation, listi
 - Cleaned the exterior contour of `house_01_2d.png` into the preserved sibling `house_01_2d_clean.png`; `OuterGraveyardMoonlit.tscn` now uses the clean version while the original remains unchanged.
 Completed: produced a second corrected tall-balcony house with one uniform dark contour tight to the colored silhouette, removing the doubled black halo and uneven exterior blocks. The scene uses the v2 asset; earlier versions remain preserved.
 
+- Replaced Ash Golem animation references with the new `Ash_Golem/Polished` PNG sequences (211 frames, 18 animations), preserving clip durations and updating menu previews and scene frame roots. Focused Godot validation passed for all textures, animation speeds, and preview loading; the user confirmed the original Ash Golem replacement works in game. Editor import reported resource leaks at shutdown.
+
 ## Important decisions
 Weather stays fixed to Tbilisi during development. When the game is put on Steam, add player-local weather using the player's city/region (for example, a US player's local city). Defer implementation until Steam release preparation; Steam's country lookup alone does not provide state/city.
 

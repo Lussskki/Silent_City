@@ -14,7 +14,7 @@ const SQUAD_ARENA_SPAWNS: Array[Vector2] = [
 	Vector2(6620, 458),
 	Vector2(900, 578),
 ]
-const ASH_GOLEM_FRAMES_ROOT := "res://Characters/Active_Players/Ash_Golem/PNG Sequences"
+const ASH_GOLEM_FRAMES_ROOT := "res://Characters/Active_Players/Ash_Golem/Polished"
 const ONLINE_CHARACTER_SPRITE_OFFSETS := {
 	"player": Vector2(0, -24),
 	"golem": Vector2(0, -24),

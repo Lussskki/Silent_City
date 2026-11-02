@@ -453,7 +453,7 @@ kick_sound = ExtResource("36_kick_sound")
 hit_sound = ExtResource("36_kick_sound")
 landing_sound = ExtResource("39_landing_sound")
 max_coin_power = 30
-dynamic_frames_root = "res://Characters/Active_Players/Ash_Golem/PNG Sequences"
+dynamic_frames_root = "res://Characters/Active_Players/Ash_Golem/Polished"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1781632174]
 position = Vector2(0, 25)
