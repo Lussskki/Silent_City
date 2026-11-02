@@ -193,6 +193,8 @@ Completed: produced a second corrected tall-balcony house with one uniform dark 
 
 - Filled the `cemetery_road` cave background with a decorative animated pool, distant mossy columns, shoreline grass, and additional animated plants using existing assets. Scenery preview rendered successfully and full headless scene validation passed; shutdown reported resource leaks. Existing gameplay, collisions, and lift remain unchanged.
 
+- Created the underground path proposal in `output/diagrams/Silent_City_Underground_Left_Edge.drawio` and its PNG preview: 14 staggered rooms, winding exploration loops, one optional boss, a dry exit below the sea/seabed, and save places in rooms 02, 06, and 11. Diagram connections, boss-free reachability, exit placement, and save markers validated; preview visually reviewed. Game implementation has not started.
+
 ## Important decisions
 Weather stays fixed to Tbilisi during development. When the game is put on Steam, add player-local weather using the player's city/region (for example, a US player's local city). Defer implementation until Steam release preparation; Steam's country lookup alone does not provide state/city.
 
