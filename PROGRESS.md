@@ -191,6 +191,8 @@ Completed: produced a second corrected tall-balcony house with one uniform dark 
 
 - Replaced Ash Golem animation references with the new `Ash_Golem/Polished` PNG sequences (211 frames, 18 animations), preserving clip durations and updating menu previews and scene frame roots. Focused Godot validation passed for all textures, animation speeds, and preview loading; the user confirmed the original Ash Golem replacement works in game. Editor import reported resource leaks at shutdown.
 
+- Filled the `cemetery_road` cave background with a decorative animated pool, distant mossy columns, shoreline grass, and additional animated plants using existing assets. Scenery preview rendered successfully and full headless scene validation passed; shutdown reported resource leaks. Existing gameplay, collisions, and lift remain unchanged.
+
 ## Important decisions
 Weather stays fixed to Tbilisi during development. When the game is put on Steam, add player-local weather using the player's city/region (for example, a US player's local city). Defer implementation until Steam release preparation; Steam's country lookup alone does not provide state/city.
 

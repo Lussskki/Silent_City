@@ -7096,6 +7096,34 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 
+[sub_resource type="Shader" id="DecorativeCaveWaterShader"]
+code = "shader_type canvas_item;
+render_mode unshaded;
+void fragment() {
+ vec2 p = floor(UV * vec2(2300.0, 150.0) / 3.0) * 3.0;
+ float shore = 7.0 + sin(p.x * 0.016) * 3.0 + sin(p.x * 0.045 + TIME * 0.55) * 1.5;
+ float depth = p.y - shore;
+ vec3 water = mix(vec3(0.10, 0.23, 0.26), vec3(0.045, 0.095, 0.14), smoothstep(0.0, 140.0, depth));
+ float ripple = step(0.93, sin(p.x * 0.035 + TIME * 0.45 + floor(p.y / 12.0) * 2.4));
+ ripple *= step(0.72, cos(p.y * 0.52)) * (1.0 - smoothstep(25.0, 130.0, depth));
+ water += ripple * vec3(0.045, 0.085, 0.08);
+ water = mix(water, vec3(0.19, 0.34, 0.35), (1.0 - smoothstep(0.0, 3.0, depth)) * 0.5);
+ COLOR = vec4(water, smoothstep(0.0, 4.0, depth));
+}"
+
+[sub_resource type="ShaderMaterial" id="DecorativeCaveWaterMaterial"]
+shader = SubResource("DecorativeCaveWaterShader")
+
+[sub_resource type="AtlasTexture" id="CaveReedTuft"]
+atlas = ExtResource("moss_props")
+region = Rect2(1536, 3072, 512, 512)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="CaveShortGrass"]
+atlas = ExtResource("moss_props")
+region = Rect2(1536, 3584, 512, 512)
+filter_clip = true
+
 [node name="CemeteryRoad" type="Node2D" unique_id=564632502]
 script = ExtResource("road_script")
 
@@ -7455,6 +7483,7 @@ text = "Main Menu"
 z_index = -90
 
 [node name="CaveBackdrop" type="ColorRect" parent="Underground" unique_id=753712259]
+z_index = -10
 material = SubResource("CaveBackdropMaterial")
 offset_left = -1035.0
 offset_top = -779.0
@@ -8304,3 +8333,545 @@ color = Color(1, 0.82, 0.58, 1)
 energy = 0.75
 texture = SubResource("CaveLandingLightTexture")
 texture_scale = 3.0
+
+
+[node name="WetlandBackground" type="Node2D" parent="Underground"]
+z_index = -1
+
+[node name="FarCavernColumn00" type="Sprite2D" parent="Underground/WetlandBackground"]
+modulate = Color(0.52, 0.64, 0.72, 1)
+texture_filter = 2
+material = SubResource("CaveDistantPalette")
+position = Vector2(40, 225)
+scale = Vector2(0.33, 0.33)
+texture = SubResource("MossRegion1")
+
+[node name="FarCavernColumn01" type="Sprite2D" parent="Underground/WetlandBackground"]
+modulate = Color(0.52, 0.64, 0.72, 1)
+texture_filter = 2
+material = SubResource("CaveDistantPalette")
+position = Vector2(420, 175)
+scale = Vector2(0.27, 0.27)
+texture = SubResource("MossRegion2")
+
+[node name="FarCavernColumn02" type="Sprite2D" parent="Underground/WetlandBackground"]
+modulate = Color(0.52, 0.64, 0.72, 1)
+texture_filter = 2
+material = SubResource("CaveDistantPalette")
+position = Vector2(850, 245)
+scale = Vector2(0.3, 0.3)
+texture = SubResource("MossRegion3")
+
+[node name="FarCavernColumn03" type="Sprite2D" parent="Underground/WetlandBackground"]
+modulate = Color(0.52, 0.64, 0.72, 1)
+texture_filter = 2
+material = SubResource("CaveDistantPalette")
+position = Vector2(1220, 185)
+scale = Vector2(0.25, 0.25)
+texture = SubResource("MossRegion4")
+
+[node name="FarCavernColumn04" type="Sprite2D" parent="Underground/WetlandBackground"]
+modulate = Color(0.52, 0.64, 0.72, 1)
+texture_filter = 2
+material = SubResource("CaveDistantPalette")
+position = Vector2(1570, 230)
+scale = Vector2(0.32, 0.32)
+texture = SubResource("MossRegion1")
+
+[node name="FarCavernColumn05" type="Sprite2D" parent="Underground/WetlandBackground"]
+modulate = Color(0.52, 0.64, 0.72, 1)
+texture_filter = 2
+material = SubResource("CaveDistantPalette")
+position = Vector2(1940, 195)
+scale = Vector2(0.28, 0.28)
+texture = SubResource("MossRegion2")
+
+[node name="FarCavernColumn06" type="Sprite2D" parent="Underground/WetlandBackground"]
+modulate = Color(0.52, 0.64, 0.72, 1)
+texture_filter = 2
+material = SubResource("CaveDistantPalette")
+position = Vector2(2300, 220)
+scale = Vector2(0.34, 0.34)
+texture = SubResource("MossRegion3")
+
+[node name="StillCaveWater" type="ColorRect" parent="Underground/WetlandBackground"]
+z_index = 1
+material = SubResource("DecorativeCaveWaterMaterial")
+offset_left = -160.0
+offset_top = 505.0
+offset_right = 2130.0
+offset_bottom = 665.0
+mouse_filter = 2
+
+[node name="FarBankGrass00" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(-90, 527.0)
+scale = Vector2(0.13, 0.13)
+texture = SubResource("CaveReedTuft")
+offset = Vector2(0, -256)
+flip_h = false
+
+[node name="FarBankGrass01" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(20, 524.0)
+scale = Vector2(0.18, 0.18)
+texture = SubResource("CaveShortGrass")
+offset = Vector2(0, -256)
+flip_h = true
+
+[node name="FarBankGrass02" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(130, 521.0)
+scale = Vector2(0.15, 0.15)
+texture = SubResource("CaveShortGrass")
+offset = Vector2(0, -256)
+flip_h = false
+
+[node name="FarBankGrass03" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(240, 527.0)
+scale = Vector2(0.21, 0.21)
+texture = SubResource("CaveReedTuft")
+offset = Vector2(0, -256)
+flip_h = true
+
+[node name="FarBankGrass04" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(350, 524.0)
+scale = Vector2(0.16, 0.16)
+texture = SubResource("CaveShortGrass")
+offset = Vector2(0, -256)
+flip_h = false
+
+[node name="FarBankGrass05" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(460, 521.0)
+scale = Vector2(0.13, 0.13)
+texture = SubResource("CaveShortGrass")
+offset = Vector2(0, -256)
+flip_h = true
+
+[node name="FarBankGrass06" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(570, 527.0)
+scale = Vector2(0.18, 0.18)
+texture = SubResource("CaveReedTuft")
+offset = Vector2(0, -256)
+flip_h = false
+
+[node name="FarBankGrass07" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(680, 524.0)
+scale = Vector2(0.15, 0.15)
+texture = SubResource("CaveShortGrass")
+offset = Vector2(0, -256)
+flip_h = true
+
+[node name="FarBankGrass08" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(790, 521.0)
+scale = Vector2(0.21, 0.21)
+texture = SubResource("CaveShortGrass")
+offset = Vector2(0, -256)
+flip_h = false
+
+[node name="FarBankGrass09" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(900, 527.0)
+scale = Vector2(0.16, 0.16)
+texture = SubResource("CaveReedTuft")
+offset = Vector2(0, -256)
+flip_h = true
+
+[node name="FarBankGrass10" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(1010, 524.0)
+scale = Vector2(0.13, 0.13)
+texture = SubResource("CaveShortGrass")
+offset = Vector2(0, -256)
+flip_h = false
+
+[node name="FarBankGrass11" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(1120, 521.0)
+scale = Vector2(0.18, 0.18)
+texture = SubResource("CaveShortGrass")
+offset = Vector2(0, -256)
+flip_h = true
+
+[node name="FarBankGrass12" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(1230, 527.0)
+scale = Vector2(0.15, 0.15)
+texture = SubResource("CaveReedTuft")
+offset = Vector2(0, -256)
+flip_h = false
+
+[node name="FarBankGrass13" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(1340, 524.0)
+scale = Vector2(0.21, 0.21)
+texture = SubResource("CaveShortGrass")
+offset = Vector2(0, -256)
+flip_h = true
+
+[node name="FarBankGrass14" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(1450, 521.0)
+scale = Vector2(0.16, 0.16)
+texture = SubResource("CaveShortGrass")
+offset = Vector2(0, -256)
+flip_h = false
+
+[node name="FarBankGrass15" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(1560, 527.0)
+scale = Vector2(0.13, 0.13)
+texture = SubResource("CaveReedTuft")
+offset = Vector2(0, -256)
+flip_h = true
+
+[node name="FarBankGrass16" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(1670, 524.0)
+scale = Vector2(0.18, 0.18)
+texture = SubResource("CaveShortGrass")
+offset = Vector2(0, -256)
+flip_h = false
+
+[node name="FarBankGrass17" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(1780, 521.0)
+scale = Vector2(0.15, 0.15)
+texture = SubResource("CaveShortGrass")
+offset = Vector2(0, -256)
+flip_h = true
+
+[node name="FarBankGrass18" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(1890, 527.0)
+scale = Vector2(0.21, 0.21)
+texture = SubResource("CaveReedTuft")
+offset = Vector2(0, -256)
+flip_h = false
+
+[node name="FarBankGrass19" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(2000, 524.0)
+scale = Vector2(0.16, 0.16)
+texture = SubResource("CaveShortGrass")
+offset = Vector2(0, -256)
+flip_h = true
+
+[node name="FarBankGrass20" type="Sprite2D" parent="Underground/WetlandBackground"]
+z_index = 2
+modulate = Color(0.46, 0.64, 0.7, 1)
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(2110, 521.0)
+scale = Vector2(0.13, 0.13)
+texture = SubResource("CaveShortGrass")
+offset = Vector2(0, -256)
+flip_h = false
+
+[node name="WetlandGrass" type="Node2D" parent="Scenery"]
+z_index = -1
+
+[node name="ShoreGrass00" type="Sprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(20, 630)
+scale = Vector2(0.16, 0.16)
+texture = SubResource("CaveShortGrass")
+offset = Vector2(0, -256)
+flip_h = false
+
+[node name="ShoreGrass01" type="Sprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(130, 630)
+scale = Vector2(0.23, 0.23)
+texture = SubResource("CaveReedTuft")
+offset = Vector2(0, -256)
+flip_h = true
+
+[node name="ShoreGrass02" type="Sprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(230, 630)
+scale = Vector2(0.18, 0.18)
+texture = SubResource("CaveReedTuft")
+offset = Vector2(0, -256)
+flip_h = false
+
+[node name="ShoreGrass03" type="Sprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(320, 630)
+scale = Vector2(0.26, 0.26)
+texture = SubResource("CaveShortGrass")
+offset = Vector2(0, -256)
+flip_h = true
+
+[node name="ShoreGrass04" type="Sprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(450, 630)
+scale = Vector2(0.19, 0.19)
+texture = SubResource("CaveReedTuft")
+offset = Vector2(0, -256)
+flip_h = false
+
+[node name="ShoreGrass05" type="Sprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(540, 630)
+scale = Vector2(0.21, 0.21)
+texture = SubResource("CaveReedTuft")
+offset = Vector2(0, -256)
+flip_h = true
+
+[node name="ShoreGrass06" type="Sprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(650, 630)
+scale = Vector2(0.16, 0.16)
+texture = SubResource("CaveShortGrass")
+offset = Vector2(0, -256)
+flip_h = false
+
+[node name="ShoreGrass07" type="Sprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(770, 630)
+scale = Vector2(0.23, 0.23)
+texture = SubResource("CaveReedTuft")
+offset = Vector2(0, -256)
+flip_h = true
+
+[node name="ShoreGrass08" type="Sprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(840, 630)
+scale = Vector2(0.18, 0.18)
+texture = SubResource("CaveReedTuft")
+offset = Vector2(0, -256)
+flip_h = false
+
+[node name="ShoreGrass09" type="Sprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(1190, 630)
+scale = Vector2(0.26, 0.26)
+texture = SubResource("CaveShortGrass")
+offset = Vector2(0, -256)
+flip_h = true
+
+[node name="ShoreGrass10" type="Sprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(1290, 630)
+scale = Vector2(0.19, 0.19)
+texture = SubResource("CaveReedTuft")
+offset = Vector2(0, -256)
+flip_h = false
+
+[node name="ShoreGrass11" type="Sprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(1400, 630)
+scale = Vector2(0.21, 0.21)
+texture = SubResource("CaveReedTuft")
+offset = Vector2(0, -256)
+flip_h = true
+
+[node name="ShoreGrass12" type="Sprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(1515, 630)
+scale = Vector2(0.16, 0.16)
+texture = SubResource("CaveShortGrass")
+offset = Vector2(0, -256)
+flip_h = false
+
+[node name="ShoreGrass13" type="Sprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(1620, 630)
+scale = Vector2(0.23, 0.23)
+texture = SubResource("CaveReedTuft")
+offset = Vector2(0, -256)
+flip_h = true
+
+[node name="ShoreGrass14" type="Sprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(1760, 630)
+scale = Vector2(0.18, 0.18)
+texture = SubResource("CaveReedTuft")
+offset = Vector2(0, -256)
+flip_h = false
+
+[node name="ShoreGrass15" type="Sprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(1840, 630)
+scale = Vector2(0.26, 0.26)
+texture = SubResource("CaveShortGrass")
+offset = Vector2(0, -256)
+flip_h = true
+
+[node name="ShoreGrass16" type="Sprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(1960, 630)
+scale = Vector2(0.19, 0.19)
+texture = SubResource("CaveReedTuft")
+offset = Vector2(0, -256)
+flip_h = false
+
+[node name="ShoreGrass17" type="Sprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(2050, 630)
+scale = Vector2(0.21, 0.21)
+texture = SubResource("CaveReedTuft")
+offset = Vector2(0, -256)
+flip_h = true
+
+[node name="WaterPlants00" type="AnimatedSprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(170, 592)
+scale = Vector2(0.22, 0.22)
+sprite_frames = SubResource("CavePlantFrames2")
+animation = &"idle"
+autoplay = "idle"
+frame = 0
+flip_h = false
+
+[node name="WaterPlants01" type="AnimatedSprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(510, 592)
+scale = Vector2(0.22, 0.22)
+sprite_frames = SubResource("CavePlantFrames3")
+animation = &"idle"
+autoplay = "idle"
+frame = 2
+flip_h = true
+
+[node name="WaterPlants02" type="AnimatedSprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(700, 592)
+scale = Vector2(0.22, 0.22)
+sprite_frames = SubResource("CavePlantFrames4")
+animation = &"idle"
+autoplay = "idle"
+frame = 4
+flip_h = false
+
+[node name="WaterPlants03" type="AnimatedSprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(1315, 592)
+scale = Vector2(0.22, 0.22)
+sprite_frames = SubResource("CavePlantFrames5")
+animation = &"idle"
+autoplay = "idle"
+frame = 6
+flip_h = true
+
+[node name="WaterPlants04" type="AnimatedSprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(1480, 592)
+scale = Vector2(0.22, 0.22)
+sprite_frames = SubResource("CavePlantFrames6")
+animation = &"idle"
+autoplay = "idle"
+frame = 8
+flip_h = false
+
+[node name="WaterPlants05" type="AnimatedSprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(1810, 592)
+scale = Vector2(0.22, 0.22)
+sprite_frames = SubResource("CavePlantFrames9")
+animation = &"idle"
+autoplay = "idle"
+frame = 10
+flip_h = true
+
+[node name="WaterPlants06" type="AnimatedSprite2D" parent="Scenery/WetlandGrass"]
+texture_filter = 2
+material = SubResource("CavePlantPalette")
+position = Vector2(2000, 592)
+scale = Vector2(0.22, 0.22)
+sprite_frames = SubResource("CavePlantFrames10")
+animation = &"idle"
+autoplay = "idle"
+frame = 12
+flip_h = false
