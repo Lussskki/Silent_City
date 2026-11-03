@@ -916,6 +916,14 @@ func _open_pause_audio() -> void:
 		_set_pause_focus.call_deferred(pause_master_volume_button)
 
 
+func open_save_place_menu() -> void:
+	var settings := get_node_or_null("/root/GameSettings")
+	if settings == null or bool(settings.get("online_mode")) or pause_menu.visible:
+		return
+	_open_pause_menu()
+	_open_pause_save()
+
+
 func _open_pause_save() -> void:
 	var settings := get_node_or_null("/root/GameSettings")
 	if settings == null or bool(settings.get("online_mode")):
