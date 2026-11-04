@@ -65,8 +65,25 @@
 [ext_resource type="Texture2D" uid="uid://beud73l6que8h" path="res://Sprites/Graveyard/GraveyardTileset_second/PNG/Platfromer/Forbidden_Graveyard_2D_Platformer_Tileset_Platformer - Ground Additional 04.png" id="road_underwater_underwater_ground_04"]
 [ext_resource type="PackedScene" path="res://Scenes/Environment/SeaWater.tscn" id="shared_sea"]
 
+[ext_resource type="Texture2D" path="res://Sprites/Mossy Tileset/CaveRedraw/cavern_rounded_walls.png" id="redraw_walls"]
+[ext_resource type="Texture2D" path="res://Sprites/Mossy Tileset/CaveRedraw/cavern_rounded_ground.png" id="redraw_ground"]
+[ext_resource type="Texture2D" path="res://Resources/Second_prompt/background_assets/waterfall_000.png" id="redraw_water_0"]
+[ext_resource type="Texture2D" path="res://Resources/Second_prompt/background_assets/waterfall_001.png" id="redraw_water_1"]
+[ext_resource type="Texture2D" path="res://Resources/Second_prompt/background_assets/waterfall_002.png" id="redraw_water_2"]
+[ext_resource type="Texture2D" path="res://Resources/Second_prompt/background_assets/waterfall_003.png" id="redraw_water_3"]
+[ext_resource type="Texture2D" path="res://Resources/Second_prompt/background_assets/waterfall_004.png" id="redraw_water_4"]
+[ext_resource type="Texture2D" path="res://Resources/Second_prompt/background_assets/waterfall_005.png" id="redraw_water_5"]
+[ext_resource type="Texture2D" path="res://Resources/Second_prompt/background_assets/waterfall_006.png" id="redraw_water_6"]
+[ext_resource type="Texture2D" path="res://Resources/Second_prompt/background_assets/waterfall_007.png" id="redraw_water_7"]
+
+[ext_resource type="Texture2D" path="res://Sprites/Mossy Tileset/CaveRedraw/cavern_depth_background.png" id="cave_distant_fill"]
+[ext_resource type="Texture2D" path="res://Sprites/Mossy Tileset/CaveRedraw/cavern_rounded_shaft.png" id="cave_lift_shaft"]
+
+[ext_resource type="AudioStream" path="res://Resources/Background_voice/Waterfalls/cave_waterfall_rush.wav" id="cave_water_rush"]
+[ext_resource type="AudioStream" path="res://Resources/Background_voice/Waterfalls/cave_waterfall_splash.wav" id="cave_water_splash"]
+
 [sub_resource type="RectangleShape2D" id="RoadFallKillShape"]
-size = Vector2(4096, 180)
+size = Vector2(7936, 180)
 
 [sub_resource type="RectangleShape2D" id="RoadGroundShape"]
 size = Vector2(2048, 384)
@@ -87,23 +104,20 @@ filter_clip = true
 [sub_resource type="Shader" id="RoadSeaCliffShader"]
 code = "shader_type canvas_item;
 uniform sampler2D rock_texture : source_color, filter_linear, repeat_disable;
-uniform vec4 rock_tint : source_color = vec4(0.83, 0.85, 0.95, 1.0);
 varying vec2 world_position;
 void vertex() { world_position = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy; }
 void fragment() {
- vec2 p = world_position / 128.0;
- float x = fract(p.x);
- if (mod(floor(p.x), 2.0) < 1.0) { x = 1.0 - x; }
- float y = fract(p.y);
- if (mod(floor(p.y), 2.0) < 1.0) { y = 1.0 - y; }
- vec3 rock = texture(rock_texture, vec2(x, (40.0 + y * 256.0) / 320.0)).rgb;
- COLOR = vec4(rock * rock_tint.rgb, 1.0);
+ vec2 patch_size = vec2(450.0, 270.0);
+ vec2 p = (world_position - vec2(1880.0, -512.0)) / patch_size;
+ vec2 mirrored = vec2(1.0) - abs(mod(p, vec2(2.0)) - vec2(1.0));
+ vec2 rock_uv = (vec2(80.0, 50.0) + mirrored * patch_size) / vec2(textureSize(rock_texture, 0));
+ vec3 rock = texture(rock_texture, rock_uv).rgb;
+ COLOR = vec4(rock * vec3(0.72, 0.8, 0.9), texture(TEXTURE, UV).a);
 }"
 
 [sub_resource type="ShaderMaterial" id="RoadSeaCliffMaterial"]
 shader = SubResource("RoadSeaCliffShader")
-shader_parameter/rock_texture = ExtResource("road_bare_stone")
-shader_parameter/rock_tint = Color(0.83, 0.85, 0.95, 1)
+shader_parameter/rock_texture = ExtResource("redraw_ground")
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yp222"]
 radius = 6.0
@@ -193,12 +207,12 @@ void fragment() {
  vec2 p = floor(UV * vec2(2300.0, 150.0) / 3.0) * 3.0;
  float shore = 7.0 + sin(p.x * 0.016) * 3.0 + sin(p.x * 0.045 + TIME * 0.55) * 1.5;
  float depth = p.y - shore;
- vec3 water = mix(vec3(0.10, 0.23, 0.26), vec3(0.045, 0.095, 0.14), smoothstep(0.0, 140.0, depth));
+ vec3 water = mix(vec3(0.045, 0.075, 0.14), vec3(0.018, 0.032, 0.075), smoothstep(0.0, 140.0, depth));
  float ripple = step(0.93, sin(p.x * 0.035 + TIME * 0.45 + floor(p.y / 12.0) * 2.4));
  ripple *= step(0.72, cos(p.y * 0.52)) * (1.0 - smoothstep(25.0, 130.0, depth));
- water += ripple * vec3(0.045, 0.085, 0.08);
- water = mix(water, vec3(0.19, 0.34, 0.35), (1.0 - smoothstep(0.0, 3.0, depth)) * 0.5);
- COLOR = vec4(water, smoothstep(0.0, 4.0, depth));
+ water += ripple * vec3(0.025, 0.04, 0.065);
+ water = mix(water, vec3(0.13, 0.21, 0.31), (1.0 - smoothstep(0.0, 3.0, depth)) * 0.5);
+ COLOR = vec4(water, smoothstep(0.0, 4.0, depth) * 0.4 * (1.0 - smoothstep(0.65, 1.0, UV.y)));
  if (soft_edges) {
   COLOR.a *= smoothstep(0.0, 0.04, UV.x) * (1.0 - smoothstep(0.96, 1.0, UV.x));
  }
@@ -7129,9 +7143,6 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 
-[sub_resource type="RectangleShape2D" id="UndergroundDescentStepShape"]
-size = Vector2(128, 384)
-
 [sub_resource type="RectangleShape2D" id="UndergroundEndShape"]
 size = Vector2(128, 800)
 
@@ -7154,11 +7165,129 @@ filter_clip = true
 shader = SubResource("DecorativeCaveWaterShader")
 shader_parameter/soft_edges = true
 
+[sub_resource type="AtlasTexture" id="BrokenWall0"]
+atlas = ExtResource("redraw_walls")
+region = Rect2(11, 80, 214, 517)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="BrokenWall1"]
+atlas = ExtResource("redraw_walls")
+region = Rect2(221, 80, 406, 586)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="BrokenWall2"]
+atlas = ExtResource("redraw_walls")
+region = Rect2(638, 80, 275, 480)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="BrokenWall3"]
+atlas = ExtResource("redraw_walls")
+region = Rect2(918, 80, 356, 581)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="BrokenWall4"]
+atlas = ExtResource("redraw_walls")
+region = Rect2(1291, 80, 275, 561)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="BrokenWall5"]
+atlas = ExtResource("redraw_walls")
+region = Rect2(1583, 80, 380, 547)
+filter_clip = true
+
+[sub_resource type="Shader" id="BrokenWallWaterShader"]
+code = "shader_type canvas_item;
+varying vec4 water_tint;
+void vertex() { water_tint = COLOR; }
+void fragment() {
+ vec4 source = texture(TEXTURE, UV);
+ float value = max(source.r, max(source.g, source.b));
+ float edge = smoothstep(0.0, 0.055, UV.x) * smoothstep(0.0, 0.055, 1.0 - UV.x);
+ edge *= smoothstep(0.0, 0.045, UV.y) * smoothstep(0.0, 0.055, 1.0 - UV.y);
+ source.a *= smoothstep(0.20, 0.39, value) * edge;
+ COLOR = source * water_tint;
+}"
+
+[sub_resource type="ShaderMaterial" id="BrokenWallWaterMaterial"]
+shader = SubResource("BrokenWallWaterShader")
+
+[sub_resource type="SpriteFrames" id="BrokenWallWaterFrames"]
+animations = [{
+"frames": [{"duration": 1.0, "texture": ExtResource("redraw_water_0")}, {"duration": 1.0, "texture": ExtResource("redraw_water_1")}, {"duration": 1.0, "texture": ExtResource("redraw_water_2")}, {"duration": 1.0, "texture": ExtResource("redraw_water_3")}, {"duration": 1.0, "texture": ExtResource("redraw_water_4")}, {"duration": 1.0, "texture": ExtResource("redraw_water_5")}, {"duration": 1.0, "texture": ExtResource("redraw_water_6")}, {"duration": 1.0, "texture": ExtResource("redraw_water_7")}],
+"loop": true,
+"name": &"pour",
+"speed": 8.0
+}]
+
+[sub_resource type="Gradient" id="CaveMoteShapeGradient"]
+offsets = PackedFloat32Array(0, 0.3, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.8, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="CaveMoteTexture"]
+gradient = SubResource("CaveMoteShapeGradient")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="CaveMoteLifeGradient"]
+offsets = PackedFloat32Array(0, 0.2, 0.8, 1)
+colors = PackedColorArray(0.6, 0.75, 1, 0, 0.6, 0.75, 1, 0.5, 0.6, 0.75, 1, 0.5, 0.6, 0.75, 1, 0)
+
+[sub_resource type="Shader" id="WalkableTunnelRockShader"]
+code = "shader_type canvas_item;
+uniform sampler2D rock_texture : source_color, filter_linear, repeat_enable;
+uniform bool ceiling = false;
+varying vec2 world_position;
+void vertex() { world_position = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy; }
+void fragment() {
+ float floor_level = 620.0 + clamp((-world_position.x - 1920.0) / 1120.0, 0.0, 1.0) * 256.0;
+ float surface = ceiling ? floor_level - 440.0 : floor_level;
+ float depth = ceiling ? surface - world_position.y : world_position.y - surface;
+ float u = fract((world_position.x + (ceiling ? 384.0 : 0.0)) / 2048.0);
+ float v = clamp(0.022 + depth / 620.0, 0.022, 0.94);
+ vec3 rock = texture(rock_texture, vec2(u, v)).rgb;
+ rock *= ceiling ? vec3(0.58, 0.64, 0.82) : vec3(0.86, 0.91, 1.0);
+ rock = mix(rock, vec3(0.008, 0.012, 0.025), smoothstep(300.0, 700.0, depth));
+ COLOR = vec4(rock, 1.0);
+}"
+
+[sub_resource type="ShaderMaterial" id="TunnelFloorMaterial"]
+shader = SubResource("WalkableTunnelRockShader")
+shader_parameter/rock_texture = ExtResource("redraw_ground")
+shader_parameter/ceiling = false
+
+[sub_resource type="ShaderMaterial" id="TunnelRoofMaterial"]
+shader = SubResource("WalkableTunnelRockShader")
+shader_parameter/rock_texture = ExtResource("redraw_ground")
+shader_parameter/ceiling = true
+
+[sub_resource type="Shader" id="TunnelBackgroundRockShader"]
+code = "shader_type canvas_item;
+uniform sampler2D rock_texture : source_color, filter_linear, repeat_enable;
+varying vec2 wall_position;
+void vertex() { wall_position = VERTEX; }
+void fragment() {
+ vec2 p = wall_position;
+ float u = fract((p.x + 4608.0) / 1800.0 + sin(p.y / 370.0) * 0.07);
+ float phase = (p.y + 450.0) / 900.0 + sin(p.x / 320.0) * 0.045;
+ float stone_y = 1.0 - abs(fract(phase) * 2.0 - 1.0);
+ float v = 0.07 + stone_y * 0.38;
+ vec3 rock = texture(rock_texture, vec2(u, v)).rgb;
+ rock = rock * vec3(0.68, 0.74, 0.84) + vec3(0.006, 0.009, 0.016);
+ COLOR = vec4(rock, 1.0);
+}"
+
+[sub_resource type="ShaderMaterial" id="TunnelBackgroundRockMaterial"]
+shader = SubResource("TunnelBackgroundRockShader")
+shader_parameter/rock_texture = ExtResource("redraw_ground")
+
 [node name="CemeteryRoad" type="Node2D" unique_id=564632502]
 script = ExtResource("road_script")
 
 [node name="FallKillZone" type="Area2D" parent="." unique_id=187034299]
-position = Vector2(1024, 1200)
+position = Vector2(-1024, 1380)
 collision_layer = 0
 script = ExtResource("road_kill_zone")
 
@@ -7201,6 +7330,7 @@ scale = Vector2(1, 1.422093)
 position = Vector2(129, 475)
 
 [node name="Sprite2D" type="Sprite2D" parent="Level/UnderwaterRocks/Rock01" unique_id=1032273568]
+material = SubResource("RoadSeaCliffMaterial")
 position = Vector2(-40.5, -77.34671)
 scale = Vector2(1.4140625, 2.7797935)
 texture = ExtResource("road_underwater_bank_ground_06")
@@ -7523,8 +7653,10 @@ mouse_filter = 2
 metadata/_edit_lock_ = true
 
 [node name="DistantColumns" type="Node2D" parent="Underground" unique_id=648853573]
+visible = false
 
 [node name="DistantColumn0" type="Sprite2D" parent="Underground/DistantColumns" unique_id=1307152723]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(120, 225)
@@ -7532,6 +7664,7 @@ scale = Vector2(0.2, 0.2)
 texture = SubResource("MossRegion1")
 
 [node name="DistantColumn1" type="Sprite2D" parent="Underground/DistantColumns" unique_id=92501577]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(660, 235)
@@ -7539,6 +7672,7 @@ scale = Vector2(0.24, 0.24)
 texture = SubResource("MossRegion2")
 
 [node name="DistantColumn2" type="Sprite2D" parent="Underground/DistantColumns" unique_id=811275519]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(1388, 235)
@@ -7546,6 +7680,7 @@ scale = Vector2(0.22, 0.22)
 texture = SubResource("MossRegion3")
 
 [node name="DistantColumn3" type="Sprite2D" parent="Underground/DistantColumns" unique_id=248704249]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(1960, 235)
@@ -7553,6 +7688,7 @@ scale = Vector2(0.24, 0.24)
 texture = SubResource("MossRegion4")
 
 [node name="CavernHill0" type="Sprite2D" parent="Underground" unique_id=642718389]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(310, 630)
@@ -7561,6 +7697,7 @@ texture = SubResource("MossRegion5")
 offset = Vector2(0, -576)
 
 [node name="CavernHill1" type="Sprite2D" parent="Underground" unique_id=1635635831]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(1745, 630)
@@ -7569,6 +7706,7 @@ texture = SubResource("MossRegion6")
 offset = Vector2(0, -576)
 
 [node name="DistantShelf0" type="Sprite2D" parent="Underground" unique_id=342288137]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(375, 380)
@@ -7576,6 +7714,7 @@ scale = Vector2(0.23, 0.23)
 texture = SubResource("MossRegion80")
 
 [node name="DistantShelf1" type="Sprite2D" parent="Underground" unique_id=2052430804]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(1675, 380)
@@ -7586,6 +7725,7 @@ texture = SubResource("MossRegion81")
 z_index = -1
 
 [node name="FarCavernColumn00" type="Sprite2D" parent="Underground/WetlandBackground" unique_id=459615729]
+visible = false
 modulate = Color(0.52, 0.64, 0.72, 1)
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
@@ -7594,6 +7734,7 @@ scale = Vector2(0.33, 0.33)
 texture = SubResource("MossRegion1")
 
 [node name="FarCavernColumn01" type="Sprite2D" parent="Underground/WetlandBackground" unique_id=1327849654]
+visible = false
 modulate = Color(0.52, 0.64, 0.72, 1)
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
@@ -7602,6 +7743,7 @@ scale = Vector2(0.27, 0.27)
 texture = SubResource("MossRegion2")
 
 [node name="FarCavernColumn02" type="Sprite2D" parent="Underground/WetlandBackground" unique_id=2122444696]
+visible = false
 modulate = Color(0.52, 0.64, 0.72, 1)
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
@@ -7610,6 +7752,7 @@ scale = Vector2(0.3, 0.3)
 texture = SubResource("MossRegion3")
 
 [node name="FarCavernColumn03" type="Sprite2D" parent="Underground/WetlandBackground" unique_id=475748375]
+visible = false
 modulate = Color(0.52, 0.64, 0.72, 1)
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
@@ -7618,6 +7761,7 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion4")
 
 [node name="FarCavernColumn04" type="Sprite2D" parent="Underground/WetlandBackground" unique_id=893904534]
+visible = false
 modulate = Color(0.52, 0.64, 0.72, 1)
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
@@ -7626,6 +7770,7 @@ scale = Vector2(0.32, 0.32)
 texture = SubResource("MossRegion1")
 
 [node name="FarCavernColumn05" type="Sprite2D" parent="Underground/WetlandBackground" unique_id=1005917950]
+visible = false
 modulate = Color(0.52, 0.64, 0.72, 1)
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
@@ -7634,6 +7779,7 @@ scale = Vector2(0.28, 0.28)
 texture = SubResource("MossRegion2")
 
 [node name="FarCavernColumn06" type="Sprite2D" parent="Underground/WetlandBackground" unique_id=1242096268]
+visible = false
 modulate = Color(0.52, 0.64, 0.72, 1)
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
@@ -7874,6 +8020,7 @@ offset = Vector2(0, -256)
 z_index = -2
 
 [node name="GroundMoss00" type="Sprite2D" parent="Terrain" unique_id=1648265793]
+visible = false
 z_index = -26
 texture_filter = 2
 material = SubResource("GroundBlendLeftSurface")
@@ -7882,6 +8029,7 @@ scale = Vector2(0.25, 0.3408204)
 texture = SubResource("MossRegion7")
 
 [node name="GroundRock1_00" type="Sprite2D" parent="Terrain" unique_id=322969272]
+visible = false
 texture_filter = 2
 material = SubResource("GroundBlendLeftFill")
 position = Vector2(64, 812)
@@ -7889,6 +8037,7 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion8")
 
 [node name="GroundRock2_00" type="Sprite2D" parent="Terrain" unique_id=1891745076]
+visible = false
 texture_filter = 2
 material = SubResource("GroundBlendLeftFill")
 position = Vector2(64, 940)
@@ -7896,6 +8045,8 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion9")
 
 [node name="CeilingMoss00" type="Sprite2D" parent="Terrain" unique_id=1862082574]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(64, -80)
@@ -7904,6 +8055,7 @@ texture = SubResource("MossRegion10")
 flip_v = true
 
 [node name="BareStoneFloor01" type="Sprite2D" parent="Terrain" unique_id=1432778138]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -7912,6 +8064,7 @@ scale = Vector2(0.4, 0.42105263)
 texture = SubResource("RoadBareStoneSurface")
 
 [node name="GroundRock1_01" type="Sprite2D" parent="Terrain" unique_id=404757]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -7920,6 +8073,7 @@ scale = Vector2(0.4, 0.5)
 texture = SubResource("RoadBareStoneFill")
 
 [node name="GroundRock2_01" type="Sprite2D" parent="Terrain" unique_id=1474004627]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -7928,6 +8082,8 @@ scale = Vector2(0.4, 0.5)
 texture = SubResource("RoadBareStoneFill")
 
 [node name="CeilingMoss01" type="Sprite2D" parent="Terrain" unique_id=446958190]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(192, -80)
@@ -7936,6 +8092,7 @@ texture = SubResource("MossRegion14")
 flip_v = true
 
 [node name="BareStoneFloor02" type="Sprite2D" parent="Terrain" unique_id=1190525276]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -7945,6 +8102,7 @@ texture = SubResource("RoadBareStoneSurface")
 flip_h = true
 
 [node name="GroundRock1_02" type="Sprite2D" parent="Terrain" unique_id=2030221087]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -7954,6 +8112,7 @@ texture = SubResource("RoadBareStoneFill")
 flip_h = true
 
 [node name="GroundRock2_02" type="Sprite2D" parent="Terrain" unique_id=80637238]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -7963,6 +8122,8 @@ texture = SubResource("RoadBareStoneFill")
 flip_h = true
 
 [node name="CeilingMoss02" type="Sprite2D" parent="Terrain" unique_id=16935040]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(320, -80)
@@ -7971,6 +8132,7 @@ texture = SubResource("MossRegion18")
 flip_v = true
 
 [node name="BareStoneFloor03" type="Sprite2D" parent="Terrain" unique_id=1501518366]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -7979,6 +8141,7 @@ scale = Vector2(0.4, 0.42105263)
 texture = SubResource("RoadBareStoneSurface")
 
 [node name="GroundRock1_03" type="Sprite2D" parent="Terrain" unique_id=830189376]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -7987,6 +8150,7 @@ scale = Vector2(0.4, 0.5)
 texture = SubResource("RoadBareStoneFill")
 
 [node name="GroundRock2_03" type="Sprite2D" parent="Terrain" unique_id=2117704301]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -7995,6 +8159,8 @@ scale = Vector2(0.4, 0.5)
 texture = SubResource("RoadBareStoneFill")
 
 [node name="CeilingMoss03" type="Sprite2D" parent="Terrain" unique_id=970412868]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(448, -80)
@@ -8003,6 +8169,7 @@ texture = SubResource("MossRegion22")
 flip_v = true
 
 [node name="BareStoneFloor04" type="Sprite2D" parent="Terrain" unique_id=652358838]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8012,6 +8179,7 @@ texture = SubResource("RoadBareStoneSurface")
 flip_h = true
 
 [node name="GroundRock1_04" type="Sprite2D" parent="Terrain" unique_id=1745575588]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8021,6 +8189,7 @@ texture = SubResource("RoadBareStoneFill")
 flip_h = true
 
 [node name="GroundRock2_04" type="Sprite2D" parent="Terrain" unique_id=1714614820]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8030,6 +8199,8 @@ texture = SubResource("RoadBareStoneFill")
 flip_h = true
 
 [node name="CeilingMoss04" type="Sprite2D" parent="Terrain" unique_id=562411895]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(576, -80)
@@ -8038,6 +8209,7 @@ texture = SubResource("MossRegion26")
 flip_v = true
 
 [node name="BareStoneFloor05" type="Sprite2D" parent="Terrain" unique_id=1927697950]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8046,6 +8218,7 @@ scale = Vector2(0.4, 0.42105263)
 texture = SubResource("RoadBareStoneSurface")
 
 [node name="GroundRock1_05" type="Sprite2D" parent="Terrain" unique_id=1332459801]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8054,6 +8227,7 @@ scale = Vector2(0.4, 0.5)
 texture = SubResource("RoadBareStoneFill")
 
 [node name="GroundRock2_05" type="Sprite2D" parent="Terrain" unique_id=1297401872]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8062,6 +8236,8 @@ scale = Vector2(0.4, 0.5)
 texture = SubResource("RoadBareStoneFill")
 
 [node name="CeilingMoss05" type="Sprite2D" parent="Terrain" unique_id=1447057387]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(704, -80)
@@ -8070,6 +8246,7 @@ texture = SubResource("MossRegion30")
 flip_v = true
 
 [node name="BareStoneFloor06" type="Sprite2D" parent="Terrain" unique_id=1407509174]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8079,6 +8256,7 @@ texture = SubResource("RoadBareStoneSurface")
 flip_h = true
 
 [node name="GroundRock1_06" type="Sprite2D" parent="Terrain" unique_id=2085492276]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8088,6 +8266,7 @@ texture = SubResource("RoadBareStoneFill")
 flip_h = true
 
 [node name="GroundRock2_06" type="Sprite2D" parent="Terrain" unique_id=646237285]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8097,6 +8276,8 @@ texture = SubResource("RoadBareStoneFill")
 flip_h = true
 
 [node name="CeilingMoss06" type="Sprite2D" parent="Terrain" unique_id=1610156606]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(832, -80)
@@ -8105,6 +8286,7 @@ texture = SubResource("MossRegion34")
 flip_v = true
 
 [node name="BareStoneFloor07" type="Sprite2D" parent="Terrain" unique_id=1621879750]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8113,6 +8295,7 @@ scale = Vector2(0.4, 0.42105263)
 texture = SubResource("RoadBareStoneSurface")
 
 [node name="GroundRock1_07" type="Sprite2D" parent="Terrain" unique_id=882332671]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8121,6 +8304,7 @@ scale = Vector2(0.4, 0.5)
 texture = SubResource("RoadBareStoneFill")
 
 [node name="GroundRock2_07" type="Sprite2D" parent="Terrain" unique_id=59961068]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8129,6 +8313,7 @@ scale = Vector2(0.4, 0.5)
 texture = SubResource("RoadBareStoneFill")
 
 [node name="BareStoneFloor08" type="Sprite2D" parent="Terrain" unique_id=293168686]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8138,6 +8323,7 @@ texture = SubResource("RoadBareStoneSurface")
 flip_h = true
 
 [node name="GroundRock1_08" type="Sprite2D" parent="Terrain" unique_id=1777246963]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8147,6 +8333,7 @@ texture = SubResource("RoadBareStoneFill")
 flip_h = true
 
 [node name="GroundRock2_08" type="Sprite2D" parent="Terrain" unique_id=383389209]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8156,6 +8343,7 @@ texture = SubResource("RoadBareStoneFill")
 flip_h = true
 
 [node name="BareStoneFloor09" type="Sprite2D" parent="Terrain" unique_id=2108077684]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8164,6 +8352,7 @@ scale = Vector2(0.4, 0.42105263)
 texture = SubResource("RoadBareStoneSurface")
 
 [node name="GroundRock1_09" type="Sprite2D" parent="Terrain" unique_id=154719613]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8172,6 +8361,7 @@ scale = Vector2(0.4, 0.5)
 texture = SubResource("RoadBareStoneFill")
 
 [node name="GroundRock2_09" type="Sprite2D" parent="Terrain" unique_id=591125096]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8180,6 +8370,8 @@ scale = Vector2(0.4, 0.5)
 texture = SubResource("RoadBareStoneFill")
 
 [node name="CeilingMoss09" type="Sprite2D" parent="Terrain" unique_id=1018728791]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(1216, -80)
@@ -8188,6 +8380,7 @@ texture = SubResource("MossRegion44")
 flip_v = true
 
 [node name="BareStoneFloor10" type="Sprite2D" parent="Terrain" unique_id=2087755342]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8197,6 +8390,7 @@ texture = SubResource("RoadBareStoneSurface")
 flip_h = true
 
 [node name="GroundRock1_10" type="Sprite2D" parent="Terrain" unique_id=1091199463]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8206,6 +8400,7 @@ texture = SubResource("RoadBareStoneFill")
 flip_h = true
 
 [node name="GroundRock2_10" type="Sprite2D" parent="Terrain" unique_id=446933105]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8215,6 +8410,8 @@ texture = SubResource("RoadBareStoneFill")
 flip_h = true
 
 [node name="CeilingMoss10" type="Sprite2D" parent="Terrain" unique_id=1994274841]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(1344, -80)
@@ -8223,6 +8420,7 @@ texture = SubResource("MossRegion48")
 flip_v = true
 
 [node name="BareStoneFloor11" type="Sprite2D" parent="Terrain" unique_id=18330663]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8231,6 +8429,7 @@ scale = Vector2(0.4, 0.42105263)
 texture = SubResource("RoadBareStoneSurface")
 
 [node name="GroundRock1_11" type="Sprite2D" parent="Terrain" unique_id=1386350936]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8239,6 +8438,7 @@ scale = Vector2(0.4, 0.5)
 texture = SubResource("RoadBareStoneFill")
 
 [node name="GroundRock2_11" type="Sprite2D" parent="Terrain" unique_id=1770700812]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8247,6 +8447,8 @@ scale = Vector2(0.4, 0.5)
 texture = SubResource("RoadBareStoneFill")
 
 [node name="CeilingMoss11" type="Sprite2D" parent="Terrain" unique_id=917547347]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(1472, -80)
@@ -8255,6 +8457,7 @@ texture = SubResource("MossRegion52")
 flip_v = true
 
 [node name="BareStoneFloor12" type="Sprite2D" parent="Terrain" unique_id=1746590298]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8264,6 +8467,7 @@ texture = SubResource("RoadBareStoneSurface")
 flip_h = true
 
 [node name="GroundRock1_12" type="Sprite2D" parent="Terrain" unique_id=274851021]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8273,6 +8477,7 @@ texture = SubResource("RoadBareStoneFill")
 flip_h = true
 
 [node name="GroundRock2_12" type="Sprite2D" parent="Terrain" unique_id=1539074646]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8282,6 +8487,8 @@ texture = SubResource("RoadBareStoneFill")
 flip_h = true
 
 [node name="CeilingMoss12" type="Sprite2D" parent="Terrain" unique_id=1869698720]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(1600, -80)
@@ -8290,6 +8497,7 @@ texture = SubResource("MossRegion56")
 flip_v = true
 
 [node name="BareStoneFloor13" type="Sprite2D" parent="Terrain" unique_id=4068146]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8298,6 +8506,7 @@ scale = Vector2(0.4, 0.42105263)
 texture = SubResource("RoadBareStoneSurface")
 
 [node name="GroundRock1_13" type="Sprite2D" parent="Terrain" unique_id=1828808911]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8306,6 +8515,7 @@ scale = Vector2(0.4, 0.5)
 texture = SubResource("RoadBareStoneFill")
 
 [node name="GroundRock2_13" type="Sprite2D" parent="Terrain" unique_id=1491797709]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8314,6 +8524,8 @@ scale = Vector2(0.4, 0.5)
 texture = SubResource("RoadBareStoneFill")
 
 [node name="CeilingMoss13" type="Sprite2D" parent="Terrain" unique_id=1666429539]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(1728, -80)
@@ -8322,6 +8534,7 @@ texture = SubResource("MossRegion60")
 flip_v = true
 
 [node name="BareStoneFloor14" type="Sprite2D" parent="Terrain" unique_id=1576127498]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8331,6 +8544,7 @@ texture = SubResource("RoadBareStoneSurface")
 flip_h = true
 
 [node name="GroundRock1_14" type="Sprite2D" parent="Terrain" unique_id=1001353540]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8340,6 +8554,7 @@ texture = SubResource("RoadBareStoneFill")
 flip_h = true
 
 [node name="GroundRock2_14" type="Sprite2D" parent="Terrain" unique_id=1380130405]
+visible = false
 modulate = Color(0.83, 0.85, 0.95, 1)
 texture_filter = 2
 material = SubResource("RoadStoneSeamless")
@@ -8349,6 +8564,8 @@ texture = SubResource("RoadBareStoneFill")
 flip_h = true
 
 [node name="CeilingMoss14" type="Sprite2D" parent="Terrain" unique_id=768986773]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(1856, -80)
@@ -8357,6 +8574,7 @@ texture = SubResource("MossRegion64")
 flip_v = true
 
 [node name="GroundMoss15" type="Sprite2D" parent="Terrain" unique_id=1445630483]
+visible = false
 texture_filter = 2
 material = SubResource("GroundBlendRightSurface")
 position = Vector2(1984, 684)
@@ -8364,6 +8582,7 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion65")
 
 [node name="GroundRock1_15" type="Sprite2D" parent="Terrain" unique_id=2054150374]
+visible = false
 texture_filter = 2
 material = SubResource("GroundBlendRightFill")
 position = Vector2(1984, 812)
@@ -8371,6 +8590,7 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion66")
 
 [node name="GroundRock2_15" type="Sprite2D" parent="Terrain" unique_id=1130289487]
+visible = false
 texture_filter = 2
 material = SubResource("GroundBlendRightFill")
 position = Vector2(1984, 940)
@@ -8378,6 +8598,8 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion67")
 
 [node name="CeilingMoss15" type="Sprite2D" parent="Terrain" unique_id=1082708011]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(1984, -80)
@@ -8928,37 +9150,9 @@ z_index = 0
 [node name="Plants" type="Node2D" parent="FirstUndergroundRooms/ReedPools"]
 z_index = 1
 
-[node name="Ground" type="StaticBody2D" parent="FirstUndergroundRooms/MossCrossroads"]
-position = Vector2(-1024, 812)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FirstUndergroundRooms/MossCrossroads/Ground"]
-shape = SubResource("RoadGroundShape")
-
-[node name="Floor00" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1984, 684)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill00" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1984, 812)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase00" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1984, 940)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling00" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-1984, -80)
@@ -8966,31 +9160,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor01" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1856, 684)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill01" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1856, 812)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase01" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1856, 940)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling01" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-1856, -80)
@@ -8998,31 +9170,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor02" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1728, 684)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill02" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1728, 812)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase02" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1728, 940)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling02" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-1728, -80)
@@ -9030,31 +9180,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor03" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1600, 684)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill03" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1600, 812)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase03" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1600, 940)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling03" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-1600, -80)
@@ -9062,31 +9190,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor04" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1472, 684)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill04" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1472, 812)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase04" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1472, 940)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling04" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-1472, -80)
@@ -9094,31 +9200,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor05" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1344, 684)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill05" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1344, 812)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase05" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1344, 940)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling05" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-1344, -80)
@@ -9126,31 +9210,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor06" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1216, 684)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill06" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1216, 812)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase06" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1216, 940)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling06" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-1216, -80)
@@ -9158,31 +9220,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor07" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1088, 684)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill07" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1088, 812)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase07" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-1088, 940)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling07" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-1088, -80)
@@ -9190,31 +9230,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor08" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-960, 684)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill08" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-960, 812)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase08" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-960, 940)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling08" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-960, -80)
@@ -9222,31 +9240,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor09" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-832, 684)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill09" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-832, 812)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase09" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-832, 940)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling09" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-832, -80)
@@ -9254,31 +9250,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor10" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-704, 684)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill10" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-704, 812)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase10" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-704, 940)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling10" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-704, -80)
@@ -9286,31 +9260,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor11" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-576, 684)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill11" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-576, 812)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase11" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-576, 940)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling11" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-576, -80)
@@ -9318,31 +9270,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor12" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-448, 684)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill12" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-448, 812)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase12" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-448, 940)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling12" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-448, -80)
@@ -9350,31 +9280,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor13" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-320, 684)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill13" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-320, 812)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase13" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-320, 940)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling13" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-320, -80)
@@ -9382,31 +9290,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor14" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-192, 684)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill14" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-192, 812)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase14" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-192, 940)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling14" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-192, -80)
@@ -9414,31 +9300,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor15" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-64, 684)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill15" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-64, 812)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase15" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-64, 940)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling15" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-64, -80)
@@ -9447,6 +9311,7 @@ texture = SubResource("MossRegion10")
 flip_v = true
 
 [node name="CaveColumn0" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-1928, 225)
@@ -9454,6 +9319,7 @@ scale = Vector2(0.19, 0.19)
 texture = SubResource("MossRegion1")
 
 [node name="CaveColumn1" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-1508, 225)
@@ -9461,6 +9327,7 @@ scale = Vector2(0.23, 0.23)
 texture = SubResource("MossRegion2")
 
 [node name="CaveColumn2" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-1038, 225)
@@ -9468,6 +9335,7 @@ scale = Vector2(0.2, 0.2)
 texture = SubResource("MossRegion3")
 
 [node name="CaveColumn3" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-548, 225)
@@ -9475,6 +9343,7 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion4")
 
 [node name="CaveColumn4" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-168, 225)
@@ -9482,6 +9351,7 @@ scale = Vector2(0.21, 0.21)
 texture = SubResource("MossRegion1")
 
 [node name="CavernBank0" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-1708, 620)
@@ -9490,6 +9360,7 @@ texture = SubResource("MossRegion5")
 offset = Vector2(0, -576)
 
 [node name="RockShelf0" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-1613, 400)
@@ -9497,6 +9368,7 @@ scale = Vector2(0.21, 0.21)
 texture = SubResource("MossRegion80")
 
 [node name="CavernBank1" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-978, 620)
@@ -9505,6 +9377,7 @@ texture = SubResource("MossRegion6")
 offset = Vector2(0, -576)
 
 [node name="RockShelf1" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-883, 400)
@@ -9512,6 +9385,7 @@ scale = Vector2(0.21, 0.21)
 texture = SubResource("MossRegion81")
 
 [node name="CavernBank2" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-308, 620)
@@ -9520,6 +9394,7 @@ texture = SubResource("MossRegion5")
 offset = Vector2(0, -576)
 
 [node name="RockShelf2" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-213, 400)
@@ -9538,7 +9413,7 @@ mouse_filter = 2
 [node name="BankGrass00" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-1998, 631.850)
+position = Vector2(-1998, 649.6786)
 scale = Vector2(0.15, 0.15)
 texture = SubResource("FirstRoomsShortGrass")
 offset = Vector2(0, -256)
@@ -9547,7 +9422,7 @@ flip_h = false
 [node name="BankGrass01" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-1890, 634.080)
+position = Vector2(-1890, 634.0800)
 scale = Vector2(0.22, 0.22)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -9556,7 +9431,7 @@ flip_h = true
 [node name="BankGrass02" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-1782, 631.520)
+position = Vector2(-1782, 631.5200)
 scale = Vector2(0.18, 0.18)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -9565,7 +9440,7 @@ flip_h = false
 [node name="BankGrass03" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-1674, 638.960)
+position = Vector2(-1726, 638.9600)
 scale = Vector2(0.24, 0.24)
 texture = SubResource("FirstRoomsShortGrass")
 offset = Vector2(0, -256)
@@ -9574,7 +9449,7 @@ flip_h = true
 [node name="BankGrass04" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-1566, 630.880)
+position = Vector2(-1506, 630.8800)
 scale = Vector2(0.17, 0.17)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -9583,7 +9458,7 @@ flip_h = false
 [node name="BankGrass05" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-1458, 629.600)
+position = Vector2(-1458, 629.6000)
 scale = Vector2(0.15, 0.15)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -9592,7 +9467,7 @@ flip_h = true
 [node name="BankGrass06" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-1350, 637.380)
+position = Vector2(-1374, 637.3800)
 scale = Vector2(0.22, 0.22)
 texture = SubResource("FirstRoomsShortGrass")
 offset = Vector2(0, -256)
@@ -9601,7 +9476,7 @@ flip_h = false
 [node name="BankGrass07" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-1242, 631.520)
+position = Vector2(-1186, 631.5200)
 scale = Vector2(0.18, 0.18)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -9610,7 +9485,7 @@ flip_h = true
 [node name="BankGrass08" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-1134, 635.360)
+position = Vector2(-1134, 635.3600)
 scale = Vector2(0.24, 0.24)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -9619,7 +9494,7 @@ flip_h = false
 [node name="BankGrass09" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-1026, 633.430)
+position = Vector2(-1026, 633.4300)
 scale = Vector2(0.17, 0.17)
 texture = SubResource("FirstRoomsShortGrass")
 offset = Vector2(0, -256)
@@ -9628,7 +9503,7 @@ flip_h = true
 [node name="BankGrass10" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-918, 629.600)
+position = Vector2(-958, 629.6000)
 scale = Vector2(0.15, 0.15)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -9637,7 +9512,7 @@ flip_h = false
 [node name="BankGrass11" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-810, 634.080)
+position = Vector2(-770, 634.0800)
 scale = Vector2(0.22, 0.22)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -9646,7 +9521,7 @@ flip_h = true
 [node name="BankGrass12" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-702, 634.220)
+position = Vector2(-702, 634.2200)
 scale = Vector2(0.18, 0.18)
 texture = SubResource("FirstRoomsShortGrass")
 offset = Vector2(0, -256)
@@ -9655,7 +9530,7 @@ flip_h = false
 [node name="BankGrass13" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-594, 635.360)
+position = Vector2(-638, 635.3600)
 scale = Vector2(0.24, 0.24)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -9664,7 +9539,7 @@ flip_h = true
 [node name="BankGrass14" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-486, 630.880)
+position = Vector2(-482, 790.8800)
 scale = Vector2(0.17, 0.17)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -9673,7 +9548,7 @@ flip_h = false
 [node name="BankGrass15" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-378, 631.850)
+position = Vector2(-378, 631.8500)
 scale = Vector2(0.15, 0.15)
 texture = SubResource("FirstRoomsShortGrass")
 offset = Vector2(0, -256)
@@ -9682,7 +9557,7 @@ flip_h = true
 [node name="BankGrass16" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-270, 634.080)
+position = Vector2(-270, 634.0800)
 scale = Vector2(0.22, 0.22)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -9691,7 +9566,7 @@ flip_h = false
 [node name="BankGrass17" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-162, 631.520)
+position = Vector2(-162, 631.5200)
 scale = Vector2(0.18, 0.18)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -9700,7 +9575,7 @@ flip_h = true
 [node name="BankGrass18" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-54, 638.960)
+position = Vector2(-54, 638.9600)
 scale = Vector2(0.24, 0.24)
 texture = SubResource("FirstRoomsShortGrass")
 offset = Vector2(0, -256)
@@ -9709,7 +9584,7 @@ flip_h = false
 [node name="MossyBoulder0" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
-position = Vector2(-1848, 624)
+position = Vector2(-1848, 624.0000)
 scale = Vector2(0.12, 0.12)
 texture = SubResource("MossRegion69")
 offset = Vector2(0, -480)
@@ -9725,7 +9600,7 @@ offset = Vector2(0, 704)
 [node name="MossyBoulder1" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
-position = Vector2(-1408, 624)
+position = Vector2(-1408, 624.0000)
 scale = Vector2(0.1, 0.1)
 texture = SubResource("MossRegion70")
 offset = Vector2(0, -480)
@@ -9741,7 +9616,7 @@ offset = Vector2(0, 576)
 [node name="MossyBoulder3" type="Sprite2D" parent="FirstUndergroundRooms/MossCrossroads/Scenery"]
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
-position = Vector2(-268, 624)
+position = Vector2(-268, 624.0000)
 scale = Vector2(0.11, 0.11)
 texture = SubResource("MossRegion69")
 offset = Vector2(0, -480)
@@ -9757,7 +9632,7 @@ offset = Vector2(0, 550)
 [node name="AnimatedReeds0" type="AnimatedSprite2D" parent="FirstUndergroundRooms/MossCrossroads/Plants"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-1748, 580.5)
+position = Vector2(-1748, 580.5000)
 scale = Vector2(0.24, 0.24)
 sprite_frames = SubResource("CavePlantFrames2")
 animation = &"idle"
@@ -9767,7 +9642,7 @@ frame = 6
 [node name="AnimatedReeds1" type="AnimatedSprite2D" parent="FirstUndergroundRooms/MossCrossroads/Plants"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-1278, 580.5)
+position = Vector2(-1186, 580.5000)
 scale = Vector2(0.24, 0.24)
 sprite_frames = SubResource("CavePlantFrames3")
 animation = &"idle"
@@ -9777,7 +9652,7 @@ frame = 9
 [node name="AnimatedReeds2" type="AnimatedSprite2D" parent="FirstUndergroundRooms/MossCrossroads/Plants"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-618, 580.5)
+position = Vector2(-638, 580.5000)
 scale = Vector2(0.24, 0.24)
 sprite_frames = SubResource("CavePlantFrames5")
 animation = &"idle"
@@ -9787,7 +9662,7 @@ frame = 15
 [node name="AnimatedReeds3" type="AnimatedSprite2D" parent="FirstUndergroundRooms/MossCrossroads/Plants"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-138, 580.5)
+position = Vector2(-138, 580.5000)
 scale = Vector2(0.24, 0.24)
 sprite_frames = SubResource("CavePlantFrames8")
 animation = &"idle"
@@ -9798,7 +9673,7 @@ frame = 24
 z_index = 100
 texture_filter = 2
 material = SubResource("CaveFlowerPalette")
-position = Vector2(-1558, 567)
+position = Vector2(-1506, 567.0000)
 scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("CavePlantFrames0")
 animation = &"idle"
@@ -9808,43 +9683,15 @@ autoplay = "idle"
 z_index = 100
 texture_filter = 2
 material = SubResource("CaveFlowerPalette")
-position = Vector2(-458, 567)
+position = Vector2(-458, 567.0000)
 scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("CavePlantFrames0")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="Ground" type="StaticBody2D" parent="FirstUndergroundRooms/ReedPools"]
-position = Vector2(-3584, 1068)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FirstUndergroundRooms/ReedPools/Ground"]
-shape = SubResource("RoadGroundShape")
-
-[node name="Floor00" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-4544, 940)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill00" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-4544, 1068)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase00" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-4544, 1196)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling00" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-4544, 176)
@@ -9852,31 +9699,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor01" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-4416, 940)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill01" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-4416, 1068)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase01" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-4416, 1196)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling01" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-4416, 176)
@@ -9884,31 +9709,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor02" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-4288, 940)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill02" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-4288, 1068)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase02" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-4288, 1196)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling02" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-4288, 176)
@@ -9916,31 +9719,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor03" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-4160, 940)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill03" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-4160, 1068)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase03" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-4160, 1196)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling03" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-4160, 176)
@@ -9948,31 +9729,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor04" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-4032, 940)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill04" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-4032, 1068)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase04" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-4032, 1196)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling04" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-4032, 176)
@@ -9980,31 +9739,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor05" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3904, 940)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill05" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3904, 1068)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase05" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3904, 1196)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling05" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-3904, 176)
@@ -10012,31 +9749,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor06" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3776, 940)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill06" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3776, 1068)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase06" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3776, 1196)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling06" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-3776, 176)
@@ -10044,31 +9759,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor07" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3648, 940)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill07" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3648, 1068)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase07" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3648, 1196)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling07" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-3648, 176)
@@ -10076,31 +9769,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor08" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3520, 940)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill08" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3520, 1068)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase08" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3520, 1196)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling08" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-3520, 176)
@@ -10108,31 +9779,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor09" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3392, 940)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill09" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3392, 1068)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase09" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3392, 1196)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling09" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-3392, 176)
@@ -10140,31 +9789,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor10" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3264, 940)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill10" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3264, 1068)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase10" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3264, 1196)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling10" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-3264, 176)
@@ -10172,31 +9799,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor11" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3136, 940)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill11" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3136, 1068)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase11" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3136, 1196)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling11" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-3136, 176)
@@ -10204,31 +9809,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor12" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3008, 940)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill12" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3008, 1068)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase12" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-3008, 1196)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling12" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-3008, 176)
@@ -10236,31 +9819,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor13" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2880, 940)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill13" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2880, 1068)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase13" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2880, 1196)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling13" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-2880, 176)
@@ -10268,31 +9829,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor14" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2752, 940)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill14" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2752, 1068)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase14" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2752, 1196)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling14" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-2752, 176)
@@ -10300,31 +9839,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="Floor15" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2624, 940)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="RockFill15" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2624, 1068)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="RockBase15" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2624, 1196)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling15" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-2624, 176)
@@ -10333,6 +9850,7 @@ texture = SubResource("MossRegion10")
 flip_v = true
 
 [node name="CaveColumn0" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-4488, 481)
@@ -10340,6 +9858,7 @@ scale = Vector2(0.19, 0.19)
 texture = SubResource("MossRegion1")
 
 [node name="CaveColumn1" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-4068, 481)
@@ -10347,6 +9866,7 @@ scale = Vector2(0.23, 0.23)
 texture = SubResource("MossRegion2")
 
 [node name="CaveColumn2" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-3598, 481)
@@ -10354,6 +9874,7 @@ scale = Vector2(0.2, 0.2)
 texture = SubResource("MossRegion3")
 
 [node name="CaveColumn3" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-3108, 481)
@@ -10361,6 +9882,7 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion4")
 
 [node name="CaveColumn4" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-2728, 481)
@@ -10368,6 +9890,7 @@ scale = Vector2(0.21, 0.21)
 texture = SubResource("MossRegion1")
 
 [node name="CavernBank0" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-4268, 876)
@@ -10376,6 +9899,7 @@ texture = SubResource("MossRegion5")
 offset = Vector2(0, -576)
 
 [node name="RockShelf0" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-4173, 656)
@@ -10383,6 +9907,7 @@ scale = Vector2(0.21, 0.21)
 texture = SubResource("MossRegion80")
 
 [node name="CavernBank1" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-3538, 876)
@@ -10391,6 +9916,7 @@ texture = SubResource("MossRegion6")
 offset = Vector2(0, -576)
 
 [node name="RockShelf1" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-3443, 656)
@@ -10398,6 +9924,7 @@ scale = Vector2(0.21, 0.21)
 texture = SubResource("MossRegion81")
 
 [node name="CavernBank2" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-2868, 876)
@@ -10406,6 +9933,7 @@ texture = SubResource("MossRegion5")
 offset = Vector2(0, -576)
 
 [node name="RockShelf2" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Background"]
+visible = false
 texture_filter = 2
 material = SubResource("CaveDistantPalette")
 position = Vector2(-2773, 656)
@@ -10424,7 +9952,7 @@ mouse_filter = 2
 [node name="BankGrass00" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-4558, 887.850)
+position = Vector2(-4558, 887.8500)
 scale = Vector2(0.15, 0.15)
 texture = SubResource("FirstRoomsShortGrass")
 offset = Vector2(0, -256)
@@ -10433,7 +9961,7 @@ flip_h = false
 [node name="BankGrass01" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-4450, 890.080)
+position = Vector2(-4450, 890.0800)
 scale = Vector2(0.22, 0.22)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -10442,7 +9970,7 @@ flip_h = true
 [node name="BankGrass02" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-4342, 887.520)
+position = Vector2(-4342, 887.5200)
 scale = Vector2(0.18, 0.18)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -10451,7 +9979,7 @@ flip_h = false
 [node name="BankGrass03" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-4234, 894.960)
+position = Vector2(-4234, 894.9600)
 scale = Vector2(0.24, 0.24)
 texture = SubResource("FirstRoomsShortGrass")
 offset = Vector2(0, -256)
@@ -10460,7 +9988,7 @@ flip_h = true
 [node name="BankGrass04" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-4126, 886.880)
+position = Vector2(-4126, 886.8800)
 scale = Vector2(0.17, 0.17)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -10469,7 +9997,7 @@ flip_h = false
 [node name="BankGrass05" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-4018, 885.600)
+position = Vector2(-4094, 1013.6000)
 scale = Vector2(0.15, 0.15)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -10478,7 +10006,7 @@ flip_h = true
 [node name="BankGrass06" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-3910, 893.380)
+position = Vector2(-3906, 893.3800)
 scale = Vector2(0.22, 0.22)
 texture = SubResource("FirstRoomsShortGrass")
 offset = Vector2(0, -256)
@@ -10487,7 +10015,7 @@ flip_h = false
 [node name="BankGrass07" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-3802, 887.520)
+position = Vector2(-3806, 887.5200)
 scale = Vector2(0.18, 0.18)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -10496,7 +10024,7 @@ flip_h = true
 [node name="BankGrass08" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-3694, 891.360)
+position = Vector2(-3618, 891.3600)
 scale = Vector2(0.24, 0.24)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -10505,7 +10033,7 @@ flip_h = false
 [node name="BankGrass09" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-3586, 889.430)
+position = Vector2(-3586, 889.4300)
 scale = Vector2(0.17, 0.17)
 texture = SubResource("FirstRoomsShortGrass")
 offset = Vector2(0, -256)
@@ -10514,7 +10042,7 @@ flip_h = true
 [node name="BankGrass10" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-3478, 885.600)
+position = Vector2(-3478, 885.6000)
 scale = Vector2(0.15, 0.15)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -10523,7 +10051,7 @@ flip_h = false
 [node name="BankGrass11" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-3370, 890.080)
+position = Vector2(-3370, 890.0800)
 scale = Vector2(0.22, 0.22)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -10532,7 +10060,7 @@ flip_h = true
 [node name="BankGrass12" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-3262, 890.220)
+position = Vector2(-3170, 890.2200)
 scale = Vector2(0.18, 0.18)
 texture = SubResource("FirstRoomsShortGrass")
 offset = Vector2(0, -256)
@@ -10541,7 +10069,7 @@ flip_h = false
 [node name="BankGrass13" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-3154, 891.360)
+position = Vector2(-3154, 891.3600)
 scale = Vector2(0.24, 0.24)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -10550,7 +10078,7 @@ flip_h = true
 [node name="BankGrass14" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-3046, 886.880)
+position = Vector2(-3046, 886.8800)
 scale = Vector2(0.17, 0.17)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -10559,7 +10087,7 @@ flip_h = false
 [node name="BankGrass15" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-2938, 887.850)
+position = Vector2(-2850, 844.4214)
 scale = Vector2(0.15, 0.15)
 texture = SubResource("FirstRoomsShortGrass")
 offset = Vector2(0, -256)
@@ -10568,7 +10096,7 @@ flip_h = true
 [node name="BankGrass16" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-2830, 890.080)
+position = Vector2(-2830, 842.0800)
 scale = Vector2(0.22, 0.22)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -10577,7 +10105,7 @@ flip_h = false
 [node name="BankGrass17" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-2722, 887.520)
+position = Vector2(-2722, 814.8343)
 scale = Vector2(0.18, 0.18)
 texture = SubResource("FirstRoomsReedTuft")
 offset = Vector2(0, -256)
@@ -10586,7 +10114,7 @@ flip_h = true
 [node name="BankGrass18" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-2614, 894.960)
+position = Vector2(-2614, 797.5886)
 scale = Vector2(0.24, 0.24)
 texture = SubResource("FirstRoomsShortGrass")
 offset = Vector2(0, -256)
@@ -10595,7 +10123,7 @@ flip_h = false
 [node name="MossyBoulder0" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
-position = Vector2(-4408, 880)
+position = Vector2(-4408, 880.0000)
 scale = Vector2(0.12, 0.12)
 texture = SubResource("MossRegion69")
 offset = Vector2(0, -480)
@@ -10611,7 +10139,7 @@ offset = Vector2(0, 704)
 [node name="MossyBoulder1" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
-position = Vector2(-3968, 880)
+position = Vector2(-3906, 880.0000)
 scale = Vector2(0.1, 0.1)
 texture = SubResource("MossRegion70")
 offset = Vector2(0, -480)
@@ -10627,7 +10155,7 @@ offset = Vector2(0, 576)
 [node name="MossyBoulder2" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
-position = Vector2(-3398, 880)
+position = Vector2(-3398, 880.0000)
 scale = Vector2(0.13, 0.13)
 texture = SubResource("MossRegion71")
 offset = Vector2(0, -480)
@@ -10643,7 +10171,8 @@ offset = Vector2(0, 576)
 [node name="MossyBoulder3" type="Sprite2D" parent="FirstUndergroundRooms/ReedPools/Scenery"]
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
-position = Vector2(-2828, 880)
+position = Vector2(-2828, 835.5387)
+rotation = -0.224711
 scale = Vector2(0.11, 0.11)
 texture = SubResource("MossRegion69")
 offset = Vector2(0, -480)
@@ -10659,7 +10188,7 @@ offset = Vector2(0, 550)
 [node name="AnimatedReeds0" type="AnimatedSprite2D" parent="FirstUndergroundRooms/ReedPools/Plants"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-4308, 836.5)
+position = Vector2(-4308, 836.5000)
 scale = Vector2(0.24, 0.24)
 sprite_frames = SubResource("CavePlantFrames2")
 animation = &"idle"
@@ -10669,7 +10198,7 @@ frame = 6
 [node name="AnimatedReeds1" type="AnimatedSprite2D" parent="FirstUndergroundRooms/ReedPools/Plants"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-3838, 836.5)
+position = Vector2(-3838, 836.5000)
 scale = Vector2(0.24, 0.24)
 sprite_frames = SubResource("CavePlantFrames3")
 animation = &"idle"
@@ -10679,7 +10208,7 @@ frame = 9
 [node name="AnimatedReeds2" type="AnimatedSprite2D" parent="FirstUndergroundRooms/ReedPools/Plants"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-3178, 836.5)
+position = Vector2(-3170, 836.5000)
 scale = Vector2(0.24, 0.24)
 sprite_frames = SubResource("CavePlantFrames5")
 animation = &"idle"
@@ -10689,7 +10218,7 @@ frame = 15
 [node name="AnimatedReeds3" type="AnimatedSprite2D" parent="FirstUndergroundRooms/ReedPools/Plants"]
 texture_filter = 2
 material = SubResource("CavePlantPalette")
-position = Vector2(-2698, 836.5)
+position = Vector2(-2698, 758.3286)
 scale = Vector2(0.24, 0.24)
 sprite_frames = SubResource("CavePlantFrames8")
 animation = &"idle"
@@ -10700,7 +10229,7 @@ frame = 24
 z_index = 100
 texture_filter = 2
 material = SubResource("CaveFlowerPalette")
-position = Vector2(-4118, 823)
+position = Vector2(-4118, 823.0000)
 scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("CavePlantFrames0")
 animation = &"idle"
@@ -10710,43 +10239,15 @@ autoplay = "idle"
 z_index = 100
 texture_filter = 2
 material = SubResource("CaveFlowerPalette")
-position = Vector2(-3018, 823)
+position = Vector2(-3038, 822.5429)
 scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("CavePlantFrames0")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="Step0" type="StaticBody2D" parent="FirstUndergroundRooms/ReedDescent"]
-position = Vector2(-2112, 876)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FirstUndergroundRooms/ReedDescent/Step0"]
-shape = SubResource("UndergroundDescentStepShape")
-
-[node name="Floor0" type="Sprite2D" parent="FirstUndergroundRooms/ReedDescent/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2112, 748)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="Rock0" type="Sprite2D" parent="FirstUndergroundRooms/ReedDescent/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2112, 876)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="Base0" type="Sprite2D" parent="FirstUndergroundRooms/ReedDescent/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2112, 1004)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling0" type="Sprite2D" parent="FirstUndergroundRooms/ReedDescent/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-2112, -16)
@@ -10754,45 +10255,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="StepGrass0" type="Sprite2D" parent="FirstUndergroundRooms/ReedDescent/Scenery"]
-texture_filter = 2
-material = SubResource("CavePlantPalette")
-position = Vector2(-2112, 695.060)
-scale = Vector2(0.14, 0.14)
-texture = SubResource("FirstRoomsShortGrass")
-offset = Vector2(0, -256)
-
-[node name="Step1" type="StaticBody2D" parent="FirstUndergroundRooms/ReedDescent"]
-position = Vector2(-2240, 940)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FirstUndergroundRooms/ReedDescent/Step1"]
-shape = SubResource("UndergroundDescentStepShape")
-
-[node name="Floor1" type="Sprite2D" parent="FirstUndergroundRooms/ReedDescent/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2240, 812)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="Rock1" type="Sprite2D" parent="FirstUndergroundRooms/ReedDescent/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2240, 940)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="Base1" type="Sprite2D" parent="FirstUndergroundRooms/ReedDescent/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2240, 1068)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling1" type="Sprite2D" parent="FirstUndergroundRooms/ReedDescent/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-2240, 48)
@@ -10800,45 +10265,9 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="StepGrass1" type="Sprite2D" parent="FirstUndergroundRooms/ReedDescent/Scenery"]
-texture_filter = 2
-material = SubResource("CavePlantPalette")
-position = Vector2(-2240, 759.060)
-scale = Vector2(0.14, 0.14)
-texture = SubResource("FirstRoomsShortGrass")
-offset = Vector2(0, -256)
-
-[node name="Step2" type="StaticBody2D" parent="FirstUndergroundRooms/ReedDescent"]
-position = Vector2(-2368, 1004)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FirstUndergroundRooms/ReedDescent/Step2"]
-shape = SubResource("UndergroundDescentStepShape")
-
-[node name="Floor2" type="Sprite2D" parent="FirstUndergroundRooms/ReedDescent/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2368, 876)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="Rock2" type="Sprite2D" parent="FirstUndergroundRooms/ReedDescent/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2368, 1004)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="Base2" type="Sprite2D" parent="FirstUndergroundRooms/ReedDescent/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2368, 1132)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling2" type="Sprite2D" parent="FirstUndergroundRooms/ReedDescent/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-2368, 112)
@@ -10846,59 +10275,15 @@ scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
 
-[node name="StepGrass2" type="Sprite2D" parent="FirstUndergroundRooms/ReedDescent/Scenery"]
-texture_filter = 2
-material = SubResource("CavePlantPalette")
-position = Vector2(-2368, 823.060)
-scale = Vector2(0.14, 0.14)
-texture = SubResource("FirstRoomsShortGrass")
-offset = Vector2(0, -256)
-
-[node name="Step3" type="StaticBody2D" parent="FirstUndergroundRooms/ReedDescent"]
-position = Vector2(-2496, 1068)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FirstUndergroundRooms/ReedDescent/Step3"]
-shape = SubResource("UndergroundDescentStepShape")
-
-[node name="Floor3" type="Sprite2D" parent="FirstUndergroundRooms/ReedDescent/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2496, 940)
-scale = Vector2(0.4, 0.42105263)
-texture = SubResource("RoadBareStoneSurface")
-
-[node name="Rock3" type="Sprite2D" parent="FirstUndergroundRooms/ReedDescent/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2496, 1068)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
-[node name="Base3" type="Sprite2D" parent="FirstUndergroundRooms/ReedDescent/Terrain"]
-modulate = Color(0.83, 0.85, 0.95, 1)
-texture_filter = 2
-material = SubResource("RoadStoneSeamless")
-position = Vector2(-2496, 1196)
-scale = Vector2(0.4, 0.5)
-texture = SubResource("RoadBareStoneFill")
-
 [node name="Ceiling3" type="Sprite2D" parent="FirstUndergroundRooms/ReedDescent/Terrain"]
+visible = false
+modulate = Color(0.18, 0.24, 0.38, 1)
 texture_filter = 2
 material = SubResource("CaveTerrainPalette")
 position = Vector2(-2496, 176)
 scale = Vector2(0.25, 0.25)
 texture = SubResource("MossRegion10")
 flip_v = true
-
-[node name="StepGrass3" type="Sprite2D" parent="FirstUndergroundRooms/ReedDescent/Scenery"]
-texture_filter = 2
-material = SubResource("CavePlantPalette")
-position = Vector2(-2496, 887.060)
-scale = Vector2(0.14, 0.14)
-texture = SubResource("FirstRoomsShortGrass")
-offset = Vector2(0, -256)
 
 [node name="EndRockWall" type="StaticBody2D" parent="FirstUndergroundRooms/ReedPools"]
 position = Vector2(-4672, 476)
@@ -10972,3 +10357,380 @@ theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 16
 text = "[F / Triangle] Save Game"
 horizontal_alignment = 1
+
+[node name="BrokenCaveArtwork" type="Node2D" parent="."]
+
+[node name="FracturedWall0" type="Sprite2D" parent="BrokenCaveArtwork"]
+z_index = -89
+modulate = Color(0.85, 0.9, 1, 1)
+position = Vector2(-4590, 150)
+scale = Vector2(1.962617, 0.691489)
+texture = SubResource("BrokenWall0")
+centered = false
+
+[node name="FracturedWall1" type="Sprite2D" parent="BrokenCaveArtwork"]
+z_index = -89
+modulate = Color(0.85, 0.9, 1, 1)
+position = Vector2(-3680, 150)
+scale = Vector2(2.142857, 0.647611)
+texture = SubResource("BrokenWall1")
+centered = false
+
+[node name="FracturedWall2" type="Sprite2D" parent="BrokenCaveArtwork"]
+z_index = -89
+modulate = Color(0.85, 0.9, 1, 1)
+position = Vector2(-2510, -144)
+scale = Vector2(2.254546, 1.019792)
+texture = SubResource("BrokenWall2")
+centered = false
+
+[node name="FracturedWall3" type="Sprite2D" parent="BrokenCaveArtwork"]
+z_index = -89
+modulate = Color(0.85, 0.9, 1, 1)
+position = Vector2(-1530, -144)
+scale = Vector2(2.219101, 0.700516)
+texture = SubResource("BrokenWall3")
+centered = false
+
+[node name="FracturedWall4" type="Sprite2D" parent="BrokenCaveArtwork"]
+z_index = -89
+modulate = Color(0.85, 0.9, 1, 1)
+position = Vector2(-370, -144)
+scale = Vector2(2.254546, 0.774510)
+texture = SubResource("BrokenWall4")
+centered = false
+
+[node name="FracturedWall5" type="Sprite2D" parent="BrokenCaveArtwork"]
+z_index = -89
+modulate = Color(0.85, 0.9, 1, 1)
+position = Vector2(960, -144)
+scale = Vector2(2.631579, 0.794333)
+texture = SubResource("BrokenWall5")
+centered = false
+
+[node name="GroundRimBacking" type="Polygon2D" parent="BrokenCaveArtwork"]
+visible = false
+z_index = -3
+color = Color(0.105, 0.11, 0.145, 1)
+polygon = PackedVector2Array(0, 620, 2048, 620, 2048, 642, 0, 642)
+
+[node name="MixedGroundFace" type="Sprite2D" parent="BrokenCaveArtwork"]
+visible = false
+z_index = -2
+position = Vector2(0, 611)
+scale = Vector2(0.942910, 0.621547)
+texture = ExtResource("redraw_ground")
+centered = false
+
+[node name="PouringWater0" type="AnimatedSprite2D" parent="BrokenCaveArtwork"]
+z_index = -89
+modulate = Color(0.48, 0.65, 0.73, 0.6)
+material = SubResource("BrokenWallWaterMaterial")
+position = Vector2(-3290, 570.8797)
+scale = Vector2(0.494505, 2.490226)
+sprite_frames = SubResource("BrokenWallWaterFrames")
+animation = &"pour"
+autoplay = "pour"
+frame = 0
+
+[node name="PouringWater1" type="AnimatedSprite2D" parent="BrokenCaveArtwork"]
+z_index = -89
+modulate = Color(0.48, 0.65, 0.73, 0.6)
+material = SubResource("BrokenWallWaterMaterial")
+position = Vector2(-40, 381.5)
+scale = Vector2(0.357143, 1.683333)
+sprite_frames = SubResource("BrokenWallWaterFrames")
+animation = &"pour"
+autoplay = "pour"
+frame = 2
+
+[node name="PouringWater2" type="AnimatedSprite2D" parent="BrokenCaveArtwork"]
+z_index = -3
+modulate = Color(0.48, 0.65, 0.73, 0.6)
+material = SubResource("BrokenWallWaterMaterial")
+position = Vector2(590, 880.0)
+scale = Vector2(0.241758, 2.611111)
+sprite_frames = SubResource("BrokenWallWaterFrames")
+animation = &"pour"
+autoplay = "pour"
+frame = 4
+
+[node name="DistantDepth" type="Node2D" parent="BrokenCaveArtwork"]
+
+[node name="DistantRockFill" type="Sprite2D" parent="BrokenCaveArtwork/DistantDepth"]
+z_index = -95
+modulate = Color(0.5, 0.58, 0.75, 1)
+position = Vector2(-4800, -400)
+scale = Vector2(3.619245, 2.596685)
+texture = ExtResource("cave_distant_fill")
+centered = false
+
+[node name="LiftShaftConnection" type="Sprite2D" parent="BrokenCaveArtwork"]
+z_index = -88
+modulate = Color(0.8, 0.84, 0.95, 1)
+position = Vector2(744, -900)
+scale = Vector2(0.546875, 0.989583)
+texture = ExtResource("cave_lift_shaft")
+centered = false
+
+[node name="BackgroundRockDetails" type="Node2D" parent="."]
+modulate = Color(0.65, 0.75, 1, 0.65)
+z_index = -90
+
+[node name="SmallCaveRock0" type="Sprite2D" parent="BackgroundRockDetails"]
+texture_filter = 2
+material = SubResource("CaveDistantPalette")
+modulate = Color(0.85, 0.95, 1, 1)
+position = Vector2(-2410, 868)
+scale = Vector2(0.14, 0.12)
+texture = SubResource("MossRegion70")
+flip_h = false
+
+[node name="SmallCaveRock1" type="Sprite2D" parent="BackgroundRockDetails"]
+texture_filter = 2
+material = SubResource("CaveDistantPalette")
+modulate = Color(0.85, 0.95, 1, 1)
+position = Vector2(-2324, 882)
+scale = Vector2(0.075, 0.075)
+texture = SubResource("MossRegion69")
+flip_h = true
+
+[node name="SmallCaveRock2" type="Sprite2D" parent="BackgroundRockDetails"]
+texture_filter = 2
+material = SubResource("CaveDistantPalette")
+modulate = Color(0.85, 0.95, 1, 1)
+position = Vector2(-1720, 790)
+scale = Vector2(0.13, 0.12)
+texture = SubResource("MossRegion69")
+flip_h = false
+
+[node name="SmallCaveRock3" type="Sprite2D" parent="BackgroundRockDetails"]
+texture_filter = 2
+material = SubResource("CaveDistantPalette")
+modulate = Color(0.85, 0.95, 1, 1)
+position = Vector2(-1628, 802)
+scale = Vector2(0.08, 0.085)
+texture = SubResource("MossRegion70")
+flip_h = true
+
+[node name="SmallCaveRock4" type="Sprite2D" parent="BackgroundRockDetails"]
+texture_filter = 2
+material = SubResource("CaveDistantPalette")
+modulate = Color(0.85, 0.95, 1, 1)
+position = Vector2(-1240, 820)
+scale = Vector2(0.125, 0.12)
+texture = SubResource("MossRegion70")
+flip_h = true
+
+[node name="SmallCaveRock5" type="Sprite2D" parent="BackgroundRockDetails"]
+texture_filter = 2
+material = SubResource("CaveDistantPalette")
+modulate = Color(0.85, 0.95, 1, 1)
+position = Vector2(-900, 785)
+scale = Vector2(0.11, 0.12)
+texture = SubResource("MossRegion71")
+flip_h = false
+
+[node name="SmallCaveRock6" type="Sprite2D" parent="BackgroundRockDetails"]
+texture_filter = 2
+material = SubResource("CaveDistantPalette")
+modulate = Color(0.85, 0.95, 1, 1)
+position = Vector2(-466, 764)
+scale = Vector2(0.125, 0.11)
+texture = SubResource("MossRegion69")
+flip_h = true
+
+[node name="SmallCaveRock7" type="Sprite2D" parent="BackgroundRockDetails"]
+texture_filter = 2
+material = SubResource("CaveDistantPalette")
+modulate = Color(0.85, 0.95, 1, 1)
+position = Vector2(-330, 777)
+scale = Vector2(0.075, 0.08)
+texture = SubResource("MossRegion70")
+flip_h = false
+
+[node name="CaveAtmosphere" type="Node2D" parent="."]
+
+[node name="DriftingMotes" type="CPUParticles2D" parent="CaveAtmosphere"]
+z_index = 4
+position = Vector2(-870, 450)
+texture = SubResource("CaveMoteTexture")
+amount = 240
+lifetime = 36.0
+preprocess = 36.0
+randomness = 0.8
+emission_shape = 3
+emission_rect_extents = Vector2(3900, 750)
+direction = Vector2(0.25, -1)
+spread = 110.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 6.0
+initial_velocity_max = 14.0
+scale_amount_min = 0.1
+scale_amount_max = 0.25
+color_ramp = SubResource("CaveMoteLifeGradient")
+
+[node name="WalkableTunnel" type="Node2D" parent="."]
+
+[node name="ContinuousFloor" type="StaticBody2D" parent="WalkableTunnel"]
+metadata/route_surface = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WalkableTunnel/ContinuousFloor"]
+polygon = PackedVector2Array(-4608, 876, -3040, 876, -1920, 620, 0, 620, 0, 1480, -4608, 1480)
+
+[node name="RockFace" type="Polygon2D" parent="WalkableTunnel/ContinuousFloor"]
+z_index = -2
+material = SubResource("TunnelFloorMaterial")
+polygon = PackedVector2Array(-4608, 876, -3040, 876, -1920, 620, 0, 620, 2048, 620, 2048, 1480, -4608, 1480)
+
+[node name="LeftRoof" type="StaticBody2D" parent="WalkableTunnel"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WalkableTunnel/LeftRoof"]
+polygon = PackedVector2Array(-4608, -1000, 896, -1000, 896, 180, -1920, 180, -3040, 436, -4608, 436)
+
+[node name="RockFace" type="Polygon2D" parent="WalkableTunnel/LeftRoof"]
+z_index = -5
+material = SubResource("TunnelRoofMaterial")
+polygon = PackedVector2Array(-4608, -1000, 896, -1000, 896, 180, -1920, 180, -3040, 436, -4608, 436)
+
+[node name="RightRoof" type="StaticBody2D" parent="WalkableTunnel"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WalkableTunnel/RightRoof"]
+polygon = PackedVector2Array(1152, -1000, 2200, -1000, 2200, 180, 1152, 180)
+
+[node name="RockFace" type="Polygon2D" parent="WalkableTunnel/RightRoof"]
+z_index = -5
+material = SubResource("TunnelRoofMaterial")
+polygon = PackedVector2Array(1152, -1000, 2200, -1000, 2200, 180, 1152, 180)
+
+[node name="UpperPassage" type="Marker2D" parent="WalkableTunnel"]
+position = Vector2(-1920, 620)
+
+[node name="LowerPassage" type="Marker2D" parent="WalkableTunnel"]
+position = Vector2(-3040, 876)
+
+[node name="TunnelRockDressing" type="Node2D" parent="."]
+z_index = -1
+
+[node name="GroundRock0" type="Sprite2D" parent="TunnelRockDressing"]
+texture_filter = 2
+material = SubResource("CaveTerrainPalette")
+position = Vector2(-4480, 881.7000)
+rotation = 0.000000
+scale = Vector2(0.1, 0.1)
+texture = SubResource("MossRegion70")
+offset = Vector2(0, -480)
+flip_h = false
+
+[node name="GroundRock1" type="Sprite2D" parent="TunnelRockDressing"]
+texture_filter = 2
+material = SubResource("CaveTerrainPalette")
+position = Vector2(-4040, 883.5100)
+rotation = 0.000000
+scale = Vector2(0.13, 0.105)
+texture = SubResource("MossRegion69")
+offset = Vector2(0, -480)
+flip_h = true
+
+[node name="GroundRock2" type="Sprite2D" parent="TunnelRockDressing"]
+texture_filter = 2
+material = SubResource("CaveTerrainPalette")
+position = Vector2(-3550, 881.7000)
+rotation = 0.000000
+scale = Vector2(0.11, 0.1)
+texture = SubResource("MossRegion70")
+offset = Vector2(0, -480)
+flip_h = false
+
+[node name="GroundRock3" type="Sprite2D" parent="TunnelRockDressing"]
+texture_filter = 2
+material = SubResource("CaveTerrainPalette")
+position = Vector2(-3000, 872.7912)
+rotation = -0.224711
+scale = Vector2(0.12, 0.13)
+texture = SubResource("MossRegion71")
+offset = Vector2(0, -480)
+flip_h = true
+
+[node name="GroundRock4" type="Sprite2D" parent="TunnelRockDressing"]
+texture_filter = 2
+material = SubResource("CaveTerrainPalette")
+position = Vector2(-2530, 766.7885)
+rotation = -0.224711
+scale = Vector2(0.13, 0.1)
+texture = SubResource("MossRegion69")
+offset = Vector2(0, -480)
+flip_h = false
+
+[node name="GroundRock5" type="Sprite2D" parent="TunnelRockDressing"]
+texture_filter = 2
+material = SubResource("CaveTerrainPalette")
+position = Vector2(-2070, 660.1069)
+rotation = -0.224711
+scale = Vector2(0.11, 0.1)
+texture = SubResource("MossRegion70")
+offset = Vector2(0, -480)
+flip_h = true
+
+[node name="GroundRock6" type="Sprite2D" parent="TunnelRockDressing"]
+texture_filter = 2
+material = SubResource("CaveTerrainPalette")
+position = Vector2(-1640, 624.7000)
+rotation = 0.000000
+scale = Vector2(0.1, 0.1)
+texture = SubResource("MossRegion71")
+offset = Vector2(0, -480)
+flip_h = false
+
+[node name="GroundRock7" type="Sprite2D" parent="TunnelRockDressing"]
+texture_filter = 2
+material = SubResource("CaveTerrainPalette")
+position = Vector2(-690, 627.8200)
+rotation = 0.000000
+scale = Vector2(0.12, 0.11)
+texture = SubResource("MossRegion69")
+offset = Vector2(0, -480)
+flip_h = true
+
+[node name="RockBackWall" type="Polygon2D" parent="BrokenCaveArtwork/DistantDepth"]
+z_index = -94
+material = SubResource("TunnelBackgroundRockMaterial")
+polygon = PackedVector2Array(-4800, -400, 3061, -400, 3061, 1480, -4800, 1480)
+
+[node name="WaterfallAmbience" type="Node2D" parent="."]
+
+[node name="LowerWaterRush" type="AudioStreamPlayer2D" parent="WaterfallAmbience"]
+position = Vector2(-3290, 571)
+stream = ExtResource("cave_water_rush")
+volume_db = -14.0
+pitch_scale = 0.97
+autoplay = true
+max_distance = 1250.0
+attenuation = 1.35
+
+[node name="LowerWaterSplash" type="AudioStreamPlayer2D" parent="WaterfallAmbience"]
+position = Vector2(-3290, 780)
+stream = ExtResource("cave_water_splash")
+volume_db = -18.0
+pitch_scale = 1.02
+autoplay = true
+max_distance = 800.0
+attenuation = 1.8
+
+[node name="UpperWaterRush" type="AudioStreamPlayer2D" parent="WaterfallAmbience"]
+position = Vector2(-40, 382)
+stream = ExtResource("cave_water_rush")
+volume_db = -18.0
+pitch_scale = 1.05
+autoplay = true
+max_distance = 1050.0
+attenuation = 1.5
+
+[node name="UpperWaterSplash" type="AudioStreamPlayer2D" parent="WaterfallAmbience"]
+position = Vector2(-40, 503)
+stream = ExtResource("cave_water_splash")
+volume_db = -21.0
+pitch_scale = 0.96
+autoplay = true
+max_distance = 700.0
+attenuation = 1.8
